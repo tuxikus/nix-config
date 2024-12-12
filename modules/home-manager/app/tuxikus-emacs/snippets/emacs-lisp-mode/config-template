@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: config-template
+# key: config-template
+# key: ct
+# --
+;; $1.el --- -*- lexical-binding: t -*-
+
+(provide '$2)
+
+;; $3.el ends here
