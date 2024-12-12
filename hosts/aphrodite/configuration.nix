@@ -15,6 +15,7 @@
     pkgs._1password-cli
     pkgs.sketchybar
     pkgs.jankyborders
+    pkgs.gcc
   ];
 
   services.nix-daemon.enable = true;
