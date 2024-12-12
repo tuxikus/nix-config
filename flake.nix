@@ -57,7 +57,7 @@
         ];
       };
       # aphrodite
-      darwinConfiguration.aphrodite = darwin.lib.darwinSystem {
+      darwinConfigurations.aphrodite = darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         modules = [
           ./hosts/aphrodite/configuration.nix
