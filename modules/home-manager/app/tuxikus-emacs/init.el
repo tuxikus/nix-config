@@ -16,6 +16,7 @@
 (require 'config-org)
 (require 'config-yas)
 (require 'config-salt-mode)
+(require 'config-emms)
 (require 'config-ymir)
 (require 'config-custom-fun)
 

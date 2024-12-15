@@ -138,6 +138,7 @@ in
     fastfetch
     keepassxc
     unzip
+    mpv
   ];
 
   ### flatpak config

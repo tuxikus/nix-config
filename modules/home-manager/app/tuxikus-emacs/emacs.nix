@@ -15,13 +15,13 @@
       epkgs.orderless
       epkgs.company
       epkgs.consult
-      epkgs.hydra
       epkgs.magit
       epkgs.ace-window
       epkgs.avy
       epkgs.org-roam
       epkgs.fireplace
       epkgs.projectile
+      epkgs.emms
 
       epkgs.yasnippet
 
