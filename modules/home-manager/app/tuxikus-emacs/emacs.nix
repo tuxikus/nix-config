@@ -21,7 +21,6 @@
       epkgs.org-roam
       epkgs.fireplace
       epkgs.projectile
-      epkgs.emms
 
       epkgs.yasnippet
 
