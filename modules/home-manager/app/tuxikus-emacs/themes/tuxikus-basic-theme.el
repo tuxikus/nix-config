@@ -10,7 +10,7 @@
  '(escape-glyph ((t (:foreground "#e7a59a"))))
  '(homoglyph ((t (:foreground "#f5aa80"))))
  '(minibuffer-prompt ((t (:inherit (modus-themes-prompt)))))
- '(highlight ((t (:foreground "#ffffff" :background "#00415e"))))
+ '(highlight ((t (:foreground "#00ff00" :background "#00415e"))))
  '(region ((t (:extend t :foreground "#ffffff" :background "#3c3c3c"))))
  '(shadow ((t (:foreground "#a8a8a8"))))
  '(secondary-selection ((t (:extend t :inherit (modus-themes-special-cold)))))
