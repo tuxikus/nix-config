@@ -46,4 +46,8 @@
   home.file.".emacs.d/snippets" = {
     source = ./snippets;
   };
+  
+  home.file.".emacs.d/themes" = {
+    source = ./snippets;
+  };
 }
