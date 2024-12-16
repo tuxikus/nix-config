@@ -17,6 +17,7 @@
 (require 'config-yas)
 (require 'config-salt-mode)
 (require 'config-ymir)
+(require 'config-eglot)
 (require 'config-custom-fun)
 
 ;; init.el ends here
