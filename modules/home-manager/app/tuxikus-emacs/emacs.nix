@@ -48,6 +48,6 @@
   };
   
   home.file.".emacs.d/themes" = {
-    source = ./snippets;
+    source = ./themes;
   };
 }
