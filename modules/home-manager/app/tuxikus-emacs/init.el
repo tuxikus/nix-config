@@ -3,6 +3,7 @@
 
 (require 'config-ui)
 (require 'config-spacious-padding)
+(require 'config-themes)
 (require 'config-backup-files)
 (require 'config-qol)
 (require 'config-dired)

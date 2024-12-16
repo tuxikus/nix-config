@@ -16,7 +16,7 @@
 (setq initial-scratch-message ";; Emacs is fun")
 
 ;; highlight current line
-(global-hl-line-mode 1)
+;;(global-hl-line-mode 1)
 
 ;; theme
 (load-theme 'modus-vivendi t)
