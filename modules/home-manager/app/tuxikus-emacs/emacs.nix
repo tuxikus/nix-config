@@ -21,6 +21,7 @@
       epkgs.org-roam
       epkgs.fireplace
       epkgs.projectile
+      epkgs.spacious-padding
 
       epkgs.yasnippet
 

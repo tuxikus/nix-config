@@ -2,6 +2,7 @@
 (add-to-list 'load-path "~/.emacs.d/lisp")
 
 (require 'config-ui)
+(require 'config-spacious-padding)
 (require 'config-backup-files)
 (require 'config-qol)
 (require 'config-dired)
