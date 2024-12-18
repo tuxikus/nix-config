@@ -1,7 +1,7 @@
 ;; config-magit.el --- -*- lexical-binding: t -*-
 
 (use-package magit
-  :bind (("C-c g g") . magit-status))
+  :bind (("C-c g g" . magit-status)))
 
 (provide 'config-magit)
 
