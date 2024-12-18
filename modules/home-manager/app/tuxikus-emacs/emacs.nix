@@ -24,7 +24,7 @@
       epkgs.spacious-padding
       epkgs.marginalia
       epkgs.yasnippet
-
+      epkgs.ripgrep
       epkgs.haskell-mode
       epkgs.nix-mode
       epkgs.salt-mode
