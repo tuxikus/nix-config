@@ -7,6 +7,8 @@
 (require 'config-backup-files)
 (require 'config-qol)
 (require 'config-dired)
+(require 'config-consult)
+(require 'config-projectile)
 (require 'config-keys)
 (require 'config-vertico)
 (require 'config-orderless)
