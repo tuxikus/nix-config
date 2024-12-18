@@ -22,7 +22,7 @@
       epkgs.fireplace
       epkgs.projectile
       epkgs.spacious-padding
-
+      epkgs.marginalia
       epkgs.yasnippet
 
       epkgs.haskell-mode

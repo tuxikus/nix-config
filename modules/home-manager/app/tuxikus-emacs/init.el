@@ -10,6 +10,7 @@
 (require 'config-consult)
 (require 'config-projectile)
 (require 'config-keys)
+(require 'config-marginalia)
 (require 'config-vertico)
 (require 'config-orderless)
 (require 'config-company)
