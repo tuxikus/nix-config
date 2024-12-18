@@ -18,6 +18,7 @@
       epkgs.magit
       epkgs.ace-window
       epkgs.avy
+      epkgs.wgrep
       epkgs.org-roam
       epkgs.fireplace
       epkgs.projectile
