@@ -29,6 +29,7 @@
       epkgs.haskell-mode
       epkgs.nix-mode
       epkgs.salt-mode
+      epkgs.python-mode
     ];
     
     extraConfig = ''
