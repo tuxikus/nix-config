@@ -140,13 +140,8 @@ in
       keepassxc
       unzip
       mpv
+      podman
     ];
-
-    ### flatpak config
-    services.flatpak.enable = true;
-    # not needed if using gnome
-    #xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-    #xdg.portal.config.common.default = "gtk";
 
     # hyprland
     programs.hyprland = {
