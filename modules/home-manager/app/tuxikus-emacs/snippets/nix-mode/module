@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: module
+# key: module
+# --
+{ config, pkgs, ... }:
+{
+  $1imports = [];
+  options = {};
+  config = {};
+}
