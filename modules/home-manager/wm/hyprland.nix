@@ -96,8 +96,8 @@ in
 
         bind = $mainMod, t, exec, $terminal
         bind = $mainMod SHIFT, e, exit
-        bind = $mainMod, f, fullscreen
-        
+        bind = $mainMod, m, fullscreen
+
         bind = $mainMod, left, movefocus, l
         bind = $mainMod, right, movefocus, r
         bind = $mainMod, up, movefocus, u
