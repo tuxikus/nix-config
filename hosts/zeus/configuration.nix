@@ -14,6 +14,7 @@ in
     (nixModulesDirectory + "/udev/zsa-keyboards.nix")
     (nixModulesDirectory + "/udev/vial.nix")
     (nixModulesDirectory + "/virt.nix")
+    (nixModulesDirectory + "/podman.nix")
   ];
 
   # enable nix flakes
@@ -140,7 +141,6 @@ in
       keepassxc
       unzip
       mpv
-      podman
     ];
 
     # hyprland
