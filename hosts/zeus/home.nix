@@ -17,6 +17,7 @@ in
 
     (homeManagerModulesDirectory + "/app/tuxikus-emacs/emacs.nix")
     (homeManagerModulesDirectory + "/app/nixvim/nixvim.nix")
+    (homeManagerModulesDirectory + "/app/foot.nix")
 
     (homeManagerModulesDirectory + "/dev/nix.nix")
     (homeManagerModulesDirectory + "/dev/haskell.nix")
