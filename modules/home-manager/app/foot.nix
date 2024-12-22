@@ -1,5 +1,8 @@
 {
-  xdg.configFile."foot/foot.ini".text = ''
+  home.file.".config/foot/foot.ini".text = ''
+    shell=tmux new-session -A -s local
+    font=BlexMono Nerd Font:size=16
+
     [colors]
     alpha=1.0
     background=000000
