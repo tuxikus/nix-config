@@ -2,7 +2,6 @@
   config,
   pkgs,
   inputs,
-  home-manager,
   ...
 }:
 let
@@ -113,7 +112,6 @@ in
   environment.systemPackages = with pkgs; [
     firefox
     chromium
-    home-manager
     flatpak
   ];
 
@@ -121,9 +119,12 @@ in
   services.flatpak.enable = true;
   services.flatpak.packages = [
     "com.valvesoftware.Steam"
+    "com.mojang.Minecraft"
+    "com.heroicgameslauncher.hgl"
+    "com.github.tchx84.Flatseal"
   ];
   # not needed if using gnome
-  #xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  #Xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   #xdg.portal.config.common.default = "gtk";
 
   # Some programs need SUID wrappers, can be configured further or are
