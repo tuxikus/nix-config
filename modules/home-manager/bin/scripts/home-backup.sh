@@ -98,11 +98,9 @@ fi
 
 rsync_command="rsync -av $options $excludes \
                      $HOME/.bookmarks.org \
-                     $HOME/.gitconfig \
                      $HOME/.nix-config\
                      $HOME/.backup-log.txt \
                      $HOME/.ppw \
-                     $HOME/.ssh \
                      $HOME/org \
                      $HOME/org-edu \
                      $HOME/media \
