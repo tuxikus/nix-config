@@ -31,6 +31,7 @@
       epkgs.salt-mode
       epkgs.python-mode
       epkgs.eat
+      epkgs.dashboard
     ];
     
     extraConfig = ''
