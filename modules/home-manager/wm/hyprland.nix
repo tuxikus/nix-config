@@ -98,7 +98,7 @@ in
         bind = $mainMod, t, exec, $terminal
         bind = $mainMod SHIFT, e, exit
         bind = $mainMod, m, fullscreen
-        bind = $mainMod, e, emacsclient -c
+        bind = $mainMod, e, exec, emacsclient -c
 
         bind = $mainMod, left, movefocus, l
         bind = $mainMod, right, movefocus, r
