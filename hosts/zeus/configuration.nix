@@ -142,6 +142,7 @@ in
       unzip
       mpv
       xfce.thunar
+      gthumb
     ];
 
     # hyprland
