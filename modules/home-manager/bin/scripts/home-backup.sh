@@ -61,6 +61,12 @@ $(date '+%F_%H:%M')_$1
 END_OF_LOG
 }
 
+if [ "$#" -eq 0 ]; then
+    echo "Illegal number of parameters"
+    print_help
+    exit 1
+fi
+
 case "$1" in
     --help)
         print_help
