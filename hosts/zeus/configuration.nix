@@ -141,6 +141,7 @@ in
       keepassxc
       unzip
       mpv
+      xfce.thunar
     ];
 
     # hyprland
