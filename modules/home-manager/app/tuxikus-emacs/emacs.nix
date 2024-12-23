@@ -30,6 +30,7 @@
       epkgs.nix-mode
       epkgs.salt-mode
       epkgs.python-mode
+      epkgs.eat
     ];
     
     extraConfig = ''
