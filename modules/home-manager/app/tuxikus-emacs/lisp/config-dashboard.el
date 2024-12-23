@@ -3,7 +3,7 @@
 (use-package dashboard
   :ensure t
   :config
-  (dashboard-setup-startup-hook)
+  (setq dashboard-projects-backend 'projectile)
 
   (setq dashboard-items '((recents   . 5)
                         (bookmarks . 5)
@@ -15,7 +15,9 @@
                                  (bookmarks . "m")
                                  (projects  . "p")
                                  (agenda    . "a")
-                                 (registers . "e"))))
+                                 (registers . "e")))
+
+  (dashboard-setup-startup-hook))
 
 (provide 'config-dashboard)
 
