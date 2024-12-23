@@ -32,12 +32,15 @@
       epkgs.python-mode
       epkgs.eat
       epkgs.dashboard
+      epkgs.restart-emacs
     ];
     
     extraConfig = ''
       (load-file "~/.emacs.d/init.el")
     '';
   };
+
+  services.emacs.enable = true;
 
   home.file.".emacs.d/init.el" = {
     source = ./init.el;
