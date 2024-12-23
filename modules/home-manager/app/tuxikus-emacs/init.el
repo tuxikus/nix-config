@@ -6,6 +6,7 @@
 (require 'config-themes)
 (require 'config-backup-files)
 (require 'config-qol)
+(require 'config-dashboard)
 (require 'config-dired)
 (require 'config-consult)
 (require 'config-projectile)
