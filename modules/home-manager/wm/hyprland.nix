@@ -19,7 +19,8 @@ in
         exec-once = waybar
         exec-once = hyprpaper
         exec-once = dunst
-        exec-once = emacs
+        exec-once = emacsclient -c
+        #exec-once = emacs
 
         $terminal = foot
 
@@ -97,6 +98,7 @@ in
         bind = $mainMod, t, exec, $terminal
         bind = $mainMod SHIFT, e, exit
         bind = $mainMod, m, fullscreen
+        bind = $mainMod, e, emacsclient -c
 
         bind = $mainMod, left, movefocus, l
         bind = $mainMod, right, movefocus, r

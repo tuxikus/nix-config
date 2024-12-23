@@ -17,6 +17,8 @@
                                  (agenda    . "a")
                                  (registers . "e")))
 
+  (setq initial-buffer-choice (lambda () (get-buffer-create dashboard-buffer-name)))
+
   (dashboard-setup-startup-hook))
 
 (provide 'config-dashboard)
