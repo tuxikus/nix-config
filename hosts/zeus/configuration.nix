@@ -73,16 +73,13 @@ in
       evince
       # file-roller
       geary
-      #gnome-disk-utility
+      # gnome-disk-utility
       # seahorse
       # sushi
       # sysprof
-      #
-      # gnome-shell-extensions
-      #
       # adwaita-icon-theme
       # nixos-background-info
-      #gnome-backgrounds
+      # gnome-backgrounds
       # gnome-bluetooth
       # gnome-color-manager
       # gnome-control-center
@@ -110,7 +107,7 @@ in
       gnome-music
       # gnome-system-monitor
       gnome-weather
-      # loupe
+      loupe
       # nautilus
       gnome-connections
       simple-scan
@@ -196,7 +193,6 @@ in
       unzip
       mpv
       xfce.thunar
-      gthumb
     ];
 
     # hyprland
