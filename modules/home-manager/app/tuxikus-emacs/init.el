@@ -3,6 +3,7 @@
 
 (require 'config-ui)
 (require 'config-spacious-padding)
+(require 'conifg-doom-modeline)
 (require 'config-themes)
 (require 'config-backup-files)
 (require 'config-qol)

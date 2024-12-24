@@ -33,6 +33,7 @@
       epkgs.eat
       epkgs.dashboard
       epkgs.restart-emacs
+      epkgs.doom-modeline
     ];
     
     extraConfig = ''
