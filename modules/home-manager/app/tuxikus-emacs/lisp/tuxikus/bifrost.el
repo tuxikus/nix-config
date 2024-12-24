@@ -10,15 +10,15 @@
       (cond
        ((string-prefix-p "[DAPP] " selected-option)
         (let* ((app-name (substring selected-option 7)))
-	  (tuxikus/ymir--launch-dapp app-name)))
+	  (tuxikus/bifrost--launch-dapp app-name)))
        ((string-prefix-p "[OS] " selected-option)
         (let* ((os-action (substring selected-option 5)))
-          (tuxikus/ymir--os-control os-action)))))))
+          (tuxikus/bifrost--os-control os-action)))))))
 
 ;; (defun tuxikus/bifrost-frame ()
 ;;   (interactive)
-;;   (with-current-buffer (get-buffer-create "*ymir*")
-;;     (let ((frame (make-frame '((name . "ymir")
+;;   (with-current-buffer (get-buffer-create "*bifrost*")
+;;     (let ((frame (make-frame '((name . "bifrost")
 ;; 			       (auto-raise . t)
 ;; 			       (height . 15)
 ;; 			       (internal-border-width . 25)
@@ -45,13 +45,13 @@
 ;;           (cond
 ;;            ((string-prefix-p "[DAPP] " selected-option)
 ;;             (let* ((app-name (substring selected-option 7)))
-;; 	      (tuxikus/ymir--launch-dapp app-name)))
+;; 	      (tuxikus/bifrost--launch-dapp app-name)))
 ;;            ((string-prefix-p "[OS] " selected-option)
 ;;             (let* ((os-action (substring selected-option 5)))
-;;               (tuxikus/ymir--os-control os-action))))))
+;;               (tuxikus/bifrost--os-control os-action))))))
       
 ;;       (delete-frame frame)
-;;       (kill-buffer "*ymir*"))))
+;;       (kill-buffer "*bifrost*"))))
 
 
 ;; launch desktop application
