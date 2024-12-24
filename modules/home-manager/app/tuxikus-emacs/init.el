@@ -26,5 +26,6 @@
 (require 'config-ymir)
 (require 'config-eglot)
 (require 'config-custom-fun)
+(require 'config-embark)
 
 ;; init.el ends here
