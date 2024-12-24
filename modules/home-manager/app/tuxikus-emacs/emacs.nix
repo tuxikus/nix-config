@@ -35,6 +35,8 @@
       epkgs.restart-emacs
       epkgs.doom-modeline
       epkgs.embark
+      epkgs.embark-org-roam
+      epkgs.embark-consult
     ];
     
     extraConfig = ''

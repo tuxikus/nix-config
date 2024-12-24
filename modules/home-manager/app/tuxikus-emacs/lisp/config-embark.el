@@ -3,7 +3,7 @@
 (use-package embark
   :ensure t
   :bind (("C-." . embark-act)
-	 ("M-." . embark-dwim))
+	 ("M-." . embark-dwim)))
 
 (provide 'config-embark)
 
