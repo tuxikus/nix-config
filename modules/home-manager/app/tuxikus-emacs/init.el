@@ -23,7 +23,7 @@
 (require 'config-org)
 (require 'config-yas)
 (require 'config-salt-mode)
-(require 'config-ymir)
+(require 'config-bifrost)
 (require 'config-eglot)
 (require 'config-custom-fun)
 (require 'config-embark)
