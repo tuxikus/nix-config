@@ -11,6 +11,11 @@
       url = "github:nix-community/nixvim/nixos-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.5.1";
 
@@ -28,6 +33,7 @@
       nixvim,
       nix-flatpak,
       darwin,
+      disko,
       ...
     }@inputs:
     {
@@ -37,7 +43,9 @@
         system = "x86_64-linux";
         specialArgs = inputs;
         modules = [
+          disko.nixosModules.disko
           ./hosts/zeus/configuration.nix
+          ./hosts/zeus/disks.nix
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
