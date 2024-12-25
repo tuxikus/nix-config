@@ -77,7 +77,6 @@
   users.users.test-user = {
     isNormalUser = true;
     description = "test-user";
-    group = "test-user";
     extraGroups = [
       "networkmanager"
       "wheel"
