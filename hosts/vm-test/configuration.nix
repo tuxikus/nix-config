@@ -17,7 +17,7 @@
 
   boot.loader.grub = {
     enable = true;
-    device = "/dev/vda";
+    device = "/dev/vda1";
   };
   
   networking.hostName = "vm-test";

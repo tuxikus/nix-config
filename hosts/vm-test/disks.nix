@@ -5,7 +5,7 @@
         type = "disk";
         device = "/dev/vda";
         content = {
-          type = "gpt";
+          type = "mbr";
           partitions = {
             ESP = {
               size = "500M";
