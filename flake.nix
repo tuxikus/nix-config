@@ -60,8 +60,18 @@
         system = "x86_64-linux";
         specialArgs = inputs;
         modules = [
+          disko.nixModules.disko
           ./hosts/ares/configuration.nix
+          ./hosts/vm-test/disks.nix
           nix-flatpak.nixosModules.nix-flatpak
+        ];
+      };
+      # vm-test
+      nixosConfigurations.vm-test = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = inputs;
+        modules = [
+          ./hosts/vm-test/configuration.nix
         ];
       };
       # aphrodite
