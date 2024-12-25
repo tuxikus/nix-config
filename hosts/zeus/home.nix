@@ -21,6 +21,7 @@ in
 
     (homeManagerModulesDirectory + "/dev/nix.nix")
     (homeManagerModulesDirectory + "/dev/haskell.nix")
+    (homeManagerModulesDirectory + "/dev/scheme.nix")
 
     (homeManagerModulesDirectory + "/wm/hyprland.nix")
     
