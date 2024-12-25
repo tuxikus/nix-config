@@ -15,7 +15,7 @@ in
 
     (homeManagerModulesDirectory + "/util/tmux.nix")
 
-    (homeManagerModulesDirectory + "/app/tuxikus-emacs/emacs.nix")
+#    (homeManagerModulesDirectory + "/app/tuxikus-emacs/emacs.nix")
     (homeManagerModulesDirectory + "/app/nixvim/nixvim.nix")
     (homeManagerModulesDirectory + "/app/foot.nix")
 
