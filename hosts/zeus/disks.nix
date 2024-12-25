@@ -8,7 +8,7 @@
           type = "gpt";
           partitions = {
             ESP = {
-              size = "512M";
+              size = "512sM";
               type = "EF00";
               content = {
                 type = "filesystem";
@@ -22,27 +22,12 @@
               content = {
                 type = "luks";
                 name = "crypted";
-                settings = {
-                  allowDiscards = true;
-                };
-                additionalKeyFiles = [ "/tmp/additionalSecret.key" ];
+                settings.allowDiscards = true;
+                passwordFile = "/tmp/secret.key";
                 content = {
-                  type = "btrfs";
-                  extraArgs = [ "-f" ];
-                  subvolumes = {
-                    "/root" = {
-                      mountpoint = "/";
-                      mountOptions = [ "compress=zstd" "noatime" ];
-                    };
-                    "/home" = {
-                      mountpoint = "/home";
-                      mountOptions = [ "compress=zstd" "noatime" ];
-                    };
-                    "/nix" = {
-                      mountpoint = "/nix";
-                      mountOptions = [ "compress=zstd" "noatime" ];
-                    };
-                  };
+                  type = "filesystem";
+                  format = "ext4";
+                  mountpoint = "/";
                 };
               };
             };
