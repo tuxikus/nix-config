@@ -60,9 +60,7 @@
         system = "x86_64-linux";
         specialArgs = inputs;
         modules = [
-          disko.nixModules.disko
           ./hosts/ares/configuration.nix
-          ./hosts/vm-test/disks.nix
           nix-flatpak.nixosModules.nix-flatpak
         ];
       };
@@ -71,6 +69,8 @@
         system = "x86_64-linux";
         specialArgs = inputs;
         modules = [
+          disko.nixosModules.disko
+          ./hosts/vm-test/disks.nix
           ./hosts/vm-test/configuration.nix
         ];
       };
