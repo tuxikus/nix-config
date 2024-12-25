@@ -126,7 +126,6 @@ in
     bat
     ripgrep
     fzf
-    btop
     fastfetch
     keepassxc
     unzip
