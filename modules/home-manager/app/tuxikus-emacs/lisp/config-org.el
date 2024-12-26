@@ -1,6 +1,11 @@
 ;; config-org.el --- -*- lexical-binding: t -*-
 
-(setq org-attach-id-dir "~/org/.attach")
+(use-package org
+  :bind
+  (("C-c o t" . 'org-todo))
+  :init
+  (setq org-attach-id-dir "~/org/.attach"
+	org-log-done 'time))
 
 (provide 'config-org)
 
