@@ -1,0 +1,4 @@
+* nix-config
+** TODOs
+*** DONE add README to project
+CLOSED: [2024-12-26 Do 22:38]
