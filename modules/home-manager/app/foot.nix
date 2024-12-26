@@ -1,6 +1,5 @@
 {
   home.file.".config/foot/foot.ini".text = ''
-    shell=tmux new-session -A -s local
     font=BlexMono Nerd Font:size=16
 
     [colors]

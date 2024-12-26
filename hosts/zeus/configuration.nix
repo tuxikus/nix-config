@@ -108,6 +108,7 @@ in
 
   fonts.packages = with pkgs; [
     nerdfonts
+    iosevka
   ];
 
   environment.systemPackages = with pkgs; [
