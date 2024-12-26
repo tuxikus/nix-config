@@ -15,15 +15,12 @@
 (setq inhibit-startup-screen t)
 (setq initial-scratch-message ";; Emacs is fun")
 
-;; highlight current line
-;;(global-hl-line-mode 1)
-
 ;; theme
 (load-theme 'modus-vivendi t)
 
 ;; font
 (set-face-attribute 'default nil
-                    :family "BlexMono Nerd Font"
+                    :family "Iosevka Nerd Font"
                     :height 150
                     :weight 'normal
                     :width 'normal)
