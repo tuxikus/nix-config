@@ -1,6 +1,6 @@
 {
   home.file.".config/foot/foot.ini".text = ''
-    font=BlexMono Nerd Font:size=16
+    font=Iosevka Nerd Font Mono:size=16
 
     [colors]
     alpha=1.0

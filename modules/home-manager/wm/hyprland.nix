@@ -177,7 +177,7 @@ in
       text = ''
         * {
           font-size: 20px;
-          font-family: "BlexMono Nerd Font";
+          font-family: "Iosevka Nerd Font Mono";
         }
 
         window#waybar {

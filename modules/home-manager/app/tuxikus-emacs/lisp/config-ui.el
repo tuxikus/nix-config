@@ -14,13 +14,13 @@
 (setq inhibit-startup-message t)
 (setq inhibit-startup-screen t)
 (setq initial-scratch-message ";; Emacs is fun")
-
+s
 ;; theme
 (load-theme 'modus-vivendi t)
 
 ;; font
 (set-face-attribute 'default nil
-                    :family "Iosevka Nerd Font"
+                    :family "Iosevka Nerd Font Mono"
                     :height 150
                     :weight 'normal
                     :width 'normal)
