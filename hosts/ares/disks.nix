@@ -28,7 +28,7 @@
         };
       };
       games-disk = {
-        device = "/dev/disk/by-id/nvme-SAMSUNG_MZVLB1T0HBLR_000L2_S4DZNF0N620723";
+        device = "/dev/disk/by-id/nvme-SAMSUNG_MZVLB1T0HBLR-000L2_S4DZNF0N620723";
         type = "disk";
         content = {
           type = "gpt";
