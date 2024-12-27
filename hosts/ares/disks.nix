@@ -2,7 +2,7 @@
   disko.devices = {
     disk = {
       nixos-disk = {
-        device = "/dev/nvme1n1";
+        device = "/dev/disk/by-id/nvme-Samsung_SSD_970_EVO_Plus_500GB_S4EVNM0T907399L";
         type = "disk";
         content = {
           type = "gpt";
@@ -28,7 +28,7 @@
         };
       };
       games-disk = {
-        device = "/dev/nvme0n1";
+        device = "/dev/disk/by-id/nvme-SAMSUNG_MZVLB1T0HBLR_000L2_S4DZNF0N620723";
         type = "disk";
         content = {
           type = "gpt";
