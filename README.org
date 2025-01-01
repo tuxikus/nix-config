@@ -1,4 +1,19 @@
 * nix-config
+** Install system with disko
+#+begin_src shell
+  echo 'mysuperpassword' > /tmp/secret.key
+
+  sudo nix \
+       --experimental-features "nix-command flakes" \
+       run github:nix-community/disko/latest -- \
+       --mode destroy,format,mount \
+       --flake github:tuxikus/nix-config#host
+
+  sudo nixos-install --no-root-passwd --flake github:tuxikus/nix-config#host
+
+  sudo nixos-enter --root /mnt -c 'passwd username'
+#+end_src
+
 ** TODOs
 *** DONE add README to project
 CLOSED: [2024-12-26 Do 22:38]
