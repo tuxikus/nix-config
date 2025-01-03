@@ -118,6 +118,8 @@ in
     foot
     wget
     hyprpaper
+    mpd
+    ncmpcpp
     dunst
     waybar
     grim
@@ -131,6 +133,25 @@ in
     mpv
     dex
   ];
+
+  services.mpd = {
+    enable = true;
+    musicDirectory = "/home/tuxikus/media/music/mp3";
+    extraConfig = ''
+      audio_output {
+       type "pipewire"
+       name "My PipeWire Output"
+      }
+    ''; 
+
+    network.startWhenNeeded = true;
+    user = "tuxikus";
+  };
+
+  systemd.services.mpd.environment = {
+      #XDG_RUNTIME_DIR = "/run/user/${toString config.users.users.tuxikus.uid}";
+      XDG_RUNTIME_DIR = "/run/user/1000";
+  };
 
   # hyprland
   programs.hyprland = {
