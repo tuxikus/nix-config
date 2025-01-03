@@ -13,16 +13,13 @@ in
   config = {
     home.file."${hyprConfigDirectory}/hyprland.conf" = {
       text = ''
-        monitor = eDP-1, disable
-        monitor = HDMI-A-1, 2560x1440@60, 0x0, 1
-
         exec-once = waybar
         exec-once = hyprpaper
         exec-once = dunst
         exec-once = emacsclient -c
-        #exec-once = emacs
 
         $terminal = foot
+        $app_launcher = fuzzel
 
         env = XCURSOR_SIZE,24
         env = QT_QPA_PLATFORMTHEME,qt5ct
@@ -57,7 +54,7 @@ in
         }
 
         decoration {
-            #rounding = 10
+            rounding = 10
 
             blur {
                 enabled = true
@@ -65,10 +62,10 @@ in
                 passes = 1
             }
 
-            # drop_shadow = yes
-            # shadow_range = 4
-            # shadow_render_power = 3
-            # col.shadow = rgba(1a1a1aee)
+            drop_shadow = yes
+            shadow_range = 4
+            shadow_render_power = 3
+            col.shadow = rgba(1a1a1aee)
         }
 
         animations {
@@ -99,6 +96,7 @@ in
         bind = $mainMod SHIFT, e, exit
         bind = $mainMod, m, fullscreen
         bind = $mainMod, e, exec, emacsclient -c
+        bind = $mainMod, d, exec, $app_launcher
 
         bind = $mainMod, left, movefocus, l
         bind = $mainMod, right, movefocus, r
