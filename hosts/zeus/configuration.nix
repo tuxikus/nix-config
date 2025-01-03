@@ -120,6 +120,7 @@ in
     hyprpaper
     mpd
     ncmpcpp
+    fuzzel
     dunst
     waybar
     grim
