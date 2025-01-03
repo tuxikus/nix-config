@@ -46,7 +46,8 @@
     '';
   };
 
-  services.emacs.enable = true;
+  #services.emacs.enable = true;
+  services.emacs.enable = (builtins.currentSystem == "x86_64-linux");
 
   home.file.".emacs.d/init.el" = {
     source = ./init.el;
