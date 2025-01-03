@@ -6,6 +6,7 @@ in
   imports = [
     (homeManagerModulesDirectory + "/app/tuxikus-emacs/emacs.nix")
     (homeManagerModulesDirectory + "/app/nixvim/nixvim.nix")
+    (homeManagerModulesDirectory + "/shell/fish-prompt.nix")
   ];
   
   # This value determines the Home Manager release that your
