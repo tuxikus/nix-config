@@ -6,8 +6,8 @@ in
   imports = [
     (homeManagerModulesDirectory + "/app/tuxikus-emacs/emacs.nix")
     (homeManagerModulesDirectory + "/app/nixvim/nixvim.nix")
-    (homeManagerModulesDirectory + "/shell/fish.nix")
   ];
+  
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
   # when a new Home Manager release introduces backwards

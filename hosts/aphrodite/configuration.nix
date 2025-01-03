@@ -10,13 +10,34 @@
     pkgs.raycast
     pkgs.btop
     pkgs.alacritty
-    pkgs.fzf
     pkgs.aerospace
     pkgs._1password-cli
     pkgs.sketchybar
     pkgs.jankyborders
     pkgs.gcc
+    pkgs.fzf
+    pkgs.go-task
+    pkgs.python3
+    pkgs.openssh
+
+    pkgs.fishPlugins.fzf-fish
+    pkgs.fishPlugins.puffer
   ];
+
+  homebrew = {
+    enable = true;
+    onActivation.cleanup = "uninstall";
+    taps = [];
+    brews = [];
+    casks = [
+      "orbstack"
+      "tunnelblick"
+      "utm"
+      "firefox"
+    ];
+  };
+
+  programs.fish.enable = true;
 
   services.nix-daemon.enable = true;
   #services.karabiner-elements.enable = true;
