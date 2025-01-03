@@ -144,7 +144,7 @@ in
       }
     ''; 
 
-    network.startWhenNeeded = true;
+    #network.startWhenNeeded = true;
     user = "tuxikus";
   };
 

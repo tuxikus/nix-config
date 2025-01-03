@@ -34,6 +34,8 @@
       epkgs.dashboard
       epkgs.restart-emacs
       epkgs.doom-modeline
+      epkgs.mpdel
+      epkgs.libmpdel
       epkgs.embark
       epkgs.embark-org-roam
       epkgs.embark-consult
