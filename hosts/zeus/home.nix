@@ -14,6 +14,7 @@ in
     (homeManagerModulesDirectory + "/shell/fish.nix")
 
     (homeManagerModulesDirectory + "/app/tuxikus-emacs/emacs.nix")
+    (homeManagerModulesDirectory + "/app/tuxikus-emacs/emacs-daemon.nix")
     (homeManagerModulesDirectory + "/app/nixvim/nixvim.nix")
     (homeManagerModulesDirectory + "/app/foot.nix")
 
