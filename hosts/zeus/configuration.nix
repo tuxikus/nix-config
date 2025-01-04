@@ -118,6 +118,7 @@ in
     foot
     wget
     hyprpaper
+    hyprsunset
     mpd
     ncmpcpp
     fuzzel

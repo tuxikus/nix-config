@@ -24,6 +24,8 @@ in
         env = XCURSOR_SIZE,24
         env = QT_QPA_PLATFORMTHEME,qt5ct
 
+        monitor = DP-1, 2560x1440@144, 0x0, 1
+
         input {
             kb_layout = us
             kb_variant =
@@ -61,11 +63,6 @@ in
                 size = 3
                 passes = 1
             }
-
-            drop_shadow = yes
-            shadow_range = 4
-            shadow_render_power = 3
-            col.shadow = rgba(1a1a1aee)
         }
 
         animations {
@@ -140,7 +137,7 @@ in
     home.file."${hyprConfigDirectory}/hyprpaper.conf" = {
       text = ''
         preload = ${config.wallpaper}
-        wallpaper = HDMI-A-1, ${config.wallpaper}
+        wallpaper = DP-1, ${config.wallpaper}
       '';
     };
 
