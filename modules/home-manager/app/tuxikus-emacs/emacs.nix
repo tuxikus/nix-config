@@ -1,46 +1,56 @@
 {
-  config,
-  lib,
-  pkgs,
-  ...
-}:
-
-{
   programs.emacs = {
     enable = true;
     package = pkgs.emacs-gtk;
     extraPackages = epkgs: [
-      epkgs.vertico
-      epkgs.use-package
-      epkgs.orderless
-      # epkgs.company
-      epkgs.consult
-      epkgs.magit
-      epkgs.ace-window
-      epkgs.avy
-      epkgs.wgrep
-      epkgs.org-roam
-      epkgs.fireplace
-      epkgs.projectile
+      ### ui
       epkgs.spacious-padding
+      epkgs.doom-modeline
+      epkgs.dashboard
+      
+      ### completion
+      epkgs.vertico
+      epkgs.orderless
       epkgs.marginalia
-      epkgs.yasnippet
-      epkgs.ripgrep
+      epkgs.corfu
+      epkgs.cape
+      epkgs.consult      
+      #epkgs.company
+      
+      ### modes
       epkgs.haskell-mode
       epkgs.nix-mode
       epkgs.salt-mode
       epkgs.python-mode
+      
+      ### project management
+      epkgs.projectile
+      
+      ### window management
+      epkgs.ace-window
+      
+      ### snippets
+      epkgs.yasnippet
+      
+      ### org
+      epkgs.org-roam
+
+      ### util
+      epkgs.magit
+      epkgs.avy
+      epkgs.wgrep
+      epkgs.ripgrep
       epkgs.eat
-      epkgs.dashboard
-      epkgs.restart-emacs
-      epkgs.doom-modeline
-      epkgs.mpdel
-      epkgs.libmpdel
       epkgs.embark
       epkgs.embark-org-roam
       epkgs.embark-consult
-      epkgs.corfu
-      epkgs.cape
+      
+      ### media
+      epkgs.mpdel
+      epkgs.libmpdel      
+
+      ### fun
+      epkgs.fireplace
     ];
     
     extraConfig = ''
