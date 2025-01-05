@@ -40,6 +40,7 @@
       epkgs.embark-org-roam
       epkgs.embark-consult
       epkgs.corfu
+      epkgs.cape
     ];
     
     extraConfig = ''
