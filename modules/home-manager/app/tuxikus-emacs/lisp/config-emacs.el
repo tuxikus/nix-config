@@ -10,7 +10,7 @@
 	("C-c b d" . kill-buffer)
 
 	("C-z" . undo)
-	("C-S-z" . undo-redo)
+	("C-S-z" . undo-redo))
   :custom
   (enable-recursive-minibuffers t)
   (read-extended-command-predicate #'command-completion-default-include-p)
