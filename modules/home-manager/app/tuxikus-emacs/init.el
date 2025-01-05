@@ -18,7 +18,7 @@
 (require 'config-emacs)
 (require 'config-vertico)
 (require 'config-orderless)
-(require 'config-company)
+;;(require 'config-company)
 (require 'config-nix-mode)
 (require 'config-magit)
 (require 'config-avy)
