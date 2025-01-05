@@ -13,7 +13,3 @@
 
   sudo nixos-enter --root /mnt -c 'passwd username'
 #+end_src
-
-** TODOs
-*** DONE add README to project
-CLOSED: [2024-12-26 Do 22:38]
