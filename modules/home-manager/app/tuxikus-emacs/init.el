@@ -5,6 +5,7 @@
 (require 'config-spacious-padding)
 (require 'config-doom-modeline)
 (require 'config-themes)
+(require 'config-corfu)
 (require 'config-backup-files)
 (require 'config-qol)
 (require 'config-dashboard)
