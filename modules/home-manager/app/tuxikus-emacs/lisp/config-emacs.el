@@ -11,8 +11,6 @@
 
 	("C-z" . undo)
 	("C-S-z" . undo-redo)
-
-	("TAB" . completion-at-point))
   :custom
   (enable-recursive-minibuffers t)
   (read-extended-command-predicate #'command-completion-default-include-p)
