@@ -133,7 +133,7 @@ in
     keepassxc
     unzip
     mpv
-    dex
+    calibre
   ];
 
   services.mpd = {
