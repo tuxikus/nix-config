@@ -13,7 +13,7 @@
       epkgs.vertico
       epkgs.use-package
       epkgs.orderless
-      epkgs.company
+      # epkgs.company
       epkgs.consult
       epkgs.magit
       epkgs.ace-window
