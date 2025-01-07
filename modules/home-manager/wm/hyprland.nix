@@ -17,6 +17,7 @@ in
         exec-once = hyprpaper
         exec-once = dunst
         exec-once = emacsclient -c
+        exec-once = firefox
 
         $terminal = foot
         $app_launcher = fuzzel
