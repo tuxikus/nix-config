@@ -1,4 +1,4 @@
-;; config-eglot.el --- -*- lexical-binding: t -*-
+;; init-eglot.el --- -*- lexical-binding: t -*-
 
 (use-package eglot
   :ensure t
@@ -15,6 +15,6 @@
   (eglot-confirm-server-initiated-edits nil)  ;; allow edits without confirmation
   )
 
-(provide 'config-eglot)
+(provide 'init-eglot)
 
-;; config-eglot.el ends here
+;; init-eglot.el ends here

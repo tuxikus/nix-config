@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
-# name: config-template
-# key: config-template
+# name: init-template
+# key: init-template
 # key: ct
 # --
 ;; $1.el --- -*- lexical-binding: t -*-

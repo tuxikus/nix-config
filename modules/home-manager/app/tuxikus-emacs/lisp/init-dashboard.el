@@ -1,4 +1,4 @@
-;; config-dashboard.el --- -*- lexical-binding: t -*-
+;; init-dashboard.el --- -*- lexical-binding: t -*-
 
 (use-package dashboard
   :ensure t
@@ -21,6 +21,6 @@
 
   (dashboard-setup-startup-hook))
 
-(provide 'config-dashboard)
+(provide 'init-dashboard)
 
-;; config-dashboard.el ends here
+;; init-dashboard.el ends here

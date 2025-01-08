@@ -1,4 +1,4 @@
-;; config-emacs.el --- -*- lexical-binding: t -*-
+;; init-emacs.el --- -*- lexical-binding: t -*-
 
 (use-package emacs
   :bind (("C-c f f" . find-file)
@@ -31,6 +31,6 @@
         '(read-only t cursor-intangible t face minibuffer-prompt))
   (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode))
 
-(provide 'config-emacs)
+(provide 'init-emacs)
 
-;; config-emacs.el ends here
+;; init-emacs.el ends here

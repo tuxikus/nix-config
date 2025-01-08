@@ -1,4 +1,4 @@
-;; config-ui.el	--- -*- lexical-binding: t -*-
+;; init-ui.el	--- -*- lexical-binding: t -*-
 
 ;; disable ui elements
 (tool-bar-mode -1)
@@ -25,6 +25,6 @@
                     :weight 'normal
                     :width 'normal)
 
-(provide 'config-ui)
+(provide 'init-ui)
 
-;; config-ui.el ends here
+;; init-ui.el ends here

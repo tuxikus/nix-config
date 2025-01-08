@@ -1,4 +1,4 @@
-;; config-projectile.el --- -*- lexical-binding: t -*-
+;; init-projectile.el --- -*- lexical-binding: t -*-
 
 (use-package projectile
   :bind (("C-c p p" . projectile-switch-project)
@@ -8,6 +8,6 @@
   :init
   (projectile-mode +1))
 
-(provide 'config-projectile)
+(provide 'init-projectile)
 
-;; config-projectile.el ends here
+;; init-projectile.el ends here

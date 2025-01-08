@@ -1,4 +1,4 @@
-;; config-ace-window.el --- -*- lexical-binding: t -*-
+;; init-ace-window.el --- -*- lexical-binding: t -*-
 
 (use-package ace-window
   :bind (("M-o" . ace-window))
@@ -6,6 +6,6 @@
   (setq aw-dispatch-always t)
   (setq aw-keys '(?a ?o ?e ?u ?h ?t ?n ?s ?f)))
 
-(provide 'config-ace-window)
+(provide 'init-ace-window)
 
-;; config-ace-window.el ends here
+;; init-ace-window.el ends here

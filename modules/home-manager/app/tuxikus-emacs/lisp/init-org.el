@@ -1,4 +1,4 @@
-;; config-org.el --- -*- lexical-binding: t -*-
+;; init-org.el --- -*- lexical-binding: t -*-
 
 (use-package org
   :bind
@@ -7,6 +7,6 @@
   (setq org-attach-id-dir "~/org/.attach"
 	org-log-done 'time))
 
-(provide 'config-org)
+(provide 'init-org)
 
-;; config-org.el ends here
+;; init-org.el ends here

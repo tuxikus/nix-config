@@ -1,4 +1,4 @@
-;; config-orderless.el --- -*- lexical-binding: t -*-
+;; init-orderless.el --- -*- lexical-binding: t -*-
 
 (use-package orderless
   :custom
@@ -6,6 +6,6 @@
   (completion-category-defaults nil)
   (completion-category-overrides '((file (styles partial-completion)))))
 
-(provide 'config-orderless)
+(provide 'init-orderless)
 
-;; config-orderless.el ends here
+;; init-orderless.el ends here

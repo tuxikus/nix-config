@@ -1,4 +1,4 @@
-;; config-cape.el --- -*- lexical-binding: t -*-
+;; init-cape.el --- -*- lexical-binding: t -*-
 
 (use-package cape
   :bind ("M-TAB" . cape-prefix-map)
@@ -8,6 +8,6 @@
   (add-hook 'completion-at-point-functions #'cape-elisp-block)
 )
 
-(provide 'config-cape)
+(provide 'init-cape)
 
-;; config-cape.el ends here
+;; init-cape.el ends here

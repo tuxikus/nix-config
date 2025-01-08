@@ -1,4 +1,4 @@
-;; config-vertico.el --- -*- lexical-binding: t -*-
+;; init-vertico.el --- -*- lexical-binding: t -*-
 
 ;; Enable vertico
 (use-package vertico
@@ -10,6 +10,6 @@
   :init
   (vertico-mode))
 
-(provide 'config-vertico)
+(provide 'init-vertico)
 
-;; config-vertico.el ends here
+;; init-vertico.el ends here

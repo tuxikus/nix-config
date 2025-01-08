@@ -1,4 +1,4 @@
-;; config-org-roam.el --- -*- lexical-binding: t -*-
+;; init-org-roam.el --- -*- lexical-binding: t -*-
 
 (use-package org-roam
   :ensure t
@@ -18,6 +18,6 @@
   ;; If using org-roam-protocol
   (require 'org-roam-protocol))
 
-(provide 'config-org-roam)
+(provide 'init-org-roam)
 
-;; config-org-roam.el ends here
+;; init-org-roam.el ends here
