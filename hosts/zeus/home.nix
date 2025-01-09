@@ -27,9 +27,6 @@ in
     
     # scripts
     (homeManagerModulesDirectory + "/bin/home-backup.nix")
-    (homeManagerModulesDirectory + "/bin/quick-qemu.nix")
-    (homeManagerModulesDirectory + "/bin/fix-attach-dir.nix")
-    (homeManagerModulesDirectory + "/bin/auto-bandcamp.nix")
   ];
 
   home.username = "tuxikus";
