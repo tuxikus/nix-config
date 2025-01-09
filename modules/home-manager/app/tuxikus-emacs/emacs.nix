@@ -42,6 +42,7 @@
       epkgs.wgrep
       epkgs.ripgrep
       epkgs.eat
+      epkgs.direnv
       epkgs.embark
       epkgs.embark-org-roam
       epkgs.embark-consult
