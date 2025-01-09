@@ -15,6 +15,8 @@
     interactiveShellInit = ''
       fish_default_key_bindings
 
+      direnv hook fish | source
+
       function fish_prompt
         printf '%s %s%s%s \n > ' "[$status]" (set_color $fish_color_cwd) (prompt_pwd) (set_color normal)
       end
