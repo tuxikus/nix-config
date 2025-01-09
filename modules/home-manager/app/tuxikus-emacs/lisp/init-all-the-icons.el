@@ -4,8 +4,10 @@
   :if (display-graphic-p))
 
 (use-package all-the-icons-completion
-  :config (all-the-icons-completion-mode)
-  (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
+      :after (marginalia all-the-icons)
+      :hook (marginalia-mode . all-the-icons-completion-marginalia-setup)
+      :init
+      (all-the-icons-completion-mode))
 
 (use-package all-the-icons-dired
   :config (add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
