@@ -8,6 +8,7 @@
       epkgs.spacious-padding
       epkgs.doom-modeline
       epkgs.dashboard
+      epkgs.all-the-icons
       
       ### completion
       epkgs.vertico
@@ -15,8 +16,11 @@
       epkgs.marginalia
       epkgs.corfu
       epkgs.cape
-      epkgs.consult      
-      #epkgs.company
+      epkgs.consult  
+      epkgs.all-the-icons-completion
+
+      ### dired
+      epkgs.all-the-icons-dired
       
       ### modes
       epkgs.haskell-mode
