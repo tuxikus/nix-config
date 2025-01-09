@@ -7,7 +7,7 @@
 
   programs.fish = {
     enable = true;
-    shellAlias = {
+    shellAliases = {
       night-shift-on = "hyprsunset --temperature 3000 & disown";
       night-shift-off = "hyprsunset --temperature 6000 & disown";
     };
