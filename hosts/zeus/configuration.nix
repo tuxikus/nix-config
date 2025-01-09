@@ -107,7 +107,6 @@ in
 
   fonts.packages = with pkgs; [
     nerdfonts
-    emacs-all-the-icons-fonts
   ];
 
   environment.systemPackages = with pkgs; [
