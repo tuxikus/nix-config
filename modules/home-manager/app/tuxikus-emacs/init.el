@@ -32,4 +32,6 @@
 (require 'init-custom-fun)
 (require 'init-embark)
 
+(require 'tuxikus-eat)
+
 ;; init.el ends here
