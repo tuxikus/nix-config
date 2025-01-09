@@ -19,7 +19,7 @@
 (require 'init-emacs)
 (require 'init-vertico)
 (require 'init-orderless)
-;;(require 'init-company)
+(require 'init-direnv)
 (require 'init-nix-mode)
 (require 'init-magit)
 (require 'init-avy)
