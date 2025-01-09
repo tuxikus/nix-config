@@ -134,6 +134,7 @@ in
     unzip
     mpv
     calibre
+    direnv
   ];
 
   services.mpd = {

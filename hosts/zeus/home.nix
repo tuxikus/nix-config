@@ -19,8 +19,6 @@ in
     (homeManagerModulesDirectory + "/app/foot.nix")
     (homeManagerModulesDirectory + "/app/fuzzel.nix")
 
-    (homeManagerModulesDirectory + "/dev/nix.nix")
-
     (homeManagerModulesDirectory + "/wm/hyprland.nix")
     
     # scripts
