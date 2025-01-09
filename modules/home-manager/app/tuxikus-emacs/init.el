@@ -5,6 +5,7 @@
 (require 'init-spacious-padding)
 (require 'init-doom-modeline)
 (require 'init-themes)
+(require 'init-flycheck)
 (require 'init-corfu)
 (require 'init-cape)
 (require 'init-backup-files)

@@ -1,7 +1,6 @@
 ;; init-dashboard.el --- -*- lexical-binding: t -*-
 
 (use-package dashboard
-  :ensure t
   :config
   (setq dashboard-projects-backend 'projectile)
 

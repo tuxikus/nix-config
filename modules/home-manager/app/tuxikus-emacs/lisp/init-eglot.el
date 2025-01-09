@@ -1,7 +1,6 @@
 ;; init-eglot.el --- -*- lexical-binding: t -*-
 
 (use-package eglot
-  :ensure t
   :config
   (add-hook 'haskell-mode-hook 'eglot-ensure)
   :config

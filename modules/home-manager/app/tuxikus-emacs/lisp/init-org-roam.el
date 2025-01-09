@@ -1,7 +1,6 @@
 ;; init-org-roam.el --- -*- lexical-binding: t -*-
 
 (use-package org-roam
-  :ensure t
   :custom
   (org-roam-directory (concat org-directory "/roam"))
   :bind (("C-c o r b" . org-roam-buffer-toggle)

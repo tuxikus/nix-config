@@ -15,7 +15,8 @@
       epkgs.marginalia
       epkgs.corfu
       epkgs.cape
-      epkgs.consult  
+      epkgs.consult
+      epkgs.flycheck
       
       ### modes
       epkgs.haskell-mode
