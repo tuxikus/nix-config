@@ -136,6 +136,7 @@ in
     calibre
     direnv
     unrar-free
+    unrar
   ];
 
   services.mpd = {
