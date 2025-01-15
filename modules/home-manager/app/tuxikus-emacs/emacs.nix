@@ -8,6 +8,7 @@
       epkgs.spacious-padding
       epkgs.doom-modeline
       epkgs.dashboard
+      epkgs.org-superstar
       
       ### completion
       epkgs.vertico

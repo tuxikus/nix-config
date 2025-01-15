@@ -90,6 +90,8 @@ in
   users.groups.tuxikus = { };
   # group to flash zsa moonlander mk1 keyboard with oryx in chromium
   users.groups.plugdev = { };
+  # group of gaming user
+  users.groups.tux-gaming = { };
   #######################################
   ### Users
   # main user
@@ -102,6 +104,12 @@ in
       "wheel"
       "plugdev"
     ];
+  };
+  # gaming user
+    users.users.tux-gaming = {
+    isNormalUser = true;
+    description = "tux-gaming";
+    group = "tux-gaming";
   };
   ########################################
 
@@ -135,6 +143,14 @@ in
     mpv
     calibre
     direnv
+    flatpak
+  ];
+
+  ### flatpak config
+  services.flatpak.enable = true;
+  services.flatpak.packages = [
+    "com.valvesoftware.Steam"
+    "com.github.tchx84.Flatseal"
   ];
 
   services.mpd = {
