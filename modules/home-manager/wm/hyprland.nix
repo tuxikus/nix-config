@@ -25,7 +25,7 @@ in
         env = XCURSOR_SIZE,24
         env = QT_QPA_PLATFORMTHEME,qt5ct
 
-        monitor = DP-1, 2560x1440@144, 0x0, 1
+        monitor = DP-3, 2560x1440@144, 0x0, 1
 
         input {
             kb_layout = us
@@ -138,7 +138,7 @@ in
     home.file."${hyprConfigDirectory}/hyprpaper.conf" = {
       text = ''
         preload = ${config.wallpaper}
-        wallpaper = DP-1, ${config.wallpaper}
+        wallpaper = DP-3, ${config.wallpaper}
       '';
     };
 

@@ -3,7 +3,7 @@
     disk = {
       main = {
         type = "disk";
-        device = "/dev/nvme0n1";
+        device = "/dev/disk/by-id/nvme-Samsung_SSD_970_EVO_Plus_2TB_S4J4NX0R513058T";
         content = {
           type = "gpt";
           partitions = {
@@ -29,6 +29,23 @@
                   format = "ext4";
                   mountpoint = "/";
                 };
+              };
+            };
+          };
+        };
+      };
+      games-disk = {
+        device = "/dev/disk/by-id/nvme-SAMSUNG_MZVLB1T0HBLR-000L2_S4DZNF0N620723";
+        type = "disk";
+        content = {
+          type = "gpt";
+          partitions = {
+            games = {
+              size = "100%";
+              content = {
+                type = "filesystem";
+                format = "ext4";
+                mountpoint = "/mnt/games";
               };
             };
           };
