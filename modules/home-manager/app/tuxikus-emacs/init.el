@@ -4,6 +4,7 @@
 (require 'init-ui)
 (require 'init-spacious-padding)
 (require 'init-doom-modeline)
+(require 'init-org-superstar)
 (require 'init-themes)
 (require 'init-flycheck)
 (require 'init-corfu)
