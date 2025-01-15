@@ -96,6 +96,7 @@ in
   ### Users
   # main user
   users.users.tuxikus = {
+    uid = 1000;
     isNormalUser = true;
     description = "tuxikus";
     group = "tuxikus";
@@ -107,6 +108,7 @@ in
   };
   # gaming user
     users.users.tux-gaming = {
+    uid = 1001;
     isNormalUser = true;
     description = "tux-gaming";
     group = "tux-gaming";
