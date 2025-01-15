@@ -46,6 +46,7 @@
           disko.nixosModules.disko
           ./hosts/zeus/configuration.nix
           ./hosts/zeus/disks.nix
+          nix-flatpak.nixosModules.nix-flatpak
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
