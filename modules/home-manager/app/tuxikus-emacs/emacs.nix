@@ -38,6 +38,7 @@
       epkgs.org-roam
 
       ### util
+      epkgs.dwim-shell-command
       epkgs.magit
       epkgs.avy
       epkgs.wgrep
