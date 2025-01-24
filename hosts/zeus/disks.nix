@@ -51,6 +51,23 @@
           };
         };
       };
+      virt-disk = {
+        device = "/dev/disk/by-id/wwn-0x50014ee26a6ed785";
+        type = "disk";
+        content = {
+          type = "gpt";
+          partitions = {
+            games = {
+              size = "100%";
+              content = {
+                type = "filesystem";
+                format = "ext4";
+                mountpoint = "/mnt/virt";
+              };
+            };
+          };
+        };
+      };
     };
   };
 }
