@@ -19,9 +19,14 @@
     pkgs.go-task
     pkgs.python3
     pkgs.openssh
+    pkgs.jupyter
 
     pkgs.fishPlugins.fzf-fish
     pkgs.fishPlugins.puffer
+  ];
+
+  environment.shells = [
+    pkgs.bashInteractive
   ];
 
   homebrew = {
@@ -38,8 +43,13 @@
   };
 
   programs.fish.enable = true;
+  programs.bash.enable = true;
 
   services.nix-daemon.enable = true;
+  services.emacs.enable = true;
+  services.aerospace.enable = true;
+  services.sketchybar.enable = true;
+  services.jankyborders.enable = true;
   #services.karabiner-elements.enable = true;
 
   nix.settings.experimental-features = "nix-command flakes";
@@ -56,6 +66,8 @@
     name = "dominik.potoczki";
     home = "/Users/dominik.potoczki";
   };
+
+  system.defaults.screencapture.target = "clipboard";
 
   security.pam.enableSudoTouchIdAuth = true;
 }
