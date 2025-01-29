@@ -20,7 +20,7 @@
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.5.1";
 
     darwin = {
-      url = "github:lnl7/nix-darwin";
+      url = "github:lnl7/nix-darwin/nix-darwin-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
