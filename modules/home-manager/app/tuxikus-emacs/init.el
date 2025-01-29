@@ -6,7 +6,6 @@
 (require 'init-doom-modeline)
 (require 'init-org-superstar)
 (require 'init-themes)
-(require 'init-treesit-auto)
 (require 'init-flycheck)
 (require 'init-corfu)
 (require 'init-cape)
