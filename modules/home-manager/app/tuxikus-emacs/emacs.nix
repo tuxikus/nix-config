@@ -2,7 +2,12 @@
 {
   programs.emacs = {
     enable = true;
-    package = pkgs.emacs-gtk;
+    package = (
+    (pkgs.emacsPackagesFor pkgs.emacs-gtk).emacsWithPackages (
+      epkgs: with epkgs; [
+        (treesit-grammars.with-grammars (grammars: with grammars; [ tree-sitter-python ]))
+      ]
+    ));
     extraPackages = epkgs: [
       ### ui
       epkgs.spacious-padding
