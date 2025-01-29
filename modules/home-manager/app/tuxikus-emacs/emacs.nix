@@ -5,7 +5,10 @@
     package = (
     (pkgs.emacsPackagesFor pkgs.emacs-gtk).emacsWithPackages (
       epkgs: with epkgs; [
-        (treesit-grammars.with-grammars (grammars: with grammars; [ tree-sitter-python ]))
+        (treesit-grammars.with-grammars (grammars: with grammars; [
+          tree-sitter-python
+          tree-sitter-bash
+        ]))
       ]
     ));
     extraPackages = epkgs: [
