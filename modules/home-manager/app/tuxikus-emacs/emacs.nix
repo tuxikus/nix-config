@@ -48,6 +48,7 @@
       epkgs.embark
       epkgs.embark-org-roam
       epkgs.embark-consult
+      epkgs.treesit-auto
       
       ### media
       epkgs.mpdel
