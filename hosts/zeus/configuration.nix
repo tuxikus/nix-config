@@ -146,6 +146,8 @@ in
     calibre
     direnv
     flatpak
+    starship
+    elvish
   ];
 
   ### flatpak config
