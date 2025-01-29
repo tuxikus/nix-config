@@ -20,6 +20,7 @@
     pkgs.python3
     pkgs.openssh
     pkgs.jupyter
+    pkgs.tree-sitter
 
     pkgs.fishPlugins.fzf-fish
     pkgs.fishPlugins.puffer

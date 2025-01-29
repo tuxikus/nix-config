@@ -148,6 +148,7 @@ in
     flatpak
     starship
     elvish
+    tree-sitter
   ];
 
   ### flatpak config
