@@ -148,7 +148,10 @@ in
     flatpak
     starship
     elvish
+
+    # tree-sitter stuff
     tree-sitter
+    tree-sitter-python-grammar
   ];
 
   ### flatpak config
