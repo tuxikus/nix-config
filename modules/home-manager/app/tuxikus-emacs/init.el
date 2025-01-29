@@ -17,6 +17,7 @@
 (require 'init-projectile)
 (require 'init-ace-window)
 (require 'init-savehist)
+(require 'init-treesit)
 (require 'init-marginalia)
 (require 'init-emacs)
 (require 'init-vertico)
