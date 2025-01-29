@@ -151,7 +151,7 @@ in
 
     # tree-sitter stuff
     tree-sitter
-    tree-sitter-python-grammar
+    tree-sitter-grammars.tree-sitter-python
   ];
 
   ### flatpak config
