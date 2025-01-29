@@ -13,6 +13,7 @@ in
     # modules
     (homeManagerModulesDirectory + "/shell/fish.nix")
     (homeManagerModulesDirectory + "/shell/elvish.nix")
+    (homeManagerModulesDirectory + "/shell/starship.nix")
 
     (homeManagerModulesDirectory + "/app/tuxikus-emacs/emacs.nix")
     (homeManagerModulesDirectory + "/app/tuxikus-emacs/emacs-daemon.nix")
