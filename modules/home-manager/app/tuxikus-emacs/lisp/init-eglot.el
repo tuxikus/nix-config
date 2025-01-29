@@ -11,8 +11,7 @@
                      (globalOn . :json-false))))))  ;; disable stan
   :custom
   (eglot-autoshutdown t)  ;; shutdown language server after closing last file
-  (eglot-confirm-server-initiated-edits nil)  ;; allow edits without confirmation
-  )
+  (eglot-confirm-server-initiated-edits nil))  ;; allow edits without confirmation
 
 (provide 'init-eglot)
 
