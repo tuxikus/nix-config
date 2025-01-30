@@ -17,6 +17,7 @@
       epkgs.doom-modeline
       epkgs.dashboard
       epkgs.org-superstar
+      epkgs.almost-mono-themes
       
       ### completion
       epkgs.vertico
