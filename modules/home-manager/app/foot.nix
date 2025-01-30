@@ -4,9 +4,9 @@
 
     [colors]
     alpha=1.0
-    background=000000
-    foreground=ffffff
-    regular0=000000
+    background=ffffff
+    foreground=000000
+    regular0=ffffff
     regular1=ff8059
     regular2=44bc44
     regular3=d0bc00
