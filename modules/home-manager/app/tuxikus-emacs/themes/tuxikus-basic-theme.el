@@ -3,7 +3,7 @@
 
 (custom-theme-set-faces
  'tuxikus-basic
- '(default ((t (:family "BlexMono Nerd Font" :foundry "IBM " :width normal :height 151 :weight regular :slant normal :underline nil :overline nil :extend nil :strike-through nil :box nil :inverse-video nil :foreground "#ffffff" :background "#000000" :stipple nil :inherit nil))))
+ '(default ((t (:family "Iosevka Nerd Font" :width normal :height 151 :weight regular :slant normal :underline nil :overline nil :extend nil :strike-through nil :box nil :inverse-video nil :foreground "#00ff00" :background "#000000" :stipple nil :inherit nil))))
  '(cursor ((t (:background "#ffffff"))))
  '(fixed-pitch ((t (:family "Monospace"))))
  '(variable-pitch ((((type w32)) (:foundry "outline" :family "Arial")) (t (:family "Sans Serif"))))
