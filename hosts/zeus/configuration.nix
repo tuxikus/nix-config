@@ -146,12 +146,8 @@ in
     calibre
     direnv
     flatpak
-    starship
     elvish
-
-    # tree-sitter stuff
     tree-sitter
-    tree-sitter-grammars.tree-sitter-python
   ];
 
   ### flatpak config
