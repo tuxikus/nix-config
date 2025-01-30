@@ -16,7 +16,7 @@
 (setq initial-scratch-message ";; Emacs is fun")
 
 ;; theme
-(load-theme 'modus-vivendi t)
+(load-theme 'almost-mono-white t)
 
 ;; font
 (set-face-attribute 'default nil
