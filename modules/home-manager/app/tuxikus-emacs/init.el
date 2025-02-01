@@ -2,7 +2,7 @@
 (add-to-list 'load-path "~/.emacs.d/lisp")
 
 (require 'init-ui)
-(require 'init-spacious-padding)
+;;(require 'init-spacious-padding)
 (require 'init-doom-modeline)
 (require 'init-org-superstar)
 (require 'init-themes)
