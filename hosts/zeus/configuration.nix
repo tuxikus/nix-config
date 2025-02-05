@@ -148,6 +148,7 @@ in
     flatpak
     elvish
     tree-sitter
+    ghostty
   ];
 
   ### flatpak config

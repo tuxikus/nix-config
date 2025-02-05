@@ -17,6 +17,7 @@ in
     (homeManagerModulesDirectory + "/app/tuxikus-emacs/emacs.nix")
     (homeManagerModulesDirectory + "/app/tuxikus-emacs/emacs-daemon.nix")
     (homeManagerModulesDirectory + "/app/nixvim/nixvim.nix")
+    (homeManagerModulesDirectory + "/app/ghostty.nix")
     (homeManagerModulesDirectory + "/app/foot.nix")
     (homeManagerModulesDirectory + "/app/fuzzel.nix")
 
