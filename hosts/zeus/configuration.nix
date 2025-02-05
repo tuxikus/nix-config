@@ -125,7 +125,6 @@ in
     home-manager
     pavucontrol
     python3
-    #foot
     wget
     hyprpaper
     hyprsunset
@@ -146,7 +145,6 @@ in
     calibre
     direnv
     flatpak
-    elvish
     tree-sitter
     ghostty
   ];
