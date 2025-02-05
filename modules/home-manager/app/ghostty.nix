@@ -28,14 +28,20 @@
     text = ''
       # tuxikus-almost-mono
       palette = 0=#000000
-      palette = 1=#000000
-      # string
+      # red
+      palette = 1=#5e2b5d
+      # string - green
       palette = 2=#3c5e2b
-      palette = 3=#000000
-      palette = 4=#000000
-      palette = 5=#000000
-      palette = 6=#000000
-      palette = 7=#000000
+      # yellow
+      palette = 3=#c4b236
+      # blue
+      palette = 4=#2b4a5e
+      # magenta
+      palette = 5=#6e304d
+      # cyan
+      palette = 6=#b5cccb
+      # gray
+      palette = 7=#c5b99f
       palette = 8=#000000
       palette = 9=#000000
       palette = 10=#000000
@@ -48,7 +54,7 @@
       foreground = #000000
       cursor-color = #000000
       cursor-text = #ffffff
-      selection-background = #fcad03
+      selection-background = #fda50f
       selection-foreground = #000000
     '';
   };
