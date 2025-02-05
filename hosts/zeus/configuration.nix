@@ -125,7 +125,7 @@ in
     home-manager
     pavucontrol
     python3
-    foot
+    #foot
     wget
     hyprpaper
     hyprsunset
