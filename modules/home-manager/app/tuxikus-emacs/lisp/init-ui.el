@@ -20,11 +20,25 @@
 
 
 ;; font
-(set-face-attribute 'default nil	
+(set-face-attribute 'default nil
                     :family "Iosevka Nerd Font"
                     :height 150
-                    :weight 'normal
+                    :weight 'light
                     :width 'normal)
+
+(set-face-attribute 'bold nil
+                    :family "Iosevka Nerd Font"
+                    :weight 'light)
+
+(set-face-attribute 'italic nil
+                    :family "Iosevka Nerd Font"
+                    :slant 'italic
+                    :weight 'light)
+
+(set-face-attribute 'bold-italic nil
+                    :family "Iosevka Nerd Font"
+                    :weight 'light
+                    :slant 'italic)
 
 ;; window divider
 (setq window-divider-default-right-width 5

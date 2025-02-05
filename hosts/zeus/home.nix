@@ -42,6 +42,7 @@ in
   ### module config
   # /wm/hyprpaper.nix
   wallpaper = ./assets/wallpaper.png;
+  terminal = "ghostty";
 
   # Packages
   home.packages = [ ];

@@ -8,6 +8,9 @@ in
     wallpaper = lib.mkOption {
       type = lib.types.path;
     };
+    terminal = lib.mkOption {
+      type = lib.types.str;
+    };
   };
   
   config = {
@@ -19,7 +22,7 @@ in
         exec-once = emacsclient -c
         exec-once = firefox
 
-        $terminal = foot
+        $terminal = ${config.terminal}
         $app_launcher = fuzzel
 
         env = XCURSOR_SIZE,24
@@ -90,7 +93,7 @@ in
 
         bind = $mainMod, q, killactive,
 
-        bind = $mainMod, t, exec, $terminal
+        bind = $mainMod, return, exec, $terminal
         bind = $mainMod SHIFT, e, exit
         bind = $mainMod, m, fullscreen
         bind = $mainMod, e, exec, emacsclient -c

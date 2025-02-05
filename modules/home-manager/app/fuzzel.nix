@@ -1,9 +1,11 @@
 {
   home.file.".config/fuzzel/fuzzel.ini" = {
     text = ''
+      [font]
+      Iosevka Nerd Font:weight=light
       [colors]
-      background=000000ff
-      text=ffffffff
+      background=ffffffff
+      text=000000ff
       prompt=bac2deff
       placeholder=7f849cff
       input=cdd6f4ff
@@ -12,7 +14,7 @@
       selection-text=cdd6f4ff
       selection-match=cba6f7ff
       counter=7f849cff
-      border=ffffffff
+      border=000000ff
     '';
   };
 }
