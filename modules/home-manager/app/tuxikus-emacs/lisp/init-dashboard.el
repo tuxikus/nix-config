@@ -2,7 +2,7 @@
 
 (use-package dashboard
   :config
-  (setq dashboard-projects-backend 'projectile)
+  (setq dashboard-projects-backend 'project-el)
 
   (setq dashboard-items '((recents   . 10)
                         (bookmarks . 10)

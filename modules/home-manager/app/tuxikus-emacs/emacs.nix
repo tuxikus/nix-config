@@ -35,7 +35,7 @@
       epkgs.python-mode
       
       ### project management
-      epkgs.projectile
+      #epkgs.projectile
       
       ### window management
       epkgs.ace-window

@@ -1,6 +1,7 @@
 {
   home.file.".config/ghostty/config" = {
     text = ''
+      # basic config
       theme = tuxikus-almost-mono
       font-family = "Iosevka Nerd Font"
       font-family-bold = "Iosevka Nerd Font"
@@ -16,6 +17,10 @@
       window-padding-y = 10
       #window-decoration = none
       macos-titlebar-style = hidden
+      shell-integration = fish
+
+      # keys
+      
     '';  
   };
 

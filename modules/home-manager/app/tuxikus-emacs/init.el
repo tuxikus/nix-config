@@ -14,7 +14,7 @@
 (require 'init-dashboard)
 (require 'init-dired)
 (require 'init-consult)
-(require 'init-projectile)
+;;(require 'init-projectile)
 (require 'init-ace-window)
 (require 'init-savehist)
 (require 'init-treesit)
