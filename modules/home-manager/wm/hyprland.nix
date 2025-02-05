@@ -51,7 +51,7 @@ in
             gaps_in = 10
             gaps_out = 10
             border_size = 3
-            col.active_border = rgba(ffffffff)
+            col.active_border = rgba(aa0000ff)
             col.inactive_border = rgba(aaaaaaff)
 
             layout = dwindle
