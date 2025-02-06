@@ -57,8 +57,7 @@
         inner.vertical = 22;
         outer.left = 15;
         outer.bottom = 15;
-        #outer.top = [{ monitor."T34w-30" = 50 }];
-        outer.top = 15;
+        outer.top = [ { monitor."T34w-30" = 50; } 15 ];
         outer.right = 15;
       };
       mode.main.binding = {
