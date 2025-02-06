@@ -57,6 +57,7 @@
       epkgs.embark
       epkgs.embark-org-roam
       epkgs.embark-consult
+      epkgs.perspective
       
       ### media
       epkgs.mpdel
