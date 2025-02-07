@@ -6,4 +6,4 @@
 
 (provide 'init-perspective)
 
-;; init-perspectize.el ends here
+;; init-perspective.el ends here
