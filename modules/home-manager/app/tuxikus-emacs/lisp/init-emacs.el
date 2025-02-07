@@ -5,9 +5,6 @@
 	("C-c f r" . recentf)
 	("C-c f s" . save-buffer)
 
-	("C-c b i" . ibuffer)
-	("C-c b k" . kill-buffer)
-	("C-c b d" . kill-buffer)
 
 	("C-z" . undo)
 	("C-S-z" . undo-redo))

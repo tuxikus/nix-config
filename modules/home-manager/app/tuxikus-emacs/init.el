@@ -4,6 +4,7 @@
 (require 'init-ui)
 ;;(require 'init-spacious-padding)
 (require 'init-doom-modeline)
+(require 'init-perspective)
 (require 'init-org-superstar)
 (require 'init-themes)
 (require 'init-flycheck)
