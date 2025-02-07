@@ -1,7 +1,6 @@
 ;; init-magit.el --- -*- lexical-binding: t -*-
 
-(use-package magit
-  :bind (("C-c g g" . magit-status)))
+(use-package magit)
 
 (provide 'init-magit)
 

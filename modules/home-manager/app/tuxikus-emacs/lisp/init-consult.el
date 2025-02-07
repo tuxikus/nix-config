@@ -1,9 +1,6 @@
 ;; init-consult.el --- -*- lexical-binding: t -*-
 
-(use-package consult
-  :bind
-  (("C-c l s" . consult-line)
-   ("C-c r g" . consult-ripgrep)))
+(use-package consult)
 
 (provide 'init-consult)
 

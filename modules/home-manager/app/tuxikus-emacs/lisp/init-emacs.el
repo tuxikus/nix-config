@@ -1,13 +1,6 @@
 ;; init-emacs.el --- -*- lexical-binding: t -*-
 
 (use-package emacs
-  :bind (("C-c f f" . find-file)
-	("C-c f r" . recentf)
-	("C-c f s" . save-buffer)
-
-
-	("C-z" . undo)
-	("C-S-z" . undo-redo))
   :custom
   (enable-recursive-minibuffers t)
   (read-extended-command-predicate #'command-completion-default-include-p)
