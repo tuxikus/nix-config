@@ -1,4 +1,6 @@
-;; init-treesit.el --- -*- lexical-binding: t -*-
+;;; init-treesit.el --- -*- lexical-binding: t -*-
+;;; Commentary:
+;;; Code:
 
 (use-package treesit
   :init
@@ -8,4 +10,4 @@
 
 (provide 'init-treesit)
 
-;; init-treesit.el ends here
+;;; init-treesit.el ends here

@@ -1,7 +1,7 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 {
   environment = {
-    systemPackages = [ pkgs.qemu pkgs.OVMFFull ];
+    systemPackages = [ pkgs.qemu ];
   };
 
   programs.virt-manager.enable = true;

@@ -1,4 +1,3 @@
-{ pkgs, config, ... }:
 {
   programs.tmux = {
     enable = true;
@@ -6,8 +5,6 @@
     newSession = true;
     escapeTime = 0;
     terminal = "xterm-256color";
-    keyMode = "vi";
-    shell = "${pkgs.fish}/bin/fish";
 
     extraConfig = ''
       # vim like pane resizing

@@ -1,4 +1,6 @@
-;; init-direnv.el --- -*- lexical-binding: t -*-
+;;; init-direnv.el --- -*- lexical-binding: t -*-
+;;; Commentary:
+;;; Code:
 
 (use-package direnv
   :config
@@ -6,4 +8,4 @@
 
 (provide 'init-direnv)
 
-;; init-direnv.el ends here
+;;; init-direnv.el ends here

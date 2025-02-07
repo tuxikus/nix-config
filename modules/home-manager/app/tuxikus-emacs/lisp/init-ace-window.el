@@ -1,4 +1,6 @@
-;; init-ace-window.el --- -*- lexical-binding: t -*-
+;;; init-ace-window.el --- -*- lexical-binding: t -*-
+;;; Commentary:
+;;; Code:
 
 (use-package ace-window
   :bind (("M-o" . ace-window))
@@ -8,4 +10,4 @@
 
 (provide 'init-ace-window)
 
-;; init-ace-window.el ends here
+;;; init-ace-window.el ends here

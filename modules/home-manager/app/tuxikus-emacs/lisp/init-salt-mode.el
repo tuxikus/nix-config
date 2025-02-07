@@ -1,9 +1,11 @@
-;; init-salt-mode.el --- -*- lexical-binding: t -*-
+;;; init-salt-mode.el --- -*- lexical-binding: t -*-
+;;; Commentary:
+;;; Code:
 
-(add-hook 'salt-mode-hook
-        (lambda ()
-          (flyspell-mode 1)))
+(use-package salt-mode
+  :hook
+  (salt-mode . (lambda () (flyspell-mode 1))))
 
 (provide 'init-salt-mode)
 
-;; init-salt-mode.el ends here
+;;; init-salt-mode.el ends here

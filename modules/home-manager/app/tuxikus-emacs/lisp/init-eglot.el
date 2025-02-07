@@ -1,8 +1,10 @@
-;; init-eglot.el --- -*- lexical-binding: t -*-
+;;; init-eglot.el --- -*- lexical-binding: t -*-
+;;; Commentary:
+;;; Code:
 
 (use-package eglot
-  :config
-  (add-hook 'haskell-mode-hook 'eglot-ensure)
+  :hook
+  (haskell-mode 'eglot-ensure)
   :config
   (setq-default eglot-workspace-configuration
                 '((haskell
@@ -15,4 +17,4 @@
 
 (provide 'init-eglot)
 
-;; init-eglot.el ends here
+;;; init-eglot.el ends here

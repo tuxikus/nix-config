@@ -1,4 +1,6 @@
-;; init-perspective.el --- -*- lexical-binding: t -*-
+;;; init-perspective.el --- -*- lexical-binding: t -*-
+;;; Commentary:
+;;; Code:
 
 (use-package perspective
   :bind
@@ -6,4 +8,4 @@
 
 (provide 'init-perspective)
 
-;; init-perspective.el ends here
+;;; init-perspective.el ends here

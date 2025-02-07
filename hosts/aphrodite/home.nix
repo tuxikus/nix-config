@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 let
   homeManagerModulesDirectory = ../../modules/home-manager;
 in

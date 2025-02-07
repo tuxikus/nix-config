@@ -1,4 +1,6 @@
-;; init-dashboard.el --- -*- lexical-binding: t -*-
+;;; init-dashboard.el --- -*- lexical-binding: t -*-
+;;; Commentary:
+;;; Code:
 
 (use-package dashboard
   :config
@@ -22,4 +24,4 @@
 
 (provide 'init-dashboard)
 
-;; init-dashboard.el ends here
+;;; init-dashboard.el ends here

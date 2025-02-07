@@ -1,4 +1,6 @@
-;; init-marginalia.el --- -*- lexical-binding: t -*-
+;;; init-marginalia.el --- -*- lexical-binding: t -*-
+;;; Commentary:
+;;; Code:
 
 (use-package marginalia
   :bind (:map minibuffer-local-map
@@ -8,4 +10,4 @@
 
 (provide 'init-marginalia)
 
-;; init-marginalia.el ends here
+;;; init-marginalia.el ends here

@@ -109,7 +109,7 @@ rsync_command="rsync -av $options $excludes \
                      $HOME/.ppw \
                      $HOME/org \
                      $HOME/org-edu \
-                     $HOME/media \
+                     $HOME/multimedia \
                      $HOME/projects \
                      $destination_path"
 

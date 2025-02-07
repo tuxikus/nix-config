@@ -1,4 +1,6 @@
-;; init-orderless.el --- -*- lexical-binding: t -*-
+;;; init-orderless.el --- -*- lexical-binding: t -*-
+;;; Commentary:
+;;; Code:
 
 (use-package orderless
   :custom
@@ -8,4 +10,4 @@
 
 (provide 'init-orderless)
 
-;; init-orderless.el ends here
+;;; init-orderless.el ends here

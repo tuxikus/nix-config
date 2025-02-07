@@ -1,11 +1,13 @@
-;; init-dired.el --- -*- lexical-binding: t -*-
+;;; init-dired.el --- -*- lexical-binding: t -*-
+;;; Commentary:
+;;; Code:
 
-;; less verbose
-(add-hook 'dired-mode-hook (lambda () (dired-hide-details-mode 1)))
-
-;; enable a
-(put 'dired-find-alternate-file 'disabled nil)
+(use-package dired
+  :config
+  (put 'dired-find-alternate-file 'disabled nil)
+  :hook
+  (dired-mode . (lambda () (dired-hide-details-mode 1))))
 
 (provide 'init-dired)
 
-;; init-dired.el ends here
+;;; init-dired.el ends here

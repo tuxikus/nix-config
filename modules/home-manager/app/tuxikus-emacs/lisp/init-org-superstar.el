@@ -1,7 +1,11 @@
-;; init-org-superstar.el --- -*- lexical-binding: t -*-
+;;; init-org-superstar.el --- -*- lexical-binding: t -*-
+;;; Commentary:
+;;; Code:
 
-(add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
+(use-package org-superstar
+  :hook
+  (org-mode . (lambda () (org-superstar-mode 1))))
 
 (provide 'init-org-superstar)
 
-;; init-org-superstar.el ends here
+;;; init-org-superstar.el ends here

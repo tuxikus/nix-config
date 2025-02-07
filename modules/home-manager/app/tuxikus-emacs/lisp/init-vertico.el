@@ -1,6 +1,7 @@
-;; init-vertico.el --- -*- lexical-binding: t -*-
+;;; init-vertico.el --- -*- lexical-binding: t -*-
+;;; Commentary:
+;;; Code:
 
-;; Enable vertico
 (use-package vertico
   :custom
   (vertico-scroll-margin 0) ;; Different scroll margin
@@ -12,4 +13,4 @@
 
 (provide 'init-vertico)
 
-;; init-vertico.el ends here
+;;; init-vertico.el ends here

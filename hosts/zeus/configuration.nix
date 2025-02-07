@@ -84,17 +84,10 @@ in
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-  #######################################
-  ### Groups
-  # group of main user
   users.groups.tuxikus = { };
   # group to flash zsa moonlander mk1 keyboard with oryx in chromium
   users.groups.plugdev = { };
-  # group of gaming user
-  users.groups.tux-gaming = { };
-  #######################################
-  ### Users
-  # main user
+
   users.users.tuxikus = {
     uid = 1000;
     isNormalUser = true;
@@ -106,14 +99,6 @@ in
       "plugdev"
     ];
   };
-  # gaming user
-    users.users.tux-gaming = {
-    uid = 1001;
-    isNormalUser = true;
-    description = "tux-gaming";
-    group = "tux-gaming";
-  };
-  ########################################
 
   fonts.packages = with pkgs; [
     nerdfonts
@@ -144,21 +129,14 @@ in
     mpv
     calibre
     direnv
-    flatpak
     tree-sitter
     ghostty
-  ];
-
-  ### flatpak config
-  services.flatpak.enable = true;
-  services.flatpak.packages = [
-    "com.valvesoftware.Steam"
-    "com.github.tchx84.Flatseal"
+    ffmpeg
   ];
 
   services.mpd = {
     enable = true;
-    musicDirectory = "/home/tuxikus/media/music/mp3";
+    musicDirectory = "/home/tuxikus/multimedia/music/mp3";
     extraConfig = ''
       audio_output {
        type "pipewire"

@@ -33,6 +33,7 @@
       epkgs.nix-mode
       epkgs.salt-mode
       epkgs.python-mode
+      epkgs.ess
       
       ### project management
       #epkgs.projectile

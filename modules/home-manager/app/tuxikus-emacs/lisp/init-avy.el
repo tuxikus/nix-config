@@ -1,9 +1,12 @@
-;; init-avy.el --- -*- lexical-binding: t -*-
+;;; init-avy.el --- -*- lexical-binding: t -*-
+;;; Commentary:
+;;; Code:
 
 (use-package avy
-  :bind (("C-c a l" . avy-goto-line)
-	 ("C-c a s" . avy-goto-char-timer)))
+  :bind (("M-g f" . avy-goto-line)
+	 ("M-g w" . avy-goto-word-1)
+	 ("C-'" . avy-goto-char-2)))
 
 (provide 'init-avy)
 
-;; init-avy.el ends here
+;;; init-avy.el ends here

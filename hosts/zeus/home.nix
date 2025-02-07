@@ -11,14 +11,14 @@ in
 {
   imports = [
     # modules
-    (homeManagerModulesDirectory + "/shell/fish.nix")
+    (homeManagerModulesDirectory + "/shell/bash.nix")
 
     (homeManagerModulesDirectory + "/app/tuxikus-emacs/emacs.nix")
     (homeManagerModulesDirectory + "/app/tuxikus-emacs/emacs-daemon.nix")
     (homeManagerModulesDirectory + "/app/nixvim/nixvim.nix")
     (homeManagerModulesDirectory + "/app/ghostty.nix")
     (homeManagerModulesDirectory + "/app/fuzzel.nix")
-
+    (homeManagerModulesDirectory + "/latex.nix")
     (homeManagerModulesDirectory + "/wm/hyprland.nix")
     
     # scripts
@@ -41,6 +41,7 @@ in
   # /wm/hyprpaper.nix
   wallpaper = ./assets/wallpaper.png;
   terminal = "ghostty";
+  appLauncher = "fuzzel";
 
   # Packages
   home.packages = [ ];

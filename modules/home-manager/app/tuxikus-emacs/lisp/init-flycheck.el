@@ -1,9 +1,11 @@
-;; init-flycheck.el --- -*- lexical-binding: t -*-
+;;; init-flycheck.el --- -*- lexical-binding: t -*-
+;;; Commentary:
+;;; Code:
 
 (use-package flycheck
-  :config
-  (add-hook 'after-init-hook #'global-flycheck-mode))
+  :hook
+  (after-init . global-flycheck-mode))
 
 (provide 'init-flycheck)
 
-;; init-flycheck.el ends here
+;;; init-flycheck.el ends here

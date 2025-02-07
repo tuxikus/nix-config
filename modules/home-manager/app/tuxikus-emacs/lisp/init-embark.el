@@ -1,9 +1,12 @@
-;; init-embark.el --- -*- lexical-binding: t -*-
+;;; init-embark.el --- -*- lexical-binding: t -*-
+;;; Commentary:
+;;; Code:
 
 (use-package embark
-  :bind (("C-." . embark-act)
-	 ("M-." . embark-dwim)))
+  :bind
+  ("C-." . embark-act)
+  ("M-." . embark-dwim))
 
 (provide 'init-embark)
 
-;; init-embark.el ends here
+;;; init-embark.el ends here

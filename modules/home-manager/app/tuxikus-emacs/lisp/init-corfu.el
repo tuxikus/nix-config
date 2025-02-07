@@ -1,4 +1,6 @@
-;; init-corfu.el --- -*- lexical-binding: t -*-
+;;; init-corfu.el --- -*- lexical-binding: t -*-
+;;; Commentary:
+;;; Code:
 
 (use-package corfu
   :init
@@ -6,4 +8,4 @@
 
 (provide 'init-corfu)
 
-;; init-corfu.el ends here
+;;; init-corfu.el ends here

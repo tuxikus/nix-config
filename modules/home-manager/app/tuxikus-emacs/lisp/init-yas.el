@@ -1,7 +1,11 @@
-;; init-yas.el --- -*- lexical-binding: t -*-
+;;; init-yas.el --- -*- lexical-binding: t -*-
+;;; Commentary:
+;;; Code:
 
-(yas-global-mode 1)
+(use-package yasnippet
+  :config
+  (yas-global-mode 1))
 
 (provide 'init-yas)
 
-;; init-yas.el ends here
+;;; init-yas.el ends here

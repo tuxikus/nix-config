@@ -1,7 +1,7 @@
-;; tuxikus-eat.el --- -*- lexical-binding: t -*-
+;;; tuxikus-eat.el --- -*- lexical-binding: t -*-
 ;;; Commentary:
-
 ;;; Code:
+
 (defun tuxikus/eat-bash ()
   "Launch eat with bash."
   (interactive)

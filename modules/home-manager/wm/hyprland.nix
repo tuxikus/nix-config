@@ -11,6 +11,9 @@ in
     terminal = lib.mkOption {
       type = lib.types.str;
     };
+    appLauncher = lib.mkOption {
+      type = lib.types.str;
+    };
   };
   
   config = {
@@ -23,7 +26,7 @@ in
         exec-once = firefox
 
         $terminal = ${config.terminal}
-        $app_launcher = fuzzel
+        $app_launcher = ${config.appLauncher}
 
         env = XCURSOR_SIZE,24
         env = QT_QPA_PLATFORMTHEME,qt5ct
