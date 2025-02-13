@@ -6,25 +6,23 @@
     pkgs.nerdfonts
   ];
 
-  environment.systemPackages = [
-    pkgs.raycast
-    pkgs.btop
-    pkgs.alacritty
-    pkgs.aerospace
-    pkgs._1password-cli
-    pkgs.sketchybar
-    pkgs.jankyborders
-    pkgs.gcc
-    pkgs.fzf
-    pkgs.go-task
-    pkgs.python3
-    pkgs.openssh
-    pkgs.jupyter
-    pkgs.tree-sitter
-    pkgs.poppler_utils
-
-    pkgs.fishPlugins.fzf-fish
-    pkgs.fishPlugins.puffer
+  environment.systemPackages = with pkgs; [
+    raycast
+    btop
+    alacritty
+    aerospace
+    _1password-cli
+    sketchybar
+    jankyborders
+    gcc
+    fzf
+    go-task
+    python3
+    openssh
+    jupyter
+    tree-sitter
+    poppler_utils
+    dig
   ];
 
   environment.shells = [
@@ -44,7 +42,6 @@
     ];
   };
 
-  programs.fish.enable = true;
   programs.bash.enable = true;
 
   services.nix-daemon.enable = true;

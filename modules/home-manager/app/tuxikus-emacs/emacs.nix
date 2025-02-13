@@ -1,73 +1,52 @@
 { pkgs, ... }:
+let
+  my-emacs = pkgs.emacs.override {
+    withNativeCompilation = true;
+  };
+  my-emacs-with-packages = (pkgs.emacsPackagesFor my-emacs).emacsWithPackages ( epkgs: with epkgs; [
+    ace-window
+    almost-mono-themes
+    avy
+    consult
+    corfu
+    dashboard
+    direnv
+    doom-modeline
+    dwim-shell-command
+    eat
+    embark
+    embark-consult
+    embark-org-roam
+    ess
+    fireplace
+    flycheck
+    libmpdel
+    magit
+    marginalia
+    mpdel
+    nix-mode
+    orderless
+    org-roam
+    org-superstar
+    perspective
+    python-mode
+    ripgrep
+    salt-mode
+    verb
+    vertico
+    walkman
+    wgrep
+    yasnippet
+    (treesit-grammars.with-grammars (grammars: with grammars; [
+      tree-sitter-python
+      tree-sitter-bash
+    ]))
+  ]);
+in
 {
   programs.emacs = {
     enable = true;
-    package = (
-    (pkgs.emacsPackagesFor pkgs.emacs-gtk).emacsWithPackages (
-      epkgs: with epkgs; [
-        (treesit-grammars.with-grammars (grammars: with grammars; [
-          tree-sitter-python
-          tree-sitter-bash
-        ]))
-      ]
-    ));
-    extraPackages = epkgs: [
-      ### ui
-      epkgs.spacious-padding
-      epkgs.doom-modeline
-      epkgs.dashboard
-      epkgs.org-superstar
-      epkgs.almost-mono-themes
-      
-      ### completion
-      epkgs.vertico
-      epkgs.orderless
-      epkgs.marginalia
-      epkgs.corfu
-      epkgs.cape
-      epkgs.consult
-      epkgs.flycheck
-      
-      ### modes
-      epkgs.haskell-mode
-      epkgs.nix-mode
-      epkgs.salt-mode
-      epkgs.python-mode
-      epkgs.ess
-      
-      ### project management
-      #epkgs.projectile
-      
-      ### window management
-      epkgs.ace-window
-      
-      ### snippets
-      epkgs.yasnippet
-      
-      ### org
-      epkgs.org-roam
-
-      ### util
-      epkgs.dwim-shell-command
-      epkgs.magit
-      epkgs.avy
-      epkgs.wgrep
-      epkgs.ripgrep
-      epkgs.eat
-      epkgs.direnv
-      epkgs.embark
-      epkgs.embark-org-roam
-      epkgs.embark-consult
-      epkgs.perspective
-      
-      ### media
-      epkgs.mpdel
-      epkgs.libmpdel      
-
-      ### fun
-      epkgs.fireplace
-    ];
-    
+    package = my-emacs-with-packages;
     extraConfig = ''
       (load-file "~/.emacs.d/init.el")
     '';
