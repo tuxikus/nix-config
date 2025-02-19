@@ -17,8 +17,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     
-    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.5.1";
-
     darwin = {
       url = "github:lnl7/nix-darwin/nix-darwin-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -31,7 +29,6 @@
       nixpkgs,
       home-manager,
       nixvim,
-      nix-flatpak,
       darwin,
       disko,
       ...
@@ -46,7 +43,6 @@
           disko.nixosModules.disko
           ./hosts/zeus/configuration.nix
           ./hosts/zeus/disks.nix
-          nix-flatpak.nixosModules.nix-flatpak
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
@@ -54,27 +50,6 @@
             home-manager.users.tuxikus = import ./hosts/zeus/home.nix;
             home-manager.sharedModules = [ nixvim.homeManagerModules.nixvim ];
           }
-        ];
-      };
-      # ares
-      nixosConfigurations.ares = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = inputs;
-        modules = [
-          disko.nixosModules.disko
-          ./hosts/ares/configuration.nix
-          ./hosts/ares/disks.nix
-          nix-flatpak.nixosModules.nix-flatpak
-        ];
-      };
-      # vm-test
-      nixosConfigurations.vm-test = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = inputs;
-        modules = [
-          disko.nixosModules.disko
-          ./hosts/vm-test/disks.nix
-          ./hosts/vm-test/configuration.nix
         ];
       };
       # aphrodite
