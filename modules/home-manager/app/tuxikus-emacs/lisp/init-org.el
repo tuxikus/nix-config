@@ -23,12 +23,9 @@
   (set-face-attribute 'org-document-title nil :height 2.0)
 
   ;; load org babel languages
-  (org-babel-do-load-languages 'org-babel-load-languages '((bash . t)
-							   (sh . t)
-							   (zsh . t)
+  (org-babel-do-load-languages 'org-babel-load-languages '((shell . t)
 							   (emacs-lisp . t)
-							   (python . t)))
-  )
+							   (python . t))))
 
 (provide 'init-org)
 
