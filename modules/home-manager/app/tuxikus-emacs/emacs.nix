@@ -6,10 +6,10 @@ let
   my-emacs-with-packages = (pkgs.emacsPackagesFor my-emacs).emacsWithPackages ( epkgs: with epkgs; [
     ace-window
     almost-mono-themes
-    cape
-    pyvenv
     avy
+    cape
     consult
+    consult-yasnippet
     corfu
     dashboard
     direnv
@@ -32,6 +32,7 @@ let
     org-superstar
     perspective
     python-mode
+    pyvenv
     ripgrep
     salt-mode
     verb
