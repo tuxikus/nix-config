@@ -104,7 +104,6 @@ fi
 
 rsync_command="rsync -av $options $excludes \
                      $HOME/.bookmarks.org \
-                     $HOME/.nix-config\
                      $HOME/.backup-log.txt \
                      $HOME/.ppw \
                      $HOME/org \
