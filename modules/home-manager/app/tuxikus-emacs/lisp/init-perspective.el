@@ -4,7 +4,9 @@
 
 (use-package perspective
   :bind
-  ("C-x x s" . persp-switch))
+  ("C-x x s" . persp-switch)
+  :init
+  (persp-mode))
 
 (provide 'init-perspective)
 

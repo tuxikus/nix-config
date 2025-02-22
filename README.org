@@ -1,3 +1,606 @@
+#+options: toc:nil
+#+property: header-args :noweb yes :mkdirp yes
+#+startup: overview
+
+* ❄️ Welcome to my nix-config ❄️
+This is my literate nix/nixos/home-manager config written with the help of [[https://www.gnu.org/software/emacs/][Emacs]] and the powerful [[https://orgmode.org/][Org mode]].
+
+* Disclaimer
+* Project structure
+#+begin_src shell :results org
+  tree -d
+#+end_src
+
+#+RESULTS:
+#+begin_src org
+.
+├── hosts
+│   ├── aphrodite
+│   └── zeus
+│       └── assets
+└── modules
+    ├── home-manager
+    │   ├── app
+    │   │   ├── nixvim
+    │   │   ├── nyxt
+    │   │   └── tuxikus-emacs
+    │   │       ├── lisp
+    │   │       │   └── tuxikus
+    │   │       ├── snippets
+    │   │       │   ├── emacs-lisp-mode
+    │   │       │   ├── fundamental-mode
+    │   │       │   ├── nix-mode
+    │   │       │   └── org-mode
+    │   │       └── themes
+    │   ├── bin
+    │   │   └── scripts
+    │   ├── edu
+    │   ├── shell
+    │   ├── util
+    │   └── wm
+    └── nixos
+        └── udev
+
+27 directories
+#+end_src
+
+* Flake setup
+** Flake inputs
+#+begin_src nix :tangle flake.nix :noweb tangle
+  {
+    inputs = {
+      nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+
+      home-manager = {
+        url = "github:nix-community/home-manager/release-24.11";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
+
+      nixvim = {
+        url = "github:nix-community/nixvim/nixos-24.11";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
+
+      disko = {
+        url = "github:nix-community/disko";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
+      
+      darwin = {
+        url = "github:lnl7/nix-darwin/nix-darwin-24.11";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
+    };
+
+    <<flake-outputs>>
+  }
+#+end_src
+** Flake outputs
+#+name: flake-outputs
+#+begin_src nix :noweb no-export
+  outputs =
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      nixvim,
+      darwin,
+      disko,
+      ...
+    }@inputs:
+    {
+      ### Hosts
+      # zeus
+      nixosConfigurations.zeus = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = inputs;
+        modules = [
+          disko.nixosModules.disko
+          ./hosts/zeus/configuration.nix
+          ./hosts/zeus/disks.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.tuxikus = import ./hosts/zeus/home.nix;
+            home-manager.sharedModules = [ nixvim.homeManagerModules.nixvim ];
+          }
+        ];
+      };
+      # aphrodite
+      darwinConfigurations.aphrodite = darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
+        modules = [
+          ./hosts/aphrodite/configuration.nix
+          home-manager.darwinModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users."dominik.potoczki" = import ./hosts/aphrodite/home.nix;
+            home-manager.sharedModules = [ nixvim.homeManagerModules.nixvim ];
+          }
+        ];
+      };
+    };
+#+end_src
+* Hosts
+** Zeus
+*** Hardware
+| CPU    | AMD Ryzen 5 5600X (12) @ 3.70 GHz |
+| GPU    | AMD Radeon RX 6800 XT             |
+| Memory | 32GB DDR4                         |
+*** Nix configuration
+**** Configuration
+***** Base
+#+begin_src nix :tangle hosts/zeus/configuration.nix :noweb tangle :mkdirp yes
+  {
+    config,
+    pkgs,
+    inputs,
+    home-manager,
+    ...
+  }:
+  let
+    nixModulesDirectory = ../../modules/nixos;
+  in
+  {
+    <<zeus-configuration-imports>>
+    <<zeus-configuration-nix-settings>>
+    <<zeus-configuration-boot-loader>>
+    <<zeus-configuration-networking>>
+    <<zeus-configuration-services>>
+    <<zeus-configuration-time>>
+    <<zeus-configuration-i18n>>
+    <<zeus-configuration-security>>
+    <<zeus-configuration-users>>
+    <<zeus-configuration-fonts>>
+    <<zeus-configuration-system-packages>>
+    <<zeus-configuration-systemd>>
+    <<zeus-configuration-programs>>
+    <<zeus-configuration-system-state-version>>
+  }
+#+end_src
+***** Imports
+#+name: zeus-configuration-imports
+#+begin_src nix :noweb no-export
+  imports = [
+    ./hardware-configuration.nix
+    (nixModulesDirectory + "/udev/zsa-keyboards.nix")
+    (nixModulesDirectory + "/udev/vial.nix")
+    (nixModulesDirectory + "/virt.nix")
+    (nixModulesDirectory + "/podman.nix")
+  ];
+#+end_src
+***** Nix settings
+#+name: zeus-configuration-nix-settings
+#+begin_src nix :noweb no-export
+  nix = {
+    settings.experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 30d";
+    };
+  };
+
+#+end_src
+***** Boot loader
+#+name: zeus-configuration-boot-loader
+#+begin_src nix :tangle no-export
+  boot.loader = {
+    systemd-boot.enable = false;
+    grub = {
+      enable = true;
+      device = "nodev";
+      efiSupport = true;
+    };
+    efi.canTouchEfiVariables = true;
+  };
+#+end_src
+***** Networking
+#+name: zeus-configuration-networking
+#+begin_src nix :tangle no-export
+  networking.hostName = "zeus";
+  networking.networkmanager.enable = true;
+#+end_src
+***** Services
+#+name: zeus-configuration-services
+#+begin_src nix :tangle no-export
+  services = {
+    dbus.enable = true;
+    xserver = {
+      enable = true;
+      displayManager.gdm.enable = true;
+      xkb = {
+        layout = "us";
+        variant = "";
+      };
+    };
+    pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+    };
+    mpd = {
+      enable = true;
+      musicDirectory = "/home/tuxikus/multimedia/music/mp3";
+      extraConfig = ''
+      audio_output {
+       type "pipewire"
+       name "My PipeWire Output"
+      }
+    ''; 
+      #network.startWhenNeeded = true;
+      user = "tuxikus";
+    };
+  };
+#+end_src
+***** Time
+#+name: zeus-configuration-time
+#+begin_src nix :tangle no-export
+  time.timeZone = "Europe/Berlin";
+#+end_src
+***** i18n
+#+name: zeus-configuration-i18n
+#+begin_src nix :tangle no-export
+  i18n = {
+    defaultLocale = "en_US.UTF-8";
+    extraLocaleSettings = {
+      LC_ADDRESS = "de_DE.UTF-8";
+      LC_IDENTIFICATION = "de_DE.UTF-8";
+      LC_MEASUREMENT = "de_DE.UTF-8";
+      LC_MONETARY = "de_DE.UTF-8";
+      LC_NAME = "de_DE.UTF-8";
+      LC_NUMERIC = "de_DE.UTF-8";
+      LC_PAPER = "de_DE.UTF-8";
+      LC_TELEPHONE = "de_DE.UTF-8";
+      LC_TIME = "de_DE.UTF-8";
+    };
+  };
+#+end_src
+***** Printing
+#+name: zeus-configuration-printing
+#+begin_src nix :tangle no-export
+  # Enable CUPS to print documents.
+  #services.printing.enable = true;
+#+end_src
+***** Security
+#+name: zeus-configuration-security
+#+begin_src nix :tangle no-export
+  security.rtkit.enable = true;
+#+end_src
+***** Users
+#+name: zeus-configuration-users
+#+begin_src nix :tangle no-export
+  users = {
+    groups = {
+      tuxikus = {};
+      plugdev = {}; # group to flash zsa moonlander mk1 keyboard with oryx in chromium
+    };
+    users = {
+      tuxikus = {
+        uid = 1000;
+        isNormalUser = true;
+        description = "tuxikus";
+        group = "tuxikus";
+        extraGroups = [
+          "networkmanager"
+          "wheel"
+          "plugdev"
+        ];
+      };
+    };
+  };
+#+end_src
+***** Fonts
+#+name: zeus-configuration-fonts
+#+begin_src nix :tangle no-export
+  fonts.packages = with pkgs; [
+    nerdfonts
+  ];
+#+end_src
+***** System packages
+#+name: zeus-configuration-system-packages
+#+begin_src nix :tangle no-export
+  environment.systemPackages = with pkgs; [
+    firefox
+    chromium
+    tree
+    home-manager
+    pavucontrol
+    python3
+    wget
+    hyprpaper
+    hyprsunset
+    pyright
+    mpd
+    ncmpcpp
+    fuzzel
+    dunst
+    waybar
+    grim
+    slurp
+    bat
+    ripgrep
+    fzf
+    fastfetch
+    keepassxc
+    unzip
+    mpv
+    calibre
+    direnv
+    tree-sitter
+    ghostty
+    ffmpeg
+    yt-dlp
+    dig
+    vial
+    nyxt
+  ];
+#+end_src
+***** Systemd
+#+name: zeus-configuration-systemd
+#+begin_src nix :tangle no-export
+  systemd.services.mpd.environment = {
+    #XDG_RUNTIME_DIR = "/run/user/${toString config.users.users.tuxikus.uid}";
+    XDG_RUNTIME_DIR = "/run/user/1000";
+  };
+#+end_src
+***** Programs
+#+name: zeus-configuration-programs
+#+begin_src nix :tangle no-export
+  programs = {
+    hyprland = {
+      enable = true;
+      xwayland.enable = true;
+    };
+    ssh.startAgent = true;
+  };
+#+end_src
+***** System state version
+#+name: zeus-configuration-system-state-version
+#+begin_src nix :tangle no-export
+  # This value determines the NixOS release from which the default
+  # settings for stateful data, like file locations and database versions
+  # on your system were taken. It‘s perfectly fine and recommended to leave
+  # this value at the release version of the first install of this system.
+  # Before changing this value read the documentation for this option
+  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
+  system.stateVersion = "24.05"; # Did you read the comment?
+#+end_src
+**** Home manager
+***** Base
+#+begin_src nix :tangle hosts/zeus/home.nix :noweb tangle :mkdirp yes
+  {
+    ...
+  }:
+  let
+    homeManagerModulesDirectory = ../../modules/home-manager;
+  in
+  {
+    <<zeus-home-manager-imports>>
+    <<zeus-home-manager-configuration>>
+    <<zeus-home-manager-programs>>
+    <<zeus-home-manager-module-config-hypr>>
+  }
+#+end_src
+
+***** Imports
+#+name: zeus-home-manager-imports
+#+begin_src nix
+  imports = [
+    (homeManagerModulesDirectory + "/shell/bash.nix")
+    (homeManagerModulesDirectory + "/shell/xonsh.nix")
+    (homeManagerModulesDirectory + "/app/tuxikus-emacs/emacs.nix")
+    (homeManagerModulesDirectory + "/app/tuxikus-emacs/emacs-daemon.nix")
+    (homeManagerModulesDirectory + "/app/nyxt/nyxt.nix")
+    (homeManagerModulesDirectory + "/app/nixvim/nixvim.nix")
+    (homeManagerModulesDirectory + "/app/ghostty.nix")
+    (homeManagerModulesDirectory + "/app/fuzzel.nix")
+    (homeManagerModulesDirectory + "/latex.nix")
+    (homeManagerModulesDirectory + "/wm/hyprland.nix")
+    (homeManagerModulesDirectory + "/bin/home-backup.nix")
+  ];
+#+end_src
+
+***** Configuration
+#+name: zeus-home-manager-configuration
+#+begin_src nix
+  home = {
+    username = "tuxikus";
+    homeDirectory = "/home/tuxikus";
+
+    # This value determines the Home Manager release that your
+    # configuration is compatible with. This helps avoid breakage
+    # when a new Home Manager release introduces backwards
+    # incompatible changes.
+    #
+    # You can update Home Manager without changing this value. See
+    # the Home Manager release notes for a list of state version
+    # changes in each release.
+    stateVersion = "24.05";
+
+    packages = [];
+
+    sessionPath = [ "$HOME/.local/bin" ];
+  };
+#+end_src
+
+***** Programs
+#+name: zeus-home-manager-programs
+#+begin_src nix
+  programs = {
+    home-manager.enable = true;
+    git = {
+      enable = true;
+      userEmail = "contact@tuxikus.de";
+      userName = "tuxikus";      
+    };
+  };
+#+end_src
+
+***** Module config
+****** hypr
+#+name: zeus-home-manager-module-config-hypr
+#+begin_src nix
+  wallpaper = ./assets/wallpaper.png;
+  terminal = "ghostty";
+  appLauncher = "fuzzel";
+#+end_src
+**** Hardware configuration
+Do not modify this file!  It was generated by ‘nixos-generate-config’ and may be overwritten by future invocations. Please make changes to /etc/nixos/configuration.nix instead.
+***** Base
+#+begin_src nix :tangle hosts/zeus/hardware-configuration.nix :noweb tangle :mkdirp yes
+  {
+    config,
+    lib,
+    pkgs,
+    modulesPath,
+    ...
+  }:
+  {
+    <<zeus-hardware-config-imports>>
+    <<zeus-hardware-config-boot>>
+    <<zeus-hardware-configuration-hardware>>
+    <<zeus-hardware-configuration-networking>>
+
+    nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  }
+#+end_src
+
+***** Imports
+#+name: zeus-hardware-config-imports
+#+begin_src nix
+  imports = [
+    (modulesPath + "/installer/scan/not-detected.nix")
+  ];
+#+end_src
+
+***** Boot
+#+name: zeus-hardware-config-boot
+#+begin_src nix
+  boot = {
+    initrd = {
+      availableKernelModules = [
+        "nvme"
+        "xhci_pci"
+        "ahci"
+        "usbhid"
+        "uas"
+        "sd_mod"
+      ];
+      kernelModules = [];
+    };
+    kernelModules = [ "kvm-amd" ];
+    extraModulePackages = [];
+  };
+#+end_src
+
+***** Hardware
+#+name: zeus-hardware-configuration-hardware
+#+begin_src nix
+  hardware = {
+    pulseaudio.enable = false;
+    cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  };
+#+end_src
+***** Networking
+#+name: zeus-hardware-configuration-networking
+#+begin_src nix
+  networking.useDHCP = lib.mkDefault true;
+#+end_src
+**** Disks
+#+begin_src nix :tangle hosts/zeus/disks.nix :noweb tangle :mkdirp yes
+{
+  disko.devices = {
+    disk = {
+      root = {
+        device = "/dev/disk/by-id/nvme-SAMSUNG_MZVLB1T0HBLR-000L2_S4DZNF0N620723";
+        type = "disk";
+        content = {
+          type = "gpt";
+          partitions = {
+            ESP = {
+              size = "512M";
+              type = "EF00";
+              content = {
+                type = "filesystem";
+                format = "vfat";
+                mountpoint = "/boot";
+                mountOptions = [ "umask=0077" ];
+              };
+            };
+            luks = {
+              size = "100%";
+              content = {
+                type = "luks";
+                name = "crypted1";
+                settings.allowDiscards = true;
+                passwordFile = "/tmp/secret.key";
+                content = {
+                  type = "filesystem";
+                  format = "ext4";
+                  mountpoint = "/";
+                };
+              };
+            };          
+          };
+        };
+      };
+      home = {
+        type = "disk";
+        device = "/dev/disk/by-id/nvme-Samsung_SSD_970_EVO_Plus_2TB_S4J4NX0R513058T";
+        content = {
+          type = "gpt";
+          partitions = {
+            luks = {
+              size = "100%";
+              content = {
+                type = "luks";
+                name = "crypted2";
+                settings.allowDiscards = true;
+                passwordFile = "/tmp/secret.key";
+                content = {
+                  type = "filesystem";
+                  format = "ext4";
+                  mountpoint = "/home";
+                };
+              };
+            };
+          };
+        };
+      };
+      virt = {
+        device = "/dev/disk/by-id/wwn-0x50014ee26a6ed785";
+        type = "disk";
+        content = {
+          type = "gpt";
+          partitions = {
+            virt = {
+              size = "100%";
+              content = {
+                type = "filesystem";
+                format = "ext4";
+                mountpoint = "/mnt/virt";
+              };
+            };
+          };
+        };
+      };
+    };
+  };
+}
+#+end_src
+** Aphrodite
+*** Hardware
+Apple MacBook Pro M2
+*** Nix configuration
+**** Configuration
+**** Home manager
 * nix-config
 ** Install system with disko
 #+begin_src shell
