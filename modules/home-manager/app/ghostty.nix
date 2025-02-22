@@ -17,7 +17,8 @@
       window-padding-y = 10
       #window-decoration = none
       macos-titlebar-style = hidden
-      shell-integration = bash
+      #shell-integration = bash
+      command = xonsh
 
       # keys
     '';

@@ -12,6 +12,7 @@ in
   imports = [
     # modules
     (homeManagerModulesDirectory + "/shell/bash.nix")
+    (homeManagerModulesDirectory + "/shell/xonsh.nix")
 
     (homeManagerModulesDirectory + "/app/tuxikus-emacs/emacs.nix")
     (homeManagerModulesDirectory + "/app/tuxikus-emacs/emacs-daemon.nix")
