@@ -104,6 +104,7 @@ in
   environment.systemPackages = with pkgs; [
     firefox
     chromium
+    tree
     home-manager
     pavucontrol
     python3
