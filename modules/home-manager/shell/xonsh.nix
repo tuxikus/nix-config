@@ -10,8 +10,8 @@
 
       aliases['ll'] = 'ls -lah'
       aliases['ff'] = 'fastfetch'
-      aliases['night-shift-on'] = 'hyprsunset --temperature int(3000) & disown'
-      aliases['night-shift-off'] = 'pgrep hyprsunset | xargs kill'
+      #aliases['night-shift-on'] = 'hyprsunset --temperature 3000 &; disown 1'
+      #aliases['night-shift-off'] = 'pgrep hyprsunset | xargs kill'
     '';
   };
 }
