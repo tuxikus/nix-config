@@ -14,6 +14,7 @@ let
     dashboard
     direnv
     doom-modeline
+    doom-themes
     dwim-shell-command
     eat
     embark
