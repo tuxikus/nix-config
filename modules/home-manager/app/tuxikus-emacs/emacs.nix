@@ -6,6 +6,8 @@ let
   my-emacs-with-packages = (pkgs.emacsPackagesFor my-emacs).emacsWithPackages ( epkgs: with epkgs; [
     ace-window
     almost-mono-themes
+    cape
+    pyvenv
     avy
     consult
     corfu

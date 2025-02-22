@@ -110,6 +110,7 @@ in
     wget
     hyprpaper
     hyprsunset
+    pyright
     mpd
     ncmpcpp
     fuzzel

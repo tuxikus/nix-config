@@ -58,6 +58,16 @@
   (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
   :custom
   (enable-recursive-minibuffers t)
+  (read-extended-command-predicate #'command-completion-default-include-p)
+  (tab-always-indent 'complete)
+  
+  ;; Emacs 30 and newer: Disable Ispell completion function.
+  ;; Try `cape-dict' as an alternative.
+  (text-mode-ispell-word-completion nil)
+
+  ;; Hide commands in M-x which do not apply to the current mode.  Corfu
+  ;; commands are hidden, since they are not used via M-x. This setting is
+  ;; useful beyond Corfu.
   (read-extended-command-predicate #'command-completion-default-include-p))
 
 (provide 'init-emacs)
