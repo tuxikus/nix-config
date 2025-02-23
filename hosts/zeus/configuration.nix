@@ -13,7 +13,7 @@ in
     ./hardware-configuration.nix
     (nixModulesDirectory + "/udev/zsa-keyboards.nix")
     (nixModulesDirectory + "/udev/vial.nix")
-    (nixModulesDirectory + "/virt.nix")
+    (nixModulesDirectory + "/virtualization.nix")
     (nixModulesDirectory + "/podman.nix")
   ];
   nix = {
@@ -39,35 +39,6 @@ in
   };
   networking.hostName = "zeus";
   networking.networkmanager.enable = true;
-  services = {
-    dbus.enable = true;
-    xserver = {
-      enable = true;
-      displayManager.gdm.enable = true;
-      xkb = {
-        layout = "us";
-        variant = "";
-      };
-    };
-    pipewire = {
-      enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true;
-      pulse.enable = true;
-    };
-    mpd = {
-      enable = true;
-      musicDirectory = "/home/tuxikus/multimedia/music/mp3";
-      extraConfig = ''
-      audio_output {
-       type "pipewire"
-       name "My PipeWire Output"
-      }
-    ''; 
-      #network.startWhenNeeded = true;
-      user = "tuxikus";
-    };
-  };
   time.timeZone = "Europe/Berlin";
   i18n = {
     defaultLocale = "en_US.UTF-8";
@@ -106,6 +77,35 @@ in
   fonts.packages = with pkgs; [
     nerdfonts
   ];
+  services = {
+    dbus.enable = true;
+    xserver = {
+      enable = true;
+      displayManager.gdm.enable = true;
+      xkb = {
+        layout = "us";
+        variant = "";
+      };
+    };
+    pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+    };
+    mpd = {
+      enable = true;
+      musicDirectory = "/home/tuxikus/multimedia/music/mp3";
+      extraConfig = ''
+      audio_output {
+       type "pipewire"
+       name "My PipeWire Output"
+      }
+    ''; 
+      #network.startWhenNeeded = true;
+      user = "tuxikus";
+    };
+  };
   environment.systemPackages = with pkgs; [
     firefox
     chromium
@@ -141,16 +141,16 @@ in
     vial
     nyxt
   ];
-  systemd.services.mpd.environment = {
-    #XDG_RUNTIME_DIR = "/run/user/${toString config.users.users.tuxikus.uid}";
-    XDG_RUNTIME_DIR = "/run/user/1000";
-  };
   programs = {
     hyprland = {
       enable = true;
       xwayland.enable = true;
     };
     ssh.startAgent = true;
+  };
+  systemd.services.mpd.environment = {
+    #XDG_RUNTIME_DIR = "/run/user/${toString config.users.users.tuxikus.uid}";
+    XDG_RUNTIME_DIR = "/run/user/1000";
   };
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

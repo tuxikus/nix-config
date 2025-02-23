@@ -2,7 +2,6 @@
   pkgs,
   ...
 }:
-
 {
   services.udev.packages = [
     (pkgs.writeTextFile {

@@ -20,30 +20,38 @@ This is my literate nix/nixos/home-manager config written with the help of [[htt
 │       └── assets
 └── modules
     ├── home-manager
-    │   ├── app
-    │   │   ├── nixvim
-    │   │   ├── nyxt
-    │   │   └── tuxikus-emacs
-    │   │       ├── lisp
-    │   │       │   └── tuxikus
-    │   │       ├── snippets
-    │   │       │   ├── emacs-lisp-mode
-    │   │       │   ├── fundamental-mode
-    │   │       │   ├── nix-mode
-    │   │       │   └── org-mode
-    │   │       └── themes
-    │   ├── bin
-    │   │   └── scripts
-    │   ├── edu
+    │   ├── education
+    │   ├── gui-apps
+    │   ├── scripts
     │   ├── shell
-    │   ├── util
-    │   └── wm
+    │   ├── utility
+    │   └── window-manager
     └── nixos
         └── udev
 
-27 directories
+15 directories
 #+end_src
-
+* How to install a system
+** If using luks encryption create a secret
+#+begin_src shell
+  echo 'mysuperpassword' > /tmp/secret.key
+#+end_src
+** Fromat disks with disko
+#+begin_src shell
+  sudo nix \
+       --experimental-features "nix-command flakes" \
+       run github:nix-community/disko/latest -- \
+       --mode destroy,format,mount \
+       --flake github:tuxikus/nix-config#host  
+#+end_src
+** Install system
+#+begin_src shell
+  sudo nixos-install --no-root-passwd --flake github:tuxikus/nix-config#host
+#+end_src
+** !!! Set user passwords !!!
+#+begin_src shell
+  sudo nixos-enter --root /mnt -c 'passwd username'
+#+end_src
 * Flake setup
 ** Flake inputs
 #+begin_src nix :tangle flake.nix :noweb tangle
@@ -77,7 +85,7 @@ This is my literate nix/nixos/home-manager config written with the help of [[htt
 #+end_src
 ** Flake outputs
 #+name: flake-outputs
-#+begin_src nix :noweb no-export
+#+begin_src nix
   outputs =
     {
       self,
@@ -130,7 +138,7 @@ This is my literate nix/nixos/home-manager config written with the help of [[htt
 | GPU    | AMD Radeon RX 6800 XT             |
 | Memory | 32GB DDR4                         |
 *** Nix configuration
-**** Configuration
+**** Configuration - [[file:hosts/zeus/configuration.nix][configuration.nix]]
 ***** Base
 #+begin_src nix :tangle hosts/zeus/configuration.nix :noweb tangle :mkdirp yes
   {
@@ -148,32 +156,32 @@ This is my literate nix/nixos/home-manager config written with the help of [[htt
     <<zeus-configuration-nix-settings>>
     <<zeus-configuration-boot-loader>>
     <<zeus-configuration-networking>>
-    <<zeus-configuration-services>>
     <<zeus-configuration-time>>
     <<zeus-configuration-i18n>>
     <<zeus-configuration-security>>
     <<zeus-configuration-users>>
     <<zeus-configuration-fonts>>
+    <<zeus-configuration-services>>
     <<zeus-configuration-system-packages>>
-    <<zeus-configuration-systemd>>
     <<zeus-configuration-programs>>
+    <<zeus-configuration-systemd>>
     <<zeus-configuration-system-state-version>>
   }
 #+end_src
 ***** Imports
 #+name: zeus-configuration-imports
-#+begin_src nix :noweb no-export
+#+begin_src nix
   imports = [
     ./hardware-configuration.nix
     (nixModulesDirectory + "/udev/zsa-keyboards.nix")
     (nixModulesDirectory + "/udev/vial.nix")
-    (nixModulesDirectory + "/virt.nix")
+    (nixModulesDirectory + "/virtualization.nix")
     (nixModulesDirectory + "/podman.nix")
   ];
 #+end_src
 ***** Nix settings
 #+name: zeus-configuration-nix-settings
-#+begin_src nix :noweb no-export
+#+begin_src nix
   nix = {
     settings.experimental-features = [
       "nix-command"
@@ -189,7 +197,7 @@ This is my literate nix/nixos/home-manager config written with the help of [[htt
 #+end_src
 ***** Boot loader
 #+name: zeus-configuration-boot-loader
-#+begin_src nix :tangle no-export
+#+begin_src nix
   boot.loader = {
     systemd-boot.enable = false;
     grub = {
@@ -202,13 +210,77 @@ This is my literate nix/nixos/home-manager config written with the help of [[htt
 #+end_src
 ***** Networking
 #+name: zeus-configuration-networking
-#+begin_src nix :tangle no-export
+#+begin_src nix
   networking.hostName = "zeus";
   networking.networkmanager.enable = true;
 #+end_src
+***** Time
+#+name: zeus-configuration-time
+#+begin_src nix
+  time.timeZone = "Europe/Berlin";
+#+end_src
+***** i18n
+#+name: zeus-configuration-i18n
+#+begin_src nix
+  i18n = {
+    defaultLocale = "en_US.UTF-8";
+    extraLocaleSettings = {
+      LC_ADDRESS = "de_DE.UTF-8";
+      LC_IDENTIFICATION = "de_DE.UTF-8";
+      LC_MEASUREMENT = "de_DE.UTF-8";
+      LC_MONETARY = "de_DE.UTF-8";
+      LC_NAME = "de_DE.UTF-8";
+      LC_NUMERIC = "de_DE.UTF-8";
+      LC_PAPER = "de_DE.UTF-8";
+      LC_TELEPHONE = "de_DE.UTF-8";
+      LC_TIME = "de_DE.UTF-8";
+    };
+  };
+#+end_src
+***** Printing
+#+name: zeus-configuration-printing
+#+begin_src nix
+  # Enable CUPS to print documents.
+  #services.printing.enable = true;
+#+end_src
+***** Security
+#+name: zeus-configuration-security
+#+begin_src nix
+  security.rtkit.enable = true;
+#+end_src
+***** Users
+#+name: zeus-configuration-users
+#+begin_src nix
+  users = {
+    groups = {
+      tuxikus = {};
+      plugdev = {}; # group to flash zsa moonlander mk1 keyboard with oryx in chromium
+    };
+    users = {
+      tuxikus = {
+        uid = 1000;
+        isNormalUser = true;
+        description = "tuxikus";
+        group = "tuxikus";
+        extraGroups = [
+          "networkmanager"
+          "wheel"
+          "plugdev"
+        ];
+      };
+    };
+  };
+#+end_src
+***** Fonts
+#+name: zeus-configuration-fonts
+#+begin_src nix
+  fonts.packages = with pkgs; [
+    nerdfonts
+  ];
+#+end_src
 ***** Services
 #+name: zeus-configuration-services
-#+begin_src nix :tangle no-export
+#+begin_src nix
   services = {
     dbus.enable = true;
     xserver = {
@@ -239,73 +311,9 @@ This is my literate nix/nixos/home-manager config written with the help of [[htt
     };
   };
 #+end_src
-***** Time
-#+name: zeus-configuration-time
-#+begin_src nix :tangle no-export
-  time.timeZone = "Europe/Berlin";
-#+end_src
-***** i18n
-#+name: zeus-configuration-i18n
-#+begin_src nix :tangle no-export
-  i18n = {
-    defaultLocale = "en_US.UTF-8";
-    extraLocaleSettings = {
-      LC_ADDRESS = "de_DE.UTF-8";
-      LC_IDENTIFICATION = "de_DE.UTF-8";
-      LC_MEASUREMENT = "de_DE.UTF-8";
-      LC_MONETARY = "de_DE.UTF-8";
-      LC_NAME = "de_DE.UTF-8";
-      LC_NUMERIC = "de_DE.UTF-8";
-      LC_PAPER = "de_DE.UTF-8";
-      LC_TELEPHONE = "de_DE.UTF-8";
-      LC_TIME = "de_DE.UTF-8";
-    };
-  };
-#+end_src
-***** Printing
-#+name: zeus-configuration-printing
-#+begin_src nix :tangle no-export
-  # Enable CUPS to print documents.
-  #services.printing.enable = true;
-#+end_src
-***** Security
-#+name: zeus-configuration-security
-#+begin_src nix :tangle no-export
-  security.rtkit.enable = true;
-#+end_src
-***** Users
-#+name: zeus-configuration-users
-#+begin_src nix :tangle no-export
-  users = {
-    groups = {
-      tuxikus = {};
-      plugdev = {}; # group to flash zsa moonlander mk1 keyboard with oryx in chromium
-    };
-    users = {
-      tuxikus = {
-        uid = 1000;
-        isNormalUser = true;
-        description = "tuxikus";
-        group = "tuxikus";
-        extraGroups = [
-          "networkmanager"
-          "wheel"
-          "plugdev"
-        ];
-      };
-    };
-  };
-#+end_src
-***** Fonts
-#+name: zeus-configuration-fonts
-#+begin_src nix :tangle no-export
-  fonts.packages = with pkgs; [
-    nerdfonts
-  ];
-#+end_src
 ***** System packages
 #+name: zeus-configuration-system-packages
-#+begin_src nix :tangle no-export
+#+begin_src nix
   environment.systemPackages = with pkgs; [
     firefox
     chromium
@@ -342,17 +350,9 @@ This is my literate nix/nixos/home-manager config written with the help of [[htt
     nyxt
   ];
 #+end_src
-***** Systemd
-#+name: zeus-configuration-systemd
-#+begin_src nix :tangle no-export
-  systemd.services.mpd.environment = {
-    #XDG_RUNTIME_DIR = "/run/user/${toString config.users.users.tuxikus.uid}";
-    XDG_RUNTIME_DIR = "/run/user/1000";
-  };
-#+end_src
 ***** Programs
 #+name: zeus-configuration-programs
-#+begin_src nix :tangle no-export
+#+begin_src nix
   programs = {
     hyprland = {
       enable = true;
@@ -361,9 +361,18 @@ This is my literate nix/nixos/home-manager config written with the help of [[htt
     ssh.startAgent = true;
   };
 #+end_src
+***** Systemd
+#+name: zeus-configuration-systemd
+#+begin_src nix
+  systemd.services.mpd.environment = {
+    #XDG_RUNTIME_DIR = "/run/user/${toString config.users.users.tuxikus.uid}";
+    XDG_RUNTIME_DIR = "/run/user/1000";
+  };
+#+end_src
+
 ***** System state version
 #+name: zeus-configuration-system-state-version
-#+begin_src nix :tangle no-export
+#+begin_src nix
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
@@ -372,7 +381,7 @@ This is my literate nix/nixos/home-manager config written with the help of [[htt
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.05"; # Did you read the comment?
 #+end_src
-**** Home manager
+**** Home manager - [[file:hosts/zeus/home.nix][home.nix]]
 ***** Base
 #+begin_src nix :tangle hosts/zeus/home.nix :noweb tangle :mkdirp yes
   {
@@ -384,29 +393,26 @@ This is my literate nix/nixos/home-manager config written with the help of [[htt
   {
     <<zeus-home-manager-imports>>
     <<zeus-home-manager-configuration>>
+    <<zeus-home-manager-services>>
     <<zeus-home-manager-programs>>
     <<zeus-home-manager-module-config-hypr>>
   }
 #+end_src
-
 ***** Imports
 #+name: zeus-home-manager-imports
 #+begin_src nix
   imports = [
     (homeManagerModulesDirectory + "/shell/bash.nix")
     (homeManagerModulesDirectory + "/shell/xonsh.nix")
-    (homeManagerModulesDirectory + "/app/tuxikus-emacs/emacs.nix")
-    (homeManagerModulesDirectory + "/app/tuxikus-emacs/emacs-daemon.nix")
-    (homeManagerModulesDirectory + "/app/nyxt/nyxt.nix")
-    (homeManagerModulesDirectory + "/app/nixvim/nixvim.nix")
-    (homeManagerModulesDirectory + "/app/ghostty.nix")
-    (homeManagerModulesDirectory + "/app/fuzzel.nix")
-    (homeManagerModulesDirectory + "/latex.nix")
-    (homeManagerModulesDirectory + "/wm/hyprland.nix")
-    (homeManagerModulesDirectory + "/bin/home-backup.nix")
+    (homeManagerModulesDirectory + "/gui-apps/emacs.nix")
+    (homeManagerModulesDirectory + "/gui-apps/nyxt.nix")
+    (homeManagerModulesDirectory + "/gui-apps/ghostty.nix")
+    (homeManagerModulesDirectory + "/gui-apps/fuzzel.nix")
+    (homeManagerModulesDirectory + "/education/latex.nix")
+    (homeManagerModulesDirectory + "/window-manager/hyprland.nix")
+    (homeManagerModulesDirectory + "/scripts/home-backup.nix")
   ];
 #+end_src
-
 ***** Configuration
 #+name: zeus-home-manager-configuration
 #+begin_src nix
@@ -429,7 +435,13 @@ This is my literate nix/nixos/home-manager config written with the help of [[htt
     sessionPath = [ "$HOME/.local/bin" ];
   };
 #+end_src
-
+***** Services
+#+name: zeus-home-manager-services
+#+begin_src nix
+  services = {
+    emacs.enable = true;
+  };
+#+end_src
 ***** Programs
 #+name: zeus-home-manager-programs
 #+begin_src nix
@@ -442,7 +454,6 @@ This is my literate nix/nixos/home-manager config written with the help of [[htt
     };
   };
 #+end_src
-
 ***** Module config
 ****** hypr
 #+name: zeus-home-manager-module-config-hypr
@@ -451,7 +462,7 @@ This is my literate nix/nixos/home-manager config written with the help of [[htt
   terminal = "ghostty";
   appLauncher = "fuzzel";
 #+end_src
-**** Hardware configuration
+**** Hardware configuration - [[file:hosts/zeus/hardware-configuration.nix][hardware-configuration.nix]]
 Do not modify this file!  It was generated by ‘nixos-generate-config’ and may be overwritten by future invocations. Please make changes to /etc/nixos/configuration.nix instead.
 ***** Base
 #+begin_src nix :tangle hosts/zeus/hardware-configuration.nix :noweb tangle :mkdirp yes
@@ -513,7 +524,7 @@ Do not modify this file!  It was generated by ‘nixos-generate-config’ and ma
 #+begin_src nix
   networking.useDHCP = lib.mkDefault true;
 #+end_src
-**** Disks
+**** Disk setup - [[file:hosts/zeus/disks.nix][disks.nix]]
 #+begin_src nix :tangle hosts/zeus/disks.nix :noweb tangle :mkdirp yes
 {
   disko.devices = {
@@ -599,20 +610,2032 @@ Do not modify this file!  It was generated by ‘nixos-generate-config’ and ma
 *** Hardware
 Apple MacBook Pro M2
 *** Nix configuration
-**** Configuration
-**** Home manager
-* nix-config
-** Install system with disko
-#+begin_src shell
-  echo 'mysuperpassword' > /tmp/secret.key
-
-  sudo nix \
-       --experimental-features "nix-command flakes" \
-       run github:nix-community/disko/latest -- \
-       --mode destroy,format,mount \
-       --flake github:tuxikus/nix-config#host
-
-  sudo nixos-install --no-root-passwd --flake github:tuxikus/nix-config#host
-
-  sudo nixos-enter --root /mnt -c 'passwd username'
+**** Configuration - [[file:hosts/aphrodite/configuration.nix][configuration.nix]]
+***** Base
+#+begin_src nix :tangle hosts/aphrodite/configuration.nix :noweb tangle :mkdirp yes
+  { pkgs, ...}:
+  {
+    <<aphrodite-configuration-nix-settings>>
+    <<aphrodite-configuration-nixpkgs-config>>
+    <<aphrodite-configuration-users>>
+    <<aphrodite-configuration-fonts>>
+    <<aphrodite-configuration-services>>
+    <<aphrodite-configuration-system-packages>>
+    <<aphrodite-configuration-programs>>
+    <<aphrodite-configuration-homebrew>>
+    <<aphrodite-configuration-system>>
+    <<aphrodite-configuration-security>>
+  }
 #+end_src
+***** Nix settings
+#+name: aphrodite-configuration-nix-settings
+#+begin_src nix
+  nix.settings.experimental-features = "nix-command flakes";
+#+end_src
+***** Nixpkgs config
+#+name: aphrodite-configuration-nixpkgs-config
+#+begin_src nix
+  nixpkgs = {
+    config.allowUnfree = true;
+    hostPlatform = "aarch64-darwin";
+  };
+#+end_src
+***** Users
+#+name: aphrodite-configuration-users
+#+begin_src nix
+  users = {
+    users."dominik.potoczki" = {
+      name = "dominik.potoczki";
+      home = "/Users/dominik.potoczki";
+    };
+  };
+#+end_src
+***** Fonts
+#+name: aphrodite-configuration-fonts
+#+begin_src nix
+  fonts.packages = [
+    pkgs.nerdfonts
+  ];
+#+end_src
+***** Services
+#+name: aphrodite-configuration-services
+#+begin_src nix :noweb yes
+  services = {
+    <<aphrodite-configuration-services-nix-daemon>>
+    <<aphrodite-configuration-services-aerospace>>
+    <<aphrodite-configuration-services-sketchybar>>
+    <<aphrodite-configuration-services-jankyborders>>
+  };
+#+end_src
+****** Nix daemon
+#+name: aphrodite-configuration-services-nix-daemon
+#+begin_src nix
+    nix-daemon.enable = true;
+#+end_src
+****** Aerospace
+#+name: aphrodite-configuration-services-aerospace
+#+begin_src nix
+  aerospace = {
+    enable = true;
+    settings = {
+      gaps = {
+        inner.horizontal = 22;
+        inner.vertical = 22;
+        outer.left = 15;
+        outer.bottom = 15;
+        outer.top = [ { monitor."T34w-30" = 50; } 15 ];
+        outer.right = 15;
+      };
+      mode.main.binding = {
+        cmd-left = "focus left";
+        cmd-down = "focus down";
+        cmd-up = "focus up";
+        cmd-right = "focus right";
+
+        cmd-shift-left = "move left";
+        cmd-shift-down = "move down";
+        cmd-shift-up = "move up";
+        cmd-shift-right = "move right";
+
+        cmd-m = "fullscreen";
+
+        cmd-1 = "workspace 1";
+        cmd-2 = "workspace 2";
+        cmd-3 = "workspace 3";
+        cmd-4 = "workspace 4";
+        cmd-5 = "workspace 5";
+        cmd-6 = "workspace 6";
+        cmd-7 = "workspace 7";
+        cmd-8 = "workspace 8";
+        cmd-9 = "workspace 9";
+        cmd-0 = "workspace 10";
+        
+        cmd-shift-1 = "move-node-to-workspace 1";
+        cmd-shift-2 = "move-node-to-workspace 2";
+        cmd-shift-3 = "move-node-to-workspace 3";
+        cmd-shift-4 = "move-node-to-workspace 4";
+        cmd-shift-5 = "move-node-to-workspace 5";
+        cmd-shift-6 = "move-node-to-workspace 6";
+        cmd-shift-7 = "move-node-to-workspace 7";
+        cmd-shift-8 = "move-node-to-workspace 8";
+        cmd-shift-9 = "move-node-to-workspace 9";
+        cmd-shift-0 = "move-node-to-workspace 10";
+
+        cmd-r = "mode resize";
+      };
+      mode.resize.binding = {
+        h = "resize width -50";
+        j = "resize height +50";
+        k = "resize height -50";
+        l = "resize width +50";
+        enter = "mode main";
+        esc = "mode main";
+      };
+    };
+  };
+#+end_src
+****** Sketchybar
+#+name: aphrodite-configuration-services-sketchybar
+#+begin_src nix
+  sketchybar.enable = true;
+#+end_src
+****** Jankyborders
+#+name: aphrodite-configuration-services-jankyborders
+#+begin_src nix
+  jankyborders = {
+    enable = true;
+    active_color = "0xFFFF0000";
+    width = 10.0;
+  };
+#+end_src
+***** System packages
+#+name: aphrodite-configuration-system-packages
+#+begin_src nix
+  environment = {
+    systemPackages = with pkgs; [
+      raycast
+      btop
+      alacritty
+      aerospace
+      _1password-cli
+      sketchybar
+      jankyborders
+      gcc
+      fzf
+      go-task
+      python3
+      openssh
+      jupyter
+      tree-sitter
+      poppler_utils
+      dig
+    ];
+    shells = with pkgs; [
+      bashInteractive
+      xonsh
+    ];
+  };
+#+end_src
+***** Programs
+#+name: aphrodite-configuration-programs
+#+begin_src nix
+  programs = {
+    bash.enable = true;
+    zsh.enable = true;
+  };
+#+end_src
+***** Homebrew
+#+name: aphrodite-configuration-homebrew
+#+begin_src nix
+  homebrew = {
+    enable = true;
+    onActivation.cleanup = "uninstall";
+    taps = [];
+    brews = [];
+    casks = [
+      "orbstack"
+      "tunnelblick"
+      "utm"
+      "firefox"
+    ];
+  };
+#+end_src
+***** System
+#+name: aphrodite-configuration-system
+#+begin_src nix
+  system = {
+    # Used for backwards compatibility, please read the changelog before changing
+    # $ darwin-rebuild changelog
+    stateVersion = 4;
+    defaults.screencapture.target = "clipboard";
+  };
+#+end_src
+***** Security
+#+name: aphrodite-configuration-security
+#+begin_src nix
+  security.pam.enableSudoTouchIdAuth = true;
+#+end_src
+**** Home manager - [[file:hosts/aphrodite/home.nix][home.nix]]
+***** Base
+#+begin_src nix :tangle hosts/aphrodite/home.nix :noweb tangle :mkdirp yes
+  { pgks, ... }:
+  let
+    homeManagerModulesDirectory = ../../modules/home-manager;
+  in
+  {
+    <<aphrodite-home-manager-imports>>
+    <<aphrodite-home-manager-config>>
+    <<aphrodite-home-manager-programs>>
+  }
+#+end_src
+***** Imports
+#+name: aphrodite-home-manager-imports
+#+begin_src nix
+  imports = [
+    (homeManagerModulesDirectory + "/app/tuxikus-emacs/emacs.nix")
+    (homeManagerModulesDirectory + "/app/nixvim/nixvim.nix")
+  ];
+#+end_src
+***** Config
+#+name: aphrodite-home-manager-config
+#+begin_src nix
+  home = {
+    # This value determines the Home Manager release that your
+    # configuration is compatible with. This helps avoid breakage
+    # when a new Home Manager release introduces backwards
+    # incompatible changes.
+
+    # You should not change this value, even if you update Home Manager. If you do
+    # want to update the value, then make sure to first check the Home Manager
+    # release notes.
+    stateVersion = "24.11"; # Please read the comment before changing.
+    packages = [];
+  };
+#+end_src
+***** Programs
+#+name: aphrodite-home-manager-programs
+#+begin_src nix
+  programs.home-manager.enable = true;
+#+end_src
+* Modules
+** Nixos
+*** udev rules - [[file:modules/nixos/udev/][udev/]]
+**** vial - [[file:modules/nixos/udev/vial.nix][vial.nix]]
+#+begin_src nix :tangle modules/nixos/udev/vial.nix :mkdirp yes
+  {
+    pkgs,
+    ...
+  }:
+  {
+    services.udev.packages = [
+      (pkgs.writeTextFile {
+        name = "udev-file";
+        text = ''
+          KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{serial}=="*vial:f64c2b3c*", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
+        '';
+        destination = "/etc/udev/rules.d/99-vial.rules";
+      })
+    ];
+  }
+#+end_src
+**** zsa-keyboards - [[file:modules/nixos/udev/zsa-keyboards.nix][zsa-keyboards.nix]]
+#+begin_src nix :tangle modules/nixos/udev/zsa-keyboards.nix :mkdirp yes
+  {
+    config,
+    lib,
+    pkgs,
+    ...
+  }:
+
+  {
+    services.udev.packages = [
+      (pkgs.writeTextFile {
+        name = "udev-file";
+        text = ''
+          # Rules for Oryx web flashing and live training
+          KERNEL=="hidraw*", ATTRS{idVendor}=="16c0", MODE="0664", GROUP="plugdev"
+          KERNEL=="hidraw*", ATTRS{idVendor}=="3297", MODE="0664", GROUP="plugdev"
+
+          # Legacy rules for live training over webusb (Not needed for firmware v21+)
+            # Rule for all ZSA keyboards
+            SUBSYSTEM=="usb", ATTR{idVendor}=="3297", GROUP="plugdev"
+            # Rule for the Moonlander
+            SUBSYSTEM=="usb", ATTR{idVendor}=="3297", ATTR{idProduct}=="1969", GROUP="plugdev"
+            # Rule for the Ergodox EZ
+            SUBSYSTEM=="usb", ATTR{idVendor}=="feed", ATTR{idProduct}=="1307", GROUP="plugdev"
+            # Rule for the Planck EZ
+            SUBSYSTEM=="usb", ATTR{idVendor}=="feed", ATTR{idProduct}=="6060", GROUP="plugdev"
+
+          # Wally Flashing rules for the Ergodox EZ
+          ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789B]?", ENV{ID_MM_DEVICE_IGNORE}="1"
+          ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789A]?", ENV{MTP_NO_PROBE}="1"
+          SUBSYSTEMS=="usb", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789ABCD]?", MODE:="0666"
+          KERNEL=="ttyACM*", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789B]?", MODE:="0666"
+
+          # Keymapp / Wally Flashing rules for the Moonlander and Planck EZ
+          SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="df11", MODE:="0666", SYMLINK+="stm32_dfu"
+          # Keymapp Flashing rules for the Voyager
+          SUBSYSTEMS=="usb", ATTRS{idVendor}=="3297", MODE:="0666", SYMLINK+="ignition_dfu"
+        '';
+        destination = "/etc/udev/rules.d/50-zsa.rules";
+      })
+    ];
+  }
+#+end_src
+*** Containers
+**** Podman
+#+begin_src nix :tangle modules/nixos/podman.nix :mkdirp yes
+  { pkgs, ... }:
+  {
+    virtualisation.containers.enable = true;
+    virtualisation = {
+      podman = {
+        enable = true;
+        defaultNetwork.settings.dns_enabled = true;
+      };
+    };
+
+    environment.systemPackages = with pkgs; [
+      dive
+      podman-tui
+      podman-compose
+    ];
+  }
+#+end_src
+*** Virtualization
+#+begin_src nix :tangle modules/nixos/virtualization.nix :mkdirp yes
+  { pkgs, ... }:
+  {
+    environment = {
+      systemPackages = [ pkgs.qemu ];
+    };
+
+    programs.virt-manager.enable = true;
+  }
+#+end_src
+** Home manager
+*** GUI applications
+**** Ghostty
+#+begin_src nix :tangle modules/home-manager/gui-apps/ghostty.nix :mkdirp yes
+  {
+    home.file.".config/ghostty/config" = {
+      text = ''
+        <<ghostty-window-settings>>
+        <<ghostty-theme>>
+        <<ghostty-font>>
+        <<ghostty-init-command>>
+        <<ghostty-keys>>
+      '';
+    };
+  }
+#+end_src
+***** Window settings
+#+name: ghostty-window-settings
+#+begin_src conf
+  window-padding-x = 10
+  window-padding-y = 10
+  macos-titlebar-style = hidden
+#+end_src
+***** Theme
+#+name: ghostty-theme
+#+begin_src conf
+  theme = 3024 Day
+#+end_src
+***** Font
+#+name: ghostty-font
+#+begin_src conf
+  font-family = "Iosevka Nerd Font"
+  font-family-bold = "Iosevka Nerd Font"
+  font-family-italic = "Iosevka Nerd Font"
+  font-family-bold-italic = "Iosevka Nerd Font"
+  font-style = "Light"
+  font-style-bold = "Light"
+  font-style-italic = "Light"
+  font-style-bold-italic = "Light"
+  font-size = 15
+#+end_src
+***** Initial command
+#+name: ghostty-init-command
+#+begin_src conf
+  command = xonsh
+#+end_src
+***** Keys
+#+name: ghostty-keys
+#+begin_src conf
+  
+#+end_src
+**** Nyxt
+#+begin_src nix :tangle modules/home-manager/gui-apps/nyxt.nix :noweb tangle :mkdirp yes
+  {
+    home.file."config/nyxt/config.lisp" = {
+      text = ''
+        <<nyxt-emacs-mode>>
+        <<nyxt-search-engines>>
+        <<nyxt-blocker-mode>>
+     '';
+    };
+  }
+#+end_src
+***** Enable Emacs mode
+#+name: nyxt-emacs-mode
+#+begin_src lisp
+  (define-configuration buffer
+      ((default-modes (append '(emacs-mode) %slot-value%))))
+#+end_src
+***** Search engines
+#+name: nyxt-search-engines
+#+begin_src lisp
+  (defvar *my-search-engines*
+    (list
+     '("google" "https://google.com/search?q=~a" "https://google.com"))
+    "List of search engines.")
+
+  (define-configuration context-buffer
+      "Go through the search engines above and make-search-engine out of them."
+    ((search-engines
+      (append %slot-default%
+              (mapcar
+               (lambda (engine) (apply 'make-search-engine engine))
+               ,*my-search-engines*)))))
+#+end_src
+***** Blocker mode
+#+name: nyxt-blocker-mode
+#+begin_src lisp
+  (define-configuration web-buffer
+      ((default-modes
+  	 (pushnew 'nyxt/mode/blocker:blocker-mode %slot-value%))))
+#+end_src
+**** Emacs
+***** Nix config
+#+begin_src nix :tangle modules/home-manager/gui-apps/emacs.nix :noweb tangle :mkdirp yes
+  { pkgs, ... }:
+  let
+    <<emacs-nix-package-config>>
+  in
+  {
+    <<emacs-enable-emacs>>
+    <<emacs-files>>
+  }
+#+end_src
+****** Emacs nix package config
+#+name: emacs-nix-package-config
+#+begin_src nix
+  my-emacs = pkgs.emacs.override {
+    withNativeCompilation = true;
+  };
+  my-emacs-with-packages = (pkgs.emacsPackagesFor my-emacs).emacsWithPackages ( epkgs: with epkgs; [
+    ace-window
+    almost-mono-themes
+    avy
+    cape
+    consult
+    consult-yasnippet
+    corfu
+    dashboard
+    direnv
+    doom-modeline
+    doom-themes
+    dwim-shell-command
+    eat
+    embark
+    embark-consult
+    embark-org-roam
+    ess
+    fireplace
+    flycheck
+    libmpdel
+    magit
+    marginalia
+    mpdel
+    nix-mode
+    orderless
+    org-roam
+    org-superstar
+    perspective
+    python-mode
+    pyvenv
+    ripgrep
+    salt-mode
+    verb
+    vertico
+    walkman
+    wgrep
+    yasnippet
+    (treesit-grammars.with-grammars (grammars: with grammars; [
+      tree-sitter-python
+      tree-sitter-bash
+    ]))
+  ]);
+#+end_src
+****** Enable Emacs
+#+name: emacs-enable-emacs
+#+begin_src nix
+  programs.emacs = {
+    enable = true;
+    package = my-emacs-with-packages;
+    extraConfig = ''
+      (load-file "~/.emacs.d/init.el")
+    '';
+  };
+#+end_src
+****** Files
+#+name: emacs-files
+#+begin_src nix :noweb yes
+  home = {
+    file = {
+      # init.el
+      ".emacs.d/init.el".text = ''
+        <<emacs-init>>
+      '';
+      
+      # configs
+      ".emacs.d/lisp/init-ace-window.el".text = ''
+        <<emacs-init-ace-window>>
+      '';
+      
+      ".emacs.d/lisp/init-avy.el".text = ''
+        <<emacs-init-avy>>
+      '';
+
+      ".emacs.d/lisp/init-cape.el".text = ''
+        <<emacs-init-cape>>
+      '';
+
+      ".emacs.d/lisp/init-consult.el".text = ''
+        <<emacs-init-consult>>
+      '';
+
+      ".emacs.d/lisp/init-corfu.el".text = ''
+        <<emacs-init-corfu>>
+      '';
+
+      ".emacs.d/lisp/init-custom-fun.el".text = ''
+        <<emacs-init-custom-fun>>
+      '';
+
+      ".emacs.d/lisp/init-dashboard.el".text = ''
+        <<emacs-init-dashboard>>
+      '';
+
+      ".emacs.d/lisp/init-dired.el".text = ''
+        <<emacs-init-dired>>
+      '';
+
+      ".emacs.d/lisp/init-direnv.el".text = ''
+        <<emacs-init-direnv>>
+      '';
+
+      ".emacs.d/lisp/init-doom-modeline.el".text = ''
+        <<emacs-init-doom-modeline>>
+      '';
+
+      ".emacs.d/lisp/init-dwim-shell-command.el".text = ''
+        <<emacs-init-dwim-shell-command>>
+      '';
+
+      ".emacs.d/lisp/init-eglot.el".text = ''
+        <<emacs-init-eglot>>
+      '';
+
+      ".emacs.d/lisp/init-emacs.el".text = ''
+        <<emacs-init-emacs>>
+      '';
+
+      ".emacs.d/lisp/init-embark.el".text = ''
+        <<emacs-init-embark>>
+      '';
+
+      ".emacs.d/lisp/init-flycheck.el".text = ''
+        <<emacs-init-flycheck>>
+      '';
+
+      ".emacs.d/lisp/init-magit.el".text = ''
+        <<emacs-init-magit>>
+      '';
+
+      ".emacs.d/lisp/init-marginalia.el".text = ''
+        <<emacs-init-marginalia>>
+      '';
+
+      ".emacs.d/lisp/init-nix-mode.el".text = ''
+        <<emacs-init-nix-mode>>
+      '';
+
+      ".emacs.d/lisp/init-orderless.el".text = ''
+        <<emacs-init-orderless>>
+      '';
+
+      ".emacs.d/lisp/init-org.el".text = ''
+        <<emacs-init-org>>
+      '';
+
+      ".emacs.d/lisp/init-org-roam.el".text = ''
+        <<emacs-init-org-roam>>
+      '';
+
+      ".emacs.d/lisp/init-org-superstar.el".text = ''
+        <<emacs-init-org-superstar>>
+      '';
+
+      ".emacs.d/lisp/init-perspective.el".text = ''
+        <<emacs-init-perspective>>
+      '';
+
+      ".emacs.d/lisp/init-salt-mode.el".text = ''
+        <<emacs-init-salt-mode>>
+      '';
+
+      ".emacs.d/lisp/init-savehist.el".text = ''
+        <<emacs-init-savehist>>
+      '';
+
+      ".emacs.d/lisp/init-treesit.el".text = ''
+        <<emacs-init-treesit>>
+      '';
+
+      ".emacs.d/lisp/init-use-package.el".text = ''
+        <<emacs-init-use-package>>
+      '';
+
+      ".emacs.d/lisp/init-vertico.el".text = ''
+        <<emacs-init-vertico>>
+      '';
+
+      ".emacs.d/lisp/init-yas.el".text = ''
+        <<emacs-init-yas>>
+      '';
+
+      # custom functions  
+      ".emacs.d/lisp/tuxikus/custom-fun.el".text = ''
+        <<emacs-custom-fun>>
+      '';
+
+      # themes
+      ".emacs.d/themes/tuxikus-basic-theme".text = ''
+        <<emacs-themes-tuxikus-basic-theme>>
+      '';
+
+      # snippets
+      # emacs-lisp-mode
+      ".emacs.d/snippets/emacs-lisp-mode/config-template".text = ''
+        <<emacs-snippets-emacs-lisp-mode-config-template>>
+      '';
+
+      # fundamental-mode
+      ".emacs.d/snippets/fundamental-mode/date".text = ''
+        <<emacs-snippets-fundamental-mode-date>>
+      '';
+
+      # nix-mode
+      ".emacs.d/snippets/nix-mode/flake-dev-env".text = ''
+        <<emacs-snippets-nix-mode-flake-dev-env>>
+      '';
+
+      ".emacs.d/snippets/nix-mode/module".text = ''
+        <<emacs-snippets-nix-mode-module>>
+      '';
+
+      # org-mode
+      ".emacs.d/snippets/org-mode/code-block".text = ''
+        <<emacs-snippets-org-mode-code-block>>
+      '';
+
+      ".emacs.d/snippets/org-mode/code-block-emacs-lisp".text = ''
+        <<emacs-snippets-org-mode-code-block-emacs-lisp>>
+      '';
+
+      ".emacs.d/snippets/org-mode/code-block-python".text = ''
+        <<emacs-snippets-org-mode-code-block-python>>
+      '';
+    };
+  };
+#+end_src
+***** Emacs config
+****** init.el
+#+name: emacs-init
+#+begin_src emacs-lisp
+  ;; init.el --- -*- lexical-binding: t no-byte-compile: t -*-
+  ;;; Commentary:
+  ;;; Code:
+  (add-to-list 'load-path "~/.emacs.d/lisp")
+
+  (require 'init-doom-modeline)
+  (require 'init-use-package)
+  (require 'init-dwim-shell-command)
+  (require 'init-perspective)
+  (require 'init-org-superstar)
+  (require 'init-flycheck)
+  (require 'init-corfu)
+  (require 'init-cape)
+  (require 'init-dashboard)
+  (require 'init-dired)
+  (require 'init-consult)
+  (require 'init-ace-window)
+  (require 'init-savehist)
+  (require 'init-treesit)
+  (require 'init-marginalia)
+  (require 'init-emacs)
+  (require 'init-vertico)
+  (require 'init-orderless)
+  (require 'init-direnv)
+  (require 'init-nix-mode)
+  (require 'init-magit)
+  (require 'init-avy)
+  (require 'init-org-roam)
+  (require 'init-org)
+  (require 'init-yas)
+  (require 'init-salt-mode)
+  (require 'init-eglot)
+  (require 'init-custom-fun)
+  (require 'init-embark)
+
+  (require 'tuxikus-eat)
+  ;; init.el ends here
+#+end_src
+****** Configs
+******* Ace window
+#+name: emacs-init-ace-window
+#+begin_src emacs-lisp
+  ;;; init-ace-window.el --- -*- lexical-binding: t -*-
+  ;;; Commentary:
+  ;;; Code:
+
+  (use-package ace-window
+    :bind (("M-o" . ace-window))
+    :config
+    (setq aw-dispatch-always t)
+    (setq aw-keys '(?a ?o ?e ?u ?h ?t ?n ?s ?f)))
+
+  (provide 'init-ace-window)
+
+  ;;; init-ace-window.el ends here
+#+end_src
+******* Avy
+#+name: emacs-init-avy
+#+begin_src emacs-lisp
+  ;;; init-avy.el --- -*- lexical-binding: t -*-
+  ;;; Commentary:
+  ;;; Code:
+
+  (use-package avy
+    :bind
+    (("M-g f" . avy-goto-line)
+     ("M-g w" . avy-goto-word-1)
+     ("C-'" . avy-goto-char-2)))
+
+  (provide 'init-avy)
+
+  ;;; init-avy.el ends here
+#+end_src
+******* Cape
+#+name: emacs-init-cape
+#+begin_src emacs-lisp
+  ;;; init-cape.el --- -*- lexical-binding: t -*-
+  ;;; Commentary:
+  ;;; Code:
+
+  (use-package cape
+    :bind ("M-<tab>" . cape-prefix-map)
+    :init
+    (add-hook 'completion-at-point-functions #'cape-dabbrev)
+    (add-hook 'completion-at-point-functions #'cape-abbrev)
+    (add-hook 'completion-at-point-functions #'cape-file)
+    (add-hook 'completion-at-point-functions #'cape-elisp-block)
+    (add-hook 'completion-at-point-functions #'cape-history))
+
+  (provide 'init-cape)
+
+  ;;; init-cape.el ends here
+#+end_src
+******* Consult
+#+name: emacs-init-consult
+#+begin_src emacs-lisp
+  ;;; init-consult.el --- -*- lexical-binding: t -*-
+  ;;; Commentary:
+  ;;; Code:
+
+  (use-package consult)
+
+  (provide 'init-consult)
+
+  ;;; init-consult.el ends here
+#+end_src
+******* Corfu
+#+name: emacs-init-corfu
+#+begin_src emacs-lisp
+  ;;; init-corfu.el --- -*- lexical-binding: t -*-
+  ;;; Commentary:
+  ;;; Code:
+
+  (use-package corfu
+    :init
+    (global-corfu-mode))
+
+  (provide 'init-corfu)
+
+  ;;; init-corfu.el ends here
+#+end_src
+******* Custom fun
+#+name: emacs-init-custom-fun
+#+begin_src emacs-lisp
+  ;;; init-custom-fun.el --- -*- lexical-binding: t -*-
+  ;;; Commentary:
+  ;;; Code:
+
+  (use-package custom-fun
+    :load-path "~/.emacs.d/lisp/tuxikus"
+    :demand)
+
+  (provide 'init-custom-fun)
+
+  ;;; init-custom-fun.el ends here
+#+end_src
+******* Dashboard
+#+name: emacs-init-dashboard
+#+begin_src emacs-lisp
+  ;;; init-dashboard.el --- -*- lexical-binding: t -*-
+  ;;; Commentary:
+  ;;; Code:
+
+  (use-package dashboard
+    :config
+    (setq dashboard-projects-backend 'project-el)
+
+    (setq dashboard-items '((recents   . 10)
+                            (bookmarks . 10)
+                            (projects  . 10)
+                            (agenda    . 10)
+                            (registers . 10)))
+
+    (setq dashboard-item-shortcuts '((recents   . "r")
+                                     (bookmarks . "m")
+                                     (projects  . "p")
+                                     (agenda    . "a")
+                                     (registers . "e")))
+
+    (setq initial-buffer-choice (lambda () (get-buffer-create dashboard-buffer-name)))
+
+    (dashboard-setup-startup-hook))
+
+  (provide 'init-dashboard)
+
+  ;;; init-dashboard.el ends here
+#+end_src
+******* Dired
+#+name: emacs-init-dired
+#+begin_src emacs-lisp
+  ;;; init-dired.el --- -*- lexical-binding: t -*-
+  ;;; Commentary:
+  ;;; Code:
+
+  (use-package dired
+    :config
+    (put 'dired-find-alternate-file 'disabled nil)
+    :hook
+    (dired-mode . (lambda () (dired-hide-details-mode 1))))
+
+  (provide 'init-dired)
+
+  ;;; init-dired.el ends here
+#+end_src
+******* Direnv
+#+name: emacs-init-direnv
+#+begin_src emacs-lisp
+  ;;; init-direnv.el --- -*- lexical-binding: t -*-
+  ;;; Commentary:
+  ;;; Code:
+
+  (use-package direnv
+    :config
+    (direnv-mode))
+
+  (provide 'init-direnv)
+
+  ;;; init-direnv.el ends here
+ #+end_src
+******* Doom modeline
+#+name: emacs-init-doom-modeline
+#+begin_src emacs-lisp
+  ;;; init-doom-modeline.el --- -*- lexical-binding: t -*-
+  ;;; Commentary:
+  ;;; Code:
+
+  (use-package doom-modeline
+    :init (doom-modeline-mode 1))
+
+  (provide 'init-doom-modeline)
+
+  ;;; init-doom-modeline.el ends here
+#+end_src
+******* dwim shell command
+#+name: emacs-init-dwim-shell-command
+#+begin_src emacs-lisp
+  ;;; init-dwim-shell-command.el --- -*- lexical-binding: t -*-
+  ;;; Commentary:
+  ;;; Code:
+
+  (use-package dwim-shell-command
+    :config
+    (unload-feature 'dwim-shell-command-autoloads t))
+
+  (provide 'init-dwim-shell-command)
+
+  ;;; init-dwim-shell-command.el ends here
+#+end_src
+******* Eglot
+#+name: emacs-init-eglot
+#+begin_src emacs-lisp
+  ;;; init-eglot.el --- -*- lexical-binding: t -*-
+  ;;; Commentary:
+  ;;; Code:
+
+  (use-package eglot
+    :hook
+    (add-hook 'python-ts-mode-hook 'eglot-ensure)
+    (add-hook 'python-mode-hook 'eglot-ensure)
+    :config
+    :custom
+    (eglot-autoshutdown t)  ;; shutdown language server after closing last file
+    (eglot-confirm-server-initiated-edits nil))  ;; allow edits without confirmation
+
+  (provide 'init-eglot)
+
+  ;;; init-eglot.el ends here
+#+end_src
+******* Emacs
+#+name: emacs-init-emacs
+#+begin_src emacs-lisp
+  ;;; init-emacs.el --- -*- lexical-binding: t -*-
+  ;;; Commentary:
+  ;;; Code:
+
+  (use-package emacs
+    :init
+    (setq create-lockfiles nil
+  	make-backup-files nil
+  	custom-theme-directory "~/.emacs.d/themes"
+  	inhibit-startup-message t
+  	inhibit-startup-screen t
+  	initial-scratch-message ";;; Emacs is fun")
+    (fset 'yes-or-no-p 'y-or-n-p)
+    (tool-bar-mode -1)
+    (menu-bar-mode -1)
+    (scroll-bar-mode -1)
+    (load-theme 'doom-flatwhite t)
+    (set-face-attribute 'default nil
+                      :family "Iosevka Nerd Font"
+                      :height 150
+                      :weight 'light
+                      :width 'normal)
+
+    (set-face-attribute 'bold nil
+  		      :family "Iosevka Nerd Font"
+  		      :weight 'light)
+
+    (set-face-attribute 'italic nil
+  		      :family "Iosevka Nerd Font"
+  		      :slant 'italic
+  		      :weight 'light)
+
+    (set-face-attribute 'bold-italic nil
+  		      :family "Iosevka Nerd Font"
+  		      :weight 'light
+  		      :slant 'italic)
+
+    ;; window divider
+    (setq window-divider-default-right-width 5
+  	window-divider-default-bottom-width 5
+  	window-divider-default-places t)
+
+    (window-divider-mode 1)
+    ;; Add prompt indicator to `completing-read-multiple'.
+    ;; We display [CRM<separator>], e.g., [CRM,] if the separator is a comma.
+    (defun crm-indicator (args)
+      (cons (format "[CRM%s] %s"
+                    (replace-regexp-in-string
+                     "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
+                     crm-separator)
+                    (car args))
+            (cdr args)))
+    (advice-add #'completing-read-multiple :filter-args #'crm-indicator)
+
+    ;; Do not allow the cursor in the minibuffer prompt
+    (setq minibuffer-prompt-properties
+          '(read-only t cursor-intangible t face minibuffer-prompt))
+    (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
+    :custom
+    (enable-recursive-minibuffers t)
+    (read-extended-command-predicate #'command-completion-default-include-p)
+    (tab-always-indent 'complete)
+    
+    ;; Emacs 30 and newer: Disable Ispell completion function.
+    ;; Try `cape-dict' as an alternative.
+    (text-mode-ispell-word-completion nil)
+
+    ;; Hide commands in M-x which do not apply to the current mode.  Corfu
+    ;; commands are hidden, since they are not used via M-x. This setting is
+    ;; useful beyond Corfu.
+    (read-extended-command-predicate #'command-completion-default-include-p))
+
+  (provide 'init-emacs)
+  
+  ;;; init-emacs.el ends here
+#+end_src
+******* Embark
+#+name: emacs-init-embark
+#+begin_src emacs-lisp
+  ;;; init-embark.el --- -*- lexical-binding: t -*-
+  ;;; Commentary:
+  ;;; Code:
+
+  (use-package embark
+    :bind
+    ("C-." . embark-act)
+    ("M-." . embark-dwim))
+
+  (provide 'init-embark)
+
+  ;;; init-embark.el ends here
+#+end_src
+******* Flycheck
+#+name: emacs-init-flycheck
+#+begin_src emacs-lisp
+  ;;; init-flycheck.el --- -*- lexical-binding: t -*-
+  ;;; Commentary:
+  ;;; Code:
+
+  (use-package flycheck
+    :hook
+    (after-init . global-flycheck-mode))
+
+  (provide 'init-flycheck)
+
+  ;;; init-flycheck.el ends here
+#+end_src
+******* Magit
+#+name: emacs-init-magit
+#+begin_src emacs-lisp
+  ;;; init-magit.el --- -*- lexical-binding: t -*-
+  ;;; Commentary:
+  ;;; Code:
+
+  (use-package magit)
+
+  (provide 'init-magit)
+
+  ;;; init-magit.el ends here
+#+end_src
+******* Marginalia
+#+name: emacs-init-marginalia
+#+begin_src emacs-lisp
+  ;;; init-marginalia.el --- -*- lexical-binding: t -*-
+  ;;; Commentary:
+  ;;; Code:
+
+  (use-package marginalia
+    :bind (:map minibuffer-local-map
+           ("M-A" . marginalia-cycle))
+    :init
+    (marginalia-mode))
+
+  (provide 'init-marginalia)
+
+  ;;; init-marginalia.el ends here
+#+end_src
+******* Nix mode
+#+name: emacs-init-nix-mode
+#+begin_src emacs-lisp
+  ;;; init-nix-mode.el --- -*- lexical-binding: t -*-
+  ;;; Commentary:
+  ;;; Code:
+
+  (use-package nix-mode
+    :mode "\\.nix\\'")
+
+  (provide 'init-nix-mode)
+
+  ;;; init-nix-mode.el ends here
+#+end_src
+******* Orderless
+#+name: emacs-init-orderless
+#+begin_src emacs-lisp
+  ;;; init-orderless.el --- -*- lexical-binding: t -*-
+  ;;; Commentary:
+  ;;; Code:
+
+  (use-package orderless
+    :custom
+    (completion-styles '(orderless flex))
+    (completion-category-defaults nil)
+    (completion-category-overrides '((file (styles basic partial-completion)))))
+
+  (provide 'init-orderless)
+
+  ;;; init-orderless.el ends here
+#+end_src
+******* Org
+#+name: emacs-init-org
+#+begin_src emacs-lisp
+  ;;; init-org.el --- -*- lexical-binding: t -*-
+  ;;; Commentary:
+  ;;; Code:
+
+  (use-package org
+    :init
+    (setq org-attach-id-dir "~/org/.attach"
+  	org-log-done 'time
+  	org-hide-emphasis-markers t)
+
+    :config
+    (set-face-attribute 'org-level-1 nil :height 1.5)
+    (set-face-attribute 'org-level-2 nil :height 1.4)
+    (set-face-attribute 'org-level-3 nil :height 1.3)
+    (set-face-attribute 'org-level-4 nil :height 1.2)
+    (set-face-attribute 'org-level-5 nil :height 1.1)
+    (set-face-attribute 'org-level-6 nil :height 1.0)
+    (set-face-attribute 'org-level-7 nil :height 1.0)
+    (set-face-attribute 'org-level-8 nil :height 1.0)
+    (set-face-attribute 'org-block-begin-line nil :background "#f0f0f0")
+    (set-face-attribute 'org-block-end-line nil :background "#f0f0f0")
+    (set-face-attribute 'org-document-title nil :height 2.0)
+
+    ;; load org babel languages
+    (org-babel-do-load-languages 'org-babel-load-languages '((shell . t)
+  							   (emacs-lisp . t)
+  							   (python . t))))
+
+  (provide 'init-org)
+
+  ;;; init-org.el ends here
+#+end_src
+******* Org roam
+#+name: emacs-init-org-roam
+#+begin_src emacs-lisp
+  ;;; init-org-roam.el --- -*- lexical-binding: t -*-
+  ;;; Commentary:
+  ;;; Code:
+
+  (use-package org-roam
+    :custom
+    (org-roam-directory (concat org-directory "/roam"))
+    :config
+    ;; If you're using a vertical completion framework, you might want a more informative completion interface
+    (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
+    (org-roam-db-autosync-mode)
+    ;; If using org-roam-protocol
+    (require 'org-roam-protocol))
+
+  (provide 'init-org-roam)
+
+  ;;; init-org-roam.el ends here
+#+end_src
+******* Org superstar
+#+name: emacs-init-org-superstar
+#+begin_src emacs-lisp
+  ;;; init-org-superstar.el --- -*- lexical-binding: t -*-
+  ;;; Commentary:
+  ;;; Code:
+
+  (use-package org-superstar
+    :hook
+    (org-mode . (lambda () (org-superstar-mode 1))))
+
+  (provide 'init-org-superstar)
+
+  ;;; init-org-superstar.el ends here
+#+end_src
+******* Perspective
+#+name: emacs-init-perspective
+#+begin_src emacs-lisp
+  ;;; init-perspective.el --- -*- lexical-binding: t -*-
+  ;;; Commentary:
+  ;;; Code:
+
+  (use-package perspective
+    :bind
+    ("C-x x s" . persp-switch)
+    ("C-x x x" . persp-kill)
+    :init
+    (persp-mode))
+
+  (provide 'init-perspective)
+
+  ;;; init-perspective.el ends here
+#+end_src
+******* Salt mode
+#+name: emacs-init-salt-mode
+#+begin_src emacs-lisp
+  ;;; init-salt-mode.el --- -*- lexical-binding: t -*-
+  ;;; Commentary:
+  ;;; Code:
+
+  (use-package salt-mode
+    :hook
+    (salt-mode . (lambda () (flyspell-mode 1))))
+
+  (provide 'init-salt-mode)
+
+  ;;; init-salt-mode.el ends here
+#+end_src
+******* Savehist
+#+name: emacs-init-savehist
+#+begin_src emacs-lisp
+  ;;; init-savehist.el --- -*- lexical-binding: t -*-
+  ;;; Commentary:
+  ;;; Code:
+
+  (use-package savehist
+    :init
+    (savehist-mode))
+
+  (provide 'init-savehist)
+
+  ;;; init-savehist.el ends here
+#+end_src
+******* Treesit
+#+name: emacs-init-treesit
+#+begin_src emacs-lisp
+  ;;; init-treesit.el --- -*- lexical-binding: t -*-
+  ;;; Commentary:
+  ;;; Code:
+
+  (use-package treesit
+    :init
+    (setq major-mode-remap-alist
+  	'((bash-mode . bash-ts-mode)
+  	  (python-mode . python-ts-mode))))
+
+  (provide 'init-treesit)
+
+  ;;; init-treesit.el ends here
+#+end_src
+******* Use package
+#+name: emacs-init-use-package
+#+begin_src emacs-lisp
+  ;;; init-use-package.el --- -*- lexical-binding: t -*-
+  ;;; Commentary:
+  ;;; Code:
+
+  (use-package use-package
+    :config
+    (setq use-package-compute-statistics t))
+
+  (provide 'init-use-package)
+
+  ;;; init-use-package.el ends here
+#+end_src
+******* Vertico
+#+name: emacs-init-vertico
+#+begin_src emacs-lisp
+  ;;; init-vertico.el --- -*- lexical-binding: t -*-
+  ;;; Commentary:
+  ;;; Code:
+
+  (use-package vertico
+    :custom
+    (vertico-scroll-margin 0) ;; Different scroll margin
+    (vertico-count 20) ;; Show more candidates
+    ;; (vertico-resize t) ;; Grow and shrink the Vertico minibuffer
+    (vertico-cycle t) ;; Enable cycling for `vertico-next/previous'
+    :init
+    (vertico-mode))
+
+  (provide 'init-vertico)
+
+  ;;; init-vertico.el ends here
+#+end_src
+******* Yas
+#+name: emacs-init-yas
+#+begin_src emacs-lisp
+  ;;; init-yas.el --- -*- lexical-binding: t -*-
+  ;;; Commentary:
+  ;;; Code:
+
+  (use-package yasnippet
+    :config
+    (yas-global-mode 1))
+
+  (provide 'init-yas)
+
+  ;;; init-yas.el ends here
+#+end_src
+****** Custom functions
+#+name: emacs-custom-fun
+#+begin_src emacs-lisp
+(defun tuxikus/get-jira-ticket-number (branch)
+  (when (string-match "[A-Z]\\{8\\}-[0-9]*" branch)
+    (message (match-string 0 branch))))
+
+(add-hook 'git-commit-setup-hook '(lambda () (insert (tuxikus/get-jira-ticket-number (magit-get-current-branch)))))
+
+(defun tuxikus/get-bookmarks-from-file ()
+  "Get bookmarks from the bookmark file"
+  (with-temp-buffer
+    (insert-file-contents "~/.bookmarks.org")
+    (org-mode)
+    (let (bookmarks)
+      (org-element-map (org-element-parse-buffer) 'link
+        (lambda (l)
+          (let* ((link (org-element-property :raw-link l))
+                 (name (org-element-interpret-data (org-element-contents l)))
+                 (tags (org-element-property :tags (org-element-property :parent l))))
+            (push (concat name
+                          "\n"
+                          link
+                          "\n"
+                          (format "[%s]" (mapconcat #'identity tags ", "))) bookmarks))))
+      bookmarks)))
+
+(defun tuxikus/add-bookmark ()
+  "Add a new bookmark to the bookmark file."
+  (interactive)
+  (let* ((title (read-from-minibuffer "Title: "))
+         (url (read-from-minibuffer "URL: "))
+         (tags (read-from-minibuffer "Tags: ")))
+    (write-region (format "* [[%s][%s]] %s\n" url title tags) nil "~/.bookmarks.org" 'append)))
+
+(defun tuxikus/edit-bookmark ()
+  "TODO implement."
+  (interactive)
+  (message "Not implemented."))
+
+(defun tuxikus/delete-bookmark ()
+  "TODO implement."
+  (interactive)
+  (message "Not implemented."))
+
+(defun tuxikus/open-bookmark ()
+  "Select a bookmark and open it."
+  (interactive)
+  (browse-url
+   (seq-elt (split-string
+             (completing-read "Open: " (tuxikus/get-bookmarks-from-file))
+             "\n") 1)))
+
+(defun tuxikus/change-org-directory ()
+  "Change the active org directory."
+  (interactive)
+  (let ((selection (completing-read "Select: " '("~/org" "~/org-edu"))))
+    (setq org-directory selection
+          org-attach-id-dir (concat org-directory "/.attach")
+          org-roam-directory (concat org-directory "/roam")
+          org-roam-db-location (concat org-directory "/org-roam.db"))))
+
+(provide 'custom-fun)
+#+end_src
+****** Themes
+******* tuxikus-basic-theme
+#+name: emacs-themes-tuxikus-basic-theme
+#+begin_src emacs-lisp
+  (deftheme tuxikus-basic
+    "Nice theme")
+
+  (custom-theme-set-faces
+   'tuxikus-basic
+   '(default ((t (:family "Iosevka Nerd Font" :width normal :height 151 :weight regular :slant normal :underline nil :overline nil :extend nil :strike-through nil :box nil :inverse-video nil :foreground "#00ff00" :background "#000000" :stipple nil :inherit nil))))
+   '(cursor ((t (:background "#ffffff"))))
+   '(fixed-pitch ((t (:family "Monospace"))))
+   '(variable-pitch ((((type w32)) (:foundry "outline" :family "Arial")) (t (:family "Sans Serif"))))
+   '(escape-glyph ((t (:foreground "#e7a59a"))))
+   '(homoglyph ((t (:foreground "#f5aa80"))))
+   '(minibuffer-prompt ((t (:inherit (modus-themes-prompt)))))
+   '(highlight ((t (:foreground "#00ff00" :background "#00415e"))))
+   '(region ((t (:extend t :foreground "#ffffff" :background "#3c3c3c"))))
+   '(shadow ((t (:foreground "#a8a8a8"))))
+   '(secondary-selection ((t (:extend t :inherit (modus-themes-special-cold)))))
+   '(trailing-whitespace ((t (:background "#a4202a"))))
+   '(font-lock-bracket-face ((t (:inherit (font-lock-punctuation-face)))))
+   '(font-lock-builtin-face ((t (:foreground "#f78fe7" :inherit (modus-themes-bold)))))
+   '(font-lock-comment-delimiter-face ((t (:inherit (font-lock-comment-face)))))
+   '(font-lock-comment-face ((t (:foreground "#a8a8a8" :inherit (modus-themes-slant)))))
+   '(font-lock-constant-face ((t (:foreground "#00bcff"))))
+   '(font-lock-delimiter-face ((t (:inherit (font-lock-punctuation-face)))))
+   '(font-lock-doc-face ((t (:foreground "#b0d6f5" :inherit (modus-themes-slant)))))
+   '(font-lock-doc-markup-face ((t (:inherit (font-lock-constant-face)))))
+   '(font-lock-escape-face ((t (:inherit (font-lock-regexp-grouping-backslash)))))
+   '(font-lock-function-call-face ((t (:inherit (font-lock-function-name-face)))))
+   '(font-lock-function-name-face ((t (:foreground "#feacd0"))))
+   '(font-lock-keyword-face ((t (:foreground "#b6a0ff" :inherit (modus-themes-bold)))))
+   '(font-lock-negation-char-face ((t (:foreground "#d0bc00" :inherit (modus-themes-bold)))))
+   '(font-lock-number-face ((t nil)))
+   '(font-lock-misc-punctuation-face ((t (:inherit (font-lock-punctuation-face)))))
+   '(font-lock-operator-face ((t nil)))
+   '(font-lock-preprocessor-face ((t (:foreground "#ff9077"))))
+   '(font-lock-property-name-face ((t (:inherit (font-lock-variable-name-face)))))
+   '(font-lock-property-use-face ((t (:inherit (font-lock-property-name-face)))))
+   '(font-lock-punctuation-face ((t nil)))
+   '(font-lock-regexp-grouping-backslash ((t (:foreground "#abab00" :inherit (modus-themes-bold)))))
+   '(font-lock-regexp-grouping-construct ((t (:foreground "#e7a59a" :inherit (modus-themes-bold)))))
+   '(font-lock-string-face ((t (:foreground "#79a8ff"))))
+   '(font-lock-type-face ((t (:foreground "#6ae4b9" :inherit (modus-themes-bold)))))
+   '(font-lock-variable-name-face ((t (:foreground "#00d3d0"))))
+   '(font-lock-variable-use-face ((t (:inherit (font-lock-variable-name-face)))))
+   '(font-lock-warning-face ((t (:foreground "#d0bc00" :inherit (modus-themes-bold)))))
+   '(button ((t (:underline (:color foreground-color :style line :position nil) :foreground "#00bcff"))))
+   '(link ((t (:inherit (button)))))
+   '(link-visited ((t (:underline (:color foreground-color :style line :position nil) :foreground "#b6a0ff" :inherit (button)))))
+   '(fringe ((t (:foreground "#ffffff" :background "#000000"))))
+   '(header-line ((t (:box (:line-width (4 . 4) :color "#212121" :style nil) :foreground "#dddddd" :background "#212121" :inherit (modus-themes-ui-variable-pitch)))))
+   '(tooltip ((t (:foreground "#ffffff" :background "#203448"))))
+   '(mode-line ((t (:box (:line-width (6 . 6) :color "#2a2a66" :style nil) :foreground "#ffffff" :background "#2a2a66" :inherit (modus-themes-ui-variable-pitch)))))
+   '(mode-line-buffer-id ((t (:inherit (bold)))))
+   '(mode-line-emphasis ((t (:foreground "#d5b1ff" :inherit (bold)))))
+   '(mode-line-highlight ((t (:box (:line-width (1 . 1) :color "#ffffff" :style nil) :inherit (highlight)))))
+   '(mode-line-inactive ((t (:box (:line-width (6 . 6) :color "#1e1e1e" :style nil) :foreground "#bfc0c4" :background "#1e1e1e" :inherit (modus-themes-ui-variable-pitch)))))
+   '(isearch ((t (:inherit (modus-themes-search-success)))))
+   '(isearch-fail ((t (:inherit (modus-themes-refine-red)))))
+   '(lazy-highlight ((t (:inherit (modus-themes-search-success-lazy)))))
+   '(match ((t (:inherit (modus-themes-special-calm)))))
+   '(next-error ((t (:extend t :inherit (modus-themes-subtle-red)))))
+   '(query-replace ((t (:inherit (modus-themes-intense-red))))))
+
+  (provide-theme 'tuxikus-basic)
+  #+end_src
+****** Snippets
+******* emacs-lisp-mode
+#+name: emacs-snippets-emacs-lisp-mode-config-template
+#+begin_src snippet
+  # -*- mode: snippet -*-
+  # name: init-template
+  # key: init-template
+  # key: ct
+  # --
+  ;;; $1.el --- -*- lexical-binding: t -*-
+  ;;; Commentary:
+  ;;; Code:
+
+  $0
+
+  (provide '$2)
+
+  ;;; $3.el ends here
+#+end_src
+******* fundamental-mode
+#+name: emacs-snippets-fundamental-mode-date
+#+begin_src snippet
+  # -*- mode: snippet -*-
+  # name: date
+  # key: date
+  # --
+  `(format-time-string "%Y-%m-%d")`$0
+#+end_src
+******* nix-mode
+******** flake-dev-env
+#+name: emacs-snippets-nix-mode-flake-dev-env
+#+begin_src snippet
+  # -*- mode: snippet -*-
+  # name: flake-dev-env
+  # key: flake-dev-env
+  # --
+  {
+    inputs = {
+      nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+      flake-utils.url = "github:numtide/flake-utils";
+    };
+    
+    outputs = { self, nixpkgs, flake-utils }:
+      flake-utils.lib.eachDefaultSystem (system:
+        let
+          pkgs = import nixpkgs { inherit system; };
+        in
+          {
+            devShell = with pkgs; mkShell {
+              buildInputs = [
+                $1
+              ];
+  	    shellHook = '''
+  	      $2
+  	    ''';
+            };
+          }
+      );
+  }
+#+end_src
+******** module
+#+name: emacs-snippets-nix-mode-module
+#+begin_src snippet
+  # -*- mode: snippet -*-
+  # name: module
+  # key: module
+  # --
+  { config, pkgs, ... }:
+  {
+    $1imports = [];
+    options = {};
+    config = {};
+  }
+#+end_src
+******* org-mode
+******** code-block
+#+name: emacs-snippets-org-mode-code-block
+#+begin_src snippet
+  # -*- mode: snippet -*-
+  # name: code-block
+  # key: cb
+  # --
+  ,#+begin_src $1
+  $0
+  ,#+end_src
+#+end_src
+#+end_src
+******** code-block-emacs-lisp
+#+name: emacs-snippets-org-mode-code-block-emacs-lisp
+#+begin_src snippet
+  # -*- mode: snippet -*-
+  # name: code-block-emacs-lisp
+  # key: cbel
+  # --
+  ,#+begin_src emacs-lisp
+  $0
+  ,#+end_src
+#+end_src
+******** code-block-python
+#+name: emacs-snippets-org-mode-code-block-python
+#+begin_src snippet
+  # -*- mode: snippet -*-
+  # name: code-block-python
+  # key: cbpy
+  # --
+  ,#+begin_src python
+  $0
+  ,#+end_src
+#+end_src
+#+end_src
+**** Fuzzel
+#+begin_src nix :tangle modules/home-manager/gui-apps/fuzzel.nix :mkdirp yes
+{
+  home.file.".config/fuzzel/fuzzel.ini" = {
+    text = ''
+      [font]
+      Iosevka Nerd Font:weight=light
+      [colors]
+      background=ffffffff
+      text=000000ff
+      prompt=bac2deff
+      placeholder=7f849cff
+      input=cdd6f4ff
+      match=cba6f7ff
+      selection=585b70ff
+      selection-text=cdd6f4ff
+      selection-match=cba6f7ff
+      counter=7f849cff
+      border=000000ff
+    '';
+  };
+}
+#+end_src
+*** Scripts
+**** home-backup
+#+begin_src nix :tangle modules/home-manager/scripts/home-backup.nix :noweb tangle :mkdirp yes
+  {
+    home.file.".local/bin/home-backup" = {
+      text = ''
+        <<script-home-backup>>
+      '';
+      
+      executable = true;
+    };
+  }
+
+#+end_src
+
+#+name: script-home-backup
+#+begin_src shell
+#!/usr/bin/env bash
+# Title          : home-backupp
+# Date           : 2024-04-11
+# Author         : tuxikus
+# Version        : 1.1
+# Description    : Create backup of home directory
+# Options        :  -o destination/output path
+#                   -d enable --dry-run
+#                   -x enable --delete
+#                   --help print help
+#                   --version print version
+
+version="1.1"
+excludes="--exclude={'*/lost+found/','lost+found/'}"
+log_file_name=".backup-log.txt"
+enable_delete=
+enable_dry_run=
+options=
+rsync_command=
+destination_path=
+
+print_help() {
+    cat <<END_OF_HELP
+------------------------------------------------------
+    [EXAMPLE] home-backup -o /path/to/backup/
+    [EXAMPLE] home-backup -do /path/to/backup/
+    [EXAMPLE] home-backup -dxo /path/to/backup/
+
+    OPTIONS:
+    -o          destination
+    -d          enable dry-run
+    -x          enable delete
+    --help      print help
+    --version   print version
+------------------------------------------------------
+END_OF_HELP
+}
+
+print_version() {
+    echo $version
+}
+
+check_path() {
+    if [ ! -d $1 ]; then
+        echo "Wrong usage!"
+        print_help
+        exit 0
+    fi
+}
+
+write_log() {
+    log_file_path="$HOME/''${log_file_name}"
+
+    # check if log file exists
+    if [ ! -f $log_file_path ]; then
+        touch $log_file_path
+    fi
+
+    cat >> $log_file_path <<END_OF_LOG
+$(date '+%F_%H:%M')_$1
+END_OF_LOG
+}
+
+if [ "$#" -eq 0 ]; then
+    echo "Illegal number of parameters"
+    print_help
+    exit 1
+fi
+
+case "$1" in
+    --help)
+        print_help
+        exit 0
+        ;;
+    --version)
+        print_version
+        exit 0
+        ;;
+esac
+
+while getopts 'o:dx' option; do
+    case "$option" in
+        o) destination_path="$OPTARG";;
+        d) enable_dry_run=1;;
+        x) enable_delete=1;;
+        ?)
+            print_help
+            exit 1
+            ;;
+    esac
+done
+
+check_path $destination_path
+
+if [[ $enable_dry_run -eq 1 && $enable_delete -eq 1 ]]; then
+    options="--dry-run --delete"
+elif [[ $enable_dry_run -eq 1 ]]; then
+    options="--dry-run"
+elif [[ $enable_delete -eq 1 ]]; then
+    options="--delete"
+else
+    options=""
+fi
+
+rsync_command="rsync -av $options $excludes \
+                     $HOME/.bookmarks.org \
+                     $HOME/.backup-log.txt \
+                     $HOME/.ppw \
+                     $HOME/org \
+                     $HOME/org-edu \
+                     $HOME/multimedia \
+                     $HOME/projects \
+                     $destination_path"
+
+eval $rsync_command
+
+if [ -z $enable_dry_run ]; then
+    write_log $destination_path
+fi
+
+sync
+
+echo "Done!"
+#+end_src
+*** Education
+**** Latex
+#+begin_src nix :tangle modules/home-manager/education/latex.nix :mkdirp yes
+  { pkgs, ... }:
+  let
+    tex = (pkgs.texlive.combine {
+      inherit (pkgs.texlive) scheme-basic
+        dvisvgm
+        dvipng
+        ulem
+        amsmath;
+    });
+  in
+  {
+    home.packages = with pkgs; [
+      tex
+    ];
+  }
+#+end_src
+**** R
+#+begin_src nix :tangle modules/home-manager/education/r.nix :mkdirp yes
+  { pkgs, ... }:
+  {
+    home.packages = with pkgs; [
+      R
+    ];
+  }
+#+end_src
+*** Shells
+**** Bash
+#+begin_src nix :tangle modules/home-manager/shell/bash.nix :mkdirp yes
+  { pkgs, ... }:
+  {
+    programs.bash = {
+      enable = true;
+      enableCompletion = true;
+      initExtra = "PS1='[$?] \\w \\$ '";
+      shellAliases = {
+        night-shift-on = "hyprsunset --temperature 3000 & disown";
+        night-shift-off = "pgrep hyprsunset | xargs kill";
+        ll = "ls -lah";
+        ff = "fastfetch";
+      };
+    };
+  }
+#+end_src
+**** xonsh
+#+begin_src nix :tangle modules/home-manager/shell/xonsh.nix :mkdirp yes
+  { pkgs, ... }:
+  {
+    home.packages = with pkgs; [
+      xonsh
+    ];
+
+    home.file.".config/xonsh/rc.xsh" = {
+      text = ''
+        $PROMPT = '{RED}{last_return_code_if_nonzero:[{BOLD_INTENSE_RED}{}{RED}] }{RESET} {YELLOW}{env_name}{RESET}{GREEN} {cwd}{branch_color}{curr_branch: {}}{RESET} {BOLD_BLUE}{prompt_end}{RESET} '
+
+        aliases['ll'] = 'ls -lah'
+        aliases['ff'] = 'fastfetch'
+        #aliases['night-shift-on'] = 'hyprsunset --temperature 3000 &; disown 1'
+        #aliases['night-shift-off'] = 'pgrep hyprsunset | xargs kill'
+      '';
+    };
+  }
+#+end_src
+*** Utility
+**** tmux
+#+begin_src nix :tangle modules/home-manager/utility/tmux.nix :mkdirp yes
+  {
+    programs.tmux = {
+      enable = true;
+      shortcut = "a";
+      newSession = true;
+      escapeTime = 0;
+      terminal = "xterm-256color";
+
+      extraConfig = ''
+        # vim like pane resizing
+        bind -r C-k resize-pane -U
+        bind -r C-j resize-pane -D
+        bind -r C-h resize-pane -L
+        bind -r C-l resize-pane -R
+
+        # vim like pane switching
+        bind -r k select-pane -U
+        bind -r j select-pane -D
+        bind -r h select-pane -L
+        bind -r l select-pane -R
+
+        unbind Up
+        unbind Down
+        unbind Left
+        unbind Right
+
+        unbind C-Up
+        unbind C-Down
+        unbind C-Left
+        unbind C-Right
+
+        # easy-to-remember split pane commands
+        bind | split-window -h -c "#{pane_current_path}"
+        bind - split-window -v -c "#{pane_current_path}"
+        bind c new-window -c "#{pane_current_path}"
+      '';
+    };
+  }
+#+end_src
+*** Window manager
+**** Hyprland
+#+begin_src nix :tangle modules/home-manager/window-manager/hyprland.nix
+  { config, pkgs, lib, ... }:
+  let
+    hyprConfigDirectory = ".config/hypr";
+    waybarConfigDirectory = ".config/waybar";
+  in
+  {
+    options = {
+      wallpaper = lib.mkOption {
+        type = lib.types.path;
+      };
+      terminal = lib.mkOption {
+        type = lib.types.str;
+      };
+      appLauncher = lib.mkOption {
+        type = lib.types.str;
+      };
+    };
+    
+    config = {
+      home.file."${hyprConfigDirectory}/hyprland.conf" = {
+        text = ''
+          exec-once = waybar
+          exec-once = hyprpaper
+          exec-once = dunst
+          exec-once = emacsclient -c
+          exec-once = firefox
+
+          $terminal = ${config.terminal}
+          $app_launcher = ${config.appLauncher}
+
+          env = XCURSOR_SIZE,24
+          env = QT_QPA_PLATFORMTHEME,qt5ct
+
+          monitor = DP-3, 2560x1440@144, 0x0, 1
+
+          input {
+              kb_layout = us
+              kb_variant =
+              kb_model =
+              kb_options =
+              kb_rules =
+
+              follow_mouse = 1
+
+              touchpad {
+                  natural_scroll = no
+              }
+
+              sensitivity = 0
+              accel_profile = flat
+          }
+
+          general {
+              gaps_in = 10
+              gaps_out = 10
+              border_size = 3
+              col.active_border = rgba(aa0000ff)
+              col.inactive_border = rgba(aaaaaaff)
+
+              layout = dwindle
+
+              allow_tearing = false
+          }
+
+          decoration {
+              rounding = 10
+
+              blur {
+                  enabled = true
+                  size = 3
+                  passes = 1
+              }
+          }
+
+          animations {
+              enabled = yes
+              bezier = myBezier, 0.05, 0.9, 0.1, 1.05
+              animation = windows, 1, 7, myBezier
+              animation = windowsOut, 1, 7, default, popin 80%
+              animation = border, 1, 10, default
+              animation = borderangle, 1, 8, default
+              animation = fade, 1, 7, default
+              animation = workspaces, 1, 6, default
+          }
+
+          dwindle {
+              pseudotile = yes
+              preserve_split = yes
+          }
+
+          misc {
+              force_default_wallpaper = -1
+          }
+
+          $mainMod = SUPER
+
+          bind = $mainMod, q, killactive,
+
+          bind = $mainMod, return, exec, $terminal
+          bind = $mainMod SHIFT, e, exit
+          bind = $mainMod, m, fullscreen
+          bind = $mainMod, e, exec, emacsclient -c
+          bind = $mainMod, d, exec, $app_launcher
+
+          bind = $mainMod, left, movefocus, l
+          bind = $mainMod, right, movefocus, r
+          bind = $mainMod, up, movefocus, u
+          bind = $mainMod, down, movefocus, d
+
+          bind = $mainMod SHIFT, left, movewindow, l
+          bind = $mainMod SHIFT, right, movewindow, r
+          bind = $mainMod SHIFT, up, movewindow, u
+          bind = $mainMod SHIFT, down, movewindow, d
+
+          bind = $mainMod, 1, workspace, 1
+          bind = $mainMod, 2, workspace, 2
+          bind = $mainMod, 3, workspace, 3
+          bind = $mainMod, 4, workspace, 4
+          bind = $mainMod, 5, workspace, 5
+          bind = $mainMod, 6, workspace, 6
+          bind = $mainMod, 7, workspace, 7
+          bind = $mainMod, 8, workspace, 8
+          bind = $mainMod, 9, workspace, 9
+          bind = $mainMod, 0, workspace, 10
+
+          bind = $mainMod SHIFT, 1, movetoworkspace, 1
+          bind = $mainMod SHIFT, 2, movetoworkspace, 2
+          bind = $mainMod SHIFT, 3, movetoworkspace, 3
+          bind = $mainMod SHIFT, 4, movetoworkspace, 4
+          bind = $mainMod SHIFT, 5, movetoworkspace, 5
+          bind = $mainMod SHIFT, 6, movetoworkspace, 6
+          bind = $mainMod SHIFT, 7, movetoworkspace, 7
+          bind = $mainMod SHIFT, 8, movetoworkspace, 8
+          bind = $mainMod SHIFT, 9, movetoworkspace, 9
+          bind = $mainMod SHIFT, 0, movetoworkspace, 10
+
+          # Move/resize windows with mainMod + LMB/RMB and dragging
+          bindm = $mainMod, mouse:272, movewindow
+          bindm = $mainMod, mouse:273, resizewindow
+        '';
+      };
+
+      # hyprpaper config
+      home.file."${hyprConfigDirectory}/hyprpaper.conf" = {
+        text = ''
+          preload = ${config.wallpaper}
+          wallpaper = DP-3, ${config.wallpaper}
+        '';
+      };
+
+      # waybar config
+      home.file."${waybarConfigDirectory}/config" = {
+        text = ''
+          {
+              "layer": "top", // Waybar at top layer
+              "position": "top", // Waybar position (top|bottom|left|right)
+              "modules-left": ["hyprland/workspaces"],
+              "modules-center": ["custom/music"],
+              "modules-right": ["pulseaudio", "clock", "tray"],
+              "clock": {
+                  "timezone": "Europe/Berlin",
+                  "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+                  "format-alt": "  {:%d/%m/%Y} ",
+                  "format": "  {:%H:%M} "
+              },
+              "pulseaudio": {
+                  // "scroll-step": 1, // %, can be a float
+                  "format": "{icon} {volume}%",
+                  "format-muted": "  ",
+                  "format-icons": {
+                      "default": ["", "", ""]
+                  },
+              },
+          }
+        '';
+      };
+
+      home.file."${waybarConfigDirectory}/style.css" = {
+        text = ''
+          ,* {
+            font-size: 20px;
+            font-family: "Iosevka Nerd Font";
+          }
+
+          window#waybar {
+              background: rgba(0,0,0,1.0);
+          }
+
+          #window {
+              color: #c5c8c6;
+          }
+
+          #workspaces button {
+              background-color: black;
+              color: white;
+          }
+
+          #workspaces button:hover {
+              background-color: white;
+              color: black;
+          }
+
+          #workspaces button.focused {
+              background-color: white;
+              color: black;
+          }
+
+          #custom-notification {
+            font-family: "Fira Code";
+          }
+
+          #clock,
+          #pulseaudio,
+          #workspaces {
+              background: black;
+              color: white;
+          }
+        '';
+      };
+    };
+  }
+#+end_src
+

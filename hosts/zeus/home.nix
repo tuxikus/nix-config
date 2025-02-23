@@ -8,15 +8,13 @@ in
   imports = [
     (homeManagerModulesDirectory + "/shell/bash.nix")
     (homeManagerModulesDirectory + "/shell/xonsh.nix")
-    (homeManagerModulesDirectory + "/app/tuxikus-emacs/emacs.nix")
-    (homeManagerModulesDirectory + "/app/tuxikus-emacs/emacs-daemon.nix")
-    (homeManagerModulesDirectory + "/app/nyxt/nyxt.nix")
-    (homeManagerModulesDirectory + "/app/nixvim/nixvim.nix")
-    (homeManagerModulesDirectory + "/app/ghostty.nix")
-    (homeManagerModulesDirectory + "/app/fuzzel.nix")
-    (homeManagerModulesDirectory + "/latex.nix")
-    (homeManagerModulesDirectory + "/wm/hyprland.nix")
-    (homeManagerModulesDirectory + "/bin/home-backup.nix")
+    (homeManagerModulesDirectory + "/gui-apps/emacs.nix")
+    (homeManagerModulesDirectory + "/gui-apps/nyxt.nix")
+    (homeManagerModulesDirectory + "/gui-apps/ghostty.nix")
+    (homeManagerModulesDirectory + "/gui-apps/fuzzel.nix")
+    (homeManagerModulesDirectory + "/education/latex.nix")
+    (homeManagerModulesDirectory + "/window-manager/hyprland.nix")
+    (homeManagerModulesDirectory + "/scripts/home-backup.nix")
   ];
   home = {
     username = "tuxikus";
@@ -35,6 +33,9 @@ in
     packages = [];
   
     sessionPath = [ "$HOME/.local/bin" ];
+  };
+  services = {
+    emacs.enable = true;
   };
   programs = {
     home-manager.enable = true;
