@@ -331,21 +331,21 @@ in
             (set-face-attribute 'default nil
                               :family "Iosevka Nerd Font"
                               :height ${config.fontSize}
-                              :weight 'light
+                              :weight 'regular
                               :width 'normal)
           
             (set-face-attribute 'bold nil
           		      :family "Iosevka Nerd Font"
-          		      :weight 'light)
+          		      :weight 'regular)
           
             (set-face-attribute 'italic nil
           		      :family "Iosevka Nerd Font"
           		      :slant 'italic
-          		      :weight 'light)
+          		      :weight 'regular)
           
             (set-face-attribute 'bold-italic nil
           		      :family "Iosevka Nerd Font"
-          		      :weight 'light
+          		      :weight 'regular
           		      :slant 'italic)
           
             ;; window divider
