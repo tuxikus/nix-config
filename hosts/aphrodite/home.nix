@@ -21,6 +21,7 @@ in
   };
   programs.home-manager.enable = true;
   emacsPkg = pkgs.emacs-macport;
+  fontSize = "200"
   customInit = ''
   (setq custom-init-loaded t)
   (setq mac-option-key-is-meta t

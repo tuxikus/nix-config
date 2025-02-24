@@ -461,6 +461,7 @@ This is my literate nix/nixos/home-manager config written with the help of [[htt
 #+name: zeus-home-manager-module-config-emacs
 #+begin_src nix
   emacsPkg = pkgs.emacs;
+  fontSize = "200";
 #+end_src
 
 **** Hardware configuration - [[file:hosts/zeus/hardware-configuration.nix][hardware-configuration.nix]]
@@ -865,6 +866,7 @@ Apple MacBook Pro M2
 #+name: aphrodite-home-manager-module-config-emacs
 #+begin_src nix
   emacsPkg = pkgs.emacs-macport;
+  fontSize = "200"
   customInit = ''
   (setq custom-init-loaded t)
   (setq mac-option-key-is-meta t
@@ -1075,6 +1077,9 @@ Apple MacBook Pro M2
         type = lib.types.package;
       };
       customInit = lib.mkOption {
+        type = lib.types.str;
+      };
+      fontSize = lib.mkOption {
         type = lib.types.str;
       };
     };
@@ -1600,7 +1605,7 @@ Apple MacBook Pro M2
     (load-theme 'doom-flatwhite t)
     (set-face-attribute 'default nil
                       :family "Iosevka Nerd Font"
-                      :height 150
+                      :height ${config.fontSize}
                       :weight 'light
                       :width 'normal)
 

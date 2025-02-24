@@ -55,6 +55,9 @@ in
     customInit = lib.mkOption {
       type = lib.types.str;
     };
+    fontSize = lib.mkOption {
+      type = lib.types.str;
+    };
   };
 
   config = {
@@ -327,7 +330,7 @@ in
             (load-theme 'doom-flatwhite t)
             (set-face-attribute 'default nil
                               :family "Iosevka Nerd Font"
-                              :height 150
+                              :height ${config.fontSize}
                               :weight 'light
                               :width 'normal)
           
