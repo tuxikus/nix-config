@@ -833,8 +833,7 @@ Apple MacBook Pro M2
 #+name: aphrodite-home-manager-imports
 #+begin_src nix
   imports = [
-    (homeManagerModulesDirectory + "/app/tuxikus-emacs/emacs.nix")
-    (homeManagerModulesDirectory + "/app/nixvim/nixvim.nix")
+    (homeManagerModulesDirectory + "/gui-apps/emacs.nix")
   ];
 #+end_src
 ***** Config
