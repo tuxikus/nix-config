@@ -51,5 +51,5 @@ in
   appLauncher = "fuzzel";
   emacsPkg = pkgs.emacs;
   customInit = "";
-  fontSize = "200";
+  fontSize = "150";
 }
