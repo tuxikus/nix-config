@@ -461,6 +461,7 @@ This is my literate nix/nixos/home-manager config written with the help of [[htt
 #+name: zeus-home-manager-module-config-emacs
 #+begin_src nix
   emacsPkg = pkgs.emacs;
+  customInit = "";
   fontSize = "200";
 #+end_src
 

@@ -50,5 +50,6 @@ in
   terminal = "ghostty";
   appLauncher = "fuzzel";
   emacsPkg = pkgs.emacs;
+  customInit = "";
   fontSize = "200";
 }
