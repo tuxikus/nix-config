@@ -1,4 +1,5 @@
 {
+  pkgs,
   ...
 }:
 let
@@ -48,4 +49,5 @@ in
   wallpaper = ./assets/wallpaper.png;
   terminal = "ghostty";
   appLauncher = "fuzzel";
+  emacsPkg = pkgs.emacs;
 }

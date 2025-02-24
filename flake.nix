@@ -7,11 +7,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixvim = {
-      url = "github:nix-community/nixvim/nixos-24.11";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -28,7 +23,6 @@
       self,
       nixpkgs,
       home-manager,
-      nixvim,
       darwin,
       disko,
       ...
@@ -48,7 +42,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.tuxikus = import ./hosts/zeus/home.nix;
-            home-manager.sharedModules = [ nixvim.homeManagerModules.nixvim ];
+            home-manager.sharedModules = [ ];
           }
         ];
       };
@@ -62,7 +56,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users."dominik.potoczki" = import ./hosts/aphrodite/home.nix;
-            home-manager.sharedModules = [ nixvim.homeManagerModules.nixvim ];
+            home-manager.sharedModules = [ ];
           }
         ];
       };

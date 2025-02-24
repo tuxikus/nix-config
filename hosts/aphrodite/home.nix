@@ -20,4 +20,12 @@ in
     packages = [];
   };
   programs.home-manager.enable = true;
+  emacsPkg = pkgs.emacs-macport;
+  customInit = ''
+  (setq custom-init-loaded t)
+  (setq mac-option-key-is-meta t
+        mac-command-key-is-meta nil
+        mac-options-modifier 'meta
+        mac-command-modifier 'super)
+  '';
 }
