@@ -867,7 +867,7 @@ Apple MacBook Pro M2
 #+name: aphrodite-home-manager-module-config-emacs
 #+begin_src nix
   emacsPkg = pkgs.emacs-macport;
-  fontSize = "200"
+  fontSize = "200";
   customInit = ''
   (setq custom-init-loaded t)
   (setq mac-option-key-is-meta t
