@@ -25,7 +25,7 @@ in
   (setq custom-init-loaded t)
   (setq mac-option-key-is-meta t
         mac-command-key-is-meta nil
-        mac-options-modifier 'meta
+        mac-option-modifier 'meta
         mac-command-modifier 'super)
   '';
 }
