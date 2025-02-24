@@ -820,7 +820,7 @@ Apple MacBook Pro M2
 #+end_src
 **** Home manager - [[file:hosts/aphrodite/home.nix][home.nix]]
 #+begin_src nix :tangle hosts/aphrodite/home.nix :noweb tangle :mkdirp yes
-  { pgks, ... }:
+  { pkgs, ... }:
   let
     homeManagerModulesDirectory = ../../modules/home-manager;
   in
