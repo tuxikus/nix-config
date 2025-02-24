@@ -99,6 +99,8 @@
       tree-sitter
       poppler_utils
       dig
+      pyright
+      poetry
     ];
     shells = with pkgs; [
       bashInteractive

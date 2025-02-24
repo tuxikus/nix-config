@@ -5,6 +5,7 @@ in
 {
   imports = [
     (homeManagerModulesDirectory + "/gui-apps/emacs.nix")
+    (homeManagerModulesDirectory + "/shell/xonsh.nix")
   ];
   home = {
     # This value determines the Home Manager release that your

@@ -770,6 +770,8 @@ Apple MacBook Pro M2
       tree-sitter
       poppler_utils
       dig
+      pyright
+      poetry
     ];
     shells = with pkgs; [
       bashInteractive
@@ -834,6 +836,7 @@ Apple MacBook Pro M2
 #+begin_src nix
   imports = [
     (homeManagerModulesDirectory + "/gui-apps/emacs.nix")
+    (homeManagerModulesDirectory + "/shell/xonsh.nix")
   ];
 #+end_src
 ***** Config
