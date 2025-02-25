@@ -11,7 +11,6 @@ This is my literate nix/nixos/home-manager config written with the help of [[htt
   tree -d
 #+end_src
 
-#+RESULTS:
 #+begin_src org
 .
 ├── hosts
