@@ -112,6 +112,7 @@ in
     tree
     home-manager
     pavucontrol
+    poetry
     python3
     wget
     hyprpaper
