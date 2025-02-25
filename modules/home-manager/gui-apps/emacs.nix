@@ -152,7 +152,7 @@ in
           ;;; Code:
           
           (use-package cape
-            :bind ("M-<tab>" . cape-prefix-map)
+            :bind ("M-p" . cape-prefix-map)
             :init
             (add-hook 'completion-at-point-functions #'cape-dabbrev)
             (add-hook 'completion-at-point-functions #'cape-abbrev)
@@ -317,6 +317,9 @@ in
           ;;; Code:
           
           (use-package emacs
+            :bind
+            ("M-<tab>" . completion-at-point)
+            
             :init
             (setq create-lockfiles nil
           	make-backup-files nil
@@ -373,7 +376,8 @@ in
             :custom
             (enable-recursive-minibuffers t)
             (read-extended-command-predicate #'command-completion-default-include-p)
-            (tab-always-indent 'complete)
+          
+            ;;(tab-always-indent 'complete)
             
             ;; Emacs 30 and newer: Disable Ispell completion function.
             ;; Try `cape-dict' as an alternative.
