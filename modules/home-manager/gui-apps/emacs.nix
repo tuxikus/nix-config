@@ -41,6 +41,7 @@ let
     walkman
     wgrep
     yasnippet
+    poetry
     (treesit-grammars.with-grammars (grammars: with grammars; [
       tree-sitter-python
       tree-sitter-bash

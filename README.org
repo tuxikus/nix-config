@@ -1135,6 +1135,7 @@ Apple MacBook Pro M2
     walkman
     wgrep
     yasnippet
+    poetry
     (treesit-grammars.with-grammars (grammars: with grammars; [
       tree-sitter-python
       tree-sitter-bash
