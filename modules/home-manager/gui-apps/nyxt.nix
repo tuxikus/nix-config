@@ -1,5 +1,5 @@
 {
-  home.file."config/nyxt/config.lisp" = {
+  home.file.".config/nyxt/config.lisp" = {
     text = ''
       (define-configuration buffer
           ((default-modes (append '(emacs-mode) %slot-value%))))
