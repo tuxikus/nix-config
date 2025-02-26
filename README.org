@@ -1027,7 +1027,7 @@ Apple MacBook Pro M2
 **** Nyxt
 #+begin_src nix :tangle modules/home-manager/gui-apps/nyxt.nix :noweb tangle :mkdirp yes
   {
-    home.file."config/nyxt/config.lisp" = {
+    home.file.".config/nyxt/config.lisp" = {
       text = ''
         <<nyxt-emacs-mode>>
         <<nyxt-search-engines>>
