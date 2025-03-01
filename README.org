@@ -279,6 +279,12 @@ This is my literate nix/nixos/home-manager config written with the help of [[htt
     xserver = {
       enable = true;
       displayManager.gdm.enable = true;
+      windowManager.qtile = {
+        enable = true;
+        extraPackages = python3Packages: with python3Packages; [
+          qtile-extras
+        ];
+      };
       xkb = {
         layout = "us";
         variant = "";
@@ -294,11 +300,11 @@ This is my literate nix/nixos/home-manager config written with the help of [[htt
       enable = true;
       musicDirectory = "/home/tuxikus/multimedia/music/mp3";
       extraConfig = ''
-      audio_output {
-       type "pipewire"
-       name "My PipeWire Output"
-      }
-    ''; 
+        audio_output {
+         type "pipewire"
+         name "My PipeWire Output"
+        }
+      ''; 
       #network.startWhenNeeded = true;
       user = "tuxikus";
     };
@@ -308,7 +314,6 @@ This is my literate nix/nixos/home-manager config written with the help of [[htt
 #+name: zeus-configuration-system-packages
 #+begin_src nix
   environment.systemPackages = with pkgs; [
-    firefox
     chromium
     tree
     home-manager
@@ -342,6 +347,8 @@ This is my literate nix/nixos/home-manager config written with the help of [[htt
     dig
     vial
     nyxt
+    qutebrowser
+    wlr-randr
   ];
 #+end_src
 ***** Programs
@@ -391,6 +398,7 @@ This is my literate nix/nixos/home-manager config written with the help of [[htt
     <<zeus-home-manager-programs>>
     <<zeus-home-manager-module-config-hypr>>
     <<zeus-home-manager-module-config-emacs>>
+    <<zeus-home-manager-module-config-qtile>>
   }
 #+end_src
 ***** Imports
@@ -401,10 +409,12 @@ This is my literate nix/nixos/home-manager config written with the help of [[htt
     (homeManagerModulesDirectory + "/shell/xonsh.nix")
     (homeManagerModulesDirectory + "/gui-apps/emacs.nix")
     (homeManagerModulesDirectory + "/gui-apps/nyxt.nix")
+    (homeManagerModulesDirectory + "/gui-apps/qutebrowser.nix")
     (homeManagerModulesDirectory + "/gui-apps/ghostty.nix")
     (homeManagerModulesDirectory + "/gui-apps/fuzzel.nix")
     (homeManagerModulesDirectory + "/education/latex.nix")
     (homeManagerModulesDirectory + "/window-manager/hyprland.nix")
+    (homeManagerModulesDirectory + "/window-manager/qtile.nix")
     (homeManagerModulesDirectory + "/scripts/home-backup.nix")
   ];
 #+end_src
@@ -461,8 +471,15 @@ This is my literate nix/nixos/home-manager config written with the help of [[htt
 #+name: zeus-home-manager-module-config-emacs
 #+begin_src nix
   emacsPkg = pkgs.emacs;
-  customInit = "";
+  customInit = ''
+  (setq container-executable 'podman)
+  '';
   fontSize = "150";
+#+end_src
+****** Qtile
+#+name: zeus-home-manager-module-config-qtile
+#+begin_src nix
+  qtileWallpaper = ./assets/qtile-wallpaper.png;
 #+end_src
 
 **** Hardware configuration - [[file:hosts/zeus/hardware-configuration.nix][hardware-configuration.nix]]
@@ -773,7 +790,7 @@ Apple MacBook Pro M2
       poppler_utils
       dig
       pyright
-      poetry
+      qutebrowser
     ];
     shells = with pkgs; [
       bashInteractive
@@ -838,6 +855,7 @@ Apple MacBook Pro M2
 #+begin_src nix
   imports = [
     (homeManagerModulesDirectory + "/gui-apps/emacs.nix")
+    (homeManagerModulesDirectory + "/gui-apps/qutebrowser.nix")
     (homeManagerModulesDirectory + "/shell/xonsh.nix")
   ];
 #+end_src
@@ -874,6 +892,7 @@ Apple MacBook Pro M2
         mac-command-key-is-meta nil
         mac-option-modifier 'meta
         mac-command-modifier 'super)
+  (setq container-executable 'docker)
   '';
 #+end_src
 
@@ -995,6 +1014,7 @@ Apple MacBook Pro M2
   window-padding-x = 10
   window-padding-y = 10
   macos-titlebar-style = hidden
+  confirm-close-surface = false
 #+end_src
 ***** Theme
 #+name: ghostty-theme
@@ -1022,7 +1042,13 @@ Apple MacBook Pro M2
 ***** Keys
 #+name: ghostty-keys
 #+begin_src conf
-  
+  keybind = alt+w=copy_to_clipboard
+  keybind = ctrl+y=paste_from_clipboard
+
+  keybind = ctrl+v=scroll_page_down
+  keybind = alt+v=scroll_page_up
+
+  keybind = ctrl+t=new_tab
 #+end_src
 **** Nyxt
 #+begin_src nix :tangle modules/home-manager/gui-apps/nyxt.nix :noweb tangle :mkdirp yes
@@ -1107,6 +1133,7 @@ Apple MacBook Pro M2
     corfu
     dashboard
     direnv
+    docker
     doom-modeline
     doom-themes
     dwim-shell-command
@@ -1132,10 +1159,10 @@ Apple MacBook Pro M2
     salt-mode
     verb
     vertico
+    vundo
     walkman
     wgrep
     yasnippet
-    poetry
     (treesit-grammars.with-grammars (grammars: with grammars; [
       tree-sitter-python
       tree-sitter-bash
@@ -1198,6 +1225,10 @@ Apple MacBook Pro M2
 
       ".emacs.d/lisp/init-direnv.el".text = ''
         <<emacs-init-direnv>>
+      '';
+
+      ".emacs.d/lisp/init-docker.el".text = ''
+        <<emacs-init-docker>>
       '';
 
       ".emacs.d/lisp/init-doom-modeline.el".text = ''
@@ -1349,6 +1380,7 @@ Apple MacBook Pro M2
   (require 'init-flycheck)
   (require 'init-corfu)
   (require 'init-custom)
+  (require 'init-docker)
   (require 'init-cape)
   (require 'init-dashboard)
   (require 'init-dired)
@@ -1424,6 +1456,11 @@ Apple MacBook Pro M2
     (add-hook 'completion-at-point-functions #'cape-abbrev)
     (add-hook 'completion-at-point-functions #'cape-file)
     (add-hook 'completion-at-point-functions #'cape-elisp-block)
+    (add-hook 'completion-at-point-functions #'cape-emoji)
+    ;;(add-hook 'completion-at-point-functions #'cape-dict)
+    (add-hook 'completion-at-point-functions #'cape-rfc1345)
+    (add-hook 'completion-at-point-functions #'cape-sgml)
+    (add-hook 'completion-at-point-functions #'cape-tex)
     (add-hook 'completion-at-point-functions #'cape-history))
 
   (provide 'init-cape)
@@ -1536,6 +1573,40 @@ Apple MacBook Pro M2
 
   ;;; init-direnv.el ends here
  #+end_src
+******* Docker
+Config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rahul's Blog]]
+#+name: emacs-init-docker
+#+begin_src emacs-lisp
+  ;;; init-direnv.el --- -*- lexical-binding: t -*-
+  ;;; Commentary:
+  ;;; Code:
+
+  (defcustom container-executable 'podman
+    "The executable to be used with docker mode."
+    :type '(choice
+  	  (const :tag "docker" docker)
+  	  (const :tag "podman" podman))
+    :group 'custom)
+
+  (use-package docker
+    :bind
+    ("C-c d" . docker)
+    :config
+    (pcase contaiter-executable
+      ('docker
+       (setf docker-command "docker"
+  	   docker-compose-command "docker-compose"
+  	   docker-container-tramp-method "docker"))
+      ('podman
+       (setf docker-command "podman"
+  	   docker-compose-command "podman-compose"
+  	   docker-container-tramp-methodu "podman"))))
+
+  (provide 'init-docker)
+
+  ;;; init-docker.el ends here
+#+end_src
+
 ******* Doom modeline
 #+name: emacs-init-doom-modeline
 #+begin_src emacs-lisp
@@ -1594,7 +1665,7 @@ Apple MacBook Pro M2
 
   (use-package emacs
     :bind
-    ("M-<tab>" . completion-at-point)
+    ;;("M-<tab>" . completion-at-point)
     
     :init
     (setq create-lockfiles nil
@@ -1653,7 +1724,7 @@ Apple MacBook Pro M2
     (enable-recursive-minibuffers t)
     (read-extended-command-predicate #'command-completion-default-include-p)
 
-    ;;(tab-always-indent 'complete)
+    (tab-always-indent 'complete)
     
     ;; Emacs 30 and newer: Disable Ispell completion function.
     ;; Try `cape-dict' as an alternative.
@@ -1771,7 +1842,8 @@ Apple MacBook Pro M2
     :init
     (setq org-attach-id-dir "~/org/.attach"
   	org-log-done 'time
-  	org-hide-emphasis-markers t)
+  	org-hide-emphasis-markers t
+  	org-imenu-depth 7)
 
     :config
     (set-face-attribute 'org-level-1 nil :height 1.5)
@@ -2211,6 +2283,28 @@ Apple MacBook Pro M2
   };
 }
 #+end_src
+**** Qutebrowser
+#+begin_src nix :tangle modules/home-manager/gui-apps/qutebrowser.nix
+  { pkgs, ... }:
+  let
+    qutebrowserConfigLocation = if pkgs.system == "x86_64-linux"
+                                then ".config/qutebrowser/config.py"
+                                else ".qutebrowser/config.py";
+  in
+  {
+    home.file.${qutebrowserConfigLocation}.text = ''
+      <<qutebrowser-config>>
+    '';
+  }
+#+end_src
+***** Config
+#+name: qutebrowser-config
+#+begin_src python
+  config.load_autoconfig(False)
+  c.tabs.position = "left"
+  c.content.blocking.method = 'both'
+#+end_src
+
 *** Scripts
 **** home-backup
 #+begin_src nix :tangle modules/home-manager/scripts/home-backup.nix :noweb tangle :mkdirp yes
@@ -2399,7 +2493,7 @@ echo "Done!"
   }
 #+end_src
 **** xonsh
-#+begin_src nix :tangle modules/home-manager/shell/xonsh.nix :mkdirp yes
+#+begin_src nix :tangle modules/home-manager/shell/xonsh.nix :noweb yes :mkdirp yes
   { pkgs, ... }:
   {
     home.packages = with pkgs; [
@@ -2408,16 +2502,25 @@ echo "Done!"
 
     home.file.".config/xonsh/rc.xsh" = {
       text = ''
-        $PROMPT = '{RED}{last_return_code_if_nonzero:[{BOLD_INTENSE_RED}{}{RED}] }{RESET} {YELLOW}{env_name}{RESET}{GREEN} {cwd}{branch_color}{curr_branch: {}}{RESET} {BOLD_BLUE}{prompt_end}{RESET} '
-
-        aliases['ll'] = 'ls -lah'
-        aliases['ff'] = 'fastfetch'
-        #aliases['night-shift-on'] = 'hyprsunset --temperature 3000 &; disown 1'
-        #aliases['night-shift-off'] = 'pgrep hyprsunset | xargs kill'
+        <<xonsh-config>>
       '';
     };
   }
 #+end_src
+***** Config
+#+name: xonsh-config
+#+begin_src python
+  $PROMPT = '{RED}{last_return_code_if_nonzero:[{BOLD_INTENSE_RED}{}{RED}] }{RESET} {YELLOW}{env_name}{RESET}{GREEN} {cwd}{branch_color}{curr_branch: {}}{RESET} {BOLD_BLUE}{prompt_end}{RESET} '
+
+  $PATH.append("~/.local/bin/")
+
+  aliases['ll'] = 'ls -lah'
+  aliases['ff'] = 'fastfetch'
+  aliases['python-create-venv'] = 'python3 -m venv venv'
+  aliases['python-activate-venv'] = 'source-bash venv/bin/activate'
+  aliases['pip-freeze'] = 'python3 -m pip freeze > requirements.txt'
+#+end_src
+
 *** Utility
 **** tmux
 #+begin_src nix :tangle modules/home-manager/utility/tmux.nix :mkdirp yes
@@ -2684,5 +2787,245 @@ echo "Done!"
       };
     };
   }
+#+end_src
+**** Qtile
+#+begin_src nix :tangle modules/home-manager/window-manager/qtile.nix :noweb yes
+  { config, lib, ... }:
+  {
+    options = {
+      qtileWallpaper = lib.mkOption {
+        type = lib.types.path;
+      };
+    };
+
+    config = {
+      home.file = {
+        ".config/qtile/config.py".text = ''
+            <<qtile-config>>
+          '';
+
+        ".config/qtile/autostart.sh" = {
+          text = ''
+              <<qtile-autostart>>
+            '';
+          executable = true;
+        };
+      };      
+    };
+  }
+
+#+end_src
+***** Config
+#+name: qtile-config
+#+begin_src python
+  import os
+  import subprocess
+
+  from libqtile import bar, layout, qtile, widget, hook
+  from libqtile.config import Click, Drag, Group, Key, Match, Screen
+  from libqtile.lazy import lazy
+  from libqtile.backend.wayland import InputConfig
+
+  @hook.subscribe.startup_once
+  def autostart():
+      home = os.path.expanduser('~/.config/qtile/autostart.sh')
+      subprocess.call(home)
+
+  mod = "mod4"
+  terminal = "ghostty"
+  app_launcher = "fuzzel"
+
+  keys = [
+      Key([mod], "Left", lazy.layout.left(), desc="Move focus to left"),
+      Key([mod], "Right", lazy.layout.right(), desc="Move focus to right"),
+      Key([mod], "Down", lazy.layout.down(), desc="Move focus down"),
+      Key([mod], "Up", lazy.layout.up(), desc="Move focus up"),
+
+      Key([mod, "shift"], "Left", lazy.layout.shuffle_left(), desc="Move window to the left"),
+      Key([mod, "shift"], "Right", lazy.layout.shuffle_right(), desc="Move window to the right"),
+      Key([mod, "shift"], "Down", lazy.layout.shuffle_down(), desc="Move window down"),
+      Key([mod, "shift"], "Up", lazy.layout.shuffle_up(), desc="Move window up"),
+
+      # Toggle between split and unsplit sides of stack.
+      # Split = all windows displayed
+      # Unsplit = 1 window displayed, like Max layout, but still with
+      # multiple stack panes
+      Key(
+          [mod, "shift"],
+          "Return",
+          lazy.layout.toggle_split(),
+          desc="Toggle between split and unsplit sides of stack",
+      ),
+      Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
+      # Toggle between different layouts as defined below
+      Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
+      Key([mod], "q", lazy.window.kill(), desc="Kill focused window"),
+      Key(
+          [mod],
+          "m",
+          lazy.window.toggle_fullscreen(),
+          desc="Toggle fullscreen on the focused window",
+      ),
+
+      Key([mod], "d", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
+      #Key([mod], "d", lazy.spawn(app_launcher), desc="Spawn fuzzel"),
+  ]
+
+  # Add key bindings to switch VTs in Wayland.
+  # We can't check qtile.core.name in default config as it is loaded before qtile is started
+  # We therefore defer the check until the key binding is run by using .when(func=...)
+  for vt in range(1, 8):
+      keys.append(
+          Key(
+              ["control", "mod1"],
+              f"f{vt}",
+              lazy.core.change_vt(vt).when(func=lambda: qtile.core.name == "wayland"),
+              desc=f"Switch to VT{vt}",
+          )
+      )
+
+
+  groups = [Group(i) for i in "123456789"]
+
+  for i in groups:
+      keys.extend(
+          [
+              # mod + group number = switch to group
+              Key(
+                  [mod],
+                  i.name,
+                  lazy.group[i.name].toscreen(),
+                  desc=f"Switch to group {i.name}",
+              ),
+              # mod + shift + group number = switch to & move focused window to group
+              Key(
+                  [mod, "shift"],
+                  i.name,
+                  lazy.window.togroup(i.name, switch_group=True),
+                  desc=f"Switch to & move focused window to group {i.name}",
+              ),
+              # Or, use below if you prefer not to switch to that group.
+              # # mod + shift + group number = move focused window to group
+              # Key([mod, "shift"], i.name, lazy.window.togroup(i.name),
+              #     desc="move focused window to group {}".format(i.name)),
+          ]
+      )
+
+  layouts = [
+      layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], border_width=4),
+      layout.Max(),
+      # Try more layouts by unleashing below layouts.
+      # layout.Stack(num_stacks=2),
+      # layout.Bsp(),
+      # layout.Matrix(),
+      # layout.MonadTall(),
+      # layout.MonadWide(),
+      # layout.RatioTile(),
+      # layout.Tile(),
+      # layout.TreeTab(),
+      # layout.VerticalTile(),
+      # layout.Zoomy(),
+  ]
+
+  widget_defaults = dict(
+      font="Iosevka Nerd Font",
+      fontsize=15,
+      padding=10,
+  )
+  extension_defaults = widget_defaults.copy()
+
+  screens = [
+      Screen(
+          wallpaper="${config.qtileWallpaper}",
+          wallpaper_mode="fill",
+          top=bar.Bar(
+              [
+                  widget.CurrentLayout(),
+                  widget.GroupBox(),
+                  widget.Prompt(),
+                  widget.WindowName(),
+                  widget.Chord(
+                      chords_colors={
+                          "launch": ("#ff0000", "#ffffff"),
+                      },
+                      name_transform=lambda name: name.upper(),
+                  ),
+                  # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
+                  widget.StatusNotifier(),
+                  # widget.Systray(),
+                  widget.CPU(),
+                  widget.Memory(),
+                  widget.PulseVolume(),
+                  widget.Clock(format="%Y-%m-%d %a %I:%M %p"),
+                  widget.QuickExit(),
+              ],
+              32,
+              # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
+              # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
+          ),
+          # You can uncomment this variable if you see that on X11 floating resize/moving is laggy
+          # By default we handle these events delayed to already improve performance, however your system might still be struggling
+          # This variable is set to None (no cap) by default, but you can set it to 60 to indicate that you limit it to 60 events per second
+          # x11_drag_polling_rate = 60,
+      ),
+  ]
+
+  # Drag floating layouts.
+  mouse = [
+      Drag([mod], "Button1", lazy.window.set_position_floating(), start=lazy.window.get_position()),
+      Drag([mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()),
+      Click([mod], "Button2", lazy.window.bring_to_front()),
+  ]
+
+  dgroups_key_binder = None
+  dgroups_app_rules = []  # type: list
+  follow_mouse_focus = True
+  bring_front_click = False
+  floats_kept_above = True
+  cursor_warp = False
+  floating_layout = layout.Floating(
+      float_rules=[
+          # Run the utility of `xprop` to see the wm class and name of an X client.
+          ,*layout.Floating.default_float_rules,
+          Match(wm_class="confirmreset"),  # gitk
+          Match(wm_class="makebranch"),  # gitk
+          Match(wm_class="maketag"),  # gitk
+          Match(wm_class="ssh-askpass"),  # ssh-askpass
+          Match(title="branchdialog"),  # gitk
+          Match(title="pinentry"),  # GPG key password entry
+      ]
+  )
+  auto_fullscreen = True
+  focus_on_window_activation = "smart"
+  reconfigure_screens = True
+
+  # If things like steam games want to auto-minimize themselves when losing
+  # focus, should we respect this or not?
+  auto_minimize = True
+
+  # get by running: qtile cmd-obj -o core -f get_inputs
+  wl_input_rules = {
+     "1133:16519:Logitech G903 LS": InputConfig(accel_profile='flat'),
+  }
+
+  # xcursor theme (string or None) and size (integer) for Wayland backend
+  wl_xcursor_theme = None
+  wl_xcursor_size = 24
+
+  # XXX: Gasp! We're lying here. In fact, nobody really uses or cares about this
+  # string besides java UI toolkits; you can see several discussions on the
+  # mailing lists, GitHub issues, and other WM documentation that suggest setting
+  # this string if your java app doesn't work correctly. We may as well just lie
+  # and say that we're a working one by default.
+  #
+  # We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
+  # java that happens to be on java's whitelist.
+  wmname = "LG3D"
+#+end_src
+***** Autostart
+#+name: qtile-autostart
+#+begin_src shell
+  #!/usr/bin/env sh
+  wlr-randr --output DP-3 --mode 2560x1440@144 &
 #+end_src
 

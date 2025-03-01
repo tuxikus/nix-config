@@ -82,6 +82,12 @@ in
     xserver = {
       enable = true;
       displayManager.gdm.enable = true;
+      windowManager.qtile = {
+        enable = true;
+        extraPackages = python3Packages: with python3Packages; [
+          qtile-extras
+        ];
+      };
       xkb = {
         layout = "us";
         variant = "";
@@ -97,17 +103,16 @@ in
       enable = true;
       musicDirectory = "/home/tuxikus/multimedia/music/mp3";
       extraConfig = ''
-      audio_output {
-       type "pipewire"
-       name "My PipeWire Output"
-      }
-    ''; 
+        audio_output {
+         type "pipewire"
+         name "My PipeWire Output"
+        }
+      ''; 
       #network.startWhenNeeded = true;
       user = "tuxikus";
     };
   };
   environment.systemPackages = with pkgs; [
-    firefox
     chromium
     tree
     home-manager
@@ -141,6 +146,8 @@ in
     dig
     vial
     nyxt
+    qutebrowser
+    wlr-randr
   ];
   programs = {
     hyprland = {

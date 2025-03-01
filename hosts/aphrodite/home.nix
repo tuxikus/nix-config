@@ -5,6 +5,7 @@ in
 {
   imports = [
     (homeManagerModulesDirectory + "/gui-apps/emacs.nix")
+    (homeManagerModulesDirectory + "/gui-apps/qutebrowser.nix")
     (homeManagerModulesDirectory + "/shell/xonsh.nix")
   ];
   home = {
@@ -28,5 +29,6 @@ in
         mac-command-key-is-meta nil
         mac-option-modifier 'meta
         mac-command-modifier 'super)
+  (setq container-executable 'docker)
   '';
 }

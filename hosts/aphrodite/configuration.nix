@@ -100,7 +100,7 @@
       poppler_utils
       dig
       pyright
-      poetry
+      qutebrowser
     ];
     shells = with pkgs; [
       bashInteractive

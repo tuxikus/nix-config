@@ -11,10 +11,12 @@ in
     (homeManagerModulesDirectory + "/shell/xonsh.nix")
     (homeManagerModulesDirectory + "/gui-apps/emacs.nix")
     (homeManagerModulesDirectory + "/gui-apps/nyxt.nix")
+    (homeManagerModulesDirectory + "/gui-apps/qutebrowser.nix")
     (homeManagerModulesDirectory + "/gui-apps/ghostty.nix")
     (homeManagerModulesDirectory + "/gui-apps/fuzzel.nix")
     (homeManagerModulesDirectory + "/education/latex.nix")
     (homeManagerModulesDirectory + "/window-manager/hyprland.nix")
+    (homeManagerModulesDirectory + "/window-manager/qtile.nix")
     (homeManagerModulesDirectory + "/scripts/home-backup.nix")
   ];
   home = {
@@ -50,6 +52,9 @@ in
   terminal = "ghostty";
   appLauncher = "fuzzel";
   emacsPkg = pkgs.emacs;
-  customInit = "";
+  customInit = ''
+  (setq container-executable 'podman)
+  '';
   fontSize = "150";
+  qtileWallpaper = ./assets/qtile-wallpaper.png;
 }

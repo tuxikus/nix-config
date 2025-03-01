@@ -13,6 +13,7 @@ let
     corfu
     dashboard
     direnv
+    docker
     doom-modeline
     doom-themes
     dwim-shell-command
@@ -38,10 +39,10 @@ let
     salt-mode
     verb
     vertico
+    vundo
     walkman
     wgrep
     yasnippet
-    poetry
     (treesit-grammars.with-grammars (grammars: with grammars; [
       tree-sitter-python
       tree-sitter-bash
@@ -86,6 +87,7 @@ in
           (require 'init-flycheck)
           (require 'init-corfu)
           (require 'init-custom)
+          (require 'init-docker)
           (require 'init-cape)
           (require 'init-dashboard)
           (require 'init-dired)
@@ -158,6 +160,11 @@ in
             (add-hook 'completion-at-point-functions #'cape-abbrev)
             (add-hook 'completion-at-point-functions #'cape-file)
             (add-hook 'completion-at-point-functions #'cape-elisp-block)
+            (add-hook 'completion-at-point-functions #'cape-emoji)
+            ;;(add-hook 'completion-at-point-functions #'cape-dict)
+            (add-hook 'completion-at-point-functions #'cape-rfc1345)
+            (add-hook 'completion-at-point-functions #'cape-sgml)
+            (add-hook 'completion-at-point-functions #'cape-tex)
             (add-hook 'completion-at-point-functions #'cape-history))
           
           (provide 'init-cape)
@@ -265,6 +272,37 @@ in
           ;;; init-direnv.el ends here
         '';
     
+        ".emacs.d/lisp/init-docker.el".text = ''
+          ;;; init-direnv.el --- -*- lexical-binding: t -*-
+          ;;; Commentary:
+          ;;; Code:
+          
+          (defcustom container-executable 'podman
+            "The executable to be used with docker mode."
+            :type '(choice
+          	  (const :tag "docker" docker)
+          	  (const :tag "podman" podman))
+            :group 'custom)
+          
+          (use-package docker
+            :bind
+            ("C-c d" . docker)
+            :config
+            (pcase contaiter-executable
+              ('docker
+               (setf docker-command "docker"
+          	   docker-compose-command "docker-compose"
+          	   docker-container-tramp-method "docker"))
+              ('podman
+               (setf docker-command "podman"
+          	   docker-compose-command "podman-compose"
+          	   docker-container-tramp-methodu "podman"))))
+          
+          (provide 'init-docker)
+          
+          ;;; init-docker.el ends here
+        '';
+    
         ".emacs.d/lisp/init-doom-modeline.el".text = ''
           ;;; init-doom-modeline.el --- -*- lexical-binding: t -*-
           ;;; Commentary:
@@ -318,7 +356,7 @@ in
           
           (use-package emacs
             :bind
-            ("M-<tab>" . completion-at-point)
+            ;;("M-<tab>" . completion-at-point)
             
             :init
             (setq create-lockfiles nil
@@ -377,7 +415,7 @@ in
             (enable-recursive-minibuffers t)
             (read-extended-command-predicate #'command-completion-default-include-p)
           
-            ;;(tab-always-indent 'complete)
+            (tab-always-indent 'complete)
             
             ;; Emacs 30 and newer: Disable Ispell completion function.
             ;; Try `cape-dict' as an alternative.
@@ -488,7 +526,8 @@ in
             :init
             (setq org-attach-id-dir "~/org/.attach"
           	org-log-done 'time
-          	org-hide-emphasis-markers t)
+          	org-hide-emphasis-markers t
+          	org-imenu-depth 7)
           
             :config
             (set-face-attribute 'org-level-1 nil :height 1.5)
