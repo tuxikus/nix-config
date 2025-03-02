@@ -30,7 +30,7 @@ This is my literate nix/nixos/home-manager config written with the help of [[htt
 
 15 directories
 #+end_src
-	* How to install a system
+* How to install a system
 ** If using luks encryption create a secret
 #+begin_src shell
   echo 'mysuperpassword' > /tmp/secret.key
@@ -1153,6 +1153,7 @@ Apple MacBook Pro M2
     org-roam
     org-modern
     org-superstar
+    org-present
     perspective
     python-mode
     pyvenv
@@ -1292,6 +1293,10 @@ Apple MacBook Pro M2
         <<emacs-init-org-superstar>>
       '';
 
+      ".emacs.d/lisp/init-org-present.el".text = ''
+        <<emacs-init-org-present>>
+      '';
+      
       ".emacs.d/lisp/init-perspective.el".text = ''
         <<emacs-init-perspective>>
       '';
@@ -1396,6 +1401,7 @@ Apple MacBook Pro M2
   (require 'init-dashboard)
   (require 'init-dired)
   (require 'init-consult)
+  (require 'init-org-present)
   (require 'init-ace-window)
   (require 'init-savehist)
   (require 'init-treesit)
@@ -1944,6 +1950,19 @@ Config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rahul's Bl
   (provide 'init-org-superstar)
 
   ;;; init-org-superstar.el ends here
+#+end_src
+******* Org present
+#+name: emacs-init-org-present
+#+begin_src emacs-lisp
+  ;;; init-org-present.el --- -*- lexical-binding: t -*-
+  ;;; Commentary:
+  ;;; Code:
+
+  (use-package org-present)
+
+  (provide 'init-org-present)
+
+  ;;; init-org-present.el ends here
 #+end_src
 ******* Perspective
 #+name: emacs-init-perspective
