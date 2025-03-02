@@ -33,6 +33,7 @@ let
     org-roam
     org-modern
     org-superstar
+    org-present
     perspective
     python-mode
     pyvenv
@@ -95,6 +96,7 @@ in
           (require 'init-dashboard)
           (require 'init-dired)
           (require 'init-consult)
+          (require 'init-org-present)
           (require 'init-ace-window)
           (require 'init-savehist)
           (require 'init-treesit)
@@ -616,6 +618,19 @@ in
           ;;; init-org-superstar.el ends here
         '';
     
+        ".emacs.d/lisp/init-org-present.el".text = ''
+          ;;; init-org-present.el --- -*- lexical-binding: t -*-
+          ;;; Commentary:
+          ;;; Code:
+          
+          (use-package org-present)
+            
+          
+          (provide 'init-org-present)
+          
+          ;;; init-org-present.el ends here
+        '';
+        
         ".emacs.d/lisp/init-perspective.el".text = ''
           ;;; init-perspective.el --- -*- lexical-binding: t -*-
           ;;; Commentary:
