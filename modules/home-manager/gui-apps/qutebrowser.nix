@@ -29,7 +29,7 @@ in
     
         # Commands
         '<alt-x>': 'cmd-set-text :',
-        '<ctrl-x>b': 'cmd-set-text -s :buffer',
+        '<ctrl-x>b': 'cmd-set-text -s :tab-focus',
         '<ctrl-x>k': 'tab-close',
         '<ctrl-x><ctrl-c>': 'quit',
     
