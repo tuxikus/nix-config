@@ -1019,7 +1019,7 @@ Apple MacBook Pro M2
 ***** Theme
 #+name: ghostty-theme
 #+begin_src conf
-  theme = 3024 Day
+  theme = BlulocoLight
 #+end_src
 ***** Font
 #+name: ghostty-font
@@ -1151,6 +1151,7 @@ Apple MacBook Pro M2
     nix-mode
     orderless
     org-roam
+    org-modern
     org-superstar
     perspective
     python-mode
@@ -1283,6 +1284,10 @@ Apple MacBook Pro M2
         <<emacs-init-org-roam>>
       '';
 
+      ".emacs.d/lisp/init-org-modern.el".text = ''
+        <<emacs-init-org-modern>>
+      '';      
+
       ".emacs.d/lisp/init-org-superstar.el".text = ''
         <<emacs-init-org-superstar>>
       '';
@@ -1386,6 +1391,7 @@ Apple MacBook Pro M2
   (require 'init-corfu)
   (require 'init-custom)
   (require 'init-docker)
+  (require 'init-org-modern)
   (require 'init-cape)
   (require 'init-dashboard)
   (require 'init-dired)
@@ -1683,7 +1689,7 @@ Config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rahul's Bl
     (tool-bar-mode -1)
     (menu-bar-mode -1)
     (scroll-bar-mode -1)
-    (load-theme 'doom-flatwhite t)
+    (load-theme 'doom-bluloco-light t)
     (set-face-attribute 'default nil
                       :family "Iosevka Nerd Font"
                       :height ${config.fontSize}
@@ -1907,6 +1913,23 @@ Config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rahul's Bl
 
   ;;; init-org-roam.el ends here
 #+end_src
+******* Org modern
+#+name: emacs-init-org-modern
+#+begin_src emacs-lisp
+  ;;; init-org-modern.el --- -*- lexical-binding: t -*-
+  ;;; Commentary:
+  ;;; Code:
+
+  (use-package org-modern
+    :config
+    (with-eval-after-load 'org (global-org-modern-mode)))
+
+  (provide 'init-org-modern)
+
+  ;;; init-org-modern.el ends here
+
+#+end_src
+
 ******* Org superstar
 #+name: emacs-init-org-superstar
 #+begin_src emacs-lisp

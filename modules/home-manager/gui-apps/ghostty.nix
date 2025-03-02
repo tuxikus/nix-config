@@ -5,7 +5,7 @@
       window-padding-y = 10
       macos-titlebar-style = hidden
       confirm-close-surface = false
-      theme = 3024 Day
+      theme = BlulocoLight
       font-family = "Iosevka Nerd Font"
       font-family-bold = "Iosevka Nerd Font"
       font-family-italic = "Iosevka Nerd Font"

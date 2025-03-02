@@ -31,6 +31,7 @@ let
     nix-mode
     orderless
     org-roam
+    org-modern
     org-superstar
     perspective
     python-mode
@@ -89,6 +90,7 @@ in
           (require 'init-corfu)
           (require 'init-custom)
           (require 'init-docker)
+          (require 'init-org-modern)
           (require 'init-cape)
           (require 'init-dashboard)
           (require 'init-dired)
@@ -370,7 +372,7 @@ in
             (tool-bar-mode -1)
             (menu-bar-mode -1)
             (scroll-bar-mode -1)
-            (load-theme 'doom-flatwhite t)
+            (load-theme 'doom-bluloco-light t)
             (set-face-attribute 'default nil
                               :family "Iosevka Nerd Font"
                               :height ${config.fontSize}
@@ -584,6 +586,21 @@ in
           
           ;;; init-org-roam.el ends here
         '';
+    
+        ".emacs.d/lisp/init-org-modern.el".text = ''
+          ;;; init-org-modern.el --- -*- lexical-binding: t -*-
+          ;;; Commentary:
+          ;;; Code:
+          
+          (use-package org-modern
+            :config
+            (with-eval-after-load 'org (global-org-modern-mode)))
+          
+          (provide 'init-org-modern)
+          
+          ;;; init-org-modern.el ends here
+          
+        '';      
     
         ".emacs.d/lisp/init-org-superstar.el".text = ''
           ;;; init-org-superstar.el --- -*- lexical-binding: t -*-
