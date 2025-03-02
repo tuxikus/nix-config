@@ -1251,6 +1251,10 @@ Apple MacBook Pro M2
         <<emacs-init-embark>>
       '';
 
+      ".emacs.d/lisp/init-em-banner.el".text = ''
+        <<emacs-init-em-banner>>
+      '';
+
       ".emacs.d/lisp/init-flycheck.el".text = ''
         <<emacs-init-flycheck>>
       '';
@@ -1378,6 +1382,7 @@ Apple MacBook Pro M2
   (require 'init-perspective)
   (require 'init-org-superstar)
   (require 'init-flycheck)
+  (require 'init-em-banner)
   (require 'init-corfu)
   (require 'init-custom)
   (require 'init-docker)
@@ -1755,6 +1760,20 @@ Config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rahul's Bl
 
   ;;; init-embark.el ends here
 #+end_src
+******* Em Banner
+#+name: emacs-init-em-banner
+#+begin_src emacs-lisp
+  ;;; init-em-banner.el --- -*- lexical-binding: t -*-
+  ;;; Commentary:
+  ;;; Code:
+
+  (use-package em-banner)
+
+  (provide 'init-em-banner)
+
+  ;;; init-em-banner.el ends here
+#+end_src
+
 ******* Flycheck
 #+name: emacs-init-flycheck
 #+begin_src emacs-lisp

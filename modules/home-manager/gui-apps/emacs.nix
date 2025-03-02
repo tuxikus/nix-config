@@ -85,6 +85,7 @@ in
           (require 'init-perspective)
           (require 'init-org-superstar)
           (require 'init-flycheck)
+          (require 'init-em-banner)
           (require 'init-corfu)
           (require 'init-custom)
           (require 'init-docker)
@@ -444,6 +445,18 @@ in
           (provide 'init-embark)
           
           ;;; init-embark.el ends here
+        '';
+    
+        ".emacs.d/lisp/init-em-banner.el".text = ''
+          ;;; init-em-banner.el --- -*- lexical-binding: t -*-
+          ;;; Commentary:
+          ;;; Code:
+          
+          (use-package em-banner)
+          
+          (provide 'init-em-banner)
+          
+          ;;; init-em-banner.el ends here
         '';
     
         ".emacs.d/lisp/init-flycheck.el".text = ''
