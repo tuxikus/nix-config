@@ -11,6 +11,7 @@ let
     consult
     consult-yasnippet
     corfu
+    corfu-terminal
     dashboard
     direnv
     docker
@@ -90,6 +91,7 @@ in
           (require 'init-flycheck)
           (require 'init-em-banner)
           (require 'init-corfu)
+          (require 'init-corfu-terminal)
           (require 'init-custom)
           (require 'init-docker)
           (require 'init-org-modern)
@@ -255,6 +257,21 @@ in
           (provide 'init-corfu)
           
           ;;; init-corfu.el ends here
+        '';
+        
+        ".emacs.d/lisp/init-corfu-terminal.el".text = ''
+          ;;; init-corfu-terminal.el --- -*- lexical-binding: t -*-
+          ;;; Commentary:
+          ;;; Code:
+          
+          (use-package corfu
+            :init
+            (unless (display-graphic-p)
+          (corfu-terminal-mode +1)))
+          
+          (provide 'init-corfu-terminal)
+          
+          ;;; init-corfu-terminal.el ends here
         '';
     
         ".emacs.d/lisp/init-custom-fun.el".text = ''
