@@ -12,8 +12,8 @@
       
       aliases['ll'] = 'ls -lah'
       aliases['ff'] = 'fastfetch'
-      aliases['python-create-venv'] = 'python3 -m venv venv'
-      aliases['python-activate-venv'] = 'source-bash venv/bin/activate'
+      aliases['pyvc'] = 'python3 -m venv venv'
+      aliases['pyva'] = 'source-bash venv/bin/activate'
       aliases['pip-freeze'] = 'python3 -m pip freeze > requirements.txt'
     '';
   };
