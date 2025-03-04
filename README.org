@@ -2051,15 +2051,15 @@ Config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rahul's Bl
 ******* Org present
 #+name: emacs-init-org-present
 #+begin_src emacs-lisp
-  ;;; init-org-present.el --- -*- lexical-binding: t -*-
-  ;;; Commentary:
-  ;;; Code:
+    ;;; init-org-present.el --- -*- lexical-binding: t -*-
+    ;;; Commentary:
+    ;;; Code:
 
-  (use-package org-present)
+    (use-package org-present)
 
-  (provide 'init-org-present)
+    (provide 'init-org-present)
 
-  ;;; init-org-present.el ends here
+    ;;; init-org-present.el ends here
 #+end_src
 ******* Perspective
 #+name: emacs-init-perspective
