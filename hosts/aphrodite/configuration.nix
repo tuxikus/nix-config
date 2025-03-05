@@ -100,7 +100,7 @@
       poppler_utils
       dig
       pyright
-      qutebrowser
+      ripgrep
     ];
     shells = with pkgs; [
       bashInteractive
@@ -121,6 +121,7 @@
       "tunnelblick"
       "utm"
       "firefox"
+      "qutebrowser"
     ];
   };
   system = {

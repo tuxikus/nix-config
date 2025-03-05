@@ -118,7 +118,9 @@ in
     home-manager
     pavucontrol
     poetry
-    python3
+    python312Full
+    python312Packages.pip
+    python312Packages.tkinter
     wget
     hyprpaper
     hyprsunset
@@ -148,6 +150,7 @@ in
     nyxt
     qutebrowser
     wlr-randr
+    ripgrep
   ];
   programs = {
     hyprland = {

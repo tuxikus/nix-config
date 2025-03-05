@@ -319,7 +319,9 @@ This is my literate nix/nixos/home-manager config written with the help of [[htt
     home-manager
     pavucontrol
     poetry
-    python3
+    python312Full
+    python312Packages.pip
+    python312Packages.tkinter
     wget
     hyprpaper
     hyprsunset
@@ -349,6 +351,7 @@ This is my literate nix/nixos/home-manager config written with the help of [[htt
     nyxt
     qutebrowser
     wlr-randr
+    ripgrep
   ];
 #+end_src
 ***** Programs
@@ -790,7 +793,7 @@ Apple MacBook Pro M2
       poppler_utils
       dig
       pyright
-      qutebrowser
+      ripgrep
     ];
     shells = with pkgs; [
       bashInteractive
@@ -819,6 +822,7 @@ Apple MacBook Pro M2
       "tunnelblick"
       "utm"
       "firefox"
+      "qutebrowser"
     ];
   };
 #+end_src
