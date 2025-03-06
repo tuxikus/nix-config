@@ -62,15 +62,15 @@ in
     };
     users = {
       tuxikus = {
-        uid = 1000;
-        isNormalUser = true;
-        description = "tuxikus";
-        group = "tuxikus";
-        extraGroups = [
-          "networkmanager"
-          "wheel"
-          "plugdev"
-        ];
+  	uid = 1000;
+  	isNormalUser = true;
+  	description = "tuxikus";
+  	group = "tuxikus";
+  	extraGroups = [
+  	  "networkmanager"
+  	  "wheel"
+  	  "plugdev"
+  	];
       };
     };
   };
@@ -83,14 +83,14 @@ in
       enable = true;
       displayManager.gdm.enable = true;
       windowManager.qtile = {
-        enable = true;
-        extraPackages = python3Packages: with python3Packages; [
-          qtile-extras
-        ];
+  	enable = true;
+  	extraPackages = python3Packages: with python3Packages; [
+  	  qtile-extras
+  	];
       };
       xkb = {
-        layout = "us";
-        variant = "";
+  	layout = "us";
+  	variant = "";
       };
     };
     pipewire = {
@@ -103,11 +103,11 @@ in
       enable = true;
       musicDirectory = "/home/tuxikus/multimedia/music/mp3";
       extraConfig = ''
-        audio_output {
-         type "pipewire"
-         name "My PipeWire Output"
-        }
-      ''; 
+  	audio_output {
+  	 type "pipewire"
+  	 name "My PipeWire Output"
+  	}
+      '';
       #network.startWhenNeeded = true;
       user = "tuxikus";
     };
@@ -117,7 +117,6 @@ in
     tree
     home-manager
     pavucontrol
-    poetry
     python312Full
     python312Packages.pip
     python312Packages.tkinter
@@ -151,6 +150,8 @@ in
     qutebrowser
     wlr-randr
     ripgrep
+    nixd
+    nixfmt-rfc-style
   ];
   programs = {
     hyprland = {

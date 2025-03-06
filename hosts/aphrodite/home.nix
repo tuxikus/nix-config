@@ -27,9 +27,9 @@ in
   customInit = ''
   (setq custom-init-loaded t)
   (setq mac-option-key-is-meta t
-        mac-command-key-is-meta nil
-        mac-option-modifier 'meta
-        mac-command-modifier 'super)
+  	mac-command-key-is-meta nil
+  	mac-option-modifier 'meta
+  	mac-command-modifier 'super)
   (setq container-executable 'docker)
   '';
 }

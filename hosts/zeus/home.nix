@@ -45,7 +45,7 @@ in
     git = {
       enable = true;
       userEmail = "contact@tuxikus.de";
-      userName = "tuxikus";      
+      userName = "tuxikus";
     };
   };
   wallpaper = ./assets/wallpaper.png;
