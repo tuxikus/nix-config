@@ -428,9 +428,9 @@ in
         '';
     
         ".emacs.d/lisp/init-emacs.el".text = ''
-          ;;; init-emacs.el --- -*- lexical-binding: t -*-
-          ;;; Commentary:
-          ;;; Code:
+            ;;; init-emacs.el --- -*- lexical-binding: t -*-
+            ;;; Commentary:
+            ;;; Code:
           
           (use-package emacs
             :bind
@@ -438,40 +438,42 @@ in
             
             :init
             (setq create-lockfiles nil
-          	make-backup-files nil
-          	custom-theme-directory "~/.emacs.d/themes"
-          	inhibit-startup-message t
-          	inhibit-startup-screen t
-          	initial-scratch-message ";;; Emacs is fun")
+            	make-backup-files nil
+            	custom-theme-directory "~/.emacs.d/themes"
+            	inhibit-startup-message t
+            	inhibit-startup-screen t
+            	initial-scratch-message ";;; Emacs is fun")
             (fset 'yes-or-no-p 'y-or-n-p)
             (tool-bar-mode -1)
             (menu-bar-mode -1)
+            (setq display-line-numbers-type 'relative) 
+            (global-display-line-numbers-mode) 
             (scroll-bar-mode -1)
             (load-theme 'doom-bluloco-light t)
             (set-face-attribute 'default nil
-                              :family "Iosevka Nerd Font"
-                              :height ${config.fontSize}
-                              :weight 'regular
-                              :width 'normal)
+                                :family "Iosevka Nerd Font"
+                                :height ${config.fontSize}
+                                :weight 'regular
+                                :width 'normal)
           
             (set-face-attribute 'bold nil
-          		      :family "Iosevka Nerd Font"
-          		      :weight 'regular)
+            		      :family "Iosevka Nerd Font"
+            		      :weight 'regular)
           
             (set-face-attribute 'italic nil
-          		      :family "Iosevka Nerd Font"
-          		      :slant 'italic
-          		      :weight 'regular)
+            		      :family "Iosevka Nerd Font"
+            		      :slant 'italic
+            		      :weight 'regular)
           
             (set-face-attribute 'bold-italic nil
-          		      :family "Iosevka Nerd Font"
-          		      :weight 'regular
-          		      :slant 'italic)
+            		      :family "Iosevka Nerd Font"
+            		      :weight 'regular
+            		      :slant 'italic)
           
             ;; window divider
             (setq window-divider-default-right-width 5
-          	window-divider-default-bottom-width 5
-          	window-divider-default-places t)
+            	window-divider-default-bottom-width 5
+            	window-divider-default-places t)
           
             (window-divider-mode 1)
             ;; Add prompt indicator to `completing-read-multiple'.
@@ -506,7 +508,7 @@ in
           
           (provide 'init-emacs)
           
-          ;;; init-emacs.el ends here
+            ;;; init-emacs.el ends here
         '';
     
         ".emacs.d/lisp/init-embark.el".text = ''
