@@ -7,6 +7,7 @@ in
     (homeManagerModulesDirectory + "/gui-apps/emacs.nix")
     (homeManagerModulesDirectory + "/gui-apps/qutebrowser.nix")
     (homeManagerModulesDirectory + "/shell/xonsh.nix")
+    (homeManagerModulesDirectory + "/shell/bash.nix")
   ];
   home = {
     # This value determines the Home Manager release that your

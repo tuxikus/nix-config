@@ -861,6 +861,7 @@ Apple MacBook Pro M2
     (homeManagerModulesDirectory + "/gui-apps/emacs.nix")
     (homeManagerModulesDirectory + "/gui-apps/qutebrowser.nix")
     (homeManagerModulesDirectory + "/shell/xonsh.nix")
+    (homeManagerModulesDirectory + "/shell/bash.nix")
   ];
 #+end_src
 ***** Config
@@ -1041,7 +1042,7 @@ Apple MacBook Pro M2
 ***** Initial command
 #+name: ghostty-init-command
 #+begin_src conf
-  command = xonsh
+  command = bash
 #+end_src
 ***** Keys
 #+name: ghostty-keys
@@ -1149,6 +1150,7 @@ Apple MacBook Pro M2
     ess
     fireplace
     flycheck
+    keycast
     libmpdel
     magit
     marginalia
@@ -1269,6 +1271,10 @@ Apple MacBook Pro M2
 
       ".emacs.d/lisp/init-flycheck.el".text = ''
         <<emacs-init-flycheck>>
+      '';
+
+      ".emacs.d/lisp/init-keycast.el".text = ''
+        <<emacs-init-keycast>>
       '';
 
       ".emacs.d/lisp/init-magit.el".text = ''
@@ -1413,6 +1419,7 @@ Apple MacBook Pro M2
   (require 'init-docker)
   (require 'init-org-modern)
   (require 'init-cape)
+  (require 'init-keycast)
   (require 'init-dashboard)
   (require 'init-dired)
   (require 'init-consult)
@@ -1885,6 +1892,22 @@ Config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rahul's Bl
 
   ;;; init-flycheck.el ends here
 #+end_src
+*************** Keycast
+#+name: emacs-init-keycast
+#+begin_src emacs-lisp
+  ;;; init-keycast.el --- -*- lexical-binding: t -*-
+  ;;; Commentary:
+  ;;; Code:
+
+  (use-package keycast
+    :config
+    (keycast-header-line-mode))
+
+  (provide 'init-keycast)
+
+  ;;; init-keycast.el ends here
+#+end_src
+
 ******* Magit
 #+name: emacs-init-magit
 #+begin_src emacs-lisp

@@ -25,6 +25,7 @@ let
     ess
     fireplace
     flycheck
+    keycast
     libmpdel
     magit
     marginalia
@@ -96,6 +97,7 @@ in
           (require 'init-docker)
           (require 'init-org-modern)
           (require 'init-cape)
+          (require 'init-keycast)
           (require 'init-dashboard)
           (require 'init-dired)
           (require 'init-consult)
@@ -546,6 +548,20 @@ in
           (provide 'init-flycheck)
           
           ;;; init-flycheck.el ends here
+        '';
+    
+        ".emacs.d/lisp/init-keycast.el".text = ''
+          ;;; init-keycast.el --- -*- lexical-binding: t -*-
+          ;;; Commentary:
+          ;;; Code:
+          
+          (use-package keycast
+            :config
+            (keycast-header-line-mode))
+          
+          (provide 'init-keycast)
+          
+          ;;; init-keycast.el ends here
         '';
     
         ".emacs.d/lisp/init-magit.el".text = ''

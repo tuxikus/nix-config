@@ -15,7 +15,7 @@
       font-style-italic = "Light"
       font-style-bold-italic = "Light"
       font-size = 15
-      command = xonsh
+      command = bash
       keybind = alt+w=copy_to_clipboard
       keybind = ctrl+y=paste_from_clipboard
       
