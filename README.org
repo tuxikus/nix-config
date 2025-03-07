@@ -1196,217 +1196,169 @@ Apple MacBook Pro M2
 #+begin_src nix :noweb yes
   home = {
     file = {
-      # init.el
       ".emacs.d/init.el".text = ''
-  	<<emacs-init>>
-  	'';
+      	<<emacs-init>>
+      '';
 
-      # configs
       ".emacs.d/lisp/init-ace-window.el".text = ''
-  	<<emacs-init-ace-window>>
-  	'';
+  	    <<emacs-init-ace-window>>
+    	'';
 
       ".emacs.d/lisp/init-avy.el".text = ''
-  	<<emacs-init-avy>>
-  	'';
+      	<<emacs-init-avy>>
+  	  '';
 
       ".emacs.d/lisp/init-cape.el".text = ''
-  	<<emacs-init-cape>>
-  	'';
+  	    <<emacs-init-cape>>
+  	  '';
 
       ".emacs.d/lisp/init-consult.el".text = ''
-  	<<emacs-init-consult>>
-  	'';
+  	    <<emacs-init-consult>>
+  	  '';
 
       ".emacs.d/lisp/init-corfu.el".text = ''
-  	<<emacs-init-corfu>>
-  	'';
+  	    <<emacs-init-corfu>>
+  	  '';
 
       ".emacs.d/lisp/init-corfu-terminal.el".text = ''
-  	<<emacs-init-corfu-terminal>>
-  	'';
+  	    <<emacs-init-corfu-terminal>>
+  	  '';
 
       ".emacs.d/lisp/init-custom-fun.el".text = ''
-  	<<emacs-init-custom-fun>>
-  	'';
+  	    <<emacs-init-custom-fun>>
+  	  '';
 
       ".emacs.d/lisp/init-dashboard.el".text = ''
-  	<<emacs-init-dashboard>>
-  	'';
+  	    <<emacs-init-dashboard>>
+  	  '';
 
       ".emacs.d/lisp/init-dired.el".text = ''
-  	<<emacs-init-dired>>
-  	'';
+  	    <<emacs-init-dired>>
+  	  '';
 
       ".emacs.d/lisp/init-direnv.el".text = ''
-  	<<emacs-init-direnv>>
-  	'';
+  	    <<emacs-init-direnv>>
+  	  '';
 
       ".emacs.d/lisp/init-docker.el".text = ''
-  	<<emacs-init-docker>>
-  	'';
+      	<<emacs-init-docker>>
+  	  '';
 
       ".emacs.d/lisp/init-doom-modeline.el".text = ''
-  	<<emacs-init-doom-modeline>>
-  	'';
+  	    <<emacs-init-doom-modeline>>
+  	  '';
 
       ".emacs.d/lisp/init-dwim-shell-command.el".text = ''
-  	<<emacs-init-dwim-shell-command>>
-  	'';
+  	    <<emacs-init-dwim-shell-command>>
+  	  '';
 
       ".emacs.d/lisp/init-eglot.el".text = ''
-  	<<emacs-init-eglot>>
-  	'';
+  	    <<emacs-init-eglot>>
+  	  '';
 
       ".emacs.d/lisp/init-emacs.el".text = ''
-  	<<emacs-init-emacs>>
-  	'';
+  	    <<emacs-init-emacs>>
+  	  '';
 
       ".emacs.d/lisp/init-embark.el".text = ''
-  	<<emacs-init-embark>>
-  	'';
+  	    <<emacs-init-embark>>
+  	  '';
 
       ".emacs.d/lisp/init-em-banner.el".text = ''
-  	<<emacs-init-em-banner>>
-  	'';
+  	    <<emacs-init-em-banner>>
+  	  '';
 
       ".emacs.d/lisp/init-flycheck.el".text = ''
-  	<<emacs-init-flycheck>>
-  	'';
+  	    <<emacs-init-flycheck>>
+  	  '';
 
       ".emacs.d/lisp/init-keycast.el".text = ''
-  	<<emacs-init-keycast>>
-  	'';
+  	    <<emacs-init-keycast>>
+  	  '';
 
       ".emacs.d/lisp/init-magit.el".text = ''
-  	<<emacs-init-magit>>
-  	'';
+  	    <<emacs-init-magit>>
+  	  '';
 
       ".emacs.d/lisp/init-marginalia.el".text = ''
-  	<<emacs-init-marginalia>>
-  	'';
+  	    <<emacs-init-marginalia>>
+  	  '';
 
       ".emacs.d/lisp/init-move-text.el".text = ''
-  	<<emacs-init-move-text>>
-  	'';
+  	    <<emacs-init-move-text>>
+  	  '';
 
       ".emacs.d/lisp/init-nix-mode.el".text = ''
-  	<<emacs-init-nix-mode>>
-  	'';
+  	    <<emacs-init-nix-mode>>
+  	  '';
 
       ".emacs.d/lisp/init-orderless.el".text = ''
-  	<<emacs-init-orderless>>
-  	'';
+  	    <<emacs-init-orderless>>
+  	  '';
 
       ".emacs.d/lisp/init-org.el".text = ''
-  	<<emacs-init-org>>
-  	'';
+  	    <<emacs-init-org>>
+  	  '';
 
       ".emacs.d/lisp/init-org-roam.el".text = ''
-  	<<emacs-init-org-roam>>
-  	'';
+  	    <<emacs-init-org-roam>>
+  	  '';
 
       ".emacs.d/lisp/init-org-modern.el".text = ''
-  	<<emacs-init-org-modern>>
-  	'';
+  	    <<emacs-init-org-modern>>
+  	  '';
 
       ".emacs.d/lisp/init-org-superstar.el".text = ''
-  	<<emacs-init-org-superstar>>
-  	'';
+  	    <<emacs-init-org-superstar>>
+  	  '';
 
       ".emacs.d/lisp/init-org-present.el".text = ''
-  	<<emacs-init-org-present>>
-  	'';
+  	    <<emacs-init-org-present>>
+  	  '';
 
       ".emacs.d/lisp/init-perspective.el".text = ''
-  	<<emacs-init-perspective>>
-  	'';
+  	    <<emacs-init-perspective>>
+  	  '';
 
       ".emacs.d/lisp/init-salt-mode.el".text = ''
-  	<<emacs-init-salt-mode>>
-  	'';
+  	    <<emacs-init-salt-mode>>
+  	  '';
 
       ".emacs.d/lisp/init-savehist.el".text = ''
-  	<<emacs-init-savehist>>
-  	'';
+  	    <<emacs-init-savehist>>
+  	  '';
 
       ".emacs.d/lisp/init-treesit.el".text = ''
-  	<<emacs-init-treesit>>
-  	'';
+  	    <<emacs-init-treesit>>
+  	  '';
 
       ".emacs.d/lisp/init-use-package.el".text = ''
-  	<<emacs-init-use-package>>
-  	'';
+  	    <<emacs-init-use-package>>
+  	  '';
 
       ".emacs.d/lisp/init-vertico.el".text = ''
-  	<<emacs-init-vertico>>
-  	'';
+  	    <<emacs-init-vertico>>
+  	  '';
 
       ".emacs.d/lisp/init-yas.el".text = ''
-  	<<emacs-init-yas>>
-  	'';
+  	    <<emacs-init-yas>>
+  	  '';
 
       # custom init
       ".emacs.d/lisp/init-custom.el".text = ''
-  	${config.customInit}
+  	    ${config.customInit}
 
-  	(provide 'init-custom)
-  	'';
+    	  (provide 'init-custom)
+  	  '';
 
       # custom functions
       ".emacs.d/lisp/tuxikus/custom-fun.el".text = ''
-  	<<emacs-custom-fun>>
-  	'';
+      	<<emacs-custom-fun>>
+      '';
 
       # themes
       ".emacs.d/themes/tuxikus-basic-theme".text = ''
-  	<<emacs-themes-tuxikus-basic-theme>>
-  	'';
-
-      # snippets
-      # emacs-lisp-mode
-      ".emacs.d/snippets/emacs-lisp-mode/config-template".text = ''
-  	<<emacs-snippets-emacs-lisp-mode-config-template>>
-  	'';
-
-      # fundamental-mode
-      ".emacs.d/snippets/fundamental-mode/date".text = ''
-  	<<emacs-snippets-fundamental-mode-date>>
-  	'';
-
-      # nix-mode
-      ".emacs.d/snippets/nix-mode/flake-dev-env".text = ''
-  	<<emacs-snippets-nix-mode-flake-dev-env>>
-  	'';
-
-      ".emacs.d/snippets/nix-mode/module".text = ''
-  	<<emacs-snippets-nix-mode-module>>
-  	'';
-
-      # org-mode
-      ".emacs.d/snippets/org-mode/code-block".text = ''
-  	<<emacs-snippets-org-mode-code-block>>
-  	'';
-
-      ".emacs.d/snippets/org-mode/code-block-emacs-lisp".text = ''
-  	<<emacs-snippets-org-mode-code-block-emacs-lisp>>
-  	'';
-
-      ".emacs.d/snippets/org-mode/code-block-python".text = ''
-  	<<emacs-snippets-org-mode-code-block-python>>
-  	'';
-
-      # salt-mode
-      ".emacs.d/snippets/salt-mode/jinja-variable".text = ''
-  	<<emacs-snippets-salt-mode-jinja-variable>>
-  	'';
-
-      ".emacs.d/snippets/salt-mode/jinja-statement".text = ''
-        <<emacs-snippets-salt-mode-jinja-statement>>
-        '';
-
-      ".emacs.d/snippets/salt-mode/jinja-comment".text = ''
-        <<emacs-snippets-salt-mode-jinja-comment>>
+      	<<emacs-themes-tuxikus-basic-theme>>
   	  '';
     };
   };
@@ -2349,144 +2301,6 @@ Config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rahul's Bl
 
   (provide-theme 'tuxikus-basic)
   #+end_src
-****** Snippets
-******* emacs-lisp-mode
-#+name: emacs-snippets-emacs-lisp-mode-config-template
-#+begin_src snippet
-  # -*- mode: snippet -*-
-  # name: init-template
-  # key: init-template
-  # key: ct
-  # --
-  ;;; $1.el --- -*- lexical-binding: t -*-
-  ;;; Commentary:
-  ;;; Code:
-
-  $0
-
-  (provide '$2)
-
-  ;;; $3.el ends here
-#+end_src
-******* fundamental-mode
-#+name: emacs-snippets-fundamental-mode-date
-#+begin_src snippet
-  # -*- mode: snippet -*-
-  # name: date
-  # key: date
-  # --
-  `(format-time-string "%Y-%m-%d")`$0
-#+end_src
-******* nix-mode
-******** flake-dev-env
-#+name: emacs-snippets-nix-mode-flake-dev-env
-#+begin_src snippet
-  # -*- mode: snippet -*-
-  # name: flake-dev-env
-  # key: flake-dev-env
-  # --
-  {
-    inputs = {
-      nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
-      flake-utils.url = "github:numtide/flake-utils";
-    };
-
-    outputs = { self, nixpkgs, flake-utils }:
-      flake-utils.lib.eachDefaultSystem (system:
-	let
-	  pkgs = import nixpkgs { inherit system; };
-	in
-	  {
-	    devShell = with pkgs; mkShell {
-	      buildInputs = [
-		$1
-	      ];
-	      shellHook = '''
-		$2
-	      ''';
-	    };
-	  }
-      );
-  }
-#+end_src
-******** module
-#+name: emacs-snippets-nix-mode-module
-#+begin_src snippet
-  # -*- mode: snippet -*-
-  # name: module
-  # key: module
-  # --
-  { config, pkgs, ... }:
-  {
-    $1imports = [];
-    options = {};
-    config = {};
-  }
-#+end_src
-******* org-mode
-******** code-block
-#+name: emacs-snippets-org-mode-code-block
-#+begin_src snippet
-  # -*- mode: snippet -*-
-  # name: code-block
-  # key: cb
-  # --
-  ,#+begin_src $1
-  $0
-  ,#+end_src
-#+end_src
-#+end_src
-******** code-block-emacs-lisp
-#+name: emacs-snippets-org-mode-code-block-emacs-lisp
-#+begin_src snippet
-  # -*- mode: snippet -*-
-  # name: code-block-emacs-lisp
-  # key: cbel
-  # --
-  ,#+begin_src emacs-lisp
-  $0
-  ,#+end_src
-#+end_src
-******** code-block-python
-#+name: emacs-snippets-org-mode-code-block-python
-#+begin_src snippet
-  # -*- mode: snippet -*-
-  # name: code-block-python
-  # key: cbpy
-  # --
-  ,#+begin_src python
-  $0
-  ,#+end_src
-#+end_src
-#+end_src
-******* salt-mode
-******** jinja-variable
-#+name: emacs-snippets-salt-mode-jinja-variable
-#+begin_src snippet
-  # -*- mode: snippet -*-
-  # name: jinja-variable
-  # key: jv
-  # --
-  {{ $0 }}
-#+end_src
-******** jinja-statement
-#+name: emacs-snippets-salt-mode-jinja-statement
-#+begin_src snippet
-  # -*- mode: snippet -*-
-  # name: jinja-statement
-  # key: js
-  # --
-  {% $0 %}
-#+end_src
-******** jinja-comment
-#+name: emacs-snippets-salt-mode-jinja-comment
-#+begin_src snippet
-  # -*- mode: snippet -*-
-  # name: jinja-comment
-  # key: jc
-  # --
-  {# $0 #}
-#+end_src
 **** Fuzzel
 #+begin_src nix :tangle modules/home-manager/gui-apps/fuzzel.nix :mkdirp yes
 {
