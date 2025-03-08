@@ -642,9 +642,9 @@ in
     	    (use-package org
     	      :init
     	      (setq org-attach-id-dir "~/org/.attach"
-    	    	  org-log-done 'time
-    	    	  org-hide-emphasis-markers t
-    	    	  org-imenu-depth 7)
+    	    	org-log-done 'time
+    	    	org-hide-emphasis-markers t
+    	    	org-imenu-depth 7)
     	    
     	      :config
     	      (set-face-attribute 'org-level-1 nil :height 1.5)
@@ -661,8 +661,10 @@ in
     	    
     	      ;; load org babel languages
     	      (org-babel-do-load-languages 'org-babel-load-languages '((shell . t)
-    	    							     (emacs-lisp . t)
-    	    							     (python . t))))
+    	    							   (emacs-lisp . t)
+    	    							   (python . t)))
+    	      :bind
+    	      ("C-M-<return>" . org-insert-subheading))
     	    
     	    (provide 'init-org)
     	    
