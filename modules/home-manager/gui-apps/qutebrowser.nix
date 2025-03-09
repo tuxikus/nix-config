@@ -32,6 +32,7 @@ in
         '<ctrl-x>b': 'cmd-set-text -s :tab-focus',
         '<ctrl-x>k': 'tab-close',
         '<ctrl-x><ctrl-c>': 'quit',
+        '<ctrl-x>xg': 'reload',
     
         # searching
         '<ctrl-s>': 'cmd-set-text /',
@@ -41,8 +42,8 @@ in
         '<alt-s>': 'hint all',
     
         # history
-        '<ctrl-]>': 'forward',
-        '<ctrl-[>': 'back',
+        '<ctrl-?>': 'forward',
+        '<ctrl-/>': 'back',
     
         # tabs
         '<ctrl-tab>': 'tab-next',
