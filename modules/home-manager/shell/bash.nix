@@ -3,7 +3,7 @@
   programs.bash = {
     enable = true;
     enableCompletion = true;
-    initExtra = "PS1='[$?] \\w \\$ '";
+    initExtra = "PS1='[$?] \\w \\n\\$ '";
     shellAliases = {
       ed = "emacs --daemon";
       e = "emacsclient -c & disown";
