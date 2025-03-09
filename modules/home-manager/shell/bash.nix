@@ -6,7 +6,7 @@
     initExtra = "PS1='[$?] \\w \\$ '";
     shellAliases = {
       ed = "emacs --daemon";
-      e = "emacsclient -c";
+      e = "emacsclient -c & disown";
 	    night-shift-on = "hyprsunset --temperature 3000 & disown";
 	    night-shift-off = "pgrep hyprsunset | xargs kill";
 	    ll = "ls -lah";
