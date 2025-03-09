@@ -5,7 +5,6 @@
 * ❄️ Welcome to my nix-config ❄️
 This is my literate nix/nixos/home-manager config written with the help of [[https://www.gnu.org/software/emacs/][Emacs]] and the powerful [[https://orgmode.org/][Org mode]].
 
-* Disclaimer
 * Project structure
 #+begin_src shell :results org
   tree -d
@@ -30,14 +29,13 @@ This is my literate nix/nixos/home-manager config written with the help of [[htt
 
 15 directories
 #+end_src
-
 * How to install a system
 ** If using luks encryption create a secret
 #+begin_src shell
   echo 'mysuperpassword' > /tmp/secret.key
 #+end_src
 ** Optional: Fromat disks with disko
-For partitioning and formating I'm using [[https://github.com/nix-community/disko][disko]]. I hardcoded the ids of my drives to the disk.nix config (e.g. [[*Disk setup - \[\[file:hosts/zeus/disks.nix\]\[disks.nix\]\]][disk setup of the zeus host]]) for each host. Be sure to update the disks.nix with your current and/or desired disk layout and ids.
+For partitioning and formating I'm using [[https://github.com/nix-community/disko][disko]]. I hardcoded the ids of my drives to the disks.nix config (e.g. [[*Disk setup - \[\[file:hosts/zeus/disks.nix\]\[disks.nix\]\]][disk setup of the zeus host]]) for each host. Be sure to update the disks.nix with your current and/or desired disk layout and ids.
 #+begin_src shell
   sudo nix \
        --experimental-features "nix-command flakes" \
