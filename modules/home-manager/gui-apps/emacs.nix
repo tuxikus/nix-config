@@ -434,7 +434,7 @@ in
     	    
     	    (use-package emacs
     	      :bind
-    	      ;;("M-<tab>" . completion-at-point)
+    	      ("M-<tab>" . completion-at-point)
     	      ;;("" . duplicate-line)
     	    
     	      :init
@@ -498,7 +498,7 @@ in
     	      (enable-recursive-minibuffers t)
     	      (read-extended-command-predicate #'command-completion-default-include-p)
     	    
-    	      (tab-always-indent 'complete)
+    	      ;; (tab-always-indent 'complete)
     	    
     	      ;; Emacs 30 and newer: Disable Ispell completion function.
     	      ;; Try `cape-dict' as an alternative.
