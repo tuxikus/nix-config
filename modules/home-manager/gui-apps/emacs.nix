@@ -444,7 +444,8 @@ in
     	    	inhibit-startup-message t
     	    	inhibit-startup-screen t
     	    	initial-scratch-message ";;; Emacs is fun"
-    	    	global-auto-revert-non-file-buffers t)
+    	    	global-auto-revert-non-file-buffers t
+    	    	electric-pair-mode 1)
     	      (fset 'yes-or-no-p 'y-or-n-p)
     	      (tool-bar-mode -1)
     	      (menu-bar-mode -1)

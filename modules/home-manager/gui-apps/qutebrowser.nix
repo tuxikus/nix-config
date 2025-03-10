@@ -7,7 +7,7 @@ in
 {
   home.file.${qutebrowserConfigLocation}.text = ''
     config.load_autoconfig(False)
-    c.tabs.position = "left"
+    # c.tabs.position = "left"
     c.content.blocking.method = 'both'
     
     # disable insert mode completely
