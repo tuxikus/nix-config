@@ -4,6 +4,12 @@
     enable = true;
     enableCompletion = true;
     initExtra = "PS1='[$?] \\w \\n\\$ '";
+    bashrcExtra = ''
+      if command -v fzf-share >/dev/null; then
+        source "$(fzf-share)/key-bindings.bash"
+        source "$(fzf-share)/completion.bash"
+      fi
+    '';
     shellAliases = {
       ed = "emacs --daemon";
       e = "emacsclient -c & disown";
