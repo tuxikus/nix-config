@@ -1181,6 +1181,7 @@ Apple MacBook Pro M2
     salt-mode
     verb
     vertico
+    vertico-posframe
     vundo
     walkman
     wgrep
@@ -1351,6 +1352,10 @@ Apple MacBook Pro M2
   	    <<emacs-init-vertico>>
   	  '';
 
+      ".emacs.d/lisp/init-vertico-posframe.el".text = ''
+  	    <<emacs-init-vertico-posframe>>
+  	  '';
+
       ".emacs.d/lisp/init-yas.el".text = ''
   	    <<emacs-init-yas>>
   	  '';
@@ -1408,6 +1413,7 @@ Apple MacBook Pro M2
   (require 'init-move-text)
   (require 'init-emacs)
   (require 'init-vertico)
+  (require 'init-vertico-posframe)
   (require 'init-orderless)
   (require 'init-direnv)
   (require 'init-nix-mode)
@@ -2170,6 +2176,21 @@ Config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rahul's Bl
   (provide 'init-vertico)
 
   ;;; init-vertico.el ends here
+#+end_src
+******* Vertico posframe
+#+name: emacs-init-vertico-posframe
+#+begin_src emacs-lisp
+  ;;; init-vertico-posframe.el --- -*- lexical-binding: t -*-
+  ;;; Commentary:
+  ;;; Code:
+
+  (use-package vertico-posframe
+    :init
+    (vertico-posframe-mode 1))
+
+  (provide 'init-vertico-posframe)
+
+  ;;; init-vertico-posframe.el ends here
 #+end_src
 ******* Yas
 #+name: emacs-init-yas

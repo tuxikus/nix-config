@@ -44,6 +44,7 @@ let
     salt-mode
     verb
     vertico
+    vertico-posframe
     vundo
     walkman
     wgrep
@@ -108,6 +109,7 @@ in
         	(require 'init-move-text)
         	(require 'init-emacs)
         	(require 'init-vertico)
+        	(require 'init-vertico-posframe)
         	(require 'init-orderless)
         	(require 'init-direnv)
         	(require 'init-nix-mode)
@@ -828,6 +830,20 @@ in
     	    (provide 'init-vertico)
     	    
     	    ;;; init-vertico.el ends here
+    	  '';
+    
+        ".emacs.d/lisp/init-vertico-posframe.el".text = ''
+    	    ;;; init-vertico-posframe.el --- -*- lexical-binding: t -*-
+    	    ;;; Commentary:
+    	    ;;; Code:
+    	    
+    	    (use-package vertico-posframe
+    	      :init
+    	      (vertico-posframe-mode 1))
+    	    
+    	    (provide 'init-vertico-posframe)
+    	    
+    	    ;;; init-vertico-posframe.el ends here
     	  '';
     
         ".emacs.d/lisp/init-yas.el".text = ''
