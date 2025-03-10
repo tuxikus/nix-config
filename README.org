@@ -3150,8 +3150,8 @@ echo "Done!"
   		  widget.QuickExit(),
   	      ],
   	      32,
-  	      border_width=[0, 0, 2, 0],  # Draw top and bottom borders
-  	      border_color=["000000", "000000", "000000", "000000"]  # Borders are magenta
+  	      # border_width=[0, 0, 2, 0],  # Draw top and bottom borders
+  	      # border_color=["000000", "000000", "000000", "000000"]  # Borders are magenta
   	  ),
   	  # You can uncomment this variable if you see that on X11 floating resize/moving is laggy
   	  # By default we handle these events delayed to already improve performance, however your system might still be struggling
