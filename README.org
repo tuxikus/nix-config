@@ -5,7 +5,18 @@
 * ❄️ Welcome to my nix-config ❄️
 This is my literate nix/nixos/home-manager config written with the help of [[https://www.gnu.org/software/emacs/][Emacs]] and the powerful [[https://orgmode.org/][Org mode]].
 
-* Project structure
+* Config structure
+I splitted my nix config into two parts, hosts specific config and nix modules.
+
+The host config contains:
+- hardware-configuration.nix - created by the initial nix installation
+- configuration.nix - default nix configuration
+- home.nix - home-manager config 
+- disks.nix - disk partitioning and formatting
+
+Modules:
+- home-manager - application and package config used by home-manager
+- nixos - application and package config used by nix
 #+begin_src shell :results org
   tree -d
 #+end_src
@@ -35,7 +46,7 @@ This is my literate nix/nixos/home-manager config written with the help of [[htt
   echo 'mysuperpassword' > /tmp/secret.key
 #+end_src
 ** Optional: Fromat disks with disko
-For partitioning and formating I'm using [[https://github.com/nix-community/disko][disko]]. I hardcoded the ids of my drives to the disks.nix config (e.g. [[*Disk setup - \[\[file:hosts/zeus/disks.nix\]\[disks.nix\]\]][disk setup of the zeus host]]) for each host. Be sure to update the disks.nix with your current and/or desired disk layout and ids.
+For partitioning and formatting I'm using [[https://github.com/nix-community/disko][disko]]. I hardcoded the ids of my drives to the disks.nix config (e.g. [[*Disk setup - \[\[file:hosts/zeus/disks.nix\]\[disks.nix\]\]][disk setup of the zeus host]]) for each host. Be sure to update the disks.nix with your current and/or desired disk layout and ids.
 #+begin_src shell
   sudo nix \
        --experimental-features "nix-command flakes" \
@@ -130,9 +141,9 @@ For partitioning and formating I'm using [[https://github.com/nix-community/disk
 | CPU    | AMD Ryzen 5 5600X (12) @ 3.70 GHz |
 | GPU    | AMD Radeon RX 6800 XT             |
 | Memory | 32GB DDR4                         |
+
 *** Nix configuration
 **** Configuration - [[file:hosts/zeus/configuration.nix][configuration.nix]]
-***** Base
 #+begin_src nix :tangle hosts/zeus/configuration.nix :noweb tangle :mkdirp yes
   {
     config,
@@ -189,6 +200,7 @@ For partitioning and formating I'm using [[https://github.com/nix-community/disk
 
 #+end_src
 ***** Boot loader
+To use [[https://www.gnu.org/software/grub/][grub]] as the boot loader you need to disable systemd boot and enable grub.
 #+name: zeus-configuration-boot-loader
 #+begin_src nix
   boot.loader = {
@@ -233,7 +245,6 @@ For partitioning and formating I'm using [[https://github.com/nix-community/disk
 ***** Printing
 #+name: zeus-configuration-printing
 #+begin_src nix
-  # Enable CUPS to print documents.
   #services.printing.enable = true;
 #+end_src
 ***** Security
@@ -1740,59 +1751,63 @@ Config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rahul's Bl
   (use-package emacs
     :bind
     ;;("M-<tab>" . completion-at-point)
+    ;;("" . duplicate-line)
 
     :init
     (setq create-lockfiles nil
-	make-backup-files nil
-	custom-theme-directory "~/.emacs.d/themes"
-	inhibit-startup-message t
-	inhibit-startup-screen t
-	initial-scratch-message ";;; Emacs is fun")
+  	make-backup-files nil
+  	custom-theme-directory "~/.emacs.d/themes"
+  	inhibit-startup-message t
+  	inhibit-startup-screen t
+  	initial-scratch-message ";;; Emacs is fun"
+  	global-auto-revert-non-file-buffers t)
     (fset 'yes-or-no-p 'y-or-n-p)
     (tool-bar-mode -1)
     (menu-bar-mode -1)
     (scroll-bar-mode -1)
+    (save-place-mode 1)
+    (global-auto-revert-mode 1)
     (load-theme 'doom-bluloco-light t)
     (set-face-attribute 'default nil
-			:family "Iosevka Nerd Font"
-			:height ${config.fontSize}
-			:weight 'regular
-			:width 'normal)
+  			:family "Iosevka Nerd Font"
+  			:height ${config.fontSize}
+  			:weight 'regular
+  			:width 'normal)
 
     (set-face-attribute 'bold nil
-		      :family "Iosevka Nerd Font"
-		      :weight 'regular)
+  		      :family "Iosevka Nerd Font"
+  		      :weight 'regular)
 
     (set-face-attribute 'italic nil
-		      :family "Iosevka Nerd Font"
-		      :slant 'italic
-		      :weight 'regular)
+  		      :family "Iosevka Nerd Font"
+  		      :slant 'italic
+  		      :weight 'regular)
 
     (set-face-attribute 'bold-italic nil
-		      :family "Iosevka Nerd Font"
-		      :weight 'regular
-		      :slant 'italic)
+  		      :family "Iosevka Nerd Font"
+  		      :weight 'regular
+  		      :slant 'italic)
 
     ;; window divider
     (setq window-divider-default-right-width 5
-	window-divider-default-bottom-width 5
-	window-divider-default-places t)
+  	window-divider-default-bottom-width 5
+  	window-divider-default-places t)
 
     (window-divider-mode 1)
     ;; Add prompt indicator to `completing-read-multiple'.
     ;; We display [CRM<separator>], e.g., [CRM,] if the separator is a comma.
     (defun crm-indicator (args)
       (cons (format "[CRM%s] %s"
-		    (replace-regexp-in-string
-		     "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
-		     crm-separator)
-		    (car args))
-	    (cdr args)))
+  		    (replace-regexp-in-string
+  		     "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
+  		     crm-separator)
+  		    (car args))
+  	    (cdr args)))
     (advice-add #'completing-read-multiple :filter-args #'crm-indicator)
 
     ;; Do not allow the cursor in the minibuffer prompt
     (setq minibuffer-prompt-properties
-	  '(read-only t cursor-intangible t face minibuffer-prompt))
+  	  '(read-only t cursor-intangible t face minibuffer-prompt))
     (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
     :custom
     (enable-recursive-minibuffers t)

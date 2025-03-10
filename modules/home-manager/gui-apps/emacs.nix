@@ -433,6 +433,7 @@ in
     	    (use-package emacs
     	      :bind
     	      ;;("M-<tab>" . completion-at-point)
+    	      ;;("" . duplicate-line)
     	    
     	      :init
     	      (setq create-lockfiles nil
@@ -440,11 +441,14 @@ in
     	    	custom-theme-directory "~/.emacs.d/themes"
     	    	inhibit-startup-message t
     	    	inhibit-startup-screen t
-    	    	initial-scratch-message ";;; Emacs is fun")
+    	    	initial-scratch-message ";;; Emacs is fun"
+    	    	global-auto-revert-non-file-buffers t)
     	      (fset 'yes-or-no-p 'y-or-n-p)
     	      (tool-bar-mode -1)
     	      (menu-bar-mode -1)
     	      (scroll-bar-mode -1)
+    	      (save-place-mode 1)
+    	      (global-auto-revert-mode 1)
     	      (load-theme 'doom-bluloco-light t)
     	      (set-face-attribute 'default nil
     	    			:family "Iosevka Nerd Font"
