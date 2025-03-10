@@ -19,7 +19,7 @@
 	    night-shift-off = "pgrep hyprsunset | xargs kill";
 	    ll = "ls -lah";
 	    ff = "fastfetch";
-      #cdp = "
+      cdp = "cd $(cli-project-switcher | fzf)";
     };
   };
 }
