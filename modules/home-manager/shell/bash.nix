@@ -5,6 +5,8 @@
     enableCompletion = true;
     initExtra = "PS1='[$?] \\w \\n\\$ '";
     bashrcExtra = ''
+      PATH=~/.local/bin:$PATH
+
       if command -v fzf-share >/dev/null; then
         source "$(fzf-share)/key-bindings.bash"
         source "$(fzf-share)/completion.bash"
@@ -17,6 +19,7 @@
 	    night-shift-off = "pgrep hyprsunset | xargs kill";
 	    ll = "ls -lah";
 	    ff = "fastfetch";
+      cdp = "
     };
   };
 }
