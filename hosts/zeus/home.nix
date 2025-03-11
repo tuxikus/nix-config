@@ -25,6 +25,10 @@ in
   home = {
     username = "tuxikus";
     homeDirectory = "/home/tuxikus";
+    
+    sessionVariables = {
+      EDITOR = "emacsclient -c";
+    };
   
     # This value determines the Home Manager release that your
     # configuration is compatible with. This helps avoid breakage

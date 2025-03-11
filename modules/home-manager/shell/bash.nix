@@ -4,9 +4,6 @@
     enable = true;
     enableCompletion = true;
     initExtra = "PS1='[$?] \\w \\n\\$ '";
-    sessionVariables = {
-      EDITOR = "emacsclient -c";
-    };
     bashrcExtra = ''
       PATH=~/.local/bin:$PATH
 
