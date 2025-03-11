@@ -4,7 +4,7 @@ let
 in
 {
   imports = [
-    (homeManagerModulesDirectory + "/gui-apps/emacs.nix")
+    (homeManagerModulesDirectory + "/text-editors/emacs.nix")
     (homeManagerModulesDirectory + "/gui-apps/qutebrowser.nix")
     (homeManagerModulesDirectory + "/shell/xonsh.nix")
     (homeManagerModulesDirectory + "/shell/bash.nix")

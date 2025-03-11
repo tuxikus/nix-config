@@ -9,7 +9,7 @@ in
   imports = [
     (homeManagerModulesDirectory + "/shell/bash.nix")
     (homeManagerModulesDirectory + "/shell/xonsh.nix")
-    (homeManagerModulesDirectory + "/gui-apps/emacs.nix")
+    (homeManagerModulesDirectory + "/text-editors/emacs.nix")
     (homeManagerModulesDirectory + "/gui-apps/nyxt.nix")
     (homeManagerModulesDirectory + "/gui-apps/qutebrowser.nix")
     (homeManagerModulesDirectory + "/gui-apps/ghostty.nix")
