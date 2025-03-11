@@ -2689,6 +2689,9 @@ echo "Done!"
       enable = true;
       enableCompletion = true;
       initExtra = "PS1='[$?] \\w \\n\\$ '";
+      sessionVariables = {
+        EDITOR = "emacsclient -c";
+      };
       bashrcExtra = ''
         PATH=~/.local/bin:$PATH
 
@@ -2787,7 +2790,8 @@ echo "Done!"
       enable = true;
       enableBashIntegration = true;
       settings = {
-                
+          simplified_ui = true;
+          scroll_buffer_size = 25000;
       };
     };
   }
