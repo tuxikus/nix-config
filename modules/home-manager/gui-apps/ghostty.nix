@@ -16,13 +16,7 @@
 	font-style-bold-italic = "Light"
 	font-size = 15
 	command = bash
-	keybind = alt+w=copy_to_clipboard
-	keybind = ctrl+y=paste_from_clipboard
 	
-	keybind = ctrl+v=scroll_page_down
-	keybind = alt+v=scroll_page_up
-	
-	keybind = ctrl+t=new_tab
     '';
   };
 }
