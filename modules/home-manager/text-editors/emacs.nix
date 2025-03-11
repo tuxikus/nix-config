@@ -366,7 +366,7 @@ in
         	  :bind
         	  ;;("C-c d" . docker)
         	  :config
-        	  (pcase contaiter-executable
+        	  (pcase container-executable
         	    ('docker
         	     (setf docker-command "docker"
         		     docker-compose-command "docker-compose"

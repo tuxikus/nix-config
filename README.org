@@ -1834,7 +1834,7 @@ Config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rahul's Bl
     :bind
     ;;("C-c d" . docker)
     :config
-    (pcase contaiter-executable
+    (pcase container-executable
       ('docker
        (setf docker-command "docker"
 	     docker-compose-command "docker-compose"
