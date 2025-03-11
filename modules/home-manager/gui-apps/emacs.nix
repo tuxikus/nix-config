@@ -841,6 +841,10 @@ in
     	    
     	    (use-package vertico-posframe
     	      :init
+    	      (setq vertico-multiform-commands
+    	    	'((consult-line (:not posframe))
+    	    	  (t posframe)))
+    	      
     	      (vertico-posframe-mode 1))
     	    
     	    (provide 'init-vertico-posframe)
