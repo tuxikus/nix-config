@@ -2521,7 +2521,7 @@ Config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rahul's Bl
   {
     home.file.".local/bin/home-backup" = {
       text = ''
-	<<script-home-backup>>
+<<script-home-backup>>
       '';
 
       executable = true;
