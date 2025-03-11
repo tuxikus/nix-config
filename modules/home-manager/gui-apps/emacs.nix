@@ -444,8 +444,7 @@ in
     	    	inhibit-startup-message t
     	    	inhibit-startup-screen t
     	    	initial-scratch-message ";;; Emacs is fun"
-    	    	global-auto-revert-non-file-buffers t
-    	    	electric-pair-mode 1)
+    	    	global-auto-revert-non-file-buffers t)
     	      (fset 'yes-or-no-p 'y-or-n-p)
     	      (tool-bar-mode -1)
     	      (menu-bar-mode -1)
@@ -494,6 +493,8 @@ in
     	      (setq minibuffer-prompt-properties
     	    	  '(read-only t cursor-intangible t face minibuffer-prompt))
     	      (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
+    	      :config
+    	      (electric-pair-mode)
     	      :custom
     	      (enable-recursive-minibuffers t)
     	      (read-extended-command-predicate #'command-completion-default-include-p)
