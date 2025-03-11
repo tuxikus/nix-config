@@ -84,7 +84,7 @@ in
         	;;; Code:
         	(add-to-list 'load-path "~/.emacs.d/lisp")
         	
-        	(require 'init-doom-modeline)
+        	;; (require 'init-doom-modeline)
         	(require 'init-use-package)
         	(require 'init-dwim-shell-command)
         	(require 'init-perspective)
@@ -364,7 +364,7 @@ in
         	
         	(use-package docker
         	  :bind
-        	  ("C-c d" . docker)
+        	  ;;("C-c d" . docker)
         	  :config
         	  (pcase contaiter-executable
         	    ('docker
@@ -495,6 +495,7 @@ in
     	      (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
     	      :config
     	      (electric-pair-mode)
+    	      (which-key-mode 1)
     	      :custom
     	      (enable-recursive-minibuffers t)
     	      (read-extended-command-predicate #'command-completion-default-include-p)
@@ -563,7 +564,7 @@ in
     	    
     	    (use-package keycast
     	      :config
-    	      (keycast-header-line-mode))
+    	      (keycast-mode-line-mode))
     	    
     	    (provide 'init-keycast)
     	    
@@ -841,15 +842,29 @@ in
     	    
     	    (use-package vertico-posframe
     	      :init
+    	      (vertico-posframe-mode 1)
     	      (setq vertico-multiform-commands
-    	    	'((consult-line (:not posframe))
-    	    	  (t posframe)))
+    	    	'((consult-line
+    	               posframe
+    	               (vertico-posframe-poshandler . posframe-poshandler-frame-top-center)
+    	               (vertico-posframe-border-width . 10)
+    	               ;; NOTE: This is useful when emacs is used in both in X and
+    	               ;; terminal, for posframe do not work well in terminal, so
+    	               ;; vertico-buffer-mode will be used as fallback at the
+    	               ;; moment.
+    	               (vertico-posframe-fallback-mode . vertico-buffer-mode))
+    	              (t posframe)))
     	      
-    	      (vertico-posframe-mode 1))
+    	      (vertico-multiform-mode 1)
     	    
-    	    (provide 'init-vertico-posframe)
+    	      (setq vertico-multiform-commands
+    	      	'((consult-line (:not posframe))
+    	    	  (consult-grep (:not posframe))
+    	    	  (consult-ripgrep (:not posframe))
+    	      	  (t posframe))))
+    	      (provide 'init-vertico-posframe)
     	    
-    	    ;;; init-vertico-posframe.el ends here
+    	      ;;; init-vertico-posframe.el ends here
     	  '';
     
         ".emacs.d/lisp/init-yas.el".text = ''
