@@ -14,10 +14,13 @@ in
     (homeManagerModulesDirectory + "/gui-apps/qutebrowser.nix")
     (homeManagerModulesDirectory + "/gui-apps/ghostty.nix")
     (homeManagerModulesDirectory + "/gui-apps/fuzzel.nix")
+    (homeManagerModulesDirectory + "/utility/tmux.nix")
+    (homeManagerModulesDirectory + "/utility/zellij.nix")
     (homeManagerModulesDirectory + "/education/latex.nix")
     (homeManagerModulesDirectory + "/window-manager/hyprland.nix")
     (homeManagerModulesDirectory + "/window-manager/qtile.nix")
     (homeManagerModulesDirectory + "/scripts/home-backup.nix")
+  
   ];
   home = {
     username = "tuxikus";

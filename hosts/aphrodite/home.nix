@@ -8,6 +8,8 @@ in
     (homeManagerModulesDirectory + "/gui-apps/qutebrowser.nix")
     (homeManagerModulesDirectory + "/shell/xonsh.nix")
     (homeManagerModulesDirectory + "/shell/bash.nix")
+    (homeManagerModulesDirectory + "/utility/tmux.nix")
+    (homeManagerModulesDirectory + "/utility/zellij.nix")
   ];
   home = {
     # This value determines the Home Manager release that your

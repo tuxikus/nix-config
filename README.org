@@ -429,10 +429,13 @@ To use [[https://www.gnu.org/software/grub/][grub]] as the boot loader you need 
     (homeManagerModulesDirectory + "/gui-apps/qutebrowser.nix")
     (homeManagerModulesDirectory + "/gui-apps/ghostty.nix")
     (homeManagerModulesDirectory + "/gui-apps/fuzzel.nix")
+    (homeManagerModulesDirectory + "/utility/tmux.nix")
+    (homeManagerModulesDirectory + "/utility/zellij.nix")
     (homeManagerModulesDirectory + "/education/latex.nix")
     (homeManagerModulesDirectory + "/window-manager/hyprland.nix")
     (homeManagerModulesDirectory + "/window-manager/qtile.nix")
     (homeManagerModulesDirectory + "/scripts/home-backup.nix")
+
   ];
 #+end_src
 ***** Configuration
@@ -876,6 +879,8 @@ Apple MacBook Pro M2
     (homeManagerModulesDirectory + "/gui-apps/qutebrowser.nix")
     (homeManagerModulesDirectory + "/shell/xonsh.nix")
     (homeManagerModulesDirectory + "/shell/bash.nix")
+    (homeManagerModulesDirectory + "/utility/tmux.nix")
+    (homeManagerModulesDirectory + "/utility/zellij.nix")
   ];
 #+end_src
 ***** Config
@@ -2778,6 +2783,18 @@ echo "Done!"
 	bind - split-window -v -c "#{pane_current_path}"
 	bind c new-window -c "#{pane_current_path}"
       '';
+    };
+  }
+#+end_src
+**** zellij
+#+begin_src nix :tangle modules/home-manager/utility/zellij.nix :mkdirp yes
+  {
+    programs.zellij = {
+      enable = true;
+      enableBashIntegration = true;
+      settings = {
+                
+      };
     };
   }
 #+end_src
