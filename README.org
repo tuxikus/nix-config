@@ -1316,8 +1316,8 @@ Emacs like config from [[https://gitlab.com/jgkamat/qutemacs/blob/master/qutemac
     ess
     fireplace
     flycheck
+    flycheck-inline
     keycast
-    libmpdel
     magit
     marginalia
     move-text
@@ -1438,6 +1438,10 @@ Emacs like config from [[https://gitlab.com/jgkamat/qutemacs/blob/master/qutemac
   	    <<emacs-init-flycheck>>
   	  '';
 
+      ".emacs.d/lisp/init-flycheck-inline.el".text = ''
+  	    <<emacs-init-flycheck-inline>>
+  	  '';
+      
       ".emacs.d/lisp/init-keycast.el".text = ''
   	    <<emacs-init-keycast>>
   	  '';
@@ -1548,6 +1552,7 @@ Emacs like config from [[https://gitlab.com/jgkamat/qutemacs/blob/master/qutemac
   (require 'init-perspective)
   (require 'init-org-superstar)
   (require 'init-flycheck)
+  (require 'init-flycheck-inline)
   (require 'init-em-banner)
   (require 'init-corfu)
   (require 'init-corfu-terminal)
@@ -2052,6 +2057,22 @@ Config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rahul's Bl
   ;;; init-keycast.el ends here
 #+end_src
 
+******* Flycheck inline
+#+name: emacs-init-flycheck-inline
+#+begin_src emacs-lisp
+  ;;; init-flycheck-inline.el --- -*- lexical-binding: t -*-
+  ;;; Commentary:
+  ;;; Code:
+
+  (use-package flycheck-inline
+    :config
+    (with-eval-after-load 'flycheck
+    (add-hook 'flycheck-mode-hook #'flycheck-inline-mode)))
+
+  (provide 'init-flycheck-inline)
+
+  ;;; init-flycheck-inline.el ends here
+#+end_src
 ******* Magit
 #+name: emacs-init-magit
 #+begin_src emacs-lisp

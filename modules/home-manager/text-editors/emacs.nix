@@ -25,8 +25,8 @@ let
     ess
     fireplace
     flycheck
+    flycheck-inline
     keycast
-    libmpdel
     magit
     marginalia
     move-text
@@ -90,6 +90,7 @@ in
         	(require 'init-perspective)
         	(require 'init-org-superstar)
         	(require 'init-flycheck)
+        	(require 'init-flycheck-inline)
         	(require 'init-em-banner)
         	(require 'init-corfu)
         	(require 'init-corfu-terminal)
@@ -557,6 +558,21 @@ in
     	    ;;; init-flycheck.el ends here
     	  '';
     
+        ".emacs.d/lisp/init-flycheck-inline.el".text = ''
+    	    ;;; init-flycheck-inline.el --- -*- lexical-binding: t -*-
+    	    ;;; Commentary:
+    	    ;;; Code:
+    	    
+    	    (use-package flycheck-inline
+    	      :config
+    	      (with-eval-after-load 'flycheck
+    	      (add-hook 'flycheck-mode-hook #'flycheck-inline-mode)))
+    	    
+    	    (provide 'init-flycheck-inline)
+    	    
+    	    ;;; init-flycheck-inline.el ends here
+    	  '';
+        
         ".emacs.d/lisp/init-keycast.el".text = ''
     	    ;;; init-keycast.el --- -*- lexical-binding: t -*-
     	    ;;; Commentary:
