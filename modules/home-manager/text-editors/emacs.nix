@@ -344,9 +344,7 @@ in
         
         (use-package dired
           :config
-          (put 'dired-find-alternate-file 'disabled nil)
-          :hook
-          (dired-mode . (lambda () (dired-hide-details-mode 1))))
+          (put 'dired-find-alternate-file 'disabled nil))
         
         (provide 'init-dired)
         
