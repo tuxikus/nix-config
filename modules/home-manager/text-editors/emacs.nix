@@ -27,17 +27,17 @@ let
     flycheck
     flycheck-inline
     format-all
+    git-link
     keycast
     magit
     marginalia
     move-text
-    mpdel
     nix-mode
     orderless
-    org-roam
     org-modern
-    org-superstar
     org-present
+    org-roam
+    org-superstar
     perspective
     python-mode
     pyvenv
