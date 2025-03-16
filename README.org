@@ -1055,13 +1055,6 @@ Apple MacBook Pro M2
 #+name: ghostty-font
 #+begin_src conf
   font-family = "Iosevka Nerd Font"
-  font-family-bold = "Iosevka Nerd Font"
-  font-family-italic = "Iosevka Nerd Font"
-  font-family-bold-italic = "Iosevka Nerd Font"
-  font-style = "Light"
-  font-style-bold = "Light"
-  font-style-italic = "Light"
-  font-style-bold-italic = "Light"
   font-size = 15
 #+end_src
 ***** Initial command

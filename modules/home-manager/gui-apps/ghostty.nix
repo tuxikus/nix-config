@@ -7,13 +7,6 @@
 	confirm-close-surface = false
 	theme = iTerm2 Solarized Light
 	font-family = "Iosevka Nerd Font"
-	font-family-bold = "Iosevka Nerd Font"
-	font-family-italic = "Iosevka Nerd Font"
-	font-family-bold-italic = "Iosevka Nerd Font"
-	font-style = "Light"
-	font-style-bold = "Light"
-	font-style-italic = "Light"
-	font-style-bold-italic = "Light"
 	font-size = 15
 	command = bash
 	
