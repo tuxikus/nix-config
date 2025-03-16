@@ -455,25 +455,8 @@ in
     	      (save-place-mode 1)
     	      (global-auto-revert-mode 1)
     	      (load-theme 'doom-solarized-light t)
-    	      (set-face-attribute 'default nil
-    	    			:family "Iosevka Nerd Font"
-    	    			:height ${config.fontSize}
-    	    			:weight 'regular
-    	    			:width 'normal)
     	    
-    	      (set-face-attribute 'bold nil
-    	    		      :family "Iosevka Nerd Font"
-    	    		      :weight 'regular)
-    	    
-    	      (set-face-attribute 'italic nil
-    	    		      :family "Iosevka Nerd Font"
-    	    		      :slant 'italic
-    	    		      :weight 'regular)
-    	    
-    	      (set-face-attribute 'bold-italic nil
-    	    		      :family "Iosevka Nerd Font"
-    	    		      :weight 'regular
-    	    		      :slant 'italic)
+    	      (set-face-attribute 'default nil :font "Iosevka Nerd Font-${config.fontSize}")
     	    
     	      ;; window divider
     	      (setq window-divider-default-right-width 5

@@ -62,6 +62,6 @@ in
   customInit = ''
   (setq container-executable 'podman)
   '';
-  fontSize = "150";
+  fontSize = "15";
   qtileWallpaper = ./assets/qtile-wallpaper.png;
 }
