@@ -282,6 +282,7 @@ To use [[https://www.gnu.org/software/grub/][grub]] as the boot loader you need 
 #+begin_src nix
   fonts.packages = with pkgs; [
     nerdfonts
+    profont
   ];
 #+end_src
 ***** Services
@@ -699,6 +700,7 @@ Apple MacBook Pro M2
 #+begin_src nix
   fonts.packages = [
     pkgs.nerdfonts
+    pkgs.profont
   ];
 #+end_src
 ***** Services

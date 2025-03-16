@@ -76,6 +76,7 @@ in
   };
   fonts.packages = with pkgs; [
     nerdfonts
+    profont
   ];
   services = {
     dbus.enable = true;

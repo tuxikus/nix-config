@@ -13,6 +13,7 @@
   };
   fonts.packages = [
     pkgs.nerdfonts
+    pkgs.profont
   ];
   services = {
     nix-daemon.enable = true;
