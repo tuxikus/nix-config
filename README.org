@@ -3,7 +3,7 @@
 #+startup: overview
 
 * ❄️ Welcome to my nix-config ❄️
-This is my literate nix/nixos/home-manager config written with the help of [[https://www.gnu.org/software/emacs/][Emacs]] and the powerful [[https://orgmode.org/][Org mode]].
+This is my literate nix/nixos/home-manager config written with the help of [[https://www.gnu.org/software/emacs/][Emacs]] and [[https://orgmode.org/][Org mode]].
 
 * Config structure
 I splitted my nix config into two parts, hosts specific config and nix modules.
@@ -1329,6 +1329,7 @@ Emacs like config from [[https://gitlab.com/jgkamat/qutemacs/blob/master/qutemac
     pyvenv
     ripgrep
     salt-mode
+    spacious-padding
     verb
     vertico
     vertico-posframe
@@ -1494,6 +1495,10 @@ Emacs like config from [[https://gitlab.com/jgkamat/qutemacs/blob/master/qutemac
       <<emacs-init-salt-mode>>
       '';
 
+      ".emacs.d/lisp/init-spacious-padding.el".text = ''
+      <<emacs-init-spacious-padding>>
+      '';
+      
       ".emacs.d/lisp/init-savehist.el".text = ''
       <<emacs-init-savehist>>
       '';
@@ -1562,6 +1567,7 @@ Emacs like config from [[https://gitlab.com/jgkamat/qutemacs/blob/master/qutemac
   (require 'init-cape)
   (require 'init-keycast)
   (require 'init-dashboard)
+  (require 'init-spacious-padding)
   (require 'init-dired)
   (require 'init-consult)
   (require 'init-format-all)
@@ -1933,6 +1939,7 @@ Config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rahul's Bl
     (scroll-bar-mode -1)
     (save-place-mode 1)
     (global-auto-revert-mode 1)
+    
     (load-theme 'doom-solarized-light t)
 
     ;; window divider
@@ -1941,6 +1948,8 @@ Config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rahul's Bl
   	window-divider-default-places t)
 
     (window-divider-mode 1)
+
+    
     ;; Add prompt indicator to `completing-read-multiple'.
     ;; We display [CRM<separator>], e.g., [CRM,] if the separator is a comma.
     (defun crm-indicator (args)
@@ -1978,7 +1987,7 @@ Config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rahul's Bl
 
   (provide 'init-emacs)
 
-    ;;; init-emacs.el ends here
+  ;;; init-emacs.el ends here
 #+end_src
 ******* Embark
 #+name: emacs-init-embark
@@ -2284,6 +2293,36 @@ Config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rahul's Bl
   (provide 'init-salt-mode)
 
   ;;; init-salt-mode.el ends here
+#+end_src
+******* Spacious padding
+#+name: emacs-init-spacious-padding
+#+begin_src emacs-lisp
+  ;;; init-spacious-padding.el --- -*- lexical-binding: t -*-
+  ;;; Commentary:
+  ;;; Code:
+
+  (use-package spacious-padding
+    :init
+    (setq spacious-padding-widths
+  	'( :internal-border-width 15
+             :header-line-width 4
+             :mode-line-width 6
+             :tab-width 4
+             :right-divider-width 30
+             :scroll-bar-width 8
+             :fringe-width 8))
+
+    ;; Read the doc string of `spacious-padding-subtle-mode-line' as it
+    ;; is very flexible and provides several examples.
+    (setq spacious-padding-subtle-mode-line
+  	`( :mode-line-active 'default
+             :mode-line-inactive vertical-border))
+
+    (spacious-padding-mode 1))
+
+  (provide 'init-spacious-padding)
+
+  ;;; init-spacious-padding.el ends here
 #+end_src
 ******* Savehist
 #+name: emacs-init-savehist

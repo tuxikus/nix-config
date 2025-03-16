@@ -43,6 +43,7 @@ let
     pyvenv
     ripgrep
     salt-mode
+    spacious-padding
     verb
     vertico
     vertico-posframe
@@ -101,6 +102,7 @@ in
         (require 'init-cape)
         (require 'init-keycast)
         (require 'init-dashboard)
+        (require 'init-spacious-padding)
         (require 'init-dired)
         (require 'init-consult)
         (require 'init-format-all)
@@ -454,6 +456,7 @@ in
           (scroll-bar-mode -1)
           (save-place-mode 1)
           (global-auto-revert-mode 1)
+          
           (load-theme 'doom-solarized-light t)
         
           ;; window divider
@@ -462,6 +465,8 @@ in
         	window-divider-default-places t)
         
           (window-divider-mode 1)
+        
+          
           ;; Add prompt indicator to `completing-read-multiple'.
           ;; We display [CRM<separator>], e.g., [CRM,] if the separator is a comma.
           (defun crm-indicator (args)
@@ -499,7 +504,7 @@ in
         
         (provide 'init-emacs)
         
-          ;;; init-emacs.el ends here
+        ;;; init-emacs.el ends here
         '';
     
         ".emacs.d/lisp/init-embark.el".text = ''
@@ -785,6 +790,35 @@ in
         ;;; init-salt-mode.el ends here
         '';
     
+        ".emacs.d/lisp/init-spacious-padding.el".text = ''
+        ;;; init-spacious-padding.el --- -*- lexical-binding: t -*-
+        ;;; Commentary:
+        ;;; Code:
+        
+        (use-package spacious-padding
+          :init
+          (setq spacious-padding-widths
+        	'( :internal-border-width 15
+                   :header-line-width 4
+                   :mode-line-width 6
+                   :tab-width 4
+                   :right-divider-width 30
+                   :scroll-bar-width 8
+                   :fringe-width 8))
+        
+          ;; Read the doc string of `spacious-padding-subtle-mode-line' as it
+          ;; is very flexible and provides several examples.
+          (setq spacious-padding-subtle-mode-line
+        	`( :mode-line-active 'default
+                   :mode-line-inactive vertical-border))
+        
+          (spacious-padding-mode 1))
+        
+        (provide 'init-spacious-padding)
+        
+        ;;; init-spacious-padding.el ends here
+        '';
+        
         ".emacs.d/lisp/init-savehist.el".text = ''
         ;;; init-savehist.el --- -*- lexical-binding: t -*-
         ;;; Commentary:
