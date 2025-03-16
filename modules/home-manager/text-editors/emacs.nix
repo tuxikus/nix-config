@@ -33,6 +33,7 @@ let
     marginalia
     move-text
     nix-mode
+    nyan-mode
     orderless
     org-modern
     org-present
@@ -392,7 +393,11 @@ in
         ;;; Code:
         
         (use-package doom-modeline
-          :init (doom-modeline-mode 1))
+          :init
+          (setq doom-modeline-time t
+        	doom-modeline-env-version t)
+          
+          (doom-modeline-mode 1))
         
         (provide 'init-doom-modeline)
         

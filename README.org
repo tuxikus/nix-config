@@ -1319,6 +1319,7 @@ Emacs like config from [[https://gitlab.com/jgkamat/qutemacs/blob/master/qutemac
     marginalia
     move-text
     nix-mode
+    nyan-mode
     orderless
     org-modern
     org-present
@@ -1872,7 +1873,11 @@ Config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rahul's Bl
   ;;; Code:
 
   (use-package doom-modeline
-    :init (doom-modeline-mode 1))
+    :init
+    (setq doom-modeline-time t
+  	doom-modeline-env-version t)
+    
+    (doom-modeline-mode 1))
 
   (provide 'init-doom-modeline)
 
