@@ -478,7 +478,8 @@ in
         	  '(read-only t cursor-intangible t face minibuffer-prompt))
           (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
           :config
-          (set-face-attribute 'default nil :font "Iosevka Nerd Font-${config.fontSize}")
+          (add-to-list 'default-frame-alist
+                   '(font . "Iosevka Nerd Font-${config.fontSize}"))
           (electric-pair-mode)
           (which-key-mode 1)
           :custom
