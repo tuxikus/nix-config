@@ -1047,7 +1047,7 @@ Apple MacBook Pro M2
 ***** Theme
 #+name: ghostty-theme
 #+begin_src conf
-  theme = BlulocoLight
+  theme = iTerm2 Solarized Light
 #+end_src
 ***** Font
 #+name: ghostty-font
@@ -1938,7 +1938,7 @@ Config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rahul's Bl
     (scroll-bar-mode -1)
     (save-place-mode 1)
     (global-auto-revert-mode 1)
-    (load-theme 'doom-bluloco-light t)
+    (load-theme 'doom-solarized-light t)
     (set-face-attribute 'default nil
   			:family "Iosevka Nerd Font"
   			:height ${config.fontSize}

@@ -5,7 +5,7 @@
 	window-padding-y = 10
 	macos-titlebar-style = hidden
 	confirm-close-surface = false
-	theme = BlulocoLight
+	theme = iTerm2 Solarized Light
 	font-family = "Iosevka Nerd Font"
 	font-family-bold = "Iosevka Nerd Font"
 	font-family-italic = "Iosevka Nerd Font"

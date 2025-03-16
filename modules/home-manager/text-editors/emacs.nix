@@ -454,7 +454,7 @@ in
     	      (scroll-bar-mode -1)
     	      (save-place-mode 1)
     	      (global-auto-revert-mode 1)
-    	      (load-theme 'doom-bluloco-light t)
+    	      (load-theme 'doom-solarized-light t)
     	      (set-face-attribute 'default nil
     	    			:family "Iosevka Nerd Font"
     	    			:height ${config.fontSize}
