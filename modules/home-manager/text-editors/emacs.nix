@@ -420,8 +420,8 @@ in
         
         (use-package eglot
           :hook
-          (add-hook 'python-ts-mode-hook 'eglot-ensure)
-          (add-hook 'python-mode-hook 'eglot-ensure)
+          ((python-ts-mode . eglot-ensure)
+           (python-mode . eglot-ensure))
           :config
           :custom
           (eglot-autoshutdown t)  ;; shutdown language server after closing last file
@@ -457,7 +457,7 @@ in
           (save-place-mode 1)
           (global-auto-revert-mode 1)
           
-          (load-theme 'doom-solarized-light t)
+          (load-theme 'modus-operandi t)
         
           ;; window divider
           (setq window-divider-default-right-width 5
