@@ -682,8 +682,11 @@ in
           (set-face-attribute 'org-level-6 nil :height 1.0)
           (set-face-attribute 'org-level-7 nil :height 1.0)
           (set-face-attribute 'org-level-8 nil :height 1.0)
-          (set-face-attribute 'org-block-begin-line nil :background "#f0f0f0")
-          (set-face-attribute 'org-block-end-line nil :background "#f0f0f0")
+          
+          ;; color begin & end src lines
+          ;; (set-face-attribute 'org-block-begin-line nil :background "#f0f0f0")
+          ;; (set-face-attribute 'org-block-end-line nil :background "#f0f0f0")
+          
           (set-face-attribute 'org-document-title nil :height 2.0)
         
           ;; load org babel languages
