@@ -86,7 +86,7 @@ in
         ;;; Code:
         (add-to-list 'load-path "~/.emacs.d/lisp")
         
-        ;; (require 'init-doom-modeline)
+        (require 'init-doom-modeline)
         (require 'init-use-package)
         (require 'init-dwim-shell-command)
         (require 'init-perspective)

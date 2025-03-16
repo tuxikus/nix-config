@@ -1551,7 +1551,7 @@ Emacs like config from [[https://gitlab.com/jgkamat/qutemacs/blob/master/qutemac
   ;;; Code:
   (add-to-list 'load-path "~/.emacs.d/lisp")
 
-  ;; (require 'init-doom-modeline)
+  (require 'init-doom-modeline)
   (require 'init-use-package)
   (require 'init-dwim-shell-command)
   (require 'init-perspective)
