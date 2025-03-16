@@ -1343,6 +1343,15 @@ Emacs like config from [[https://gitlab.com/jgkamat/qutemacs/blob/master/qutemac
     walkman
     wgrep
     yasnippet
+    (trivialBuild {
+      pname = "zellij";
+      version = "master";
+
+      src = pkgs.fetchurl {
+        url = "https://raw.githubusercontent.com/tuxikus/zellijel/refs/heads/main/zellij.el";
+        sha256 = "sha256-eT2qoXUl4Lc8WgmtGp1PxICZHmhyNVqIWeqjGRB48Kc=";
+      };
+    })
     (treesit-grammars.with-grammars (grammars: with grammars; [
       tree-sitter-python
       tree-sitter-bash
@@ -1533,6 +1542,10 @@ Emacs like config from [[https://gitlab.com/jgkamat/qutemacs/blob/master/qutemac
       <<emacs-init-yas>>
       '';
 
+      ".emacs.d/lisp/init-zellij.el".text = ''
+      <<emacs-init-zellij>>
+      '';
+      
       # custom init
       ".emacs.d/lisp/init-custom.el".text = ''
         ${config.customInit}
@@ -1603,6 +1616,7 @@ Emacs like config from [[https://gitlab.com/jgkamat/qutemacs/blob/master/qutemac
   (require 'init-eglot)
   (require 'init-custom-fun)
   (require 'init-embark)
+  (require 'init-zellij)
 
   (require 'tuxikus-eat)
   ;; init.el ends here
@@ -2473,6 +2487,19 @@ Config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rahul's Bl
   (provide 'init-yas)
 
   ;;; init-yas.el ends here
+#+end_src
+******* Zellij
+#+name: emacs-init-zellij
+#+begin_src emacs-lisp
+  ;;; init-zellijel.el --- -*- lexical-binding: t -*-
+  ;;; Commentary:
+  ;;; Code:
+
+  (use-package zellij)
+
+  (provide 'init-zellij)
+
+  ;;; init-zellijel.el ends here
 #+end_src
 ****** Custom functions
 #+name: emacs-custom-fun

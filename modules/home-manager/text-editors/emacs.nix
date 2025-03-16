@@ -52,6 +52,15 @@ let
     walkman
     wgrep
     yasnippet
+    (trivialBuild {
+      pname = "zellij";
+      version = "master";
+  
+      src = pkgs.fetchurl {
+        url = "https://raw.githubusercontent.com/tuxikus/zellijel/refs/heads/main/zellij.el";
+        sha256 = "sha256-eT2qoXUl4Lc8WgmtGp1PxICZHmhyNVqIWeqjGRB48Kc=";
+      };
+    })
     (treesit-grammars.with-grammars (grammars: with grammars; [
       tree-sitter-python
       tree-sitter-bash
@@ -129,6 +138,7 @@ in
         (require 'init-eglot)
         (require 'init-custom-fun)
         (require 'init-embark)
+        (require 'init-zellij)
         
         (require 'tuxikus-eat)
         ;; init.el ends here
@@ -953,6 +963,18 @@ in
         ;;; init-yas.el ends here
         '';
     
+        ".emacs.d/lisp/init-zellij.el".text = ''
+        ;;; init-zellijel.el --- -*- lexical-binding: t -*-
+        ;;; Commentary:
+        ;;; Code:
+        
+        (use-package zellij)
+        
+        (provide 'init-zellij)
+        
+        ;;; init-zellijel.el ends here
+        '';
+        
         # custom init
         ".emacs.d/lisp/init-custom.el".text = ''
           ${config.customInit}
