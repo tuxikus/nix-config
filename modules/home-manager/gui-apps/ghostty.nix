@@ -5,7 +5,7 @@
 	window-padding-y = 10
 	macos-titlebar-style = hidden
 	confirm-close-surface = false
-	theme = iTerm2 Solarized Light
+	theme = BlulocoLight
 	font-family = "Iosevka Nerd Font"
 	font-size = 15
 	command = bash

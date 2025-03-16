@@ -457,7 +457,7 @@ in
           (save-place-mode 1)
           (global-auto-revert-mode 1)
           
-          (load-theme 'modus-operandi t)
+          (load-theme 'doom-bluloco-light t)
         
           ;; window divider
           (setq window-divider-default-right-width 5

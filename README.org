@@ -1049,7 +1049,7 @@ Apple MacBook Pro M2
 ***** Theme
 #+name: ghostty-theme
 #+begin_src conf
-  theme = iTerm2 Solarized Light
+  theme = BlulocoLight
 #+end_src
 ***** Font
 #+name: ghostty-font
@@ -1069,15 +1069,15 @@ Apple MacBook Pro M2
 #+end_src
 **** Nyxt
 #+begin_src nix :tangle modules/home-manager/gui-apps/nyxt.nix :noweb tangle :mkdirp yes
-  {
-    home.file.".config/nyxt/config.lisp" = {
-      text = ''
-	<<nyxt-emacs-mode>>
-	<<nyxt-search-engines>>
-	<<nyxt-blocker-mode>>
-     '';
-    };
-  }
+    {
+      home.file.".config/nyxt/config.lisp" = {
+        text = ''
+        <<nyxt-emacs-mode>>
+        <<nyxt-search-engines>>
+        <<nyxt-blocker-mode>>
+       '';
+      };
+    }
 #+end_src
 ***** Enable Emacs mode
 #+name: nyxt-emacs-mode
@@ -1940,7 +1940,7 @@ Config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rahul's Bl
     (save-place-mode 1)
     (global-auto-revert-mode 1)
     
-    (load-theme 'modus-operandi t)
+    (load-theme 'doom-bluloco-light t)
 
     ;; window divider
     (setq window-divider-default-right-width 5
