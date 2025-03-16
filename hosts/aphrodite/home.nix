@@ -12,6 +12,10 @@ imports = [
   (homeManagerModulesDirectory + "/utility/zellij.nix")
 ];
 home = {
+  sessionVariables = {
+    EDITOR = "emacsclient -c";
+    VISUAL = "emacsclient -c";
+  };
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
   # when a new Home Manager release introduces backwards

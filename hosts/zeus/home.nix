@@ -28,6 +28,7 @@ home = {
   
   sessionVariables = {
     EDITOR = "emacsclient -c";
+    VISUAL = "emacsclient -c";
   };
 
   # This value determines the Home Manager release that your
