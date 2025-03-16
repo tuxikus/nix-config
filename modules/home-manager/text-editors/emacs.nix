@@ -26,6 +26,7 @@ let
     fireplace
     flycheck
     flycheck-inline
+    format-all
     keycast
     magit
     marginalia
@@ -102,6 +103,7 @@ in
         	(require 'init-dashboard)
         	(require 'init-dired)
         	(require 'init-consult)
+        	(require 'init-format-all)
         	(require 'init-org-present)
         	(require 'init-ace-window)
         	(require 'init-savehist)
@@ -571,6 +573,18 @@ in
     	    (provide 'init-flycheck-inline)
     	    
     	    ;;; init-flycheck-inline.el ends here
+    	  '';
+        
+        ".emacs.d/lisp/init-format-all.el".text = ''
+    	    ;;; init-format-all.el --- -*- lexical-binding: t -*-
+    	    ;;; Commentary:
+    	    ;;; Code:
+    	    
+    	    (use-package format-all)
+    	    
+    	    (provide 'init-format-all)
+    	    
+    	    ;;; init-format-all.el ends here
     	  '';
         
         ".emacs.d/lisp/init-keycast.el".text = ''

@@ -1317,6 +1317,7 @@ Emacs like config from [[https://gitlab.com/jgkamat/qutemacs/blob/master/qutemac
     fireplace
     flycheck
     flycheck-inline
+    format-all
     keycast
     magit
     marginalia
@@ -1442,6 +1443,10 @@ Emacs like config from [[https://gitlab.com/jgkamat/qutemacs/blob/master/qutemac
   	    <<emacs-init-flycheck-inline>>
   	  '';
       
+      ".emacs.d/lisp/init-format-all.el".text = ''
+  	    <<emacs-init-format-all>>
+  	  '';
+      
       ".emacs.d/lisp/init-keycast.el".text = ''
   	    <<emacs-init-keycast>>
   	  '';
@@ -1564,6 +1569,7 @@ Emacs like config from [[https://gitlab.com/jgkamat/qutemacs/blob/master/qutemac
   (require 'init-dashboard)
   (require 'init-dired)
   (require 'init-consult)
+  (require 'init-format-all)
   (require 'init-org-present)
   (require 'init-ace-window)
   (require 'init-savehist)
@@ -2072,6 +2078,19 @@ Config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rahul's Bl
   (provide 'init-flycheck-inline)
 
   ;;; init-flycheck-inline.el ends here
+#+end_src
+******* Format all
+#+name: emacs-init-format-all
+#+begin_src emacs-lisp
+  ;;; init-format-all.el --- -*- lexical-binding: t -*-
+  ;;; Commentary:
+  ;;; Code:
+
+  (use-package format-all)
+
+  (provide 'init-format-all)
+
+  ;;; init-format-all.el ends here
 #+end_src
 ******* Magit
 #+name: emacs-init-magit
