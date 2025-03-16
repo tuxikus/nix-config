@@ -456,8 +456,6 @@ in
           (global-auto-revert-mode 1)
           (load-theme 'doom-solarized-light t)
         
-          (set-face-attribute 'default nil :font "Iosevka Nerd Font-${config.fontSize}")
-        
           ;; window divider
           (setq window-divider-default-right-width 5
         	window-divider-default-bottom-width 5
@@ -480,6 +478,7 @@ in
         	  '(read-only t cursor-intangible t face minibuffer-prompt))
           (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
           :config
+          (set-face-attribute 'default nil :font "Iosevka Nerd Font-${config.fontSize}")
           (electric-pair-mode)
           (which-key-mode 1)
           :custom
