@@ -101,6 +101,7 @@ in
         (require 'init-docker)
         (require 'init-org-modern)
         (require 'init-cape)
+        (require 'init-nyan-mode)
         (require 'init-keycast)
         (require 'init-dashboard)
         (require 'init-spacious-padding)
@@ -648,6 +649,22 @@ in
         (provide 'init-nix-mode)
         
         ;;; init-nix-mode.el ends here
+        '';
+        
+        ".emacs.d/lisp/init-nyan-mode.el".text = ''
+        ;;; init-nyan-mode.el --- -*- lexical-binding: t -*-
+        ;;; Commentary:
+        ;;; Code:
+        
+        (use-package nyan-mode
+          :init
+          (setq nyan-animate-nyancat t
+        	nyan-wavy-trail t)
+          (nyan-mode))
+        
+        (provide 'init-nyan-mode)
+        
+        ;;; init-nyan-mode.el ends here
         '';
     
         ".emacs.d/lisp/init-orderless.el".text = ''

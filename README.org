@@ -1463,6 +1463,10 @@ Emacs like config from [[https://gitlab.com/jgkamat/qutemacs/blob/master/qutemac
       ".emacs.d/lisp/init-nix-mode.el".text = ''
       <<emacs-init-nix-mode>>
       '';
+      
+      ".emacs.d/lisp/init-nyan-mode.el".text = ''
+      <<emacs-init-nyan-mode>>
+      '';
 
       ".emacs.d/lisp/init-orderless.el".text = ''
       <<emacs-init-orderless>>
@@ -1566,6 +1570,7 @@ Emacs like config from [[https://gitlab.com/jgkamat/qutemacs/blob/master/qutemac
   (require 'init-docker)
   (require 'init-org-modern)
   (require 'init-cape)
+  (require 'init-nyan-mode)
   (require 'init-keycast)
   (require 'init-dashboard)
   (require 'init-spacious-padding)
@@ -2144,6 +2149,23 @@ Config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rahul's Bl
   (provide 'init-nix-mode)
 
   ;;; init-nix-mode.el ends here
+#+end_src
+******* Nyan mode
+#+name: emacs-init-nyan-mode
+#+begin_src emacs-lisp
+  ;;; init-nyan-mode.el --- -*- lexical-binding: t -*-
+  ;;; Commentary:
+  ;;; Code:
+
+  (use-package nyan-mode
+    :init
+    (setq nyan-animate-nyancat t
+  	nyan-wavy-trail t)
+    (nyan-mode))
+
+  (provide 'init-nyan-mode)
+
+  ;;; init-nyan-mode.el ends here
 #+end_src
 ******* Orderless
 #+name: emacs-init-orderless
