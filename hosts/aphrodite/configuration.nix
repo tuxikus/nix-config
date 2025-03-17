@@ -123,6 +123,7 @@ homebrew = {
     "utm"
     "firefox"
     "qutebrowser"
+    "cursor"
   ];
 };
 system = {

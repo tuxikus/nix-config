@@ -848,6 +848,7 @@ Apple MacBook Pro M2
       "utm"
       "firefox"
       "qutebrowser"
+      "cursor"
     ];
   };
 #+end_src
