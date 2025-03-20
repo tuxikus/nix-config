@@ -27,6 +27,7 @@ let
     flycheck
     flycheck-inline
     format-all
+    general
     git-link
     keycast
     magit
@@ -100,6 +101,7 @@ in
         (require 'init-use-package)
         (require 'init-dwim-shell-command)
         (require 'init-perspective)
+        (require 'init-general)
         (require 'init-org-superstar)
         (require 'init-flycheck)
         (require 'init-flycheck-inline)
@@ -140,7 +142,6 @@ in
         (require 'init-embark)
         (require 'init-zellij)
         
-        (require 'tuxikus-eat)
         ;; init.el ends here
         '';
     
@@ -270,8 +271,24 @@ in
         ;;; Code:
         
         (use-package corfu
-          :init
-          (global-corfu-mode))
+          :general
+          (:keymaps 'corfu-map
+                    "C-n" #'corfu-next
+                    "C-p" #'corfu-previous
+                    "<escape>" #'corfu-quit
+                    "<return>" #'corfu-insert
+                    "M-d" #'corfu-show-documentation
+                    "C-g" #'corfu-quit
+                    "M-l" #'corfu-show-location)
+          
+          :config
+          (global-corfu-mode)
+        
+          :custom
+          (corfu-auto nil)
+          (corfu-echo-documentation nil)
+          (tab-always-indent 'complete)
+          (completion-cycle-threshold nil))
         
         (provide 'init-corfu)
         
@@ -589,14 +606,24 @@ in
         ;;; init-format-all.el ends here
         '';
     
+        ".emacs.d/lisp/init-general.el".text = ''
+        ;;; init-general.el --- -*- lexical-binding: t -*-
+        ;;; Commentary:
+        ;;; Code:
+        
+        (use-package general)
+        
+        (provide 'init-general)
+        
+        ;;; init-general.el ends here
+        '';
+    
         ".emacs.d/lisp/init-keycast.el".text = ''
         ;;; init-keycast.el --- -*- lexical-binding: t -*-
         ;;; Commentary:
         ;;; Code:
         
-        (use-package keycast
-          :config
-          (keycast-mode-line-mode))
+        (use-package keycast)
         
         (provide 'init-keycast)
         
@@ -801,6 +828,10 @@ in
           :bind
           ("C-x x s" . persp-switch)
           ("C-x x x" . persp-kill)
+          :custom
+          (persp-mode-prefix-key (kbd "C-c M-p"))
+          (consult-customize consult--source-buffer :hidden t :default nil)
+          (add-to-list 'consult-buffer-sources persp-consult-source)
           :init
           (persp-mode))
         

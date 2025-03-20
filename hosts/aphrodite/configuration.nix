@@ -92,6 +92,7 @@ environment = {
     sketchybar
     jankyborders
     gcc
+    cmake
     fzf
     go-task
     python3

@@ -809,6 +809,7 @@ Apple MacBook Pro M2
       sketchybar
       jankyborders
       gcc
+      cmake
       fzf
       go-task
       python3
@@ -886,6 +887,8 @@ Apple MacBook Pro M2
   imports = [
     (homeManagerModulesDirectory + "/text-editors/emacs.nix")
     (homeManagerModulesDirectory + "/gui-apps/qutebrowser.nix")
+    (homeManagerModulesDirectory + "/education/latex.nix")
+    (homeManagerModulesDirectory + "/education/r.nix")
     (homeManagerModulesDirectory + "/shell/xonsh.nix")
     (homeManagerModulesDirectory + "/shell/bash.nix")
     (homeManagerModulesDirectory + "/utility/tmux.nix")
@@ -921,8 +924,9 @@ Apple MacBook Pro M2
 ****** Emacs
 #+name: aphrodite-home-manager-module-config-emacs
 #+begin_src nix
-  emacsPkg = pkgs.emacs-macport;
-  fontSize = "15";
+  #emacsPkg = pkgs.emacs-macport;
+  emacsPkg = pkgs.emacs;
+  fontSize = "20";
   customInit = ''
   (setq custom-init-loaded t)
   (setq mac-option-key-is-meta t
@@ -1319,6 +1323,7 @@ Emacs like config from [[https://gitlab.com/jgkamat/qutemacs/blob/master/qutemac
     flycheck
     flycheck-inline
     format-all
+    general
     git-link
     keycast
     magit
@@ -1459,6 +1464,10 @@ Emacs like config from [[https://gitlab.com/jgkamat/qutemacs/blob/master/qutemac
       <<emacs-init-format-all>>
       '';
 
+      ".emacs.d/lisp/init-general.el".text = ''
+      <<emacs-init-general>>
+      '';
+
       ".emacs.d/lisp/init-keycast.el".text = ''
       <<emacs-init-keycast>>
       '';
@@ -1579,6 +1588,7 @@ Emacs like config from [[https://gitlab.com/jgkamat/qutemacs/blob/master/qutemac
   (require 'init-use-package)
   (require 'init-dwim-shell-command)
   (require 'init-perspective)
+  (require 'init-general)
   (require 'init-org-superstar)
   (require 'init-flycheck)
   (require 'init-flycheck-inline)
@@ -1618,8 +1628,7 @@ Emacs like config from [[https://gitlab.com/jgkamat/qutemacs/blob/master/qutemac
   (require 'init-custom-fun)
   (require 'init-embark)
   (require 'init-zellij)
-
-  (require 'tuxikus-eat)
+  
   ;; init.el ends here
 #+end_src
 ****** Configs
@@ -1755,8 +1764,24 @@ Emacs like config from [[https://gitlab.com/jgkamat/qutemacs/blob/master/qutemac
   ;;; Code:
 
   (use-package corfu
-    :init
-    (global-corfu-mode))
+    :general
+    (:keymaps 'corfu-map
+              "C-n" #'corfu-next
+              "C-p" #'corfu-previous
+              "<escape>" #'corfu-quit
+              "<return>" #'corfu-insert
+              "M-d" #'corfu-show-documentation
+              "C-g" #'corfu-quit
+              "M-l" #'corfu-show-location)
+    
+    :config
+    (global-corfu-mode)
+
+    :custom
+    (corfu-auto nil)
+    (corfu-echo-documentation nil)
+    (tab-always-indent 'complete)
+    (completion-cycle-threshold nil))
 
   (provide 'init-corfu)
 
@@ -2068,16 +2093,30 @@ Config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rahul's Bl
   ;;; init-keycast.el --- -*- lexical-binding: t -*-
   ;;; Commentary:
   ;;; Code:
-
-  (use-package keycast
-    :config
-    (keycast-mode-line-mode))
+  
+  (use-package keycast)
 
   (provide 'init-keycast)
 
   ;;; init-keycast.el ends here
 #+end_src
+**************** Use Keycast with doom modeline
+To use keycast-mode-line-mode with doom-modeline use the use-package snippet below. ([[https://github.com/tarsius/keycast/issues/7#issuecomment-2387310012][GitHub]])
+#+begin_src emacs-lisp
+  (use-package keycast)
+    :hook (after-init . keycast-mode)
+    :config
+    (define-minor-mode keycast-mode
+  	"Show current command and its key binding in the mode line (fix for use with doom-modeline)."
+  	:global t
+  	(if keycast-mode
+  		(add-hook 'pre-command-hook 'keycast--update t)
+        (remove-hook 'pre-command-hook 'keycast--update)))
 
+    (add-to-list 'global-mode-string '("" keycast-mode-line)))
+
+    (provide 'init-keycast)
+#+end_src
 ******* Flycheck inline
 #+name: emacs-init-flycheck-inline
 #+begin_src emacs-lisp
@@ -2106,6 +2145,19 @@ Config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rahul's Bl
   (provide 'init-format-all)
 
   ;;; init-format-all.el ends here
+#+end_src
+******* General
+#+name: emacs-init-general
+#+begin_src emacs-lisp
+  ;;; init-general.el --- -*- lexical-binding: t -*-
+  ;;; Commentary:
+  ;;; Code:
+
+  (use-package general)
+
+  (provide 'init-general)
+
+  ;;; init-general.el ends here
 #+end_src
 ******* Magit
 #+name: emacs-init-magit
@@ -2320,6 +2372,10 @@ Config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rahul's Bl
     :bind
     ("C-x x s" . persp-switch)
     ("C-x x x" . persp-kill)
+    :custom
+    (persp-mode-prefix-key (kbd "C-c M-p"))
+    (consult-customize consult--source-buffer :hidden t :default nil)
+    (add-to-list 'consult-buffer-sources persp-consult-source)
     :init
     (persp-mode))
 
@@ -2632,7 +2688,7 @@ Config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rahul's Bl
 
   (provide-theme 'tuxikus-basic)
   #+end_src
-
+  
 *** Scripts
 **** home-backup
 #+begin_src nix :tangle modules/home-manager/scripts/home-backup.nix :noweb tangle :mkdirp yes

@@ -6,6 +6,8 @@ in
 imports = [
   (homeManagerModulesDirectory + "/text-editors/emacs.nix")
   (homeManagerModulesDirectory + "/gui-apps/qutebrowser.nix")
+  (homeManagerModulesDirectory + "/education/latex.nix")
+  (homeManagerModulesDirectory + "/education/r.nix")
   (homeManagerModulesDirectory + "/shell/xonsh.nix")
   (homeManagerModulesDirectory + "/shell/bash.nix")
   (homeManagerModulesDirectory + "/utility/tmux.nix")
@@ -28,8 +30,9 @@ home = {
   packages = [];
 };
 programs.home-manager.enable = true;
-emacsPkg = pkgs.emacs-macport;
-fontSize = "15";
+#emacsPkg = pkgs.emacs-macport;
+emacsPkg = pkgs.emacs;
+fontSize = "20";
 customInit = ''
 (setq custom-init-loaded t)
 (setq mac-option-key-is-meta t
