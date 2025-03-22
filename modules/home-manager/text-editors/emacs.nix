@@ -103,14 +103,14 @@ in
         (require 'init-dwim-shell-command)
         (require 'init-perspective)
         ;;(require 'init-tabspaces)
-        (require 'init-general)
+        ;;(require 'init-general)
         (require 'init-org-superstar)
         (require 'init-flycheck)
         (require 'init-flycheck-inline)
         (require 'init-em-banner)
         (require 'init-corfu)
         (require 'init-corfu-terminal)
-        (require 'init-custom)
+        ;;(require 'init-custom)
         (require 'init-docker)
         (require 'init-org-modern)
         (require 'init-cape)
@@ -276,16 +276,6 @@ in
         ;;; Code:
         
         (use-package corfu
-          :general
-          (:keymaps 'corfu-map
-                    "C-n" #'corfu-next
-                    "C-p" #'corfu-previous
-                    "<escape>" #'corfu-quit
-                    "<return>" #'corfu-insert
-                    "M-d" #'corfu-show-documentation
-                    "C-g" #'corfu-quit
-                    "M-l" #'corfu-show-location)
-          
           :config
           (global-corfu-mode)
         
@@ -388,7 +378,7 @@ in
         '';
     
         ".emacs.d/lisp/init-docker.el".text = ''
-        ;;; init-direnv.el --- -*- lexical-binding: t -*-
+        ;;; init-docker.el --- -*- lexical-binding: t -*-
         ;;; Commentary:
         ;;; Code:
         

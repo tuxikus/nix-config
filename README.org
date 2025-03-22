@@ -1268,6 +1268,7 @@ Emacs like config from [[https://gitlab.com/jgkamat/qutemacs/blob/master/qutemac
 #+end_src
 *** Text editors
 **** Emacs
+Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rahul's Blog]]
 ***** Nix config
 #+begin_src nix :tangle modules/home-manager/text-editors/emacs.nix :noweb tangle :mkdirp yes
   { config, pkgs, lib, ... }:
@@ -1594,14 +1595,14 @@ Emacs like config from [[https://gitlab.com/jgkamat/qutemacs/blob/master/qutemac
   (require 'init-dwim-shell-command)
   (require 'init-perspective)
   ;;(require 'init-tabspaces)
-  (require 'init-general)
+  ;;(require 'init-general)
   (require 'init-org-superstar)
   (require 'init-flycheck)
   (require 'init-flycheck-inline)
   (require 'init-em-banner)
   (require 'init-corfu)
   (require 'init-corfu-terminal)
-  (require 'init-custom)
+  ;;(require 'init-custom)
   (require 'init-docker)
   (require 'init-org-modern)
   (require 'init-cape)
@@ -1773,16 +1774,6 @@ Emacs like config from [[https://gitlab.com/jgkamat/qutemacs/blob/master/qutemac
   ;;; Code:
 
   (use-package corfu
-    :general
-    (:keymaps 'corfu-map
-              "C-n" #'corfu-next
-              "C-p" #'corfu-previous
-              "<escape>" #'corfu-quit
-              "<return>" #'corfu-insert
-              "M-d" #'corfu-show-documentation
-              "C-g" #'corfu-quit
-              "M-l" #'corfu-show-location)
-    
     :config
     (global-corfu-mode)
 
@@ -1889,10 +1880,9 @@ Emacs like config from [[https://gitlab.com/jgkamat/qutemacs/blob/master/qutemac
   ;;; init-direnv.el ends here
  #+end_src
 ******* Docker
-Config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rahul's Blog]]
 #+name: emacs-init-docker
 #+begin_src emacs-lisp
-  ;;; init-direnv.el --- -*- lexical-binding: t -*-
+  ;;; init-docker.el --- -*- lexical-binding: t -*-
   ;;; Commentary:
   ;;; Code:
 
