@@ -16,6 +16,7 @@ in
     (nixModulesDirectory + "/udev/vial.nix")
     (nixModulesDirectory + "/virtualization.nix")
     (nixModulesDirectory + "/podman.nix")
+    (nixModulesDirectory + "/development/c.nix")
   ];
 
   nix = {

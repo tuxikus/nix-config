@@ -11,7 +11,6 @@ let
   my-emacs-with-packages = (pkgs.emacsPackagesFor my-emacs).emacsWithPackages (
     epkgs: with epkgs; [
       ace-window
-      almost-mono-themes
       avy
       cape
       consult
@@ -23,7 +22,6 @@ let
       docker
       doom-modeline
       doom-themes
-      dwim-shell-command
       eat
       embark
       embark-consult
@@ -33,7 +31,6 @@ let
       flycheck
       flycheck-inline
       format-all
-      general
       git-link
       keycast
       magit
@@ -52,10 +49,8 @@ let
       ripgrep
       salt-mode
       spacious-padding
-      tabspaces
       verb
       vertico
-      vertico-posframe
       vundo
       walkman
       wgrep
@@ -101,19 +96,81 @@ in
     };
 
     home.file.".emacs.d/init.el".text = ''
-    (use-package ace-window
-      :bind (("M-o" . ace-window))
+    (use-package emacs
+      :bind
+      ("M-<tab>" . completion-at-point)
+    
+      :init
+      (setq create-lockfiles nil
+          	make-backup-files nil
+          	custom-theme-directory "~/.emacs.d/themes"
+          	inhibit-startup-message t
+          	inhibit-startup-screen t
+          	initial-scratch-message ";;; Emacs is fun"
+          	global-auto-revert-non-file-buffers t)
+      
+      (fset 'yes-or-no-p 'y-or-n-p)
+      (auto-save-mode -1)
+      (tool-bar-mode -1)
+      (menu-bar-mode -1)
+      (scroll-bar-mode -1)
+      (save-place-mode 1)
+      (global-auto-revert-mode 1)
+    
+      (load-theme 'doom-bluloco-light t)
+    
+      ;; Add prompt indicator to `completing-read-multiple'.
+      ;; We display [CRM<separator>], e.g., [CRM,] if the separator is a comma.
+      (defun crm-indicator (args)
+        (cons (format "[CRM%s] %s"
+          		  (replace-regexp-in-string
+          		   "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
+          		   crm-separator)
+          		  (car args))
+          	  (cdr args)))
+      (advice-add #'completing-read-multiple :filter-args #'crm-indicator)
+    
+      ;; Do not allow the cursor in the minibuffer prompt
+      (setq minibuffer-prompt-properties
+          	'(read-only t cursor-intangible t face minibuffer-prompt))
+      (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
       :config
+      (add-to-list 'default-frame-alist
+                   '(font . "Iosevka Nerd Font-${config.fontSize}"))
+      (which-key-mode 1)
+    
+      :custom
+      (enable-recursive-minibuffers t)
+      (read-extended-command-predicate #'command-completion-default-include-p)
+    
+      ;; (tab-always-indent 'complete)
+    
+      ;; Emacs 30 and newer: Disable Ispell completion function.
+      ;; Try `cape-dict' as an alternative.
+      (text-mode-ispell-word-completion nil)
+    
+      ;; Hide commands in M-x which do not apply to the current mode.  Corfu
+      ;; commands are hidden, since they are not used via M-x. This setting is
+      ;; useful beyond Corfu.
+      (read-extended-command-predicate #'command-completion-default-include-p))
+    
+    (use-package ace-window
+      :defer t
+      :bind
+      (("M-o" . ace-window))
+      :init
       (setq aw-dispatch-always t)
       (setq aw-keys '(?a ?o ?e ?u ?h ?t ?n ?s ?f)))
     
     (use-package avy
+      :defer t
       :bind
       (("M-g f" . avy-goto-line)
        ("M-g w" . avy-goto-word-1)
        ("C-'" . avy-goto-char-2)))
     
     (use-package cape
+      :defer t
       :bind ("M-p" . cape-prefix-map)
       :init
       (add-hook 'completion-at-point-functions #'cape-dabbrev)
@@ -128,6 +185,7 @@ in
       (add-hook 'completion-at-point-functions #'cape-history))
     
     (use-package consult
+      :defer t
       :bind
       (("C-c M-x" . consult-mode-command)
        ("C-c h" . consult-history)
@@ -151,7 +209,7 @@ in
        ("M-y" . consult-yank-pop)                ;; orig. yank-pop
        ;; M-g bindings in `goto-map'
        ("M-g e" . consult-compile-error)
-       ("M-g f" . consult-flymake)               ;; Alternative: consult-flycheck
+       ;;("M-g f" . consult-flymake)               ;; Alternative: consult-flycheck
        ("M-g g" . consult-goto-line)             ;; orig. goto-line
        ("M-g M-g" . consult-goto-line)           ;; orig. goto-line
        ("M-g o" . consult-outline)               ;; Alternative: consult-org-heading
@@ -185,13 +243,11 @@ in
       (add-to-list 'consult-buffer-sources persp-consult-source))
     
     (use-package corfu
-      :config
-      (global-corfu-mode)
-    
       :init
       (unless (display-graphic-p)
         (corfu-terminal-mode +1))
-    
+      :config
+      (global-corfu-mode)
       :custom
       (corfu-auto nil)
       (corfu-echo-documentation nil)
@@ -203,16 +259,16 @@ in
       (setq dashboard-projects-backend 'project-el)
     
       (setq dashboard-items '((recents   . 10)
-      			  (bookmarks . 10)
-      			  (projects  . 10)
-      			  (agenda    . 10)
-      			  (registers . 10)))
+          			  (bookmarks . 10)
+          			  (projects  . 10)
+          			  (agenda    . 10)
+          			  (registers . 10)))
     
       (setq dashboard-item-shortcuts '((recents   . "r")
-      				   (bookmarks . "m")
-      				   (projects  . "p")
-      				   (agenda    . "a")
-      				   (registers . "e")))
+          				   (bookmarks . "m")
+          				   (projects  . "p")
+          				   (agenda    . "a")
+          				   (registers . "e")))
     
       (setq initial-buffer-choice (lambda () (get-buffer-create dashboard-buffer-name)))
     
@@ -223,46 +279,41 @@ in
       (put 'dired-find-alternate-file 'disabled nil))
     
     (use-package direnv
+      :defer t
       :config
       (direnv-mode))
-    
     
     (defcustom container-executable 'podman
       "The executable to be used with docker mode."
       :type '(choice
-      	  (const :tag "docker" docker)
-      	  (const :tag "podman" podman))
+          	  (const :tag "docker" docker)
+          	  (const :tag "podman" podman))
       :group 'custom)
     
     (use-package docker
+      :defer t
       :bind
       ;;("C-c d" . docker)
       :config
       (pcase container-executable
         ('docker
          (setf docker-command "docker"
-      	   docker-compose-command "docker-compose"
-      	   docker-container-tramp-method "docker"))
+          	   docker-compose-command "docker-compose"
+          	   docker-container-tramp-method "docker"))
         ('podman
          (setf docker-command "podman"
-      	   docker-compose-command "podman-compose"
-      	   docker-container-tramp-methodu "podman"))))
-    
-    
+          	   docker-compose-command "podman-compose"
+          	   docker-container-tramp-methodu "podman"))))
     
     (use-package doom-modeline
+      :defer t
       :init
       (setq doom-modeline-time t
-      	doom-modeline-env-version t)
+          	doom-modeline-env-version t)
     
       (doom-modeline-mode 1))
     
     (use-package doom-themes)
-    
-    (use-package dwim-shell-command
-      :config
-      (unload-feature 'dwim-shell-command-autoloads t))
-    
     
     (use-package eglot
       :hook
@@ -273,70 +324,38 @@ in
       (eglot-autoshutdown t)
       (eglot-confirm-server-initiated-edits nil))
     
-    (use-package emacs
-      :bind
-      ("M-<tab>" . completion-at-point)
-      ;;("" . duplicate-line)
     
+    
+    (use-package electric
+      :defer t
       :init
-      (setq create-lockfiles nil
-      	make-backup-files nil
-      	custom-theme-directory "~/.emacs.d/themes"
-      	inhibit-startup-message t
-      	inhibit-startup-screen t
-      	initial-scratch-message ";;; Emacs is fun"
-      	global-auto-revert-non-file-buffers t)
-      (fset 'yes-or-no-p 'y-or-n-p)
-      (tool-bar-mode -1)
-      (menu-bar-mode -1)
-      (scroll-bar-mode -1)
-      (save-place-mode 1)
-      (global-auto-revert-mode 1)
-    
-      (load-theme 'doom-bluloco-light t)
-    
-      ;; window divider
-      (setq window-divider-default-right-width 5
-      	window-divider-default-bottom-width 5
-      	window-divider-default-places t)
-    
-      (window-divider-mode 1)
-    
-    
-      ;; Add prompt indicator to `completing-read-multiple'.
-      ;; We display [CRM<separator>], e.g., [CRM,] if the separator is a comma.
-      (defun crm-indicator (args)
-        (cons (format "[CRM%s] %s"
-      		  (replace-regexp-in-string
-      		   "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
-      		   crm-separator)
-      		  (car args))
-      	  (cdr args)))
-      (advice-add #'completing-read-multiple :filter-args #'crm-indicator)
-    
-      ;; Do not allow the cursor in the minibuffer prompt
-      (setq minibuffer-prompt-properties
-      	'(read-only t cursor-intangible t face minibuffer-prompt))
-      (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
-      :config
-      (add-to-list 'default-frame-alist
-                   '(font . "Iosevka Nerd Font-${config.fontSize}"))
+      ;;(setq electric-pair-preserve-balance nil)
       (electric-pair-mode)
-      (which-key-mode 1)
-      :custom
-      (enable-recursive-minibuffers t)
-      (read-extended-command-predicate #'command-completion-default-include-p)
     
-      ;; (tab-always-indent 'complete)
+      :config
+      (defvar latex-mode-electric-pairs '((?$ . ?$))
+        "Electric pairs for LaTeX mode.")
     
-      ;; Emacs 30 and newer: Disable Ispell completion function.
-      ;; Try `cape-dict' as an alternative.
-      (text-mode-ispell-word-completion nil)
+      (defvar org-mode-electric-pairs '(())
+        "Electric pairs for org mode.")
     
-      ;; Hide commands in M-x which do not apply to the current mode.  Corfu
-      ;; commands are hidden, since they are not used via M-x. This setting is
-      ;; useful beyond Corfu.
-      (read-extended-command-predicate #'command-completion-default-include-p))
+      (defun latex-mode-add-electric-pairs ()
+        "Add electric pairs for LaTeX mode."
+        (setq-local electric-pair-pairs (append electric-pair-pairs latex-mode-electric-pairs))
+        (setq-local electric-pair-text-pairs electric-pair-pairs)
+        (message "Electric pairs added for LaTeX mode: %s" electric-pair-pairs))
+    
+      (defun org-mode-add-electric-pairs ()
+        "Add electric pairs for org mode."
+        (setq-local electric-pair-pairs (append electric-pair-pairs
+      					    org-mode-electric-pairs
+      					    latex-mode-electric-pairs))
+        (setq-local electric-pair-text-pairs electric-pair-pairs)
+        (message "Electric pairs added for org mode: %s" electric-pair-pairs))
+    
+      :hook
+      (latex-mode . latex-mode-add-electric-pairs)
+      (org-mode . org-mode-add-electric-pairs))
     
     (use-package embark
       :bind
@@ -346,28 +365,28 @@ in
     (use-package em-banner)
     
     (use-package flycheck
+      :defer t
       :hook
       (after-init . global-flycheck-mode))
     
     (use-package flycheck-inline
+      :defer t
       :config
       (with-eval-after-load 'flycheck
         (add-hook 'flycheck-mode-hook #'flycheck-inline-mode)))
     
     (use-package format-all)
     
-    (use-package general)
-    
     (use-package magit)
     
     (use-package marginalia
       :bind (:map minibuffer-local-map
-      	      ("M-A" . marginalia-cycle))
+          	      ("M-A" . marginalia-cycle))
       :init
       (marginalia-mode))
     
     (use-package move-text
-      :config
+      :init
       (move-text-default-bindings))
     
     (use-package nix-mode
@@ -376,7 +395,7 @@ in
     (use-package nyan-mode
       :init
       (setq nyan-animate-nyancat t
-      	nyan-wavy-trail t)
+          	nyan-wavy-trail t)
       (nyan-mode))
     
     (use-package orderless
@@ -386,36 +405,21 @@ in
       (completion-category-overrides '((file (styles basic partial-completion)))))
     
     (use-package org
+      :defer t
+      :bind
+      ("C-M-<return>" . org-insert-subheading)
       :init
       (setq org-attach-id-dir "~/org/.attach"
-      	org-log-done 'time
-      	org-hide-emphasis-markers t
-      	org-imenu-depth 7)
+          	org-log-done 'time
+          	org-hide-emphasis-markers t
+          	org-imenu-depth 7)
     
-      :config
-      (set-face-attribute 'org-level-1 nil :height 1.5)
-      (set-face-attribute 'org-level-2 nil :height 1.4)
-      (set-face-attribute 'org-level-3 nil :height 1.3)
-      (set-face-attribute 'org-level-4 nil :height 1.2)
-      (set-face-attribute 'org-level-5 nil :height 1.1)
-      (set-face-attribute 'org-level-6 nil :height 1.0)
-      (set-face-attribute 'org-level-7 nil :height 1.0)
-      (set-face-attribute 'org-level-8 nil :height 1.0)
-    
-      ;; color begin & end src lines
-      ;; (set-face-attribute 'org-block-begin-line nil :background "#f0f0f0")
-      ;; (set-face-attribute 'org-block-end-line nil :background "#f0f0f0")
-    
-      (set-face-attribute 'org-document-title nil :height 2.0)
-    
-      ;; load org babel languages
       (org-babel-do-load-languages 'org-babel-load-languages '((shell . t)
-      							   (emacs-lisp . t)
-      							   (python . t)))
-      :bind
-      ("C-M-<return>" . org-insert-subheading))
+          							   (emacs-lisp . t)
+          							   (python . t))))
     
     (use-package org-roam
+      :defer t
       :custom
       (org-roam-directory (concat org-directory "/roam"))
       :config
@@ -426,29 +430,34 @@ in
       (require 'org-roam-protocol))
     
     (use-package org-modern
+      :defer t
       :config
       (with-eval-after-load 'org (global-org-modern-mode)))
     
     (use-package org-superstar
+      :defer t
       :hook
       (org-mode . (lambda () (org-superstar-mode 1))))
     
     (use-package org-present)
     
     (use-package perspective
+      :defer t
       :custom
       (persp-mode-prefix-key (kbd "C-c M-p"))
       :init
       (persp-mode))
     
     (use-package salt-mode
+      :defer t
       :hook
       (salt-mode . (lambda () (flyspell-mode 1))))
     
     (use-package spacious-padding
+      :defer t
       :init
       (setq spacious-padding-widths
-      	'( :internal-border-width 15
+          	'( :internal-border-width 15
                :header-line-width 4
                :mode-line-width 6
                :tab-width 4
@@ -459,7 +468,7 @@ in
       ;; Read the doc string of `spacious-padding-subtle-mode-line' as it
       ;; is very flexible and provides several examples.
       (setq spacious-padding-subtle-mode-line
-      	`( :mode-line-active 'default
+          	`( :mode-line-active 'default
                :mode-line-inactive vertical-border))
     
       (spacious-padding-mode 1))
@@ -468,55 +477,14 @@ in
       :init
       (savehist-mode))
     
-    ;; (use-package tabspaces
-    ;; :hook (after-init . tabspaces-mode) ;; use this only if you want the minor-mode loaded at startup.
-    ;; :commands (tabspaces-switch-or-create-workspace
-    ;;            tabspaces-open-or-create-project-and-workspace)
-    ;; :custom
-    ;; (tabspaces-use-filtered-buffers-as-default t)
-    ;; (tabspaces-default-tab "Default")
-    ;; (tabspaces-remove-to-default t)
-    ;; (tabspaces-include-buffers '("*scratch*"))
-    ;; (tabspaces-initialize-project-with-todo t)
-    ;; (tabspaces-todo-file-name "project-todo.org")
-    ;; ;; sessions
-    ;; (tabspaces-session t)
-    ;; (tabspaces-session-auto-restore t)
-    ;; (tab-bar-new-tab-choice "*scratch*")
-    
-    ;; ;; consult
-    ;; (with-eval-after-load 'consult
-    ;;   ;; hide full buffer list (still available with "b" prefix)
-    ;;   (consult-customize consult--source-buffer :hidden t :default nil)
-    ;;   ;; set consult-workspace buffer list
-    ;;   (defvar consult--source-workspace
-    ;;     (list :name     "Workspace Buffers"
-    ;;           :narrow   ?w
-    ;;           :history  'buffer-name-history
-    ;;           :category 'buffer
-    ;;           :state    #'consult--buffer-state
-    ;;           :default  t
-    ;;           :items    (lambda () (consult--buffer-query
-    ;; 				  :predicate #'tabspaces--local-buffer-p
-    ;; 				  :sort 'visibility
-    ;; 				  :as #'buffer-name)))
-    
-    ;;     "Set workspace buffer list for consult-buffer.")
-    ;;   (add-to-list 'consult-buffer-sources 'consult--source-workspace)))
-    
-    
     (use-package treesit
       :init
       (setq major-mode-remap-alist
-      	'((bash-mode . bash-ts-mode)
-      	  (python-mode . python-ts-mode))))
-    
-    (use-package use-package
-      :config
-      (setq use-package-compute-statistics t))
-    
+          	'((bash-mode . bash-ts-mode)
+          	  (python-mode . python-ts-mode))))
     
     (use-package vertico
+      :defer t
       :custom
       (vertico-scroll-margin 0) ;; Different scroll margin
       (vertico-count 20) ;; Show more candidates
@@ -525,37 +493,14 @@ in
       :init
       (vertico-mode))
     
-    (use-package vertico-posframe
-      :init
-      (vertico-posframe-mode 1)
-      (setq vertico-multiform-commands
-      	'((consult-line
-               posframe
-               (vertico-posframe-poshandler . posframe-poshandler-frame-top-center)
-               (vertico-posframe-border-width . 10)
-               ;; NOTE: This is useful when emacs is used in both in X and
-               ;; terminal, for posframe do not work well in terminal, so
-               ;; vertico-buffer-mode will be used as fallback at the
-               ;; moment.
-               (vertico-posframe-fallback-mode . vertico-buffer-mode))
-              (t posframe)))
-    
-      (vertico-multiform-mode 1)
-    
-      (setq vertico-multiform-commands
-        	'((consult-line (:not posframe))
-      	  (consult-grep (:not posframe))
-      	  (consult-ripgrep (:not posframe))
-        	  (t posframe))))
-    
     (use-package yasnippet
+      :defer t
       :config
       (yas-global-mode 1))
     
-    (use-package zellij)
+    (use-package zellij :defer t)
     
-    
-      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     
     (defun tuxikus/get-jira-ticket-number (branch)
       (when (string-match "[A-Z]\\{8\\}-[0-9]*" branch)
@@ -570,23 +515,23 @@ in
         (org-mode)
         (let (bookmarks)
           (org-element-map (org-element-parse-buffer) 'link
-    	(lambda (l)
-    	  (let* ((link (org-element-property :raw-link l))
-    		 (name (org-element-interpret-data (org-element-contents l)))
-    		 (tags (org-element-property :tags (org-element-property :parent l))))
-    	    (push (concat name
-    			  "\n"
-    			  link
-    			  "\n"
-    			  (format "[%s]" (mapconcat #'identity tags ", "))) bookmarks))))
+        	(lambda (l)
+        	  (let* ((link (org-element-property :raw-link l))
+        		 (name (org-element-interpret-data (org-element-contents l)))
+        		 (tags (org-element-property :tags (org-element-property :parent l))))
+        	    (push (concat name
+        			  "\n"
+        			  link
+        			  "\n"
+        			  (format "[%s]" (mapconcat #'identity tags ", "))) bookmarks))))
           bookmarks)))
     
     (defun tuxikus/add-bookmark ()
       "Add a new bookmark to the bookmark file."
       (interactive)
       (let* ((title (read-from-minibuffer "Title: "))
-    	 (url (read-from-minibuffer "URL: "))
-    	 (tags (read-from-minibuffer "Tags: ")))
+        	 (url (read-from-minibuffer "URL: "))
+        	 (tags (read-from-minibuffer "Tags: ")))
         (write-region (format "* [[%s][%s]] %s\n" url title tags) nil "~/.bookmarks.org" 'append)))
     
     (defun tuxikus/edit-bookmark ()
@@ -604,17 +549,17 @@ in
       (interactive)
       (browse-url
        (seq-elt (split-string
-    	     (completing-read "Open: " (tuxikus/get-bookmarks-from-file))
-    	     "\n") 1)))
+        	     (completing-read "Open: " (tuxikus/get-bookmarks-from-file))
+        	     "\n") 1)))
     
     (defun tuxikus/change-org-directory ()
       "Change the active org directory."
       (interactive)
       (let ((selection (completing-read "Select: " '("~/org" "~/org-edu"))))
         (setq org-directory selection
-    	  org-attach-id-dir (concat org-directory "/.attach")
-    	  org-roam-directory (concat org-directory "/roam")
-    	  org-roam-db-location (concat org-directory "/org-roam.db"))))
+        	  org-attach-id-dir (concat org-directory "/.attach")
+        	  org-roam-directory (concat org-directory "/roam")
+        	  org-roam-db-location (concat org-directory "/org-roam.db"))))
     '';
   };
 }
