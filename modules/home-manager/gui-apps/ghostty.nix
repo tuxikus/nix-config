@@ -1,15 +1,17 @@
 {
   home.file.".config/ghostty/config" = {
     text = ''
-	window-padding-x = 10
-	window-padding-y = 10
-	macos-titlebar-style = hidden
-	confirm-close-surface = false
-	theme = BlulocoLight
-	font-family = "Iosevka Nerd Font"
-	font-size = 15
-	command = bash
-	
+    window-padding-x = 10
+    window-padding-y = 10
+    macos-titlebar-style = hidden
+    confirm-close-surface = false
+    
+    theme = BlulocoLight
+    
+    font-family = "Iosevka Nerd Font"
+    font-size = 15
+    
+    command = bash
     '';
   };
 }
