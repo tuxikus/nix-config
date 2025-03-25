@@ -99,6 +99,12 @@ in
     (use-package emacs
       :bind
       ("M-<tab>" . completion-at-point)
+      ("C-c d" . duplicate-line)
+      ("C-c f f" . find-file)
+      ("C-c f a" . format-all-buffer)
+      ("C-c e r" . eval-region)
+      ("C-c e b" . eval-buffer)
+      ("C-c w m" . whitespace-mode)
     
       :init
       (setq create-lockfiles nil
@@ -116,6 +122,13 @@ in
       (scroll-bar-mode -1)
       (save-place-mode 1)
       (global-auto-revert-mode 1)
+    
+      ;; cursor
+      ;;(setq-default cursor-type 'box)
+    
+      ;; line numbers
+      ;; (setq display-line-numbers-type 'relative)
+      ;; (global-display-line-numbers-mode)
     
       (load-theme 'doom-bluloco-light t)
     

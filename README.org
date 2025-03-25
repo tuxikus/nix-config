@@ -1197,10 +1197,16 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
 #+end_src
 ***** Configuration
 #+name: emacs-configuration
-#+begin_src emacs-lisp :tangle ~/projects/personal/nix-config-dump/emacs/.emacs.d/init.el
+#+begin_src emacs-lisp 
   (use-package emacs
     :bind
     ("M-<tab>" . completion-at-point)
+    ("C-c d" . duplicate-line)
+    ("C-c f f" . find-file)
+    ("C-c f a" . format-all-buffer)
+    ("C-c e r" . eval-region)
+    ("C-c e b" . eval-buffer)
+    ("C-c w m" . whitespace-mode)
 
     :init
     (setq create-lockfiles nil
@@ -1218,6 +1224,13 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
     (scroll-bar-mode -1)
     (save-place-mode 1)
     (global-auto-revert-mode 1)
+
+    ;; cursor
+    ;;(setq-default cursor-type 'box)
+
+    ;; line numbers
+    ;; (setq display-line-numbers-type 'relative)
+    ;; (global-display-line-numbers-mode)
 
     (load-theme 'doom-bluloco-light t)
 
@@ -1663,6 +1676,20 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
       	  org-roam-directory (concat org-directory "/roam")
       	  org-roam-db-location (concat org-directory "/org-roam.db"))))
 #+end_src
+***** Configuration dump
+#+name: emacs-configuration-dumper
+#+begin_src text :tangle ~/projects/personal/nix-config-dump/emacs/.emacs.d/init.el
+  <<emacs-configuration-dump()>>
+#+end_src
+
+#+name: emacs-configuration-dump
+#+begin_src python :noweb yes :results output :exports none
+  config = """
+  <<emacs-configuration>>
+  """.replace("${config.fontSize}", "15")
+
+  print(config)
+#+end_src
 *** Scripts
 **** home-backup
 ***** Nix configuration
@@ -1860,6 +1887,7 @@ echo "Done!"
   	    ll = "ls -lah";
   	    ff = "fastfetch";
         cdp = "cd $(cli-project-switcher | fzf)";
+        vanilla-emacs = "emacs -q --load ~/projects/personal/vanilla-emacs/init.el"
       };
     };
   }
