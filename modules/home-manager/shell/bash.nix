@@ -20,7 +20,7 @@
 	    ll = "ls -lah";
 	    ff = "fastfetch";
       cdp = "cd $(cli-project-switcher | fzf)";
-      vanilla-emacs = "emacs -q --load ~/projects/personal/vanilla-emacs/init.el"
+      vanilla-emacs = "emacs -q --load ~/projects/personal/vanilla-emacs/init.el";
     };
   };
 }
