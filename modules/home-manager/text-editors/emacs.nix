@@ -443,7 +443,6 @@ in
       (require 'org-roam-protocol))
     
     (use-package org-modern
-      :defer t
       :config
       (with-eval-after-load 'org (global-org-modern-mode)))
     
