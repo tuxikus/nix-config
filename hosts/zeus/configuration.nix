@@ -17,6 +17,8 @@ in
     (nixModulesDirectory + "/virtualization.nix")
     (nixModulesDirectory + "/podman.nix")
     (nixModulesDirectory + "/development/c.nix")
+    (nixModulesDirectory + "/development/python.nix")
+    (nixModulesDirectory + "/development/nix.nix")
   ];
 
   nix = {
@@ -128,13 +130,9 @@ in
     tree
     home-manager
     pavucontrol
-    python312Full
-    python312Packages.pip
-    python312Packages.tkinter
     wget
     hyprpaper
     hyprsunset
-    pyright
     mpd
     ncmpcpp
     fuzzel
@@ -161,8 +159,6 @@ in
     qutebrowser
     wlr-randr
     ripgrep
-    nixd
-    nixfmt-rfc-style
   ];
 
   programs = {

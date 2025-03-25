@@ -162,6 +162,8 @@ Specs:
       (nixModulesDirectory + "/virtualization.nix")
       (nixModulesDirectory + "/podman.nix")
       (nixModulesDirectory + "/development/c.nix")
+      (nixModulesDirectory + "/development/python.nix")
+      (nixModulesDirectory + "/development/nix.nix")
     ];
 
     nix = {
@@ -273,13 +275,9 @@ Specs:
       tree
       home-manager
       pavucontrol
-      python312Full
-      python312Packages.pip
-      python312Packages.tkinter
       wget
       hyprpaper
       hyprsunset
-      pyright
       mpd
       ncmpcpp
       fuzzel
@@ -306,8 +304,6 @@ Specs:
       qutebrowser
       wlr-randr
       ripgrep
-      nixd
-      nixfmt-rfc-style
     ];
 
     programs = {
@@ -844,10 +840,32 @@ Apple MacBook Pro M2
   {
     environment.systemPackages = with pkgs; [
       gcc
-      clangd
+      clang
+      clang-tools
     ];
   }
 #+end_src
+**** Python
+#+begin_src nix :tangle modules/nixos/development/python.nix
+  { pkgs, ... }:
+  {
+    environment.systemPackages = with pkgs; [
+      python312Full
+      pyright
+    ];
+  }
+#+end_src
+**** Nix
+#+begin_src nix :tangle modules/nixos/development/nix.nix
+  { pkgs, ... }:
+  {
+    environment.systemPackages = with pkgs; [
+      nixd
+      nixfmt-rfc-style
+    ];
+  }
+#+end_src
+
 ** Home manager
 *** GUI applications
 **** Ghostty

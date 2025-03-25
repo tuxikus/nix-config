@@ -1,8 +1,7 @@
 { pkgs, ... }:
 {
   environment.systemPackages = with pkgs; [
-    gcc
-    clang
-    clang-tools
+    python312Full
+    pyright
   ];
 }
