@@ -37,11 +37,11 @@ Modules:
     │   ├── utility
     │   └── window-manager
     └── nixos
+        ├── development
         └── udev
 
-16 directories
+17 directories
 #+end_src
-
 * How to install a system
 ** If using luks encryption create a secret
 #+begin_src shell
