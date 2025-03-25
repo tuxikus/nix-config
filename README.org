@@ -140,7 +140,6 @@ Specs:
 | GPU    | AMD Radeon RX 6800 XT             |
 | Memory | 32GB DDR4                         |
 
-
 *** configuration.nix
 #+begin_src nix :tangle hosts/zeus/configuration.nix :noweb tangle :mkdirp yes
   {
@@ -533,10 +532,19 @@ Specs:
 
 ** Aphrodite
 Apple MacBook Pro M2
-*** Nix configuration
+*** configuration.nix
 #+begin_src nix :tangle hosts/aphrodite/configuration.nix :noweb tangle :mkdirp yes
   { pkgs, ... }:
+  let
+    nixModulesDirectory = ../../modules/nixos;
+  in
   {
+    imports = [
+      (nixModulesDirectory + "/development/c.nix")
+      (nixModulesDirectory + "/development/python.nix")
+      (nixModulesDirectory + "/development/nix.nix")
+    ];
+
     nix.settings.experimental-features = "nix-command flakes";
 
     nixpkgs = {
@@ -638,8 +646,6 @@ Apple MacBook Pro M2
         _1password-cli
         sketchybar
         jankyborders
-        gcc
-        cmake
         fzf
         go-task
         python3
@@ -648,7 +654,6 @@ Apple MacBook Pro M2
         tree-sitter
         poppler_utils
         dig
-        pyright
         ripgrep
       ];
       shells = with pkgs; [
@@ -674,6 +679,8 @@ Apple MacBook Pro M2
         "firefox"
         "qutebrowser"
         "cursor"
+        "ghostty"
+        "tic80"
       ];
     };
 
@@ -842,6 +849,7 @@ Apple MacBook Pro M2
       gcc
       clang
       clang-tools
+      cmake
     ];
   }
 #+end_src

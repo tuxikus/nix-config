@@ -1,5 +1,14 @@
 { pkgs, ... }:
+let
+  nixModulesDirectory = ../../modules/nixos;
+in
 {
+  imports = [
+    (nixModulesDirectory + "/development/c.nix")
+    (nixModulesDirectory + "/development/python.nix")
+    (nixModulesDirectory + "/development/nix.nix")
+  ];
+
   nix.settings.experimental-features = "nix-command flakes";
 
   nixpkgs = {
@@ -101,8 +110,6 @@
       _1password-cli
       sketchybar
       jankyborders
-      gcc
-      cmake
       fzf
       go-task
       python3
@@ -111,7 +118,6 @@
       tree-sitter
       poppler_utils
       dig
-      pyright
       ripgrep
     ];
     shells = with pkgs; [
@@ -137,6 +143,8 @@
       "firefox"
       "qutebrowser"
       "cursor"
+      "ghostty"
+      "tic80"
     ];
   };
 
