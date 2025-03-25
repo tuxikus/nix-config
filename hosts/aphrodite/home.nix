@@ -12,6 +12,7 @@ in
     (homeManagerModulesDirectory + "/shell/bash.nix")
     (homeManagerModulesDirectory + "/utility/tmux.nix")
     (homeManagerModulesDirectory + "/utility/zellij.nix")
+    (homeManagerModulesDirectory + "/gui-apps/ghostty.nix")
   ];
 
   home = {
