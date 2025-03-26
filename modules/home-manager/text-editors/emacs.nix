@@ -115,7 +115,7 @@ in
           	inhibit-startup-screen t
           	initial-scratch-message ";;; Emacs is fun"
           	global-auto-revert-non-file-buffers t)
-      
+    
       (fset 'yes-or-no-p 'y-or-n-p)
       (auto-save-mode -1)
       (tool-bar-mode -1)
@@ -169,7 +169,9 @@ in
       (read-extended-command-predicate #'command-completion-default-include-p))
     
     (use-package aas
-      :defer
+      :defer t
+      :hook (LaTeX-mode . aas-activate-for-major-mode)
+      :hook (org-mode . aas-activate-for-major-mode)
       :config
       (aas-set-snippets 'text-mode
         ;; expand unconditionally
