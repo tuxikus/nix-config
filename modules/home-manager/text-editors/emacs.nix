@@ -10,6 +10,7 @@ let
   };
   my-emacs-with-packages = (pkgs.emacsPackagesFor my-emacs).emacsWithPackages (
     epkgs: with epkgs; [
+      aas
       ace-window
       avy
       cape
@@ -166,6 +167,18 @@ in
       ;; commands are hidden, since they are not used via M-x. This setting is
       ;; useful beyond Corfu.
       (read-extended-command-predicate #'command-completion-default-include-p))
+    
+    (use-package aas
+      :defer
+      :config
+      (aas-set-snippets 'text-mode
+        ;; expand unconditionally
+        "oe" "ö"
+        "Oe" "Ö"
+        "ue" "ü"
+        "Ue" "Ü"
+        "ae" "ä"
+        "Ae" "Ä"))
     
     (use-package ace-window
       :defer t
