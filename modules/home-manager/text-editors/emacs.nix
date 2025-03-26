@@ -11,6 +11,7 @@ let
   my-emacs-with-packages = (pkgs.emacsPackagesFor my-emacs).emacsWithPackages (
     epkgs: with epkgs; [
       aas
+      olivetti
       ace-window
       avy
       cape
@@ -21,6 +22,7 @@ let
       dashboard
       direnv
       docker
+      htmlize
       doom-modeline
       doom-themes
       eat
@@ -69,6 +71,7 @@ let
         grammars: with grammars; [
           tree-sitter-python
           tree-sitter-bash
+          tree-sitter-c
         ]
       ))
     ]
@@ -106,6 +109,8 @@ in
       ("C-c e r" . eval-region)
       ("C-c e b" . eval-buffer)
       ("C-c w m" . whitespace-mode)
+      ("C-A" . beginning-of-buffer)
+      ("C-E" . end-of-buffer)
     
       :init
       (setq create-lockfiles nil

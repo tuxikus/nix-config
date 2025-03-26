@@ -1,4 +1,3 @@
-#+options: toc:nil
 #+property: header-args :noweb yes :mkdirp yes
 #+startup: overview
 
@@ -48,7 +47,8 @@ Modules:
   echo 'mysuperpassword' > /tmp/secret.key
 #+end_src
 ** Optional: Fromat disks with disko
-For partitioning and formatting I'm using [[https://github.com/nix-community/disko][disko]]. I hardcoded the ids of my drives to the disks.nix config (e.g. [[*Disk setup - \[\[file:hosts/zeus/disks.nix\]\[disks.nix\]\]][disk setup of the zeus host]]) for each host. Be sure to update the disks.nix with your current and/or desired disk layout and ids.
+For partitioning and formatting I'm using [[https://github.com/nix-community/disko][disko]]. I hardcoded the ids of my drives to the disks.nix
+config for each host. Be sure to update the disks.nix with your current and/or desired disk layout and ids.
 #+begin_src shell
   sudo nix \
        --experimental-features "nix-command flakes" \
@@ -1114,6 +1114,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
     my-emacs-with-packages = (pkgs.emacsPackagesFor my-emacs).emacsWithPackages (
       epkgs: with epkgs; [
         aas
+        olivetti
         ace-window
         avy
         cape
@@ -1124,6 +1125,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
         dashboard
         direnv
         docker
+        htmlize
         doom-modeline
         doom-themes
         eat
@@ -1172,6 +1174,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
           grammars: with grammars; [
             tree-sitter-python
             tree-sitter-bash
+            tree-sitter-c
           ]
         ))
       ]
@@ -1217,6 +1220,8 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
     ("C-c e r" . eval-region)
     ("C-c e b" . eval-buffer)
     ("C-c w m" . whitespace-mode)
+    ("C-A" . beginning-of-buffer)
+    ("C-E" . end-of-buffer)
 
     :init
     (setq create-lockfiles nil
