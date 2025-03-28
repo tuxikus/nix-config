@@ -159,6 +159,11 @@ in
     qutebrowser
     wlr-randr
     ripgrep
+    (retroarch.override {
+      cores = with libretro; [
+        nestopia
+      ];
+    })
   ];
 
   programs = {
