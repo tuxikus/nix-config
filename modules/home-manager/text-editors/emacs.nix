@@ -317,6 +317,10 @@ in
       :config
       (direnv-mode))
     
+    (use-package pdf-tools
+      :init
+      (pdf-tools-install))
+    
     (defcustom container-executable 'podman
       "The executable to be used with docker mode."
       :type '(choice
