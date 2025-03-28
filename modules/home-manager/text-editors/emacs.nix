@@ -110,8 +110,8 @@ in
       ("C-c e r" . eval-region)
       ("C-c e b" . eval-buffer)
       ("C-c w m" . whitespace-mode)
-      ("C-A" . beginning-of-buffer)
-      ("C-E" . end-of-buffer)
+      ("C-S-a" . beginning-of-buffer)
+      ("C-S-e" . end-of-buffer)
     
       :init
       (setq create-lockfiles nil
