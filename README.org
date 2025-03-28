@@ -1113,6 +1113,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
     };
     my-emacs-with-packages = (pkgs.emacsPackagesFor my-emacs).emacsWithPackages (
       epkgs: with epkgs; [
+        pdf-tools
         aas
         olivetti
         ace-window

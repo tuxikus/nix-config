@@ -10,6 +10,7 @@ let
   };
   my-emacs-with-packages = (pkgs.emacsPackagesFor my-emacs).emacsWithPackages (
     epkgs: with epkgs; [
+      pdf-tools
       aas
       olivetti
       ace-window
