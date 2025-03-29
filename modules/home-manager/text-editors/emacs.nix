@@ -112,6 +112,7 @@ in
       ("C-c e r" . eval-region)
       ("C-c e b" . eval-buffer)
       ("C-c w m" . whitespace-mode)
+      ("C-x c" . compile)
       ("C-S-a" . beginning-of-buffer)
       ("C-S-e" . end-of-buffer)
     
