@@ -191,7 +191,7 @@
   # Zephyr framework USB CDC-ACM
   ATTRS{idVendor}=="2fe3", ATTRS{idProduct}=="0100", MODE="0666", ENV{ID_MM_DEVICE_IGNORE}="1", ENV{ID_MM_PORT_IGNORE}="1"
 	'';
-	destination = "/etc/udev/rules.d/99-vial.rules";
+	destination = "/etc/udev/rules.d/99-platformio-udev.rules";
     })
   ];
 }
