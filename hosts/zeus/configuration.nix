@@ -25,6 +25,7 @@ in
     ./hardware-configuration.nix
     (nixModulesDirectory + "/udev/zsa-keyboards.nix")
     (nixModulesDirectory + "/udev/vial.nix")
+    (nixModulesDirectory + "/udev/platformio.nix")
     (nixModulesDirectory + "/virtualization.nix")
     (nixModulesDirectory + "/podman.nix")
     (nixModulesDirectory + "/development/c.nix")
