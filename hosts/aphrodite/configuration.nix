@@ -119,10 +119,8 @@ in
       poppler_utils
       dig
       ripgrep
-    ];
-    shells = with pkgs; [
       bash
-      xonsh
+      git
     ];
   };
 

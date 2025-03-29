@@ -10,8 +10,6 @@
     
     font-family = "Iosevka Nerd Font"
     font-size = 15
-    
-    command = bash
     '';
   };
 }
