@@ -174,6 +174,7 @@ in
     samba
     cifs-utils
     platformio
+    arduino-ide
     (customPackages pkgs).retroarch-joypad-autoconfig
     (retroarch.override {
       cores = with libretro; [
