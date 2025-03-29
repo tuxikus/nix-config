@@ -677,7 +677,7 @@ Apple MacBook Pro M2
         ripgrep
       ];
       shells = with pkgs; [
-        bashInteractive
+        bash
         xonsh
       ];
     };

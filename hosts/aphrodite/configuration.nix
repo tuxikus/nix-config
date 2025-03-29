@@ -121,7 +121,7 @@ in
       ripgrep
     ];
     shells = with pkgs; [
-      bashInteractive
+      bash
       xonsh
     ];
   };
