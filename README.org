@@ -319,6 +319,7 @@ Specs:
       cifs-utils
       platformio
       arduino-ide
+      raylib
       (customPackages pkgs).retroarch-joypad-autoconfig
       (retroarch.override {
         cores = with libretro; [
