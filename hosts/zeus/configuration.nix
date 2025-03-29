@@ -172,6 +172,7 @@ in
     ripgrep
     samba
     cifs-utils
+    platformio
     (customPackages pkgs).retroarch-joypad-autoconfig
     (retroarch.override {
       cores = with libretro; [
