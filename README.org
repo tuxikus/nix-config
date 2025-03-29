@@ -661,23 +661,20 @@ Apple MacBook Pro M2
     environment = {
       systemPackages = with pkgs; [
         raycast
-        btop
-        alacritty
         aerospace
         _1password-cli
         sketchybar
         jankyborders
         fzf
         go-task
-        python3
         openssh
         jupyter
         tree-sitter
         poppler_utils
         dig
         ripgrep
-        bash
         git
+        fastfetch
       ];
     };
 
@@ -710,7 +707,6 @@ Apple MacBook Pro M2
     };
 
     security.pam.enableSudoTouchIdAuth = true;
-
   }
 #+end_src
 *** home.nix

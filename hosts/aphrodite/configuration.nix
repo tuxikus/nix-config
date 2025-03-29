@@ -104,23 +104,20 @@ in
   environment = {
     systemPackages = with pkgs; [
       raycast
-      btop
-      alacritty
       aerospace
       _1password-cli
       sketchybar
       jankyborders
       fzf
       go-task
-      python3
       openssh
       jupyter
       tree-sitter
       poppler_utils
       dig
       ripgrep
-      bash
       git
+      fastfetch
     ];
   };
 
@@ -153,5 +150,4 @@ in
   };
 
   security.pam.enableSudoTouchIdAuth = true;
-
 }
