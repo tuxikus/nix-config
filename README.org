@@ -1281,12 +1281,13 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
     (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
     :config
     (setq create-lockfiles nil
-        	make-backup-files nil
-        	custom-theme-directory "~/.emacs.d/themes"
-        	inhibit-startup-message t
-        	inhibit-startup-screen t
-        	initial-scratch-message ";;; Emacs is fun"
-        	global-auto-revert-non-file-buffers t)
+  	make-backup-files nil
+  	custom-theme-directory "~/.emacs.d/themes"
+  	inhibit-startup-message t
+  	inhibit-startup-screen t
+  	initial-scratch-message ";;; Emacs is fun"
+  	global-auto-revert-non-file-buffers t
+  	org-id-uuid-program "~/.local/bin/uuidgenlc")
 
     (add-to-list 'default-frame-alist
                  '(font . "Iosevka Nerd Font-${config.fontSize}"))
