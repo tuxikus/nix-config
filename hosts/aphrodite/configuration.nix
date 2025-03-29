@@ -140,7 +140,6 @@ in
       "orbstack"
       "tunnelblick"
       "utm"
-      "firefox"
       "qutebrowser"
       "cursor"
       "ghostty"
