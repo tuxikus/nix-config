@@ -162,7 +162,6 @@ in
       (which-key-mode 1)
     
       :custom
-      (setq org-id-uuid-programm "bash -c 'uuidgen | tr A-Z a-z'")
       (enable-recursive-minibuffers t)
       (read-extended-command-predicate #'command-completion-default-include-p)
     

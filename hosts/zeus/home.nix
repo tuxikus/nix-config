@@ -22,6 +22,7 @@ in
     (homeManagerModulesDirectory + "/window-manager/waybar.nix")
     (homeManagerModulesDirectory + "/window-manager/qtile.nix")
     (homeManagerModulesDirectory + "/scripts/home-backup.nix")
+    (homeManagerModulesDirectory + "/scripts/uuidgenlc.nix")
 
   ];
 
