@@ -116,15 +116,6 @@ in
       ("C-S-e" . end-of-buffer)
     
       :init
-      (setq create-lockfiles nil
-          	make-backup-files nil
-          	custom-theme-directory "~/.emacs.d/themes"
-          	inhibit-startup-message t
-          	inhibit-startup-screen t
-          	initial-scratch-message ";;; Emacs is fun"
-          	global-auto-revert-non-file-buffers t
-            org-id-uuid-programm "bash -c 'uuidgen | tr A-Z a-z'")
-    
       (fset 'yes-or-no-p 'y-or-n-p)
       (auto-save-mode -1)
       (tool-bar-mode -1)
@@ -158,11 +149,20 @@ in
           	'(read-only t cursor-intangible t face minibuffer-prompt))
       (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
       :config
+      (setq create-lockfiles nil
+          	make-backup-files nil
+          	custom-theme-directory "~/.emacs.d/themes"
+          	inhibit-startup-message t
+          	inhibit-startup-screen t
+          	initial-scratch-message ";;; Emacs is fun"
+          	global-auto-revert-non-file-buffers t)
+    
       (add-to-list 'default-frame-alist
                    '(font . "Iosevka Nerd Font-${config.fontSize}"))
       (which-key-mode 1)
     
       :custom
+      (setq org-id-uuid-programm "bash -c 'uuidgen | tr A-Z a-z'")
       (enable-recursive-minibuffers t)
       (read-extended-command-predicate #'command-completion-default-include-p)
     
