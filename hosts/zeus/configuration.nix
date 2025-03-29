@@ -7,6 +7,17 @@
 }:
 let
   nixModulesDirectory = ../../modules/nixos;
+
+  customPackages = pkgs: {
+    retroarch-joypad-autoconfig = pkgs.retroarch-joypad-autoconfig.overrideAttrs {
+      src = pkgs.fetchFromGitHub {
+        owner = "tuxikus";
+        repo = "retroarch-joypad-autoconfig";
+        rev = "70ee2f01584891f65e380cf1976a2a980d984960";
+        hash = "sha256-v3Ocw7bksCuhdOy/ec+a5Mo6yuNwNQmjuOFirc7Eo0Y=";
+      };
+    };
+  };
 in
 {
 
@@ -159,9 +170,13 @@ in
     qutebrowser
     wlr-randr
     ripgrep
+    samba
+    cifs-utils
+    (customPackages pkgs).retroarch-joypad-autoconfig
     (retroarch.override {
       cores = with libretro; [
         nestopia
+        mupen64plus
       ];
     })
   ];

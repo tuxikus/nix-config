@@ -21,6 +21,8 @@ let
       corfu
       corfu-terminal
       dashboard
+      dired-rsync
+      dired-rsync-transient
       direnv
       docker
       htmlize
@@ -120,7 +122,8 @@ in
           	inhibit-startup-message t
           	inhibit-startup-screen t
           	initial-scratch-message ";;; Emacs is fun"
-          	global-auto-revert-non-file-buffers t)
+          	global-auto-revert-non-file-buffers t
+            org-id-uuid-programm "bash -c 'uuidgen | tr A-Z a-z'")
     
       (fset 'yes-or-no-p 'y-or-n-p)
       (auto-save-mode -1)
