@@ -13,6 +13,7 @@ in
     (homeManagerModulesDirectory + "/utility/tmux.nix")
     (homeManagerModulesDirectory + "/utility/zellij.nix")
     (homeManagerModulesDirectory + "/gui-apps/ghostty.nix")
+    (homeManagerModulesDirectory + "/scripts/uuidgenlc.nix")
   ];
 
   home = {
