@@ -176,6 +176,7 @@ in
     platformio
     arduino-ide
     raylib
+    gnumake
     (customPackages pkgs).retroarch-joypad-autoconfig
     (retroarch.override {
       cores = with libretro; [
