@@ -177,6 +177,7 @@ in
     arduino-ide
     raylib
     gnumake
+    superTuxKart
     (customPackages pkgs).retroarch-joypad-autoconfig
     (retroarch.override {
       cores = with libretro; [

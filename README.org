@@ -321,6 +321,7 @@ Specs:
       arduino-ide
       raylib
       gnumake
+      superTuxKart
       (customPackages pkgs).retroarch-joypad-autoconfig
       (retroarch.override {
         cores = with libretro; [
@@ -1498,15 +1499,12 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
   (use-package doom-themes)
 
   (use-package eglot
-    :hook
-    ((python-ts-mode . eglot-ensure)
-     (python-mode . eglot-ensure))
-    :config
+    ;; :hook
+    ;; ((python-ts-mode . eglot-ensure)
+    ;;  (python-mode . eglot-ensure))
     :custom
     (eglot-autoshutdown t)
     (eglot-confirm-server-initiated-edits nil))
-
-
 
   (use-package electric
     :defer t

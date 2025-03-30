@@ -358,15 +358,12 @@ in
     (use-package doom-themes)
     
     (use-package eglot
-      :hook
-      ((python-ts-mode . eglot-ensure)
-       (python-mode . eglot-ensure))
-      :config
+      ;; :hook
+      ;; ((python-ts-mode . eglot-ensure)
+      ;;  (python-mode . eglot-ensure))
       :custom
       (eglot-autoshutdown t)
       (eglot-confirm-server-initiated-edits nil))
-    
-    
     
     (use-package electric
       :defer t
