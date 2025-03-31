@@ -179,7 +179,6 @@ in
       (read-extended-command-predicate #'command-completion-default-include-p))
     
     (use-package aas
-      :defer t
       :hook (LaTeX-mode . aas-activate-for-major-mode)
       :hook (org-mode . aas-activate-for-major-mode)
       :config
@@ -193,7 +192,6 @@ in
         "Ae" "Ä"))
     
     (use-package ace-window
-      :defer t
       :bind
       (("M-o" . ace-window))
       :init
@@ -201,14 +199,12 @@ in
       (setq aw-keys '(?a ?o ?e ?u ?h ?t ?n ?s ?f)))
     
     (use-package avy
-      :defer t
       :bind
       (("M-g f" . avy-goto-line)
        ("M-g w" . avy-goto-word-1)
        ("C-'" . avy-goto-char-2)))
     
     (use-package cape
-      :defer t
       :bind ("M-p" . cape-prefix-map)
       :init
       (add-hook 'completion-at-point-functions #'cape-dabbrev)
@@ -222,8 +218,7 @@ in
       (add-hook 'completion-at-point-functions #'cape-tex)
       (add-hook 'completion-at-point-functions #'cape-history))
     
-    (use-package consult
-      :defer t
+    (use-package
       :bind
       (("C-c M-x" . consult-mode-command)
        ("C-c h" . consult-history)
@@ -317,7 +312,6 @@ in
       (put 'dired-find-alternate-file 'disabled nil))
     
     (use-package direnv
-      :defer t
       :config
       (direnv-mode))
     
@@ -333,7 +327,6 @@ in
       :group 'custom)
     
     (use-package docker
-      :defer t
       :bind
       ;;("C-c d" . docker)
       :config
@@ -348,7 +341,6 @@ in
           	   docker-container-tramp-methodu "podman"))))
     
     (use-package doom-modeline
-      :defer t
       :init
       (setq doom-modeline-time t
           	doom-modeline-env-version t)
@@ -366,7 +358,6 @@ in
       (eglot-confirm-server-initiated-edits nil))
     
     (use-package electric
-      :defer t
       :init
       ;;(setq electric-pair-preserve-balance nil)
       (electric-pair-mode)
@@ -404,12 +395,10 @@ in
     (use-package em-banner)
     
     (use-package flycheck
-      :defer t
       :hook
       (after-init . global-flycheck-mode))
     
     (use-package flycheck-inline
-      :defer t
       :config
       (with-eval-after-load 'flycheck
         (add-hook 'flycheck-mode-hook #'flycheck-inline-mode)))
@@ -444,7 +433,6 @@ in
       (completion-category-overrides '((file (styles basic partial-completion)))))
     
     (use-package org
-      :defer t
       :bind
       ("C-M-<return>" . org-insert-subheading)
       :init
@@ -458,7 +446,6 @@ in
           							   (python . t))))
     
     (use-package org-roam
-      :defer t
       :custom
       (org-roam-directory (concat org-directory "/roam"))
       :config
@@ -473,26 +460,22 @@ in
       (with-eval-after-load 'org (global-org-modern-mode)))
     
     (use-package org-superstar
-      :defer t
       :hook
       (org-mode . (lambda () (org-superstar-mode 1))))
     
     (use-package org-present)
     
     (use-package perspective
-      :defer t
       :custom
       (persp-mode-prefix-key (kbd "C-c M-p"))
       :init
       (persp-mode))
     
     (use-package salt-mode
-      :defer t
       :hook
       (salt-mode . (lambda () (flyspell-mode 1))))
     
     (use-package spacious-padding
-      :defer t
       :init
       (setq spacious-padding-widths
           	'( :internal-border-width 15
@@ -522,7 +505,6 @@ in
           	  (python-mode . python-ts-mode))))
     
     (use-package vertico
-      :defer t
       :custom
       (vertico-scroll-margin 0) ;; Different scroll margin
       (vertico-count 20) ;; Show more candidates
@@ -532,11 +514,10 @@ in
       (vertico-mode))
     
     (use-package yasnippet
-      :defer t
-      :config
+      :init
       (yas-global-mode 1))
     
-    (use-package zellij :defer t)
+    (use-package zellij)
     
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     
