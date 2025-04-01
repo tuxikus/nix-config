@@ -116,6 +116,9 @@ in
       ("C-S-a" . beginning-of-buffer)
       ("C-S-e" . end-of-buffer)
     
+      :hook
+      (before-save . whitespace-cleanup)
+    
       :init
       (fset 'yes-or-no-p 'y-or-n-p)
       (auto-save-mode -1)
