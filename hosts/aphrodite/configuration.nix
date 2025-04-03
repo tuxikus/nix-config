@@ -4,9 +4,7 @@ let
 in
 {
   imports = [
-    (nixModulesDirectory + "/development/c.nix")
-    (nixModulesDirectory + "/development/python.nix")
-    (nixModulesDirectory + "/development/nix.nix")
+    
   ];
 
   nix.settings.experimental-features = "nix-command flakes";

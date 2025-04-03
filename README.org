@@ -172,9 +172,6 @@ Specs:
       (nixModulesDirectory + "/udev/platformio.nix")
       (nixModulesDirectory + "/virtualization.nix")
       (nixModulesDirectory + "/podman.nix")
-      (nixModulesDirectory + "/development/c.nix")
-      (nixModulesDirectory + "/development/python.nix")
-      (nixModulesDirectory + "/development/nix.nix")
     ];
 
     nix = {
@@ -570,9 +567,7 @@ Apple MacBook Pro M2
   in
   {
     imports = [
-      (nixModulesDirectory + "/development/c.nix")
-      (nixModulesDirectory + "/development/python.nix")
-      (nixModulesDirectory + "/development/nix.nix")
+      
     ];
 
     nix.settings.experimental-features = "nix-command flakes";
@@ -876,39 +871,6 @@ Apple MacBook Pro M2
     programs.virt-manager.enable = true;
   }
 #+end_src
-*** Development
-**** C
-#+begin_src nix :tangle modules/nixos/development/c.nix
-  { pkgs, ... }:
-  {
-    environment.systemPackages = with pkgs; [
-      gcc
-      clang
-      clang-tools
-      cmake
-    ];
-  }
-#+end_src
-**** Python
-#+begin_src nix :tangle modules/nixos/development/python.nix
-  { pkgs, ... }:
-  {
-    environment.systemPackages = with pkgs; [
-      python312Full
-      pyright
-    ];
-  }
-#+end_src
-**** Nix
-#+begin_src nix :tangle modules/nixos/development/nix.nix
-  { pkgs, ... }:
-  {
-    environment.systemPackages = with pkgs; [
-
-    ];
-  }
-#+end_src
-
 ** Home manager
 *** GUI applications
 **** Ghostty

@@ -28,9 +28,6 @@ in
     (nixModulesDirectory + "/udev/platformio.nix")
     (nixModulesDirectory + "/virtualization.nix")
     (nixModulesDirectory + "/podman.nix")
-    (nixModulesDirectory + "/development/c.nix")
-    (nixModulesDirectory + "/development/python.nix")
-    (nixModulesDirectory + "/development/nix.nix")
   ];
 
   nix = {
@@ -160,7 +157,6 @@ in
     unzip
     mpv
     calibre
-    direnv
     tree-sitter
     ghostty
     ffmpeg
@@ -188,6 +184,10 @@ in
   ];
 
   programs = {
+    direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+    };
     hyprland = {
       enable = true;
       xwayland.enable = true;
