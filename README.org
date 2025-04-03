@@ -1232,6 +1232,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
     (scroll-bar-mode -1)
     (save-place-mode 1)
     (global-auto-revert-mode 1)
+    (setq-default indent-tabs-mode nil)
 
     ;; cursor
     ;;(setq-default cursor-type 'box)
@@ -1297,7 +1298,8 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
       "ue" "ü"
       "Ue" "Ü"
       "ae" "ä"
-      "Ae" "Ä"))
+      "Ae" "Ä"
+      "ss" "ß"))
 
   (use-package ace-window
     :bind

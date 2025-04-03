@@ -127,6 +127,7 @@ in
       (scroll-bar-mode -1)
       (save-place-mode 1)
       (global-auto-revert-mode 1)
+      (setq-default indent-tabs-mode nil)
     
       ;; cursor
       ;;(setq-default cursor-type 'box)
@@ -192,7 +193,8 @@ in
         "ue" "ü"
         "Ue" "Ü"
         "ae" "ä"
-        "Ae" "Ä"))
+        "Ae" "Ä"
+        "ss" "ß"))
     
     (use-package ace-window
       :bind
