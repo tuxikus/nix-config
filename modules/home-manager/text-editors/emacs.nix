@@ -106,7 +106,7 @@ in
     home.file.".emacs.d/init.el".text = ''
     (use-package emacs
       :bind
-      ("M-<tab>" . completion-at-point)
+      (("M-<tab>" . completion-at-point)
       ("C-c d" . duplicate-line)
       ("C-c f f" . find-file)
       ("C-c f a" . format-all-buffer)
@@ -115,7 +115,7 @@ in
       ("C-c w m" . whitespace-mode)
       ("C-x c" . compile)
       ("C-S-a" . beginning-of-buffer)
-      ("C-S-e" . end-of-buffer)
+      ("C-S-e" . end-of-buffer))
     
       :hook
       ((before-save . whitespace-cleanup)
@@ -248,7 +248,7 @@ in
        ("M-s l" . consult-line)
        ("M-s L" . consult-line-multi)
        ("M-s k" . consult-keep-lines)
-       ("M-s u" . consult-focus-lines)
+       ("M-s u" . consult-focus-lines))
     
       :config
       (consult-customize consult--source-buffer :hidden t :default nil)

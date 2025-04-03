@@ -174,6 +174,7 @@ in
     raylib
     gnumake
     superTuxKart
+    python3
     (customPackages pkgs).retroarch-joypad-autoconfig
     (retroarch.override {
       cores = with libretro; [
