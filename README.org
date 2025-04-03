@@ -304,7 +304,6 @@ Specs:
       unzip
       mpv
       calibre
-      direnv
       tree-sitter
       ghostty
       ffmpeg
@@ -332,6 +331,10 @@ Specs:
     ];
 
     programs = {
+      direnv = {
+        enable = true;
+        nix-direnv.enable = true;
+      };
       hyprland = {
         enable = true;
         xwayland.enable = true;
@@ -901,8 +904,7 @@ Apple MacBook Pro M2
   { pkgs, ... }:
   {
     environment.systemPackages = with pkgs; [
-      nixd
-      nixfmt-rfc-style
+
     ];
   }
 #+end_src
