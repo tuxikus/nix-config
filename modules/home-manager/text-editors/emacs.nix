@@ -150,6 +150,8 @@ in
           global-auto-revert-non-file-buffers t
           org-id-uuid-program "~/.local/bin/uuidgenlc")
     
+      ;; (set-frame-font "Iosevka Nerd Font-15" nil t)
+    
       (add-to-list 'default-frame-alist
                    '(font . "Iosevka Nerd Font-${config.fontSize}"))
     
@@ -216,6 +218,7 @@ in
       (add-hook 'completion-at-point-functions #'cape-history))
     
     (use-package consult
+      :after perspective
       :bind
       (("C-c M-x" . consult-mode-command)
        ("C-c h" . consult-history)
