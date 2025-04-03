@@ -41,20 +41,20 @@
             # Unsplit = 1 window displayed, like Max layout, but still with
             # multiple stack panes
             Key(
-        	  [mod, "shift"],
-        	  "Return",
-        	  lazy.layout.toggle_split(),
-        	  desc="Toggle between split and unsplit sides of stack",
+                [mod, "shift"],
+                "Return",
+                lazy.layout.toggle_split(),
+                desc="Toggle between split and unsplit sides of stack",
             ),
             Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
             # Toggle between different layouts as defined below
             Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
             Key([mod], "q", lazy.window.kill(), desc="Kill focused window"),
             Key(
-        	  [mod],
-        	  "m",
-        	  lazy.window.toggle_fullscreen(),
-        	  desc="Toggle fullscreen on the focused window",
+                [mod],
+                "m",
+                lazy.window.toggle_fullscreen(),
+                desc="Toggle fullscreen on the focused window",
             ),
         
             Key([mod], "d", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
@@ -66,12 +66,12 @@
         # We therefore defer the check until the key binding is run by using .when(func=...)
         for vt in range(1, 8):
             keys.append(
-        	  Key(
-        	      ["control", "mod1"],
-        	      f"f{vt}",
-        	      lazy.core.change_vt(vt).when(func=lambda: qtile.core.name == "wayland"),
-        	      desc=f"Switch to VT{vt}",
-        	  )
+                Key(
+                    ["control", "mod1"],
+                    f"f{vt}",
+                    lazy.core.change_vt(vt).when(func=lambda: qtile.core.name == "wayland"),
+                    desc=f"Switch to VT{vt}",
+                )
             )
         
         
@@ -79,26 +79,26 @@
         
         for i in groups:
             keys.extend(
-        	  [
-        	      # mod + group number = switch to group
-        	      Key(
-        		  [mod],
-        		  i.name,
-        		  lazy.group[i.name].toscreen(),
-        		  desc=f"Switch to group {i.name}",
-        	      ),
-        	      # mod + shift + group number = switch to & move focused window to group
-        	      Key(
-        		  [mod, "shift"],
-        		  i.name,
-        		  lazy.window.togroup(i.name, switch_group=True),
-        		  desc=f"Switch to & move focused window to group {i.name}",
-        	      ),
-        	      # Or, use below if you prefer not to switch to that group.
-        	      # # mod + shift + group number = move focused window to group
-        	      # Key([mod, "shift"], i.name, lazy.window.togroup(i.name),
-        	      #     desc="move focused window to group {}".format(i.name)),
-        	  ]
+                [
+                    # mod + group number = switch to group
+                    Key(
+                        [mod],
+                        i.name,
+                        lazy.group[i.name].toscreen(),
+                        desc=f"Switch to group {i.name}",
+                    ),
+                    # mod + shift + group number = switch to & move focused window to group
+                    Key(
+                        [mod, "shift"],
+                        i.name,
+                        lazy.window.togroup(i.name, switch_group=True),
+                        desc=f"Switch to & move focused window to group {i.name}",
+                    ),
+                    # Or, use below if you prefer not to switch to that group.
+                    # # mod + shift + group number = move focused window to group
+                    # Key([mod, "shift"], i.name, lazy.window.togroup(i.name),
+                    #     desc="move focused window to group {}".format(i.name)),
+                ]
             )
         
         layouts = [
@@ -126,37 +126,37 @@
         
         screens = [
             Screen(
-        	  wallpaper="${config.qtileWallpaper}",
-        	  wallpaper_mode="fill",
-        	  top=bar.Bar(
-        	      [
-        		  widget.CurrentLayout(),
-        		  widget.GroupBox(),
-        		  widget.Prompt(),
-        		  widget.WindowName(),
-        		  widget.Chord(
-        		      chords_colors={
-        			  "launch": ("#ff0000", "#ffffff"),
-        		      },
-        		      name_transform=lambda name: name.upper(),
-        		  ),
-        		  # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
-        		  widget.StatusNotifier(),
-        		  # widget.Systray(),
-        		  widget.CPU(),
-        		  widget.Memory(),
-        		  widget.PulseVolume(),
-        		  widget.Clock(format="%Y-%m-%d %a %I:%M %p"),
-        		  widget.QuickExit(),
-        	      ],
-        	      32,
-        	      # border_width=[0, 0, 2, 0],  # Draw top and bottom borders
-        	      # border_color=["000000", "000000", "000000", "000000"]  # Borders are magenta
-        	  ),
-        	  # You can uncomment this variable if you see that on X11 floating resize/moving is laggy
-        	  # By default we handle these events delayed to already improve performance, however your system might still be struggling
-        	  # This variable is set to None (no cap) by default, but you can set it to 60 to indicate that you limit it to 60 events per second
-        	  # x11_drag_polling_rate = 60,
+                wallpaper="${config.qtileWallpaper}",
+                wallpaper_mode="fill",
+                top=bar.Bar(
+                    [
+                        widget.CurrentLayout(),
+                        widget.GroupBox(),
+                        widget.Prompt(),
+                        widget.WindowName(),
+                        widget.Chord(
+                            chords_colors={
+                                "launch": ("#ff0000", "#ffffff"),
+                            },
+                            name_transform=lambda name: name.upper(),
+                        ),
+                        # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
+                        widget.StatusNotifier(),
+                        # widget.Systray(),
+                        widget.CPU(),
+                        widget.Memory(),
+                        widget.PulseVolume(),
+                        widget.Clock(format="%Y-%m-%d %a %I:%M %p"),
+                        widget.QuickExit(),
+                    ],
+                    32,
+                    # border_width=[0, 0, 2, 0],  # Draw top and bottom borders
+                    # border_color=["000000", "000000", "000000", "000000"]  # Borders are magenta
+                ),
+                # You can uncomment this variable if you see that on X11 floating resize/moving is laggy
+                # By default we handle these events delayed to already improve performance, however your system might still be struggling
+                # This variable is set to None (no cap) by default, but you can set it to 60 to indicate that you limit it to 60 events per second
+                # x11_drag_polling_rate = 60,
             ),
         ]
         
@@ -175,14 +175,14 @@
         cursor_warp = False
         floating_layout = layout.Floating(
             float_rules=[
-        	  # Run the utility of `xprop` to see the wm class and name of an X client.
-        	  *layout.Floating.default_float_rules,
-        	  Match(wm_class="confirmreset"),  # gitk
-        	  Match(wm_class="makebranch"),  # gitk
-        	  Match(wm_class="maketag"),  # gitk
-        	  Match(wm_class="ssh-askpass"),  # ssh-askpass
-        	  Match(title="branchdialog"),  # gitk
-        	  Match(title="pinentry"),  # GPG key password entry
+                # Run the utility of `xprop` to see the wm class and name of an X client.
+                *layout.Floating.default_float_rules,
+                Match(wm_class="confirmreset"),  # gitk
+                Match(wm_class="makebranch"),  # gitk
+                Match(wm_class="maketag"),  # gitk
+                Match(wm_class="ssh-askpass"),  # ssh-askpass
+                Match(title="branchdialog"),  # gitk
+                Match(title="pinentry"),  # GPG key password entry
             ]
         )
         auto_fullscreen = True

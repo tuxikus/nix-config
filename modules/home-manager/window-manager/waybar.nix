@@ -10,18 +10,18 @@ in
         "modules-center": ["custom/music"],
         "modules-right": ["pulseaudio", "clock", "tray"],
         "clock": {
-      	"timezone": "Europe/Berlin",
-      	"tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-      	"format-alt": "  {:%d/%m/%Y} ",
-      	"format": "  {:%H:%M} "
+          "timezone": "Europe/Berlin",
+          "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+          "format-alt": "  {:%d/%m/%Y} ",
+          "format": "  {:%H:%M} "
         },
         "pulseaudio": {
-      	// "scroll-step": 1, // %, can be a float
-      	"format": "{icon} {volume}%",
-      	"format-muted": "  ",
-      	"format-icons": {
-      	    "default": ["", "", ""]
-      	},
+          // "scroll-step": 1, // %, can be a float
+          "format": "{icon} {volume}%",
+          "format-muted": "  ",
+          "format-icons": {
+              "default": ["", "", ""]
+          },
         },
     }
   '';

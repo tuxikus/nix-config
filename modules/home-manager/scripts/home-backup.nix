@@ -45,9 +45,9 @@
       
       check_path() {
           if [ ! -d $1 ]; then
-      	echo "Wrong usage!"
-      	print_help
-      	exit 0
+            echo "Wrong usage!"
+            print_help
+            exit 0
           fi
       }
       
@@ -56,7 +56,7 @@
       
           # check if log file exists
           if [ ! -f $log_file_path ]; then
-      	touch $log_file_path
+            touch $log_file_path
           fi
       
           cat >> $log_file_path <<END_OF_LOG
@@ -72,24 +72,24 @@
       
       case "$1" in
           --help)
-      	print_help
-      	exit 0
-      	;;
+            print_help
+            exit 0
+            ;;
           --version)
-      	print_version
-      	exit 0
-      	;;
+            print_version
+            exit 0
+            ;;
       esac
       
       while getopts 'o:dx' option; do
           case "$option" in
-      	o) destination_path="$OPTARG";;
-      	d) enable_dry_run=1;;
-      	x) enable_delete=1;;
-      	?)
-      	    print_help
-      	    exit 1
-      	    ;;
+            o) destination_path="$OPTARG";;
+            d) enable_dry_run=1;;
+            x) enable_delete=1;;
+            ?)
+                print_help
+                exit 1
+                ;;
           esac
       done
       
@@ -106,14 +106,14 @@
       fi
       
       rsync_command="rsync -av $options $excludes \
-      		     $HOME/.bookmarks.org \
-      		     $HOME/.backup-log.txt \
-      		     $HOME/.ppw \
-      		     $HOME/org \
-      		     $HOME/org-edu \
-      		     $HOME/multimedia \
-      		     $HOME/projects \
-      		     $destination_path"
+                         $HOME/.bookmarks.org \
+                         $HOME/.backup-log.txt \
+                         $HOME/.ppw \
+                         $HOME/org \
+                         $HOME/org-edu \
+                         $HOME/multimedia \
+                         $HOME/projects \
+                         $destination_path"
       
       eval $rsync_command
       

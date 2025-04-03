@@ -29,7 +29,7 @@ in
   home = {
     username = "tuxikus";
     homeDirectory = "/home/tuxikus";
-    
+
     sessionVariables = {
       EDITOR = "emacsclient -c";
       VISUAL = "emacsclient -c";

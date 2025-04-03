@@ -125,10 +125,10 @@ in
       enable = true;
       musicDirectory = "/home/tuxikus/multimedia/music/mp3";
       extraConfig = ''
-        	audio_output {
-        	 type "pipewire"
-        	 name "My PipeWire Output"
-        	}
+              audio_output {
+               type "pipewire"
+               name "My PipeWire Output"
+              }
       '';
       #network.startWhenNeeded = true;
       user = "tuxikus";

@@ -15,10 +15,10 @@
     shellAliases = {
       ed = "emacs --daemon";
       e = "emacsclient -c & disown";
-	    night-shift-on = "hyprsunset --temperature 3000 & disown";
-	    night-shift-off = "pgrep hyprsunset | xargs kill";
-	    ll = "ls -lah";
-	    ff = "fastfetch";
+          night-shift-on = "hyprsunset --temperature 3000 & disown";
+          night-shift-off = "pgrep hyprsunset | xargs kill";
+          ll = "ls -lah";
+          ff = "fastfetch";
       cdp = "cd $(cli-project-switcher | fzf)";
       vanilla-emacs = "emacs -q --load ~/projects/personal/vanilla-emacs/init.el";
     };

@@ -5,16 +5,16 @@ in
 {
   options = {
     terminal = lib.mkOption {
-	    type = lib.types.str;
+          type = lib.types.str;
     };
     appLauncher = lib.mkOption {
-	    type = lib.types.str;
+          type = lib.types.str;
     };
   };
 
   config = {
     home.file."${hyprConfigDirectory}/hyprland.conf" = {
-	    text = ''
+          text = ''
         exec-once = waybar
         exec-once = hyprpaper
         exec-once = dunst
@@ -39,7 +39,7 @@ in
             follow_mouse = 1
         
             touchpad {
-        	  natural_scroll = no
+                natural_scroll = no
             }
         
             sensitivity = 0
@@ -62,9 +62,9 @@ in
             rounding = 10
         
             blur {
-        	  enabled = true
-        	  size = 3
-        	  passes = 1
+                enabled = true
+                size = 3
+                passes = 1
             }
         }
         
@@ -133,7 +133,7 @@ in
         # Move/resize windows with mainMod + LMB/RMB and dragging
         bindm = $mainMod, mouse:272, movewindow
         bindm = $mainMod, mouse:273, resizewindow
-	    '';
+          '';
     };
   };
 }

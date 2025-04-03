@@ -9,5 +9,5 @@
     theme "catppuccin-latte"
     default_shell "bash"
   '';
-  
+
 }

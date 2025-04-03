@@ -1,8 +1,8 @@
 { pkgs, ... }:
 let
   qutebrowserConfigLocation = if pkgs.system == "x86_64-linux"
-				then ".config/qutebrowser/config.py"
-				else ".qutebrowser/config.py";
+                              then ".config/qutebrowser/config.py"
+                              else ".qutebrowser/config.py";
 in
 {
   home.file.${qutebrowserConfigLocation}.text = ''

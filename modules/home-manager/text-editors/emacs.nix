@@ -141,26 +141,26 @@ in
       ;; We display [CRM<separator>], e.g., [CRM,] if the separator is a comma.
       (defun crm-indicator (args)
         (cons (format "[CRM%s] %s"
-          		  (replace-regexp-in-string
-          		   "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
-          		   crm-separator)
-          		  (car args))
-          	  (cdr args)))
+                            (replace-regexp-in-string
+                             "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
+                             crm-separator)
+                            (car args))
+                    (cdr args)))
       (advice-add #'completing-read-multiple :filter-args #'crm-indicator)
     
       ;; Do not allow the cursor in the minibuffer prompt
       (setq minibuffer-prompt-properties
-          	'(read-only t cursor-intangible t face minibuffer-prompt))
+                  '(read-only t cursor-intangible t face minibuffer-prompt))
       (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
       :config
       (setq create-lockfiles nil
-    	make-backup-files nil
-    	custom-theme-directory "~/.emacs.d/themes"
-    	inhibit-startup-message t
-    	inhibit-startup-screen t
-    	initial-scratch-message ";;; Emacs is fun"
-    	global-auto-revert-non-file-buffers t
-    	org-id-uuid-program "~/.local/bin/uuidgenlc")
+          make-backup-files nil
+          custom-theme-directory "~/.emacs.d/themes"
+          inhibit-startup-message t
+          inhibit-startup-screen t
+          initial-scratch-message ";;; Emacs is fun"
+          global-auto-revert-non-file-buffers t
+          org-id-uuid-program "~/.local/bin/uuidgenlc")
     
       (add-to-list 'default-frame-alist
                    '(font . "Iosevka Nerd Font-${config.fontSize}"))
@@ -221,7 +221,7 @@ in
       (add-hook 'completion-at-point-functions #'cape-tex)
       (add-hook 'completion-at-point-functions #'cape-history))
     
-    (use-package
+    (use-package consult
       :bind
       (("C-c M-x" . consult-mode-command)
        ("C-c h" . consult-history)
@@ -295,16 +295,16 @@ in
       (setq dashboard-projects-backend 'project-el)
     
       (setq dashboard-items '((recents   . 10)
-          			  (bookmarks . 10)
-          			  (projects  . 10)
-          			  (agenda    . 10)
-          			  (registers . 10)))
+                                    (bookmarks . 10)
+                                    (projects  . 10)
+                                    (agenda    . 10)
+                                    (registers . 10)))
     
       (setq dashboard-item-shortcuts '((recents   . "r")
-          				   (bookmarks . "m")
-          				   (projects  . "p")
-          				   (agenda    . "a")
-          				   (registers . "e")))
+                                             (bookmarks . "m")
+                                             (projects  . "p")
+                                             (agenda    . "a")
+                                             (registers . "e")))
     
       (setq initial-buffer-choice (lambda () (get-buffer-create dashboard-buffer-name)))
     
@@ -325,8 +325,8 @@ in
     (defcustom container-executable 'podman
       "The executable to be used with docker mode."
       :type '(choice
-          	  (const :tag "docker" docker)
-          	  (const :tag "podman" podman))
+                    (const :tag "docker" docker)
+                    (const :tag "podman" podman))
       :group 'custom)
     
     (use-package docker
@@ -336,17 +336,17 @@ in
       (pcase container-executable
         ('docker
          (setf docker-command "docker"
-          	   docker-compose-command "docker-compose"
-          	   docker-container-tramp-method "docker"))
+                     docker-compose-command "docker-compose"
+                     docker-container-tramp-method "docker"))
         ('podman
          (setf docker-command "podman"
-          	   docker-compose-command "podman-compose"
-          	   docker-container-tramp-methodu "podman"))))
+                     docker-compose-command "podman-compose"
+                     docker-container-tramp-methodu "podman"))))
     
     (use-package doom-modeline
       :init
       (setq doom-modeline-time t
-          	doom-modeline-env-version t)
+                  doom-modeline-env-version t)
     
       (doom-modeline-mode 1))
     
@@ -381,8 +381,8 @@ in
       (defun org-mode-add-electric-pairs ()
         "Add electric pairs for org mode."
         (setq-local electric-pair-pairs (append electric-pair-pairs
-      					    org-mode-electric-pairs
-      					    latex-mode-electric-pairs))
+                                              org-mode-electric-pairs
+                                              latex-mode-electric-pairs))
         (setq-local electric-pair-text-pairs electric-pair-pairs)
         (message "Electric pairs added for org mode: %s" electric-pair-pairs))
     
@@ -412,7 +412,7 @@ in
     
     (use-package marginalia
       :bind (:map minibuffer-local-map
-          	      ("M-A" . marginalia-cycle))
+                        ("M-A" . marginalia-cycle))
       :init
       (marginalia-mode))
     
@@ -426,7 +426,7 @@ in
     (use-package nyan-mode
       :init
       (setq nyan-animate-nyancat t
-          	nyan-wavy-trail t)
+                  nyan-wavy-trail t)
       (nyan-mode))
     
     (use-package orderless
@@ -440,13 +440,13 @@ in
       ("C-M-<return>" . org-insert-subheading)
       :init
       (setq org-attach-id-dir "~/org/.attach"
-          	org-log-done 'time
-          	org-hide-emphasis-markers t
-          	org-imenu-depth 7)
+                  org-log-done 'time
+                  org-hide-emphasis-markers t
+                  org-imenu-depth 7)
     
       (org-babel-do-load-languages 'org-babel-load-languages '((shell . t)
-          							   (emacs-lisp . t)
-          							   (python . t))))
+                                                                     (emacs-lisp . t)
+                                                                     (python . t))))
     
     (use-package org-roam
       :custom
@@ -481,7 +481,7 @@ in
     (use-package spacious-padding
       :init
       (setq spacious-padding-widths
-          	'( :internal-border-width 15
+                  '( :internal-border-width 15
                :header-line-width 4
                :mode-line-width 6
                :tab-width 4
@@ -492,7 +492,7 @@ in
       ;; Read the doc string of `spacious-padding-subtle-mode-line' as it
       ;; is very flexible and provides several examples.
       (setq spacious-padding-subtle-mode-line
-          	`( :mode-line-active 'default
+                  `( :mode-line-active 'default
                :mode-line-inactive vertical-border))
     
       (spacious-padding-mode 1))
@@ -504,8 +504,8 @@ in
     (use-package treesit
       :init
       (setq major-mode-remap-alist
-          	'((bash-mode . bash-ts-mode)
-          	  (python-mode . python-ts-mode))))
+                  '((bash-mode . bash-ts-mode)
+                    (python-mode . python-ts-mode))))
     
     (use-package vertico
       :custom
@@ -537,23 +537,23 @@ in
         (org-mode)
         (let (bookmarks)
           (org-element-map (org-element-parse-buffer) 'link
-        	(lambda (l)
-        	  (let* ((link (org-element-property :raw-link l))
-        		 (name (org-element-interpret-data (org-element-contents l)))
-        		 (tags (org-element-property :tags (org-element-property :parent l))))
-        	    (push (concat name
-        			  "\n"
-        			  link
-        			  "\n"
-        			  (format "[%s]" (mapconcat #'identity tags ", "))) bookmarks))))
+          (lambda (l)
+            (let* ((link (org-element-property :raw-link l))
+                   (name (org-element-interpret-data (org-element-contents l)))
+                   (tags (org-element-property :tags (org-element-property :parent l))))
+              (push (concat name
+                            "\n"
+                            link
+                            "\n"
+                            (format "[%s]" (mapconcat #'identity tags ", "))) bookmarks))))
           bookmarks)))
     
     (defun tuxikus/add-bookmark ()
       "Add a new bookmark to the bookmark file."
       (interactive)
       (let* ((title (read-from-minibuffer "Title: "))
-        	 (url (read-from-minibuffer "URL: "))
-        	 (tags (read-from-minibuffer "Tags: ")))
+           (url (read-from-minibuffer "URL: "))
+           (tags (read-from-minibuffer "Tags: ")))
         (write-region (format "* [[%s][%s]] %s\n" url title tags) nil "~/.bookmarks.org" 'append)))
     
     (defun tuxikus/edit-bookmark ()
@@ -571,17 +571,17 @@ in
       (interactive)
       (browse-url
        (seq-elt (split-string
-        	     (completing-read "Open: " (tuxikus/get-bookmarks-from-file))
-        	     "\n") 1)))
+               (completing-read "Open: " (tuxikus/get-bookmarks-from-file))
+               "\n") 1)))
     
     (defun tuxikus/change-org-directory ()
       "Change the active org directory."
       (interactive)
       (let ((selection (completing-read "Select: " '("~/org" "~/org-edu"))))
         (setq org-directory selection
-        	  org-attach-id-dir (concat org-directory "/.attach")
-        	  org-roam-directory (concat org-directory "/roam")
-        	  org-roam-db-location (concat org-directory "/org-roam.db"))))
+            org-attach-id-dir (concat org-directory "/.attach")
+            org-roam-directory (concat org-directory "/roam")
+            org-roam-db-location (concat org-directory "/org-roam.db"))))
     '';
   };
 }

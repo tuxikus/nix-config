@@ -2,10 +2,10 @@
 let
   tex = (pkgs.texlive.combine {
     inherit (pkgs.texlive) scheme-basic
-	dvisvgm
-	dvipng
-	ulem
-	amsmath;
+      dvisvgm
+      dvipng
+      ulem
+      amsmath;
   });
 in
 {
