@@ -35,6 +35,8 @@ let
       embark-consult
       embark-org-roam
       ess
+      rust-mode
+      dockerfile-mode
       fireplace
       flycheck
       flycheck-inline
@@ -80,6 +82,8 @@ let
           tree-sitter-bash
           tree-sitter-c
           tree-sitter-go
+          tree-sitter-gomod
+          tree-sitter-rust
         ]
       ))
     ]
@@ -493,7 +497,8 @@ in
       (setq major-mode-remap-alist
                   '((bash-mode . bash-ts-mode)
                     (python-mode . python-ts-mode)
-                    (go-mode . go-ts-mode))))
+                    (go-mode . go-ts-mode)
+                    (rust-mode . rust-ts-mode))))
     
     (use-package vertico
       :custom

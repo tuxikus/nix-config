@@ -99,6 +99,7 @@ in
   ];
 
   services = {
+    pcscd.enable = true;
     dbus.enable = true;
     xserver = {
       enable = true;
@@ -175,6 +176,7 @@ in
     gnumake
     superTuxKart
     python3
+    yubioath-flutter
     (customPackages pkgs).retroarch-joypad-autoconfig
     (retroarch.override {
       cores = with libretro; [
