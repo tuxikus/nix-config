@@ -12,6 +12,7 @@ let
     epkgs: with epkgs; [
       pdf-tools
       aas
+      go-mode
       olivetti
       ace-window
       avy
@@ -61,6 +62,8 @@ let
       vundo
       walkman
       wgrep
+      org-download
+      org-roam-ui
       yasnippet
       (trivialBuild {
         pname = "zellij";
@@ -76,6 +79,7 @@ let
           tree-sitter-python
           tree-sitter-bash
           tree-sitter-c
+          tree-sitter-go
         ]
       ))
     ]
@@ -480,11 +484,16 @@ in
       :init
       (savehist-mode))
     
+    (use-package org-download)
+    
+    (use-package go-mode)
+    
     (use-package treesit
       :init
       (setq major-mode-remap-alist
                   '((bash-mode . bash-ts-mode)
-                    (python-mode . python-ts-mode))))
+                    (python-mode . python-ts-mode)
+                    (go-mode . go-ts-mode))))
     
     (use-package vertico
       :custom
