@@ -217,6 +217,7 @@
         text = ''
           #!/usr/bin/env sh
           wlr-randr --output DP-3 --mode 2560x1440@144 &
+          dunst &
         '';
         executable = true;
       };
