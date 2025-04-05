@@ -281,6 +281,7 @@ Specs:
     };
     environment.systemPackages = with pkgs; [
       chromium
+      firefox
       tree
       home-manager
       pavucontrol
@@ -288,7 +289,6 @@ Specs:
       hyprpaper
       hyprsunset
       mpd
-      ncmpcpp
       fuzzel
       dunst
       waybar
@@ -308,7 +308,6 @@ Specs:
       yt-dlp
       dig
       vial
-      nyxt
       qutebrowser
       wlr-randr
       ripgrep
@@ -316,8 +315,6 @@ Specs:
       cifs-utils
       platformio
       arduino-ide
-      raylib
-      gnumake
       superTuxKart
       python3
       yubioath-flutter
@@ -370,7 +367,7 @@ Specs:
       (homeManagerModulesDirectory + "/shell/bash.nix")
       (homeManagerModulesDirectory + "/shell/xonsh.nix")
       (homeManagerModulesDirectory + "/text-editors/emacs.nix")
-      (homeManagerModulesDirectory + "/gui-apps/nyxt.nix")
+      #(homeManagerModulesDirectory + "/gui-apps/nyxt.nix")
       (homeManagerModulesDirectory + "/gui-apps/qutebrowser.nix")
       (homeManagerModulesDirectory + "/gui-apps/ghostty.nix")
       (homeManagerModulesDirectory + "/gui-apps/fuzzel.nix")

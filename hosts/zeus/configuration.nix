@@ -137,6 +137,7 @@ in
   };
   environment.systemPackages = with pkgs; [
     chromium
+    firefox
     tree
     home-manager
     pavucontrol
@@ -144,7 +145,6 @@ in
     hyprpaper
     hyprsunset
     mpd
-    ncmpcpp
     fuzzel
     dunst
     waybar
@@ -164,7 +164,6 @@ in
     yt-dlp
     dig
     vial
-    nyxt
     qutebrowser
     wlr-randr
     ripgrep
@@ -172,8 +171,6 @@ in
     cifs-utils
     platformio
     arduino-ide
-    raylib
-    gnumake
     superTuxKart
     python3
     yubioath-flutter

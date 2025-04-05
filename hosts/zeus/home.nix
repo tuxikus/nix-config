@@ -10,7 +10,7 @@ in
     (homeManagerModulesDirectory + "/shell/bash.nix")
     (homeManagerModulesDirectory + "/shell/xonsh.nix")
     (homeManagerModulesDirectory + "/text-editors/emacs.nix")
-    (homeManagerModulesDirectory + "/gui-apps/nyxt.nix")
+    #(homeManagerModulesDirectory + "/gui-apps/nyxt.nix")
     (homeManagerModulesDirectory + "/gui-apps/qutebrowser.nix")
     (homeManagerModulesDirectory + "/gui-apps/ghostty.nix")
     (homeManagerModulesDirectory + "/gui-apps/fuzzel.nix")
