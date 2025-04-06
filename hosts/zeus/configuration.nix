@@ -174,6 +174,7 @@ in
     superTuxKart
     python3
     yubioath-flutter
+    superTux
     (customPackages pkgs).retroarch-joypad-autoconfig
     (retroarch.override {
       cores = with libretro; [

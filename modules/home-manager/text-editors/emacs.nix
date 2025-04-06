@@ -127,7 +127,8 @@ in
     
       :hook
       ((before-save . whitespace-cleanup)
-      (makefile-mode . indent-tabs-mode))
+      (makefile-mode . indent-tabs-mode)
+      (prog-mode . display-line-numbers-mode))
     
       :init
       (fset 'yes-or-no-p 'y-or-n-p)
@@ -143,8 +144,8 @@ in
       ;;(setq-default cursor-type 'box)
     
       ;; line numbers
-      (setq display-line-numbers-type 'relative)
-      (global-display-line-numbers-mode)
+      (setq display-line-numbers 'relative)
+      ;;(global-display-line-numbers-mode)
     
       (load-theme 'doom-bluloco-light t)
     

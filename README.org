@@ -318,6 +318,7 @@ Specs:
       superTuxKart
       python3
       yubioath-flutter
+      superTux
       (customPackages pkgs).retroarch-joypad-autoconfig
       (retroarch.override {
         cores = with libretro; [
@@ -1232,7 +1233,8 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
 
     :hook
     ((before-save . whitespace-cleanup)
-    (makefile-mode . indent-tabs-mode))
+    (makefile-mode . indent-tabs-mode)
+    (prog-mode . display-line-numbers-mode))
 
     :init
     (fset 'yes-or-no-p 'y-or-n-p)
@@ -1248,8 +1250,8 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
     ;;(setq-default cursor-type 'box)
 
     ;; line numbers
-    (setq display-line-numbers-type 'relative)
-    (global-display-line-numbers-mode)
+    (setq display-line-numbers 'relative)
+    ;;(global-display-line-numbers-mode)
 
     (load-theme 'doom-bluloco-light t)
 
