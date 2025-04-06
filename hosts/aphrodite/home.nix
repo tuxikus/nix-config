@@ -5,7 +5,6 @@ in
 {
   imports = [
     (homeManagerModulesDirectory + "/text-editors/emacs.nix")
-    (homeManagerModulesDirectory + "/gui-apps/qutebrowser.nix")
     (homeManagerModulesDirectory + "/education/latex.nix")
     (homeManagerModulesDirectory + "/education/r.nix")
     (homeManagerModulesDirectory + "/shell/xonsh.nix")
