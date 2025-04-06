@@ -368,7 +368,6 @@ Specs:
       (homeManagerModulesDirectory + "/shell/bash.nix")
       (homeManagerModulesDirectory + "/shell/xonsh.nix")
       (homeManagerModulesDirectory + "/text-editors/emacs.nix")
-      #(homeManagerModulesDirectory + "/gui-apps/nyxt.nix")
       (homeManagerModulesDirectory + "/gui-apps/qutebrowser.nix")
       (homeManagerModulesDirectory + "/gui-apps/ghostty.nix")
       (homeManagerModulesDirectory + "/gui-apps/fuzzel.nix")
@@ -697,7 +696,6 @@ Apple MacBook Pro M2
         "orbstack"
         "tunnelblick"
         "utm"
-        "qutebrowser"
         "cursor"
         "ghostty"
         "tic80"

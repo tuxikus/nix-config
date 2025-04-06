@@ -133,7 +133,6 @@ in
       "orbstack"
       "tunnelblick"
       "utm"
-      "qutebrowser"
       "cursor"
       "ghostty"
       "tic80"
