@@ -116,6 +116,7 @@ in
       ripgrep
       git
       fastfetch
+      libpng
     ];
   };
 
