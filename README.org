@@ -679,7 +679,7 @@ Apple MacBook Pro M2
         ripgrep
         git
         fastfetch
-        libpng
+        pngpaste
       ];
     };
 
