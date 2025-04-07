@@ -114,9 +114,27 @@ in
       poppler_utils
       dig
       ripgrep
-      git
       fastfetch
       pngpaste
+
+      # lets build something
+      git
+      gcc
+      autoconf
+      gnumake
+      clang
+      cmake
+
+      # :o
+      gnutls
+      coreutils
+      findutils
+      gnutar
+      gnused
+      gawk
+      getopt
+      indent
+      gnugrep
     ];
   };
 

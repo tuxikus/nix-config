@@ -35,7 +35,7 @@ in
   programs.home-manager.enable = true;
 
   #emacsPkg = pkgs.emacs-macport;
-  emacsPkg = pkgs.emacs;
+  emacsPkg = (emacs.override { withNativeCompilation = false; });
   fontSize = "20";
   customInit = ''
     (setq custom-init-loaded t)

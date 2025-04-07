@@ -677,9 +677,27 @@ Apple MacBook Pro M2
         poppler_utils
         dig
         ripgrep
-        git
         fastfetch
         pngpaste
+
+        # lets build something
+        git
+        gcc
+        autoconf
+        gnumake
+        clang
+        cmake
+
+        # :o
+        gnutls
+        coreutils
+        findutils
+        gnutar
+        gnused
+        gawk
+        getopt
+        indent
+        gnugrep
       ];
     };
 
@@ -752,7 +770,7 @@ Apple MacBook Pro M2
     programs.home-manager.enable = true;
 
     #emacsPkg = pkgs.emacs-macport;
-    emacsPkg = pkgs.emacs;
+    emacsPkg = (emacs.override { withNativeCompilation = false; });
     fontSize = "20";
     customInit = ''
       (setq custom-init-loaded t)
