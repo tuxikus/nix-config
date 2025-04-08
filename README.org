@@ -669,6 +669,7 @@ Apple MacBook Pro M2
         _1password-cli
         sketchybar
         jankyborders
+        python3
         fzf
         go-task
         openssh
@@ -679,14 +680,6 @@ Apple MacBook Pro M2
         ripgrep
         fastfetch
         pngpaste
-
-        # lets build something
-        git
-        gcc
-        autoconf
-        gnumake
-        clang
-        cmake
 
         # :o
         gnutls
@@ -702,6 +695,10 @@ Apple MacBook Pro M2
     };
 
     programs = {
+      direnv = {
+        enable = true;
+        nix-direnv.enable = true;
+      };
       bash.enable = true;
       zsh.enable = true;
     };
@@ -1161,7 +1158,6 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
         marginalia
         move-text
         nix-mode
-        nyan-mode
         orderless
         org-modern
         org-present
@@ -1532,12 +1528,6 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
 
   (use-package nix-mode
     :mode "\\.nix\\'")
-
-  (use-package nyan-mode
-    :init
-    (setq nyan-animate-nyancat t
-                nyan-wavy-trail t)
-    (nyan-mode))
 
   (use-package orderless
     :custom

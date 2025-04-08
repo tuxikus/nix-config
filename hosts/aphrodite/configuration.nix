@@ -106,6 +106,7 @@ in
       _1password-cli
       sketchybar
       jankyborders
+      python3
       fzf
       go-task
       openssh
@@ -116,14 +117,6 @@ in
       ripgrep
       fastfetch
       pngpaste
-
-      # lets build something
-      git
-      gcc
-      autoconf
-      gnumake
-      clang
-      cmake
 
       # :o
       gnutls
@@ -139,6 +132,10 @@ in
   };
 
   programs = {
+    direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+    };
     bash.enable = true;
     zsh.enable = true;
   };

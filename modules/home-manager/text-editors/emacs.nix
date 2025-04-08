@@ -47,7 +47,6 @@ let
       marginalia
       move-text
       nix-mode
-      nyan-mode
       orderless
       org-modern
       org-present
@@ -410,12 +409,6 @@ in
     
     (use-package nix-mode
       :mode "\\.nix\\'")
-    
-    (use-package nyan-mode
-      :init
-      (setq nyan-animate-nyancat t
-                  nyan-wavy-trail t)
-      (nyan-mode))
     
     (use-package orderless
       :custom
