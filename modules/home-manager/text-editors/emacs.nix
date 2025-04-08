@@ -189,13 +189,13 @@ in
     
       :config
       (aas-set-snippets 'text-mode
-        "oe" "ö"
-        "Oe" "Ö"
-        "ue" "ü"
-        "Ue" "Ü"
-        "ae" "ä"
-        "Ae" "Ä"
-        "ss" "ß"))
+        ":o" "ö"
+        ":O" "Ö"
+        ":u" "ü"
+        ":U" "Ü"
+        ":a" "ä"
+        ":A" "Ä"
+        "sz" "ß"))
     
     (use-package ace-window
       :bind
@@ -513,7 +513,7 @@ in
     
     (use-package zellij)
     
-          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     
     (defun tuxikus/get-jira-ticket-number (branch)
       (when (string-match "[A-Z]\\{8\\}-[0-9]*" branch)
