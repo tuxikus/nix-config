@@ -427,11 +427,8 @@ in
     
       (org-babel-do-load-languages 'org-babel-load-languages '((shell . t)
                                                                (emacs-lisp . t)
-                                                               (python . t)))
+                                                               (python . t))))
     
-    
-      :hook
-      ((org-mode . org-indent-mode)))
     
     (use-package org-roam
       :custom
@@ -446,13 +443,6 @@ in
     (use-package org-modern
       :ensure t
       :defer t
-      :custom
-      (org-modern-hide-stars nil)		; adds extra indentation
-      (org-modern-table nil)
-      (org-modern-list
-       '(;; (?- . "-")
-         (?* . "•")
-         (?+ . "‣")))
       :hook
       (org-mode . org-modern-mode)
       (org-agenda-finalize . org-modern-agenda))
