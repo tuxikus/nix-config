@@ -440,8 +440,18 @@ in
       (require 'org-roam-protocol))
     
     (use-package org-modern
-      :config
-      (with-eval-after-load 'org (global-org-modern-mode)))
+    :ensure t
+    :defer t
+    :custom
+    (org-modern-hide-stars nil)		; adds extra indentation
+    (org-modern-table nil)
+    (org-modern-list
+     '(;; (?- . "-")
+       (?* . "•")
+       (?+ . "‣")))
+    :hook
+    (org-mode . org-modern-mode)
+    (org-agenda-finalize . org-modern-agenda))
     
     (use-package org-superstar
       :hook
