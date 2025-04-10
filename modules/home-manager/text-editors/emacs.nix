@@ -27,6 +27,7 @@ let
       direnv
       dirvish
       docker
+      dslide
       htmlize
       doom-modeline
       doom-themes

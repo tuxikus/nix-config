@@ -1138,6 +1138,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
         direnv
         dirvish
         docker
+        dslide
         htmlize
         doom-modeline
         doom-themes
