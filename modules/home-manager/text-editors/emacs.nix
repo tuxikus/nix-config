@@ -67,6 +67,18 @@ let
       org-download
       org-roam-ui
       yasnippet
+      hide-mode-line
+      (trivialBuild {
+        pname = "moc";
+        version = "v0.6.2";
+        src = pkgs.fetchurl {
+          url = "https://raw.githubusercontent.com/positron-solutions/moc/refs/heads/master/moc.el";
+          sha256 = "sha256-rwsfM+FvWb0sviT2TtCVlWW8rfW6XBHlch4AbvhaL00=";
+        };
+
+        nativeBuildInputs = [ hide-mode-line ];
+      })
+
       (trivialBuild {
         pname = "zellij";
         version = "master";
@@ -128,7 +140,9 @@ in
       :hook
       ((before-save . whitespace-cleanup)
        (makefile-mode . indent-tabs-mode)
-       (prog-mode . display-line-numbers-mode))
+       (prog-mode . display-line-numbers-mode)
+       (kill-emacs . persp-state-save)
+       (after-save . persp-state-save))
     
       :init
       (fset 'yes-or-no-p 'y-or-n-p)
@@ -157,7 +171,8 @@ in
             inhibit-startup-screen t
             initial-scratch-message ";;; Emacs is fun"
             global-auto-revert-non-file-buffers t
-            org-id-uuid-program "~/.local/bin/uuidgenlc")
+            org-id-uuid-program "~/.local/bin/uuidgenlc"
+            persp-state-default-file "~/.local/state/emacs/persp-state")
     
       ;; (set-frame-font "Iosevka Nerd Font-15" nil t)
     
