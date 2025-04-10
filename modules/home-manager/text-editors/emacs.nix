@@ -29,7 +29,7 @@ let
       docker
       dslide
       htmlize
-      doom-modeline
+      mood-line
       doom-themes
       eat
       embark
@@ -142,7 +142,8 @@ in
        (makefile-mode . indent-tabs-mode)
        (prog-mode . display-line-numbers-mode)
        (kill-emacs . persp-state-save)
-       (after-save . persp-state-save))
+       (after-save . persp-state-save)
+       (after-init . (persp-state-load t))
     
       :init
       (fset 'yes-or-no-p 'y-or-n-p)
@@ -346,12 +347,16 @@ in
                docker-compose-command "podman-compose"
                docker-container-tramp-methodu "podman"))))
     
-    (use-package doom-modeline
-      :init
-      (setq doom-modeline-time t
-            doom-modeline-env-version t)
+    (use-package mood-line
+      :config
+      (setq mood-line-format
+        (mood-line-defformat
+         :left
+         (((mood-line-segment-buffer-status) . " ")
+          ((mood-line-segment-buffer-name)   . " : ")
+          (mood-line-segment-major-mode))))
     
-      (doom-modeline-mode 1))
+      (mood-line-mode))
     
     (use-package doom-themes)
     
