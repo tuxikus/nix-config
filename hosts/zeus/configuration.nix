@@ -7,17 +7,6 @@
 }:
 let
   nixModulesDirectory = ../../modules/nixos;
-
-  customPackages = pkgs: {
-    retroarch-joypad-autoconfig = pkgs.retroarch-joypad-autoconfig.overrideAttrs {
-      src = pkgs.fetchFromGitHub {
-        owner = "tuxikus";
-        repo = "retroarch-joypad-autoconfig";
-        rev = "70ee2f01584891f65e380cf1976a2a980d984960";
-        hash = "sha256-v3Ocw7bksCuhdOy/ec+a5Mo6yuNwNQmjuOFirc7Eo0Y=";
-      };
-    };
-  };
 in
 {
 
@@ -123,18 +112,6 @@ in
       alsa.support32Bit = true;
       pulse.enable = true;
     };
-    mpd = {
-      enable = true;
-      musicDirectory = "/home/tuxikus/multimedia/music/mp3";
-      extraConfig = ''
-              audio_output {
-               type "pipewire"
-               name "My PipeWire Output"
-              }
-      '';
-      #network.startWhenNeeded = true;
-      user = "tuxikus";
-    };
   };
   environment.systemPackages = with pkgs; [
     chromium
@@ -194,11 +171,6 @@ in
       xwayland.enable = true;
     };
     ssh.startAgent = true;
-  };
-
-  systemd.services.mpd.environment = {
-    #XDG_RUNTIME_DIR = "/run/user/${toString config.users.users.tuxikus.uid}";
-    XDG_RUNTIME_DIR = "/run/user/1000";
   };
 
   # This value determines the NixOS release from which the default

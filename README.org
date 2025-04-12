@@ -151,17 +151,6 @@ Specs:
   }:
   let
     nixModulesDirectory = ../../modules/nixos;
-
-    customPackages = pkgs: {
-      retroarch-joypad-autoconfig = pkgs.retroarch-joypad-autoconfig.overrideAttrs {
-        src = pkgs.fetchFromGitHub {
-          owner = "tuxikus";
-          repo = "retroarch-joypad-autoconfig";
-          rev = "70ee2f01584891f65e380cf1976a2a980d984960";
-          hash = "sha256-v3Ocw7bksCuhdOy/ec+a5Mo6yuNwNQmjuOFirc7Eo0Y=";
-        };
-      };
-    };
   in
   {
 
@@ -267,18 +256,6 @@ Specs:
         alsa.support32Bit = true;
         pulse.enable = true;
       };
-      mpd = {
-        enable = true;
-        musicDirectory = "/home/tuxikus/multimedia/music/mp3";
-        extraConfig = ''
-                audio_output {
-                 type "pipewire"
-                 name "My PipeWire Output"
-                }
-        '';
-        #network.startWhenNeeded = true;
-        user = "tuxikus";
-      };
     };
     environment.systemPackages = with pkgs; [
       chromium
@@ -338,11 +315,6 @@ Specs:
         xwayland.enable = true;
       };
       ssh.startAgent = true;
-    };
-
-    systemd.services.mpd.environment = {
-      #XDG_RUNTIME_DIR = "/run/user/${toString config.users.users.tuxikus.uid}";
-      XDG_RUNTIME_DIR = "/run/user/1000";
     };
 
     # This value determines the NixOS release from which the default
@@ -910,44 +882,6 @@ Apple MacBook Pro M2
   font-family = "Iosevka Nerd Font"
   font-size = 15
 #+end_src
-**** Nyxt
-***** Nix configuration
-#+begin_src nix :tangle modules/home-manager/gui-apps/nyxt.nix :noweb tangle :mkdirp yes
-  {
-    home.file.".config/nyxt/config.lisp" = {
-      text = ''
-      <<nyxt-configuration>>
-     '';
-    };
-  }
-#+end_src
-***** Configuration
-#+name: nyxt-configuration
-#+begin_src lisp :tangle ~/projects/personal/nix-config-dump/nyxt/.config/nyxt/config.lisp
-  ;; enable emacs mode
-  (define-configuration buffer
-      ((default-modes (append '(emacs-mode) %slot-value%))))
-
-  ;; search engines
-  (defvar *my-search-engines*
-    (list
-     '("google" "https://google.com/search?q=~a" "https://google.com"))
-    "List of search engines.")
-
-  (define-configuration context-buffer
-  "Go through the search engines above and make-search-engine out of them."
-    ((search-engines
-      (append %slot-default%
-            (mapcar
-             (lambda (engine) (apply 'make-search-engine engine))
-             ,*my-search-engines*)))))
-
-  ;; blocker mode
-  (define-configuration web-buffer
-      ((default-modes
-         (pushnew 'nyxt/mode/blocker:blocker-mode %slot-value%))))
-#+end_src
-
 **** Fuzzel
 ***** Nix configuration
 #+begin_src nix :tangle modules/home-manager/gui-apps/fuzzel.nix :mkdirp yes
