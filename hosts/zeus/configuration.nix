@@ -148,17 +148,8 @@ in
     cifs-utils
     platformio
     arduino-ide
-    superTuxKart
     python3
     yubioath-flutter
-    superTux
-    (customPackages pkgs).retroarch-joypad-autoconfig
-    (retroarch.override {
-      cores = with libretro; [
-        nestopia
-        mupen64plus
-      ];
-    })
   ];
 
   programs = {

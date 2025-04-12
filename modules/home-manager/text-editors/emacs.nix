@@ -414,17 +414,15 @@ in
     
     (use-package org
       :bind
-      ("C-M-<return>" . org-insert-subheading)
+      (("C-M-<return>" . org-insert-subheading))
       :init
       (setq org-attach-id-dir "~/org/.attach"
             org-log-done 'time
-            org-hide-emphasis-markers t
             org-imenu-depth 7)
     
       (org-babel-do-load-languages 'org-babel-load-languages '((shell . t)
                                                                (emacs-lisp . t)
-                                                               (python . t)
-                                                               (go . t)))
+                                                               (python . t))))
     
     
     (use-package org-roam
@@ -453,6 +451,8 @@ in
     (use-package salt-mode
       :hook
       (salt-mode . (lambda () (flyspell-mode 1))))
+    
+    (use-package moc)
     
     (use-package spacious-padding
       :init
