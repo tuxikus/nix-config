@@ -10,10 +10,7 @@ let
   };
   my-emacs-with-packages = (pkgs.emacsPackagesFor my-emacs).emacsWithPackages (
     epkgs: with epkgs; [
-      pdf-tools
       aas
-      go-mode
-      olivetti
       ace-window
       avy
       cape
@@ -22,41 +19,40 @@ let
       corfu
       corfu-terminal
       dashboard
-      dired-rsync
-      dired-rsync-transient
       direnv
       dirvish
       docker
+      dockerfile-mode
       dslide
-      htmlize
-      mood-line
-      doom-themes
       eat
       embark
       embark-consult
       embark-org-roam
       ess
-      rust-mode
-      dockerfile-mode
       fireplace
       flycheck
       flycheck-inline
       format-all
       git-link
-      keycast
+      go-mode
+      hide-mode-line
+      htmlize
       magit
       marginalia
       move-text
       nix-mode
       orderless
+      org-download
       org-modern
       org-present
       org-roam
+      org-roam-ui
       org-superstar
-      perspective
+      pdf-tools
       python-mode
       pyvenv
       ripgrep
+      rust-mode
       salt-mode
       spacious-padding
       verb
@@ -64,10 +60,7 @@ let
       vundo
       walkman
       wgrep
-      org-download
-      org-roam-ui
       yasnippet
-      hide-mode-line
       (trivialBuild {
         pname = "moc";
         version = "v0.6.2";
@@ -77,16 +70,6 @@ let
         };
 
         nativeBuildInputs = [ hide-mode-line ];
-      })
-
-      (trivialBuild {
-        pname = "zellij";
-        version = "master";
-
-        src = pkgs.fetchurl {
-          url = "https://raw.githubusercontent.com/tuxikus/zellijel/refs/heads/main/zellij.el";
-          sha256 = "sha256-eT2qoXUl4Lc8WgmtGp1PxICZHmhyNVqIWeqjGRB48Kc=";
-        };
       })
       (treesit-grammars.with-grammars (
         grammars: with grammars; [
@@ -140,10 +123,7 @@ in
       :hook
       ((before-save . whitespace-cleanup)
        (makefile-mode . indent-tabs-mode)
-       (prog-mode . display-line-numbers-mode)
-       (kill-emacs . persp-state-save)
-       (after-save . persp-state-save)
-       (after-init . (persp-state-load t))
+       (prog-mode . display-line-numbers-mode))
     
       :init
       (fset 'yes-or-no-p 'y-or-n-p)
@@ -162,9 +142,21 @@ in
       (setq display-line-numbers 'relative)
       ;;(global-display-line-numbers-mode)
     
-      (load-theme 'doom-bluloco-light t)
+      ;;(load-theme 'doom-bluloco-light t)
     
       :config
+      ;; mode line
+      (setq-default mode-line-format
+                    (list
+                     " %b " ;; buffer
+                     "| "
+                     "%m "  ;; mode
+                     ))
+    
+      ;; move mode line to top
+      (setq-default header-line-format mode-line-format)
+      (setq-default mode-line-format nil)
+    
       (setq create-lockfiles nil
             make-backup-files nil
             custom-theme-directory "~/.emacs.d/themes"
@@ -172,11 +164,9 @@ in
             inhibit-startup-screen t
             initial-scratch-message ";;; Emacs is fun"
             global-auto-revert-non-file-buffers t
-            org-id-uuid-program "~/.local/bin/uuidgenlc"
-            persp-state-default-file "~/.local/state/emacs/persp-state")
+            org-id-uuid-program "~/.local/bin/uuidgenlc")
     
-      ;; (set-frame-font "Iosevka Nerd Font-15" nil t)
-    
+      ;; (set-frame-font "Iosevka Nerd Font-15" nil t) ; test fonts
       (add-to-list 'default-frame-alist
                    '(font . "Iosevka Nerd Font-${config.fontSize}"))
     
@@ -190,9 +180,7 @@ in
       ;; Try `cape-dict' as an alternative.
       (text-mode-ispell-word-completion nil)
     
-      ;; Hide commands in M-x which do not apply to the current mode.  Corfu
-      ;; commands are hidden, since they are not used via M-x. This setting is
-      ;; useful beyond Corfu.
+      ;; Hide commands in M-x which do not apply to the current mode.
       (read-extended-command-predicate #'command-completion-default-include-p))
     
     (use-package dirvish
@@ -347,19 +335,6 @@ in
                docker-compose-command "podman-compose"
                docker-container-tramp-methodu "podman"))))
     
-    (use-package mood-line
-      :config
-      (setq mood-line-format
-        (mood-line-defformat
-         :left
-         (((mood-line-segment-buffer-status) . " ")
-          ((mood-line-segment-buffer-name)   . " : ")
-          (mood-line-segment-major-mode))))
-    
-      (mood-line-mode))
-    
-    (use-package doom-themes)
-    
     (use-package eglot
       ;; :hook
       ;; ((python-ts-mode . eglot-ensure)
@@ -448,7 +423,8 @@ in
     
       (org-babel-do-load-languages 'org-babel-load-languages '((shell . t)
                                                                (emacs-lisp . t)
-                                                               (python . t))))
+                                                               (python . t)
+                                                               (go . t)))
     
     
     (use-package org-roam
@@ -473,12 +449,6 @@ in
       (org-mode . (lambda () (org-superstar-mode 1))))
     
     (use-package org-present)
-    
-    (use-package perspective
-      :custom
-      (persp-mode-prefix-key (kbd "C-c M-p"))
-      :init
-      (persp-mode))
     
     (use-package salt-mode
       :hook
@@ -522,7 +492,7 @@ in
     (use-package vertico
       :custom
       (vertico-scroll-margin 0) ;; Different scroll margin
-      (vertico-count 20) ;; Show more candidates
+      (vertico-count 10) ;; Show more candidates
       ;; (vertico-resize t) ;; Grow and shrink the Vertico minibuffer
       (vertico-cycle t) ;; Enable cycling for `vertico-next/previous'
       :init

@@ -164,7 +164,6 @@ in
     yt-dlp
     dig
     vial
-    qutebrowser
     wlr-randr
     ripgrep
     samba
