@@ -502,8 +502,6 @@ in
       :init
       (yas-global-mode 1))
     
-    (use-package zellij)
-    
                 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     
     (defun tuxikus/get-jira-ticket-number (branch)

@@ -1428,8 +1428,6 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
       :init
       (yas-global-mode 1))
 
-    (use-package zellij)
-
                 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
     (defun tuxikus/get-jira-ticket-number (branch)
