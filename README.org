@@ -1057,6 +1057,9 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
       ;; disable bell
       (setq ring-bell-function 'ignore)
 
+      ;; line numbers, enabled via prog-mode-hook
+      (setq display-line-numbers-type 'relative)
+
       ;; cursor
       ;;(setq-default cursor-type 'box)
 

@@ -139,6 +139,9 @@ in
         ;; disable bell
         (setq ring-bell-function 'ignore)
     
+        ;; line numbers, enabled via prog-mode-hook
+        (setq display-line-numbers-type 'relative)
+    
         ;; cursor
         ;;(setq-default cursor-type 'box)
     
