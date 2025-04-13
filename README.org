@@ -1787,8 +1787,8 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
   {
     programs.tmux = {
       enable = true;
-      shortcut = "a";
-      newSessino = true;
+      shortcut = "z";
+      newSession = true;
       escapeTime = 0;
       terminal = "xterm-256color";
 

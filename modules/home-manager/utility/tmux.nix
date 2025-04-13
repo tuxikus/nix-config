@@ -1,7 +1,7 @@
 {
   programs.tmux = {
     enable = true;
-    shortcut = "a";
+    shortcut = "z";
     newSession = true;
     escapeTime = 0;
     terminal = "xterm-256color";
