@@ -2,7 +2,7 @@
   home.file.".local/bin/home-backup" = {
     text = ''
       #!/usr/bin/env bash
-      # Title          : home-backupp
+      # Title          : home-backup
       # Date           : 2024-04-11
       # Author         : tuxikus
       # Version        : 1.1
