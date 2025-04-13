@@ -135,6 +135,9 @@ in
       (global-auto-revert-mode 1)
       (setq-default indent-tabs-mode nil)
     
+      ;; disable bell
+      (setq ring-bell-function 'ignore)
+    
       ;; cursor
       ;;(setq-default cursor-type 'box)
     
