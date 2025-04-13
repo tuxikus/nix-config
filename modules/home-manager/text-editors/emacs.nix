@@ -119,7 +119,8 @@ in
          ("C-x c" . compile)
          ("C-S-a" . beginning-of-buffer)
          ("C-S-e" . end-of-buffer)
-         ("M-z" . zap-up-to-char))
+         ("M-z" . zap-up-to-char)
+         ("C-z" . nil))
     
         :hook
         ((before-save . whitespace-cleanup)
