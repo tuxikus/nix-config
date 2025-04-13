@@ -10,7 +10,6 @@ in
     (homeManagerModulesDirectory + "/shell/xonsh.nix")
     (homeManagerModulesDirectory + "/shell/bash.nix")
     (homeManagerModulesDirectory + "/utility/tmux.nix")
-    (homeManagerModulesDirectory + "/utility/zellij.nix")
     (homeManagerModulesDirectory + "/gui-apps/ghostty.nix")
     (homeManagerModulesDirectory + "/scripts/uuidgenlc.nix")
   ];

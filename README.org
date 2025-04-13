@@ -337,7 +337,6 @@ Specs:
       (homeManagerModulesDirectory + "/gui-apps/ghostty.nix")
       (homeManagerModulesDirectory + "/gui-apps/fuzzel.nix")
       (homeManagerModulesDirectory + "/utility/tmux.nix")
-      (homeManagerModulesDirectory + "/utility/zellij.nix")
       (homeManagerModulesDirectory + "/education/latex.nix")
       (homeManagerModulesDirectory + "/window-manager/hyprland.nix")
       (homeManagerModulesDirectory + "/window-manager/hyprpaper.nix")
@@ -708,7 +707,6 @@ Apple MacBook Pro M2
       (homeManagerModulesDirectory + "/shell/xonsh.nix")
       (homeManagerModulesDirectory + "/shell/bash.nix")
       (homeManagerModulesDirectory + "/utility/tmux.nix")
-      (homeManagerModulesDirectory + "/utility/zellij.nix")
       (homeManagerModulesDirectory + "/gui-apps/ghostty.nix")
       (homeManagerModulesDirectory + "/scripts/uuidgenlc.nix")
     ];
@@ -1492,80 +1490,6 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
               org-attach-id-dir (concat org-directory "/.attach")
               org-roam-directory (concat org-directory "/roam")
               org-roam-db-location (concat org-directory "/org-roam.db"))))
-
-    (defvar tuxikus/zellij-ssh-config-file "~/.ssh/config"
-      "The location of the ssh config file.")
-
-    (defun tuxikus/zellij-delete-all-sessions ()
-      "Delete all running Zellij sessions."
-      (interactive)
-      (shell-command "zellij delete-all-sessions -y"))
-
-    (defun tuxikus/zellij-kill-all-sessions ()
-      "Kill all running Zellij sessions."
-      (interactive)
-      (shell-command "zellij kill-all-sessions -y"))
-
-    (defun tuxikus/zellij-reset ()
-      "Kill and delete all running Zellij sessions"
-      (interactive)
-      (tuxikus/zellij-kill-all-sessions)
-      (tuxikus/zellij-delete-all-sessions))
-
-    (defun tuxikus/zellij-new-tab ()
-      "Create a new named tab in the selected session."
-      (interactive)
-      (let ((session (tuxikus/zellij-select-session))
-            (name (read-string "Name: ")))
-        (shell-command (format "zellij --session %s action new-tab --name %s" session name))))
-
-    (defun tuxikus/zellij-shell-command-in-new-tab ()
-      "Run shell command in a new tab."
-      (interactive)
-      (let ((session (tuxikus/zellij-select-session))
-            (command (read-string "Command: ")))
-        (shell-command (format "zellij --session %s action new-tab --name %s && zellij --session %s action write-chars '%s' && zellij action write 13" session "tab-name" session command))))
-
-    (defun tuxikus/zellij-shell-command (command)
-      "Run shell command COMMAND in a new tab."
-      (interactive "sCommand: ")
-      (let ((session (tuxikus/zellij-select-session)))
-        (shell-command (format "zellij --session %s action write-chars '%s' && zellij action write 13" session command))))
-
-    (defun tuxikus/zellij-ssh-in-new-tab ()
-      "Open a ssh connection in a new tab."
-      (interactive)
-      (let ((session (tuxikus/zellij-select-session))
-          (machine (tuxikus/zellij-select-machine)))
-        (shell-command (format "zellij --session %s action new-tab --name %s && zellij --session %s action write-chars 'ssh %s' && zellij action write 13" session (format "ssh:%s" machine) session machine))))
-
-    (defun tuxikus/zellij-kill-current-tab ()
-      "Not implemented.")
-
-    (defun tuxikus/zellij-kill-tab ()
-      "Not implemented.")
-
-    (defun tuxikus/zellij-send-region-to-current-tab ()
-      "Not implemented.")
-
-    (defun tuxikus/zellij-send-region-to-new-tab ()
-      "Not implemented.")
-
-    (defun tuxikus/zellij-select-machine ()
-      "Prompt the user to select a machine from the SSH config file."
-      (let ((hosts '()))
-        (with-temp-buffer
-          (insert-file-contents tuxikus/zellij-ssh-config-file)
-          (goto-char (point-min))
-          (while (re-search-forward "^Host.*" nil t)
-            (push (cdr (split-string (match-string 0) " ")) hosts)))
-        (completing-read "Host: " hosts)))
-
-    (defun tuxikus/zellij-select-session ()
-      "Prompt the user to select a running zellij session."
-      (completing-read
-       "Zellij session: "
-       (split-string (shell-command-to-string "zellij list-sessions -s") "\n")))
 #+end_src
 ***** Configuration dump
 #+name: emacs-configuration-dumper
