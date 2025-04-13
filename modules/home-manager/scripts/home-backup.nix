@@ -107,6 +107,7 @@
       
       rsync_command="rsync -av $options $excludes \
                          $HOME/.bookmarks.org \
+                         $HOME/.bash_history \
                          $HOME/.backup-log.txt \
                          $HOME/.ppw \
                          $HOME/org \

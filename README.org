@@ -342,6 +342,7 @@ Specs:
       (homeManagerModulesDirectory + "/window-manager/qtile.nix")
       (homeManagerModulesDirectory + "/scripts/home-backup.nix")
       (homeManagerModulesDirectory + "/scripts/uuidgenlc.nix")
+      (homeManagerModulesDirectory + "/scripts/music-unzip.nix")
 
     ];
 
@@ -1424,8 +1425,6 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
       :init
       (yas-global-mode 1))
 
-
-
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;                               Custom Functions                                   ;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1508,7 +1507,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
       (tuxikus/zellij-delete-all-sessions))
 
     (defun tuxikus/zellij-new-tab ()
-      "Create a new tab named NAME in the selected session."
+      "Create a new named tab in the selected session."
       (interactive)
       (let ((session (tuxikus/zellij-select-session))
             (name (read-string "Name: ")))
@@ -1720,6 +1719,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
 
   rsync_command="rsync -av $options $excludes \
                      $HOME/.bookmarks.org \
+                     $HOME/.bash_history \
                      $HOME/.backup-log.txt \
                      $HOME/.ppw \
                      $HOME/org \
@@ -1737,6 +1737,26 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
   sync
 
   echo "Done!"
+#+end_src
+**** music-unzip
+***** Nix configuration
+#+begin_src nix :tangle modules/home-manager/scripts/music-unzip.nix :noweb yes :mkdirp yes
+  {
+    home.file.".local/bin/music-unzip" = {
+      text = ''
+        <<script-music-unzip()>>
+      '';
+
+      executable = true;
+      };
+  }
+#+end_src
+***** Script
+#+name: script-music-unzip
+#+begin_src emacs-lisp :noweb yes
+  (with-temp-buffer
+    (insert-file-contents "~/projects/personal/python-music-unzip/main.py")
+    (buffer-string))
 #+end_src
 
 *** Education

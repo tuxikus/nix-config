@@ -21,6 +21,7 @@ in
     (homeManagerModulesDirectory + "/window-manager/qtile.nix")
     (homeManagerModulesDirectory + "/scripts/home-backup.nix")
     (homeManagerModulesDirectory + "/scripts/uuidgenlc.nix")
+    (homeManagerModulesDirectory + "/scripts/music-unzip.nix")
 
   ];
 

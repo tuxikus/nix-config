@@ -507,8 +507,6 @@ in
         :init
         (yas-global-mode 1))
     
-    
-    
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     ;;;                               Custom Functions                                   ;;;
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -591,7 +589,7 @@ in
         (tuxikus/zellij-delete-all-sessions))
     
       (defun tuxikus/zellij-new-tab ()
-        "Create a new tab named NAME in the selected session."
+        "Create a new named tab in the selected session."
         (interactive)
         (let ((session (tuxikus/zellij-select-session))
               (name (read-string "Name: ")))
