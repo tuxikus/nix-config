@@ -146,10 +146,10 @@ in
         ;;(setq-default cursor-type 'box)
     
         ;; line numbers
-        (setq display-line-numbers 'relative)
+        ;;(setq display-line-numbers 'relative)
         ;;(global-display-line-numbers-mode)
     
-        ;;(load-theme 'doom-bluloco-light t)
+        (load-theme 'modus-operandi t)
     
         :config
         ;; mode line
