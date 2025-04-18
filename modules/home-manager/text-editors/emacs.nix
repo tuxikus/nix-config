@@ -172,6 +172,15 @@ in
       ;; (custom-set-faces
       ;;  '(header-line ((t (:underline "black" :weight bold)))))
     
+      ;; tab bar
+      (setq tab-bar-new-button nil
+            tab-bar-close-button nil)
+    
+      ;; Customize the appearance of the tab-bar
+      (set-face-attribute 'tab-bar nil
+                          :height 0.9  ;; Adjust the height of the tab text
+                          :weight 'bold)  ;; Make the tab text bold
+    
       (setq create-lockfiles nil
             make-backup-files nil
             custom-theme-directory "~/.emacs.d/themes"
@@ -549,9 +558,9 @@ in
       :init
       (yas-global-mode 1))
     
-    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    ;;;                               Custom Functions                                   ;;;
-    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ;;;                               Custom Functions                                   ;;;
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     
     (defun tuxikus/get-jira-ticket-number (branch)
       (when (string-match "[A-Z]\\{8\\}-[0-9]*" branch)
