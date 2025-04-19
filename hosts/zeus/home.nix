@@ -22,7 +22,7 @@ in
     (homeManagerModulesDirectory + "/scripts/home-backup.nix")
     (homeManagerModulesDirectory + "/scripts/uuidgenlc.nix")
     (homeManagerModulesDirectory + "/scripts/music-unzip.nix")
-
+    (homeManagerModulesDirectory + "/scripts/cli-project-switcher.nix")
   ];
 
   home = {
@@ -73,4 +73,9 @@ in
   fontSize = "15";
 
   qtileWallpaper = ./assets/qtile-wallpaper.png;
+
+  projectDirectories = ''
+    ~/projects/personal
+    ~/projects/git
+  '';
 }
