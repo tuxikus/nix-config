@@ -113,41 +113,42 @@ in
     };
   };
   environment.systemPackages = with pkgs; [
+    arduino-ide
+    bat
+    calibre
     chromium
+    cifs-utils
+    dig
+    dunst
+    fastfetch
+    ffmpeg
     firefox
-    tree
+    fuzzel
+    fzf
+    ghostty
+    grim
     home-manager
-    pavucontrol
-    wget
     hyprpaper
     hyprsunset
-    mpd
-    fuzzel
-    dunst
-    waybar
-    grim
-    slurp
-    bat
-    ripgrep
-    fzf
-    fastfetch
     keepassxc
-    unzip
+    ledger
+    mpd
     mpv
-    calibre
-    tree-sitter
-    ghostty
-    ffmpeg
-    yt-dlp
-    dig
-    vial
-    wlr-randr
+    pavucontrol
+    platformio
+    python3
+    ripgrep
     ripgrep
     samba
-    cifs-utils
-    platformio
-    arduino-ide
-    python3
+    slurp
+    tree
+    tree-sitter
+    unzip
+    vial
+    waybar
+    wget
+    wlr-randr
+    yt-dlp
     yubioath-flutter
   ];
 

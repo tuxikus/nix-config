@@ -37,6 +37,7 @@ let
       go-mode
       hide-mode-line
       htmlize
+      ledger-mode
       magit
       marginalia
       move-text
@@ -212,6 +213,8 @@ in
         :init
         (dirvish-override-dired-mode))
       
+      (use-package ledger-mode)
+      
       (use-package aas
         :hook
         ((LaTeX-mode . aas-activate-for-major-mode)
@@ -230,6 +233,8 @@ in
       (use-package ace-window
         :bind
         (("M-o" . ace-window))
+      
+      
       
         :init
         (setq aw-dispatch-always t)
