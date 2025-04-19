@@ -58,6 +58,7 @@ let
       tabspaces
       verb
       vertico
+      vterm
       vundo
       walkman
       wgrep
@@ -468,6 +469,10 @@ in
       (completion-category-defaults nil)
       (completion-category-overrides '((file (styles basic partial-completion)))))
     
+    (use-package eat)
+    
+    (use-package vterm)
+    
     (use-package org
       :bind
       (("C-M-<return>" . org-insert-subheading))
@@ -482,11 +487,14 @@ in
     
     
     (use-package org-roam
+      :bind
+      (("C-c r f" . org-roam-node-find)
+       ("C-c r i" . org-roam-node-insert))
       :custom
       (org-roam-directory (concat org-directory "/roam"))
       :config
       ;; If you're using a vertical completion framework, you might want a more informative completion interface
-      ;;(setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
+      (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
       (org-roam-db-autosync-mode)
       ;; If using org-roam-protocol
       (require 'org-roam-protocol))
@@ -619,6 +627,15 @@ in
               org-attach-id-dir (concat org-directory "/.attach")
               org-roam-directory (concat org-directory "/roam")
               org-roam-db-location (concat org-directory "/org-roam.db"))))
+    
+    (defun tuxikus/delete-current-file ()
+      (interactive)
+      (let ((file (buffer-file-name)))
+        (when file
+          (progn
+            (delete-file file)
+            (kill-buffer)
+            (message "%s deleted" file)))))
     '';
   };
 }
