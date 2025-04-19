@@ -114,7 +114,6 @@ in
         :bind
         (("M-<tab>" . completion-at-point)
          ("C-c d" . duplicate-line)
-         ("C-c f f" . find-file)
          ("C-c f a" . format-all-buffer)
          ("C-c e r" . eval-region)
          ("C-c e b" . eval-buffer)
@@ -213,7 +212,8 @@ in
         :init
         (dirvish-override-dired-mode))
       
-      (use-package ledger-mode)
+      (use-package ledger-mode
+        :mode "\\.lgr\\'")
       
       (use-package aas
         :hook
@@ -233,9 +233,6 @@ in
       (use-package ace-window
         :bind
         (("M-o" . ace-window))
-      
-      
-      
         :init
         (setq aw-dispatch-always t)
         (setq aw-keys '(?a ?o ?e ?u ?h ?t ?n ?s ?f)))
@@ -287,7 +284,7 @@ in
         :bind ("M-p" . cape-prefix-map)
         :init
         (add-hook 'completion-at-point-functions #'cape-dabbrev)
-        (add-hook 'completion-at-point-functions #'cape-abbrev)
+        ;;(add-hook 'completion-at-point-functions #'cape-abbrev)
         (add-hook 'completion-at-point-functions #'cape-file)
         (add-hook 'completion-at-point-functions #'cape-elisp-block)
         (add-hook 'completion-at-point-functions #'cape-emoji)
@@ -484,11 +481,12 @@ in
         :init
         (setq org-attach-id-dir "~/org/.attach"
               org-log-done 'time
-              org-imenu-depth 7)
-      
+              org-imenu-depth 7
+              org-complete-tags-always-offer-all-agenda-tags t)
         (org-babel-do-load-languages 'org-babel-load-languages '((shell . t)
                                                                  (emacs-lisp . t)
-                                                                 (python . t))))
+                                                                 (python . t)
+                                                                 (ledger . t))))
       
       
       (use-package org-roam
@@ -501,6 +499,7 @@ in
         ;; If you're using a vertical completion framework, you might want a more informative completion interface
         (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
         (org-roam-db-autosync-mode)
+        (setq org-roam-completion-everywhere t)
         ;; If using org-roam-protocol
         (require 'org-roam-protocol))
       
