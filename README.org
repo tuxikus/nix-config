@@ -1,6 +1,5 @@
 #+property: header-args :noweb yes :mkdirp yes
 #+startup: overview
-
 * ❄️ Welcome to my nix-config ❄️
 This is my literate nix/nixos/home-manager config written with the help of [[https://www.gnu.org/software/emacs/][Emacs]] and [[https://orgmode.org/][Org mode]].
 
@@ -888,28 +887,16 @@ Apple MacBook Pro M2
   {
     home.file.".config/fuzzel/fuzzel.ini" = {
       text = ''
-      <<fuzzel-configuration>>
+        <<fuzzel-configuration>>
       '';
     };
   }
 #+end_src
 ***** Configuration
-#+name: fuzzel-config
+#+name: fuzzel-configuration
 #+begin_src conf :tangle ~/projects/personal/nix-config-dump/fuzzel/.config/fuzzel/fuzzel.ini
   [font]
   Iosevka Nerd Font:weight=light
-  [colors]
-  background=ffffffff
-  text=000000ff
-  prompt=bac2deff
-  placeholder=7f849cff
-  input=cdd6f4ff
-  match=cba6f7ff
-  selection=585b70ff
-  selection-text=cdd6f4ff
-  selection-match=cba6f7ff
-  counter=7f849cff
-  border=000000ff
 #+end_src
 *** Text editors
 **** Emacs
@@ -1416,7 +1403,9 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
     (org-babel-do-load-languages 'org-babel-load-languages '((shell . t)
                                                              (emacs-lisp . t)
                                                              (python . t)
-                                                             (ledger . t))))
+                                                             (R . t)
+                                                             (dot . t)
+                                                             (gnuplot . t))))
 
 
   (use-package org-roam

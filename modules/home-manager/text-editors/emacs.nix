@@ -490,7 +490,9 @@ in
         (org-babel-do-load-languages 'org-babel-load-languages '((shell . t)
                                                                  (emacs-lisp . t)
                                                                  (python . t)
-                                                                 (ledger . t))))
+                                                                 (R . t)
+                                                                 (dot . t)
+                                                                 (gnuplot . t))))
       
       
       (use-package org-roam
