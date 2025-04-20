@@ -471,9 +471,13 @@ in
         (completion-category-defaults nil)
         (completion-category-overrides '((file (styles basic partial-completion)))))
       
-      (use-package eat)
+      (use-package eat
+        :bind
+        (("C-c t e". eat)))
       
-      (use-package vterm)
+      (use-package vterm
+        :bind
+        (("C-c t v" . vterm)))
       
       (use-package org
         :bind
