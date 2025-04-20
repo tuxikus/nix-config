@@ -14,7 +14,8 @@
     '';
     shellAliases = {
       ed = "emacs --daemon";
-      e = "emacsclient -c & disown";
+      #e = "emacsclient -c & disown";
+      e = "emacsclient -c --eval '(tabspaces-restore-session)' & disown"
       night-shift-on = "hyprsunset --temperature 3000 & disown";
       night-shift-off = "pgrep hyprsunset | xargs kill";
       ll = "ls -lah";
