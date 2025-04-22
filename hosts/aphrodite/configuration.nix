@@ -149,9 +149,7 @@ in
       "orbstack"
       "tunnelblick"
       "utm"
-      "cursor"
       "ghostty"
-      "tic80"
     ];
   };
 
