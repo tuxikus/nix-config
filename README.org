@@ -277,6 +277,7 @@ Specs:
       ledger
       mpd
       mpv
+      pass
       pavucontrol
       platformio
       python3
@@ -290,6 +291,7 @@ Specs:
       vial
       waybar
       wget
+      wl-clipboard
       wlr-randr
       yt-dlp
       yubioath-flutter
@@ -952,6 +954,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
         org-roam
         org-roam-ui
         org-superstar
+        pass
         pdf-tools
         python-mode
         pyvenv
@@ -1488,7 +1491,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
     (yas-global-mode 1))
 
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    ;;;                               Custom Functions                                   ;;;
+    ;;;                               Functions                                          ;;;
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   (defun tuxikus/get-jira-ticket-number (branch)
@@ -1568,7 +1571,8 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
 #+begin_src python :noweb yes :results output :exports none
   config = """
   <<emacs-configuration>>
-  """.replace("${config.fontSize}", "15")
+  """.replace("${config.fontSize}", "15") \
+     .replace("''", "")
 
   print(config)
 #+end_src
@@ -1719,6 +1723,8 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
                      $HOME/.bash_history \
                      $HOME/.backup-log.txt \
                      $HOME/.ppw \
+                     $HOME/.gnupg \
+                     $HOME/.password-store \
                      $HOME/org \
                      $HOME/org-edu \
                      $HOME/multimedia \

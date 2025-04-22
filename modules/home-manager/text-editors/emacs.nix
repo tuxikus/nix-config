@@ -49,6 +49,7 @@ let
       org-roam
       org-roam-ui
       org-superstar
+      pass
       pdf-tools
       python-mode
       pyvenv
@@ -577,7 +578,7 @@ in
         (yas-global-mode 1))
       
         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-        ;;;                               Custom Functions                                   ;;;
+        ;;;                               Functions                                          ;;;
         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
       (defun tuxikus/get-jira-ticket-number (branch)

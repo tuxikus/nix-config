@@ -110,6 +110,8 @@
                          $HOME/.bash_history \
                          $HOME/.backup-log.txt \
                          $HOME/.ppw \
+                         $HOME/.gnupg \
+                         $HOME/.password-store \
                          $HOME/org \
                          $HOME/org-edu \
                          $HOME/multimedia \

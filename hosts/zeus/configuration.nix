@@ -134,6 +134,7 @@ in
     ledger
     mpd
     mpv
+    pass
     pavucontrol
     platformio
     python3
@@ -147,6 +148,7 @@ in
     vial
     waybar
     wget
+    wl-clipboard
     wlr-randr
     yt-dlp
     yubioath-flutter
