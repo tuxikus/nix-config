@@ -36,7 +36,6 @@ let
       format-all
       git-link
       go-mode
-      god-mode
       hide-mode-line
       htmlize
       ledger-mode
@@ -231,10 +230,6 @@ in
           ":a" "ä"
           ":A" "Ä"
           "sz" "ß"))
-      
-      (use-package god-mode
-        :init
-        (god-mode))
       
       (use-package ace-window
         :bind
