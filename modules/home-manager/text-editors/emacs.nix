@@ -36,6 +36,7 @@ let
       format-all
       git-link
       go-mode
+      god-mode
       hide-mode-line
       htmlize
       ledger-mode
@@ -221,7 +222,6 @@ in
         :hook
         ((LaTeX-mode . aas-activate-for-major-mode)
          (org-mode . aas-activate-for-major-mode))
-      
         :config
         (aas-set-snippets 'text-mode
           ":o" "ö"
@@ -231,6 +231,10 @@ in
           ":a" "ä"
           ":A" "Ä"
           "sz" "ß"))
+      
+      (use-package god-mode
+        :init
+        (god-mode))
       
       (use-package ace-window
         :bind
@@ -594,7 +598,9 @@ in
         (when (string-match "[A-Z]\\{8\\}-[0-9]*" branch)
           (message (match-string 0 branch))))
       
-      (add-hook 'git-commit-setup-hook '(lambda () (insert (tuxikus/get-jira-ticket-number (magit-get-current-branch)))))
+      (add-hook 'git-commit-setup-hook
+                '(lambda ()
+                   (insert (concat (tuxikus/get-jira-ticket-number (magit-get-current-branch) ": ")))))
       
       (defun tuxikus/get-bookmarks-from-file ()
         "Get bookmarks from the bookmark file"
@@ -661,8 +667,69 @@ in
         "Insert the sha256sum of the attachment at point."
         (interactive)
         (org-set-property
-         "sha256" (concat "  "
-                          (string-trim (car (split-string (shell-command-to-string (format "sha256sum %s" (tuxikus/org-attach-id-get-path))) " "))))))
+         "sha256"
+         (concat
+          "  "
+          (string-trim (car (split-string
+                             (shell-command-to-string
+                              (format "sha256sum %s" (tuxikus/org-attach-id-get-path))) " "))))))
+      
+      (defun tuxikus/org-get-property (property)
+        "Return the property PROPERTY of the org heading at point."
+        (interactive "sProperty: ")
+        (let ((property-value (org-entry-get (point) property)))
+          (if property-value
+              property-value
+            nil)))
+      
+      (defun tuxikus/org-attach-id-get-path ()
+        "Return the path of the attachment at point."
+        (interactive)
+        (let* ((attachment-dir (tuxikus/org-get-property "id"))
+               (first-part (substring attachment-dir 0 2))
+               (second-part (substring attachment-dir 2))
+               (final-dir (concat org-attach-id-dir "/" first-part "/" second-part))
+               (files (directory-files final-fir))
+               (files (remove "." files))
+               (files (remove ".." files))
+               (file-path (concat
+                           org-attach-id-dir
+                           "/"
+                           first-part
+                           "/"
+                           second-part
+                           (car files))))
+          (if (= (length files) 1)
+              (if (called-interactively-p)
+                  (message "%s" files-path)
+                (error "More than one attachment found!")))))
+      
+      (defcustom tuxikus/ssh-config-file "~/.ssh/config"
+        "SSH config file path.")
+      
+      (defun tuxikus/parse-ssh-config ()
+        "Return a list of hosts form the tuxikus/ssh-config-file"
+        (let ((ssh-config-file (expand-file-name tuxikus/ssh-config-file))
+              (hosts '()))
+          (with-temp-buffer
+            (insert-file-contents ssh-config-file)
+            (goto-char (point-min))
+            (while (re-search-forward "^Host .*" nil t)
+              (let ((host (nth 1 (split-string (match-string 0) " "))))
+                (push host hosts))))
+          hosts))
+      
+      (defun tuxikus/tabspaces-ssh-workspace ()
+        "Create a new tabspaces workspace and connect to the selected machine via ssh in vterm"
+        (interactive)
+        (let ((selected-host (completing-read "Host: " (tuxikus/parse-ssh-config))))
+          (tabspaces-switch-or-create-workspace (concat "ssh:" selected-host))
+          ;; (unless (get-buffer selecet-host)
+          ;;   (vterm selected-host))
+          (vterm (concat "ssh-" selected-host))
+          (vterm--goto-line -1)
+          (vterm-send-string (concat "ssh " selected-host))
+          (vterm-send-return)))
     '';
   };
 }
