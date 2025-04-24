@@ -30,6 +30,7 @@ let
       embark-org-roam
       ess
       exec-path-from-shell
+      hydra
       fireplace
       flycheck
       flycheck-inline
@@ -125,12 +126,10 @@ in
          ("C-S-e" . end-of-buffer)
          ("M-z" . zap-up-to-char)
          ("C-z" . nil))
-      
         :hook
         ((before-save . whitespace-cleanup)
          (makefile-mode . indent-tabs-mode)
          (prog-mode . display-line-numbers-mode))
-      
         :init
         (fset 'yes-or-no-p 'y-or-n-p)
         (auto-save-mode -1)
@@ -140,22 +139,9 @@ in
         ;;(save-place-mode 1)
         (global-auto-revert-mode 1)
         (setq-default indent-tabs-mode nil)
-      
-        ;; disable bell
         (setq ring-bell-function 'ignore)
-      
-        ;; line numbers, enabled via prog-mode-hook
         (setq display-line-numbers-type 'relative)
-      
-        ;; cursor
-        ;;(setq-default cursor-type 'box)
-      
-        ;; line numbers
-        ;;(setq display-line-numbers 'relative)
-        ;;(global-display-line-numbers-mode)
-      
         (load-theme 'modus-operandi t)
-      
         :config
         ;; mode line
         (setq-default mode-line-format
@@ -166,24 +152,16 @@ in
                                            'face '(:weight bold)))
                        '(:eval (propertize (format " %s " major-mode)
                                            'face '(:weight bold)))))
-      
         ;; move mode line to top
         (setq-default header-line-format mode-line-format)
         (setq-default mode-line-format nil)
-      
-        ;; undeline header line
-        ;; (custom-set-faces
-        ;;  '(header-line ((t (:underline "black" :weight bold)))))
-      
         ;; tab bar
         (setq tab-bar-new-button nil
               tab-bar-close-button nil)
-      
         ;; Customize the appearance of the tab-bar
         (set-face-attribute 'tab-bar nil
                             :height 0.9  ;; Adjust the height of the tab text
                             :weight 'bold)  ;; Make the tab text bold
-      
         (setq create-lockfiles nil
               make-backup-files nil
               custom-theme-directory "~/.emacs.d/themes"
@@ -192,21 +170,16 @@ in
               initial-scratch-message ";;; Emacs is fun"
               global-auto-revert-non-file-buffers t
               org-id-uuid-program "~/.local/bin/uuidgenlc")
-      
         ;; (set-frame-font "Iosevka Nerd Font-15" nil t) ; test fonts
         (add-to-list 'default-frame-alist
                      '(font . "Iosevka Nerd Font-${config.fontSize}"))
-      
         (which-key-mode 1)
-      
         :custom
         (enable-recursive-minibuffers t)
         (read-extended-command-predicate #'command-completion-default-include-p)
-      
         ;; Emacs 30 and newer: Disable Ispell completion function.
         ;; Try `cape-dict' as an alternative.
         (text-mode-ispell-word-completion nil)
-      
         ;; Hide commands in M-x which do not apply to the current mode.
         (read-extended-command-predicate #'command-completion-default-include-p))
       
@@ -298,7 +271,6 @@ in
       (use-package consult
         :bind
         (("C-c M-x" . consult-mode-command)
-         ("C-c h" . consult-history)
          ("C-c k" . consult-kmacro)
          ("C-c m" . consult-man)
          ("C-c i" . consult-info)
@@ -308,9 +280,6 @@ in
          ("C-x t b" . consult-buffer-other-tab)
          ("C-x r b" . consult-bookmark)
          ("C-x p b" . consult-project-buffer)
-         ("M-#" . consult-register-load)
-         ("M-'" . consult-register-store)
-         ("C-M-#" . consult-register)
          ("M-y" . consult-yank-pop)
          ("M-g e" . consult-compile-error)
          ("M-g g" . consult-goto-line)
@@ -321,7 +290,6 @@ in
          ("M-g i" . consult-imenu)
          ("M-g I" . consult-imenu-multi)
          ("M-s d" . consult-find)
-         ("M-s c" . consult-locate)
          ("M-s g" . consult-grep)
          ("M-s G" . consult-git-grep)
          ("M-s r" . consult-ripgrep)
@@ -584,6 +552,14 @@ in
       (use-package yasnippet
         :init
         (yas-global-mode 1))
+      
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;;;                               Hydras                                             ;;;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      
+      (defhydra hydra-clock (:color blue)
+                "     Org-Clock"
+                ("q" nil "quit" :column "Clock")
       
         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         ;;;                               Functions                                          ;;;
