@@ -25,7 +25,6 @@ let
       dockerfile-mode
       dslide
       eat
-      elisp-autofmt
       embark
       embark-consult
       embark-org-roam
