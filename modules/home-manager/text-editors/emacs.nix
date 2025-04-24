@@ -29,6 +29,7 @@ let
       embark-consult
       embark-org-roam
       ess
+      exec-path-from-shell
       fireplace
       flycheck
       flycheck-inline
@@ -341,6 +342,14 @@ in
         (corfu-echo-documentation nil)
         (tab-always-indent 'complete)
         (completion-cycle-threshold nil))
+      
+      (use-package exec-path-from-shell
+        :config
+        (when (memq window-system '(mac ns x))
+          (exec-path-from-shell-initialize))
+      
+        (when (daemonp)
+          (exec-path-from-shell-initialize)))
       
       (use-package dashboard
         :config
