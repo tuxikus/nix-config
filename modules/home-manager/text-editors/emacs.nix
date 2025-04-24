@@ -25,6 +25,7 @@ let
       dockerfile-mode
       dslide
       eat
+      elisp-autofmt
       embark
       embark-consult
       embark-org-roam
@@ -656,6 +657,13 @@ in
               (delete-file file)
               (kill-buffer)
               (message "%s deleted" file)))))
+      
+      (defun tuxikus/org-set-sha256sum ()
+        "Insert the sha256sum of the attachment at point."
+        (interactive)
+        (org-set-property
+         "sha256" (concat "  "
+                          (string-trim (car (split-string (shell-command-to-string (format "sha256sum %s" (tuxikus/org-attach-id-get-path))) " "))))))
     '';
   };
 }
