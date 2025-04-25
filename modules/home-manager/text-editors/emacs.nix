@@ -113,6 +113,10 @@ in
     };
 
     home.file.".emacs.d/init.el".text = ''
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ;;;                                           use-package                                        ;;;
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      
       (use-package emacs
         :bind
         (("M-<tab>" . completion-at-point)
@@ -125,6 +129,7 @@ in
          ("C-S-a" . beginning-of-buffer)
          ("C-S-e" . end-of-buffer)
          ("M-z" . zap-up-to-char)
+         ("C-c h o" . tuxikus/hydra-org/body)
          ("C-z" . nil))
         :hook
         ((before-save . whitespace-cleanup)
@@ -471,13 +476,15 @@ in
                                                                  (dot . t)
                                                                  (gnuplot . t))))
       
-      
       (use-package org-roam
         :bind
         (("C-c r f" . org-roam-node-find)
          ("C-c r i" . org-roam-node-insert))
         :custom
         (org-roam-directory (concat org-directory "/roam"))
+        (org-roam-dailies-capture-templates
+         '(("d" "default" entry "* %<%H:%M %p>: %?"
+            :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))))
         :config
         ;; If you're using a vertical completion framework, you might want a more informative completion interface
         (setq org-roam-node-display-template (concat "''${title:*} " (propertize "''${tags:10}" 'face 'org-tag)))
@@ -528,7 +535,9 @@ in
         :init
         (savehist-mode))
       
-      (use-package org-download)
+      (use-package org-download
+        :init
+        (setq org-download-method 'attach))
       
       (use-package go-mode)
       
@@ -557,9 +566,17 @@ in
         ;;;                               Hydras                                             ;;;
         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
-      (defhydra hydra-clock (:color blue)
-                "     Org-Clock"
-                ("q" nil "quit" :column "Clock")
+      (defhydra tuxikus/hydra-org (:color green :hint nil)
+        "Org hydra"
+        ;; Roam
+        ("rf" org-roam-node-find "Roam node find" :column "Roam")
+        ("ri" org-roam-node-insert "Roam node insert" :column "Roam")
+        ("rc" tuxikus/change-org-directory "Change org directory" :column "Roam")
+        ("rc" org-roam-dailies-capture-today "Capture daily" :column "Roam")
+        ;; Clock
+        ("ci" org-clock-in "Clock in" :column "Clock")
+        ("co" org-clock-out "Clock out" :column "Clock")
+        ("q" nil "quit" :column "Options"))
       
         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         ;;;                               Functions                                          ;;;
@@ -701,6 +718,28 @@ in
           (vterm--goto-line -1)
           (vterm-send-string (concat "ssh " selected-host))
           (vterm-send-return)))
+      
+      (defun tuxikus/generate-config-header (text border-char size)
+        "Insert a header with width SIZE and the TEXT centered."
+        (let* ((border-char border-char)
+               (border-length size)
+               (border-begin-end-length 3)
+               (text-length (length text))
+               (padding (max 0 (/ (- border-length text-length border-begin-end-length) 2)))
+               (header (concat (make-string border-begin-end-length ?\;)
+                               (make-string padding ? )
+                               text
+                               (make-string (- border-length padding text-length (* border-begin-end-length 2)) ? )
+                               (make-string border-begin-end-length ?\;))))
+          (concat (make-string border-length ?\;)
+                  "\n"
+                  header
+                  "\n"
+                  (make-string border-length ?\;))))
+      
+      (defun tuxikus/insert-config-header-large (text border-char)
+        (interactive "sText: \nsBorder Character: ")
+        (insert (tuxikus/generate-config-header text border-char 100)))
     '';
   };
 }
