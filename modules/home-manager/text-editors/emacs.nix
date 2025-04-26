@@ -284,13 +284,10 @@ in
         :map dirvish-mode-map
         ("o" . dirvish-quick-access))
         :custom
-        (dirvish-quick-access-entries ; It's a custom option, `setq' won't work
+        (dirvish-quick-access-entries
          '(("h" "~/"                          "Home")
            ("d" "~/Downloads/"                "Downloads")
-           ("m" "/mnt/"                       "Drives")
-           ("s" "/ssh:my-remote-server")      "SSH server"
-           ("e" "/sudo:root@localhost:/etc")  "Modify program settings"
-           ("t" "~/.local/share/Trash/files/" "TrashCan")))
+           ("m" "/mnt/"                       "Drives")))
         :hook
         (after-init . direnv-mode))
       
@@ -576,7 +573,9 @@ in
         ;;;                         magit                        ;;;
         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
-      (use-package magit)
+      (use-package magit
+        :bind
+        ("C-x g" . magit))
       
         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         ;;;                      marginalia                      ;;;
