@@ -49,9 +49,9 @@ in
     sessionPath = [ "$HOME/.local/bin" ];
   };
 
-  services = {
-    emacs.enable = true;
-  };
+  # services = {
+  #   emacs.enable = true;
+  # };
 
   programs = {
     home-manager.enable = true;
