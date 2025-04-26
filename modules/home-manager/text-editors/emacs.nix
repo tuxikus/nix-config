@@ -17,7 +17,6 @@ let
       consult
       consult-yasnippet
       corfu
-      corfu-terminal
       dashboard
       direnv
       dirvish
@@ -123,6 +122,15 @@ in
                 (const :tag "podman" podman))
         :group 'custom)
       
+      (defcustom tuxikus/ssh-config-file "~/.ssh/config"
+        "SSH config file path.")
+      
+      (defcustom tuxikus/nix-config-directory "~/projects/personal/nix-config/"
+        "Nix config directory")
+      
+      (defcustom tuxikus/nix-flake-host "zeus"
+        "Nix flake host")
+      
         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         ;;;                                          use-package                                         ;;;
         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -132,10 +140,7 @@ in
         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
       (use-package aas
-        :hook
-        ((LaTeX-mode . aas-activate-for-major-mode)
-         (org-mode . aas-activate-for-major-mode))
-        :config
+        :custom
         (aas-set-snippets 'text-mode
           "o:" "ö"
           "O:" "Ö"
@@ -143,7 +148,10 @@ in
           "U:" "Ü"
           "a:" "ä"
           "A:" "Ä"
-          "sz" "ß"))
+          "sz" "ß")
+        :hook
+        ((LaTeX-mode . aas-activate-for-major-mode)
+         (org-mode . aas-activate-for-major-mode)))
       
         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         ;;;                      ace-window                      ;;;
@@ -152,9 +160,9 @@ in
       (use-package ace-window
         :bind
         (("M-o" . ace-window))
-        :init
-        (setq aw-dispatch-always t)
-        (setq aw-keys '(?a ?o ?e ?u ?h ?t ?n ?s ?f)))
+        :custom
+        (aw-dispatch-always t)
+        (aw-keys '(?a ?o ?e ?u ?h ?t ?n ?s ?f)))
       
         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         ;;;                          avy                         ;;;
@@ -171,18 +179,7 @@ in
         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
       (use-package cape
-        :bind ("M-p" . cape-prefix-map)
-        :init
-        (add-hook 'completion-at-point-functions #'cape-dabbrev)
-        ;;(add-hook 'completion-at-point-functions #'cape-abbrev)
-        (add-hook 'completion-at-point-functions #'cape-file)
-        (add-hook 'completion-at-point-functions #'cape-elisp-block)
-        (add-hook 'completion-at-point-functions #'cape-emoji)
-        ;;(add-hook 'completion-at-point-functions #'cape-dict)
-        (add-hook 'completion-at-point-functions #'cape-rfc1345)
-        (add-hook 'completion-at-point-functions #'cape-sgml)
-        (add-hook 'completion-at-point-functions #'cape-tex)
-        (add-hook 'completion-at-point-functions #'cape-history))
+        :bind ("M-p" . cape-prefix-map))
       
         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         ;;;                        consult                       ;;;
@@ -229,36 +226,34 @@ in
         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
       (use-package corfu
-        :init
-        (unless (display-graphic-p)
-          (corfu-terminal-mode +1))
-        :config
-        (global-corfu-mode)
         :custom
         (corfu-auto nil)
         (corfu-echo-documentation nil)
         (tab-always-indent 'complete)
-        (completion-cycle-threshold nil))
+        (completion-cycle-threshold nil)
+        :hook
+        (after-init . global-corfu-mode))
       
         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         ;;;                       dashboard                      ;;;
         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
       (use-package dashboard
-        :config
-        (setq dashboard-projects-backend 'project-el)
-        (setq dashboard-items '((recents   . 10)
+        :custom
+        (dashboard-projects-backend 'project-el)
+        (dashboard-items '((recents   . 10)
                                 (bookmarks . 10)
                                 (projects  . 10)
                                 (agenda    . 10)
                                 (registers . 10)))
-        (setq dashboard-item-shortcuts '((recents   . "r")
+        (dashboard-item-shortcuts '((recents   . "r")
                                          (bookmarks . "m")
                                          (projects  . "p")
                                          (agenda    . "a")
                                          (registers . "e")))
-        (setq initial-buffer-choice (lambda () (get-buffer-create dashboard-buffer-name)))
-        (dashboard-setup-startup-hook))
+        (initial-buffer-choice (lambda () (get-buffer-create dashboard-buffer-name)))
+        :hook
+        (after-init . dashboard-setup-startup))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                         dired                        ;;;
@@ -273,16 +268,16 @@ in
         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
       (use-package direnv
-        :init
-        (direnv-mode))
+        :hook
+        (after-init . direnv-mode))
       
         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         ;;;                        dirvish                       ;;;
         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
       (use-package dirvish
-        :init
-        (dirvish-override-dired-mode))
+        :hook
+        (after-init . dirvish-override-dired-mode))
       
         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         ;;;                        docker                        ;;;
@@ -300,7 +295,7 @@ in
           ('podman
            (setf docker-command "podman"
                  docker-compose-command "podman-compose"
-                 docker-container-tramp-methodu "podman"))))
+                 docker-container-tramp-method "podman"))))
       
         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         ;;;                    dockerfile-mode                   ;;;
@@ -386,12 +381,13 @@ in
          ("C-S-a" . beginning-of-buffer)
          ("C-S-e" . end-of-buffer)
          ("M-z" . zap-up-to-char)
-         ("C-c h o" . tuxikus/hydra-org/body)
          ("C-z" . nil))
         :hook
         ((before-save . whitespace-cleanup)
          (makefile-mode . indent-tabs-mode)
-         (prog-mode . display-line-numbers-mode))
+         (prog-mode . display-line-numbers-mode)
+         (git-commit-setup . tuxikus/insert-jira-ticket-number))
+      
         :init
         (fset 'yes-or-no-p 'y-or-n-p)
         (auto-save-mode -1)
@@ -488,7 +484,10 @@ in
         ;;;                         hydra                        ;;;
         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
-      (use-package hydra)
+      (use-package hydra
+        :bind
+        (("C-c h o" . tuxikus/org-hydra/body)
+         ("C-c h n" . tuxikus/nix-hydra/body)))
       
         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         ;;;                       fireplace                      ;;;
@@ -858,7 +857,7 @@ in
       ;;;                                            hydras                                            ;;;
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
-      (defhydra tuxikus/hydra-org (:color green :hint nil)
+      (defhydra tuxikus/org-hydra (:color green :hint nil)
         "Org hydra"
         ;; Roam
         ("rf" org-roam-node-find "Roam node find" :column "Roam")
@@ -870,6 +869,12 @@ in
         ("co" org-clock-out "Clock out" :column "Clock")
         ("q" nil "quit" :column "Options"))
       
+      (defhydra tuxikus/nix-hydra (:color green :hint nil)
+        "Nix hydra"
+        ("u" tuxikus/nix-flake-update "Nix flake update")
+        ("r" tuxikus/nix-rebuild-switch "Nix flake update")
+        ("q" nil "quit"))
+      
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                                           functions                                          ;;;
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -878,9 +883,8 @@ in
         (when (string-match "[A-Z]\\{8\\}-[0-9]*" branch)
           (message (match-string 0 branch))))
       
-      (add-hook 'git-commit-setup-hook
-                '(lambda ()
-                   (insert (concat (tuxikus/get-jira-ticket-number (magit-get-current-branch) ": ")))))
+      (defun tuxikus/insert-jira-ticket-number ()
+        (insert (concat (tuxikus/get-jira-ticket-number (magit-get-current-branch) ": "))))
       
       (defun tuxikus/get-bookmarks-from-file ()
         "Get bookmarks from the bookmark file"
@@ -984,8 +988,6 @@ in
                   (message "%s" files-path)
                 (error "More than one attachment found!")))))
       
-      (defcustom tuxikus/ssh-config-file "~/.ssh/config"
-        "SSH config file path.")
       
       (defun tuxikus/parse-ssh-config ()
         "Return a list of hosts form the tuxikus/ssh-config-file"
@@ -1040,6 +1042,20 @@ in
       (defun tuxikus/insert-elips-config-header-small (text)
         (interactive "sText: ")
         (insert (tuxikus/generate-elisp-config-header text 30)))
+      
+      (defun tuxikus/nix-flake-update ()
+        (interactive)
+        (async-shell-command (concat
+                              "nix flake update --flake "
+                              tuxikus/nix-config-directory)))
+      
+      (defun tuxikus/nix-rebuild-switch ()
+        (interactive)
+        (async-shell-command (concat
+                              "sudo nixos-rebuild switch --flake "
+                              tuxikus/nix-config-directory
+                              ".#"
+                              tuxikus/nix-flake-host)))
     '';
   };
 }
