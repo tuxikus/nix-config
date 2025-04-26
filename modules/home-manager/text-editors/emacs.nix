@@ -625,11 +625,12 @@ in
       (use-package org
         :bind
         (("C-M-<return>" . org-insert-subheading))
+        :custom
+        ((org-attach-id-dir "~/org/.attach")
+         (org-log-done 'time)
+         (org-imenu-depth 7)
+         (org-complete-tags-always-offer-all-agenda-tags t))
         :init
-        (setq org-attach-id-dir "~/org/.attach"
-              org-log-done 'time
-              org-imenu-depth 7
-              org-complete-tags-always-offer-all-agenda-tags t)
         (org-babel-do-load-languages
          'org-babel-load-languages '((shell . t)
                                      (emacs-lisp . t)
