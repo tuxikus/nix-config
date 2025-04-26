@@ -1168,9 +1168,9 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
   ;;; Commentary:
   ;;; Code:
 
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;;;                                            custom                                            ;;;
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                                            custom                                            ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   (defcustom container-executable 'podman
     "The executable to be used with docker mode."
@@ -1203,7 +1203,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   (use-package aas
-    :custom
+    :config
     (aas-set-snippets 'text-mode
       "o:" "ö"
       "O:" "Ö"
