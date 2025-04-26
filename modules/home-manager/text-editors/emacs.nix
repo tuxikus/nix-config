@@ -396,7 +396,6 @@ in
         :bind
         (("M-<tab>" . completion-at-point)
          ("C-c d" . duplicate-line)
-         ("C-c f a" . format-all-buffer)
          ("C-c e r" . eval-region)
          ("C-c e b" . eval-buffer)
          ("C-c w m" . whitespace-mode)
