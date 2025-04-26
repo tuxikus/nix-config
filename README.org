@@ -275,6 +275,7 @@ Specs:
       hyprsunset
       keepassxc
       ledger
+      poppler_utils
       mpd
       mpv
       pass
@@ -952,7 +953,6 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
         orderless
         org-download
         org-modern
-        org-present
         org-roam
         org-roam-ui
         org-superstar
@@ -1023,12 +1023,410 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
     };
   }
 #+end_src
+***** Package list :noexport:
+#+begin_src emacs-lisp :results value list
+  (defun sort-packages ()
+    (let ((packages '("aas"
+                     "ace-window"
+                     "avy"
+                     "cape"
+                     "consult"
+                     "consult-yasnippet"
+                     "corfu"
+                     "corfu-terminal"
+                     "dashboard"
+                     "direnv"
+                     "dirvish"
+                     "docker"
+                     "dockerfile-mode"
+                     "dslide"
+                     "eat"
+                     "emacs"
+                     "electric"
+                     "em-banner"
+                     "org"
+                     "eglot"
+                     "moc"
+                     "dired"
+                     "savehist"
+                     "embark"
+                     "embark-consult"
+                     "embark-org-roam"
+                     "ess"
+                     "exec-path-from-shell"
+                     "hydra"
+                     "fireplace"
+                     "flycheck"
+                     "flycheck-inline"
+                     "format-all"
+                     "git-link"
+                     "go-mode"
+                     "hide-mode-line"
+                     "htmlize"
+                     "ledger-mode"
+                     "magit"
+                     "marginalia"
+                     "move-text"
+                     "nix-mode"
+                     "orderless"
+                     "org-download"
+                     "org-modern"
+                     "org-roam"
+                     "org-roam-ui"
+                     "org-superstar"
+                     "pass"
+                     "pdf-tools"
+                     "python-mode"
+                     "pyvenv"
+                     "ripgrep"
+                     "rust-mode"
+                     "salt-mode"
+                     "spacious-padding"
+                     "tabspaces"
+                     "verb"
+                     "treesit"
+                     "vertico"
+                     "vterm"
+                     "vundo"
+                     "walkman"
+                     "wgrep"
+                     "yasnippet")))
+      (sort packages)))
+
+  (sort-packages)
+#+end_src
+#+RESULTS:
+- aas
+- ace-window
+- avy
+- cape
+- consult
+- consult-yasnippet
+- corfu
+- corfu-terminal
+- dashboard
+- dired
+- direnv
+- dirvish
+- docker
+- dockerfile-mode
+- dslide
+- eat
+- eglot
+- electric
+- em-banner
+- emacs
+- embark
+- embark-consult
+- embark-org-roam
+- ess
+- exec-path-from-shell
+- fireplace
+- flycheck
+- flycheck-inline
+- format-all
+- git-link
+- go-mode
+- hide-mode-line
+- htmlize
+- hydra
+- ledger-mode
+- magit
+- marginalia
+- moc
+- move-text
+- nix-mode
+- orderless
+- org
+- org-download
+- org-modern
+- org-roam
+- org-roam-ui
+- org-superstar
+- pass
+- pdf-tools
+- python-mode
+- pyvenv
+- ripgrep
+- rust-mode
+- salt-mode
+- savehist
+- spacious-padding
+- tabspaces
+- treesit
+- verb
+- vertico
+- vterm
+- vundo
+- walkman
+- wgrep
+- yasnippet
+
 ***** Configuration
 #+name: emacs-configuration
 #+begin_src emacs-lisp
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;;;                                           use-package                                        ;;;
+  ;;;                                            custom                                            ;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (defcustom container-executable 'podman
+    "The executable to be used with docker mode."
+    :type '(choice
+            (const :tag "docker" docker)
+            (const :tag "podman" podman))
+    :group 'custom)
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                                          use-package                                         ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                          aas                         ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package aas
+    :hook
+    ((LaTeX-mode . aas-activate-for-major-mode)
+     (org-mode . aas-activate-for-major-mode))
+    :config
+    (aas-set-snippets 'text-mode
+      "o:" "ö"
+      "O:" "Ö"
+      "u:" "ü"
+      "U:" "Ü"
+      "a:" "ä"
+      "A:" "Ä"
+      "sz" "ß"))
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                      ace-window                      ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package ace-window
+    :bind
+    (("M-o" . ace-window))
+    :init
+    (setq aw-dispatch-always t)
+    (setq aw-keys '(?a ?o ?e ?u ?h ?t ?n ?s ?f)))
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                          avy                         ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package avy
+    :bind
+    (("M-g f" . avy-goto-line)
+     ("M-g w" . avy-goto-word-1)
+     ("C-'" . avy-goto-char-2)))
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                         cape                         ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package cape
+    :bind ("M-p" . cape-prefix-map)
+    :init
+    (add-hook 'completion-at-point-functions #'cape-dabbrev)
+    ;;(add-hook 'completion-at-point-functions #'cape-abbrev)
+    (add-hook 'completion-at-point-functions #'cape-file)
+    (add-hook 'completion-at-point-functions #'cape-elisp-block)
+    (add-hook 'completion-at-point-functions #'cape-emoji)
+    ;;(add-hook 'completion-at-point-functions #'cape-dict)
+    (add-hook 'completion-at-point-functions #'cape-rfc1345)
+    (add-hook 'completion-at-point-functions #'cape-sgml)
+    (add-hook 'completion-at-point-functions #'cape-tex)
+    (add-hook 'completion-at-point-functions #'cape-history))
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                        consult                       ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package consult
+    :bind
+    (("C-c M-x" . consult-mode-command)
+     ("C-c k" . consult-kmacro)
+     ("C-c m" . consult-man)
+     ("C-c i" . consult-info)
+     ("C-x b" . consult-buffer)
+     ("C-x 4 b" . consult-buffer-other-window)
+     ("C-x 5 b" . consult-buffer-other-frame)
+     ("C-x t b" . consult-buffer-other-tab)
+     ("C-x r b" . consult-bookmark)
+     ("C-x p b" . consult-project-buffer)
+     ("M-y" . consult-yank-pop)
+     ("M-g e" . consult-compile-error)
+     ("M-g g" . consult-goto-line)
+     ("M-g M-g" . consult-goto-line)
+     ("M-g o" . consult-outline)
+     ("M-g m" . consult-mark)
+     ("M-g k" . consult-global-mark)
+     ("M-g i" . consult-imenu)
+     ("M-g I" . consult-imenu-multi)
+     ("M-s d" . consult-find)
+     ("M-s g" . consult-grep)
+     ("M-s G" . consult-git-grep)
+     ("M-s r" . consult-ripgrep)
+     ("M-s l" . consult-line)
+     ("M-s L" . consult-line-multi)
+     ("M-s k" . consult-keep-lines)
+     ("M-s u" . consult-focus-lines)))
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                   consult-yasnippet                  ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package consult-yasnippet)
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                         corfu                        ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package corfu
+    :init
+    (unless (display-graphic-p)
+      (corfu-terminal-mode +1))
+    :config
+    (global-corfu-mode)
+    :custom
+    (corfu-auto nil)
+    (corfu-echo-documentation nil)
+    (tab-always-indent 'complete)
+    (completion-cycle-threshold nil))
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                       dashboard                      ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package dashboard
+    :config
+    (setq dashboard-projects-backend 'project-el)
+    (setq dashboard-items '((recents   . 10)
+                            (bookmarks . 10)
+                            (projects  . 10)
+                            (agenda    . 10)
+                            (registers . 10)))
+    (setq dashboard-item-shortcuts '((recents   . "r")
+                                     (bookmarks . "m")
+                                     (projects  . "p")
+                                     (agenda    . "a")
+                                     (registers . "e")))
+    (setq initial-buffer-choice (lambda () (get-buffer-create dashboard-buffer-name)))
+    (dashboard-setup-startup-hook))
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;                         dired                        ;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  ;; (use-package dired
+  ;;   :config
+  ;;   (put 'dired-find-alternate-file 'disabled nil))
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                        direnv                        ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package direnv
+    :init
+    (direnv-mode))
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                        dirvish                       ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package dirvish
+    :init
+    (dirvish-override-dired-mode))
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                        docker                        ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package docker
+    :bind
+    ;;("C-c d" . docker)
+    :config
+    (pcase container-executable
+      ('docker
+       (setf docker-command "docker"
+             docker-compose-command "docker-compose"
+             docker-container-tramp-method "docker"))
+      ('podman
+       (setf docker-command "podman"
+             docker-compose-command "podman-compose"
+             docker-container-tramp-methodu "podman"))))
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                    dockerfile-mode                   ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package dockerfile-mode
+    :mode "Dockerfile\\'")
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                        dslide                        ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package dslide)
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                          eat                         ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package eat
+    :bind
+    (("C-c t e". eat)))
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;                         eglot                        ;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package eglot
+    ;; :hook
+    ;; ((python-ts-mode . eglot-ensure)
+    ;;  (python-mode . eglot-ensure))
+    :custom
+    (eglot-autoshutdown t)
+    (eglot-confirm-server-initiated-edits nil))
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                       electric                       ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package electric
+    :init
+    ;;(setq electric-pair-preserve-balance nil)
+    (electric-pair-mode)
+    :config
+    (defvar latex-mode-electric-pairs '((?$ . ?$))
+      "Electric pairs for LaTeX mode.")
+    (defvar org-mode-electric-pairs '(())
+      "Electric pairs for org mode.")
+    (defun latex-mode-add-electric-pairs ()
+      "Add electric pairs for LaTeX mode."
+      (setq-local electric-pair-pairs (append electric-pair-pairs latex-mode-electric-pairs))
+      (setq-local electric-pair-text-pairs electric-pair-pairs)
+      (message "Electric pairs added for LaTeX mode: %s" electric-pair-pairs))
+    (defun org-mode-add-electric-pairs ()
+      "Add electric pairs for org mode."
+      (setq-local electric-pair-pairs (append electric-pair-pairs
+                                              org-mode-electric-pairs
+                                              latex-mode-electric-pairs))
+      (setq-local electric-pair-text-pairs electric-pair-pairs)
+      (message "Electric pairs added for org mode: %s" electric-pair-pairs))
+    :hook
+    (latex-mode . latex-mode-add-electric-pairs)
+    (org-mode . org-mode-add-electric-pairs))
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;                       em-banner                      ;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package em-banner)
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;                         emacs                        ;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 
   (use-package emacs
     :bind
@@ -1101,33 +1499,314 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
     ;; Hide commands in M-x which do not apply to the current mode.
     (read-extended-command-predicate #'command-completion-default-include-p))
 
-  (use-package dirvish
-    :init
-    (dirvish-override-dired-mode))
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                        embark                        ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package embark
+    :bind
+    ("C-." . embark-act)
+    ("M-." . embark-dwim))
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                    embark-consult                    ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package embark-consult)
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                    embark-org-roam                   ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package embark-org-roam)
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                          ess                         ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package ess)
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                 exec-path-from-shell                 ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package exec-path-from-shell
+    :config
+    (when (memq window-system '(mac ns x))
+      (exec-path-from-shell-initialize))
+    (when (daemonp)
+      (exec-path-from-shell-initialize)))
+
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                         hydra                        ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package hydra)
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                       fireplace                      ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package fireplace)
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                       flycheck                       ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package flycheck
+    :hook
+    (after-init . global-flycheck-mode))
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                    flycheck-inline                   ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package flycheck-inline
+    :config
+    (with-eval-after-load 'flycheck
+      (add-hook 'flycheck-mode-hook #'flycheck-inline-mode)))
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                      format-all                      ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package format-all)
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                       git-link                       ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package git-link)
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                        go-mode                       ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package go-mode
+    :mode "\\.go\\'")
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                    hide-mode-line                    ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package hide-mode-line)
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                        htmlize                       ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package htmlize)
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                      ledger-mode                     ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   (use-package ledger-mode
     :mode "\\.lgr\\'")
 
-  (use-package aas
-    :hook
-    ((LaTeX-mode . aas-activate-for-major-mode)
-     (org-mode . aas-activate-for-major-mode))
-    :config
-    (aas-set-snippets 'text-mode
-      ":o" "ö"
-      ":O" "Ö"
-      ":u" "ü"
-      ":U" "Ü"
-      ":a" "ä"
-      ":A" "Ä"
-      "sz" "ß"))
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                         magit                        ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-  (use-package ace-window
-    :bind
-    (("M-o" . ace-window))
+  (use-package magit)
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                      marginalia                      ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package marginalia
+    :bind (:map minibuffer-local-map
+                ("M-A" . marginalia-cycle))
     :init
-    (setq aw-dispatch-always t)
-    (setq aw-keys '(?a ?o ?e ?u ?h ?t ?n ?s ?f)))
+    (marginalia-mode))
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;                          moc                         ;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package moc)
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                       move-text                      ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package move-text
+    :init
+    (move-text-default-bindings))
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                       nix-mode                       ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package nix-mode
+    :mode "\\.nix\\'")
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                       orderless                      ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package orderless
+    :custom
+    (completion-styles '(orderless flex))
+    (completion-category-defaults nil)
+    (completion-category-overrides '((file (styles basic partial-completion)))))
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;                          org                         ;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package org
+    :bind
+    (("C-M-<return>" . org-insert-subheading))
+    :init
+    (setq org-attach-id-dir "~/org/.attach"
+          org-log-done 'time
+          org-imenu-depth 7
+          org-complete-tags-always-offer-all-agenda-tags t)
+    (org-babel-do-load-languages
+     'org-babel-load-languages '((shell . t)
+                                 (emacs-lisp . t)
+                                 (python . t)
+                                 (R . t)
+                                 (dot . t)
+                                 (gnuplot . t))))
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                     org-download                     ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package org-download
+    :init
+    (setq org-download-method 'attach))
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                      org-modern                      ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package org-modern
+    :defer t
+    :hook
+    (org-mode . org-modern-mode)
+    (org-agenda-finalize . org-modern-agenda))
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                       org-roam                       ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package org-roam
+    :bind
+    (("C-c r f" . org-roam-node-find)
+     ("C-c r i" . org-roam-node-insert))
+    :custom
+    (org-roam-directory (concat org-directory "/roam"))
+    (org-roam-dailies-capture-templates
+     '(("d" "default" entry "* %<%H:%M %p>: %?"
+        :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))))
+    :config
+    ;; If you're using a vertical completion framework, you might want a more informative completion interface
+    (setq org-roam-node-display-template (concat "''${title:*} " (propertize "''${tags:10}" 'face 'org-tag)))
+    (org-roam-db-autosync-mode)
+    (setq org-roam-completion-everywhere t)
+    ;; If using org-roam-protocol
+    (require 'org-roam-protocol))
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                      org-roam-ui                     ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package org-roam-ui)
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                     org-superstar                    ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package org-superstar
+    :hook
+    (org-mode . org-superstar-mode))
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                         pass                         ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package pass)
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                       pdf-tools                      ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package pdf-tools
+    :init
+    (pdf-tools-install))
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                      python-mode                     ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package python-mode
+    :defer t
+    :mode "\\.py\\'")
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                        pyvenv                        ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package pyvenv)
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                        ripgrep                       ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package ripgrep)
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                       rust-mode                      ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package rust-mode
+    :defer t
+    :mode "\\.rs\\'")
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                       salt-mode                      ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package salt-mode
+    :defer t
+    :mode "\\.sls\\'")
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;                       savehist                       ;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package savehist
+    :init
+    (savehist-mode))
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                   spacious-padding                   ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package spacious-padding
+    :init
+    (setq spacious-padding-widths
+          '( :internal-border-width 10
+             :header-line-width 5
+             :mode-line-width 5
+             :tab-width 10
+             :right-divider-width 30
+             :scroll-bar-width 8
+             :fringe-width 15))
+    ;; Read the doc string of `spacious-padding-subtle-mode-line' as it
+    ;; is very flexible and provides several examples.
+    (setq spacious-padding-subtle-mode-line
+          `( :mode-line-active 'default
+             :mode-line-inactive vertical-border))
+    (spacious-padding-mode 1))
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                       tabspaces                      ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   (use-package tabspaces
     :hook
@@ -1162,297 +1841,12 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
                                     :predicate #'tabspaces--local-buffer-p
                                     :sort 'visibility
                                     :as #'buffer-name)))
-
         "Set workspace buffer list for consult-buffer.")
       (add-to-list 'consult-buffer-sources 'consult--source-workspace)))
 
-  (use-package avy
-    :bind
-    (("M-g f" . avy-goto-line)
-     ("M-g w" . avy-goto-word-1)
-     ("C-'" . avy-goto-char-2)))
-
-  (use-package cape
-    :bind ("M-p" . cape-prefix-map)
-    :init
-    (add-hook 'completion-at-point-functions #'cape-dabbrev)
-    ;;(add-hook 'completion-at-point-functions #'cape-abbrev)
-    (add-hook 'completion-at-point-functions #'cape-file)
-    (add-hook 'completion-at-point-functions #'cape-elisp-block)
-    (add-hook 'completion-at-point-functions #'cape-emoji)
-    ;;(add-hook 'completion-at-point-functions #'cape-dict)
-    (add-hook 'completion-at-point-functions #'cape-rfc1345)
-    (add-hook 'completion-at-point-functions #'cape-sgml)
-    (add-hook 'completion-at-point-functions #'cape-tex)
-    (add-hook 'completion-at-point-functions #'cape-history))
-
-  (use-package consult
-    :bind
-    (("C-c M-x" . consult-mode-command)
-     ("C-c k" . consult-kmacro)
-     ("C-c m" . consult-man)
-     ("C-c i" . consult-info)
-     ("C-x b" . consult-buffer)
-     ("C-x 4 b" . consult-buffer-other-window)
-     ("C-x 5 b" . consult-buffer-other-frame)
-     ("C-x t b" . consult-buffer-other-tab)
-     ("C-x r b" . consult-bookmark)
-     ("C-x p b" . consult-project-buffer)
-     ("M-y" . consult-yank-pop)
-     ("M-g e" . consult-compile-error)
-     ("M-g g" . consult-goto-line)
-     ("M-g M-g" . consult-goto-line)
-     ("M-g o" . consult-outline)
-     ("M-g m" . consult-mark)
-     ("M-g k" . consult-global-mark)
-     ("M-g i" . consult-imenu)
-     ("M-g I" . consult-imenu-multi)
-     ("M-s d" . consult-find)
-     ("M-s g" . consult-grep)
-     ("M-s G" . consult-git-grep)
-     ("M-s r" . consult-ripgrep)
-     ("M-s l" . consult-line)
-     ("M-s L" . consult-line-multi)
-     ("M-s k" . consult-keep-lines)
-     ("M-s u" . consult-focus-lines)))
-
-  (use-package corfu
-    :init
-    (unless (display-graphic-p)
-      (corfu-terminal-mode +1))
-    :config
-    (global-corfu-mode)
-    :custom
-    (corfu-auto nil)
-    (corfu-echo-documentation nil)
-    (tab-always-indent 'complete)
-    (completion-cycle-threshold nil))
-
-  (use-package exec-path-from-shell
-    :config
-    (when (memq window-system '(mac ns x))
-      (exec-path-from-shell-initialize))
-
-    (when (daemonp)
-      (exec-path-from-shell-initialize)))
-
-  (use-package dashboard
-    :config
-    (setq dashboard-projects-backend 'project-el)
-
-    (setq dashboard-items '((recents   . 10)
-                            (bookmarks . 10)
-                            (projects  . 10)
-                            (agenda    . 10)
-                            (registers . 10)))
-
-    (setq dashboard-item-shortcuts '((recents   . "r")
-                                     (bookmarks . "m")
-                                     (projects  . "p")
-                                     (agenda    . "a")
-                                     (registers . "e")))
-
-    (setq initial-buffer-choice (lambda () (get-buffer-create dashboard-buffer-name)))
-
-    (dashboard-setup-startup-hook))
-
-  ;; (use-package dired
-  ;;   :config
-  ;;   (put 'dired-find-alternate-file 'disabled nil))
-
-  (use-package direnv
-    :init
-    (direnv-mode))
-
-  (use-package pdf-tools
-    :init
-    (pdf-tools-install))
-
-  (defcustom container-executable 'podman
-    "The executable to be used with docker mode."
-    :type '(choice
-            (const :tag "docker" docker)
-            (const :tag "podman" podman))
-    :group 'custom)
-
-  (use-package docker
-    :bind
-    ;;("C-c d" . docker)
-    :config
-    (pcase container-executable
-      ('docker
-       (setf docker-command "docker"
-             docker-compose-command "docker-compose"
-             docker-container-tramp-method "docker"))
-      ('podman
-       (setf docker-command "podman"
-             docker-compose-command "podman-compose"
-             docker-container-tramp-methodu "podman"))))
-
-  (use-package eglot
-    ;; :hook
-    ;; ((python-ts-mode . eglot-ensure)
-    ;;  (python-mode . eglot-ensure))
-    :custom
-    (eglot-autoshutdown t)
-    (eglot-confirm-server-initiated-edits nil))
-
-  (use-package electric
-    :init
-    ;;(setq electric-pair-preserve-balance nil)
-    (electric-pair-mode)
-
-    :config
-    (defvar latex-mode-electric-pairs '((?$ . ?$))
-      "Electric pairs for LaTeX mode.")
-
-    (defvar org-mode-electric-pairs '(())
-      "Electric pairs for org mode.")
-
-    (defun latex-mode-add-electric-pairs ()
-      "Add electric pairs for LaTeX mode."
-      (setq-local electric-pair-pairs (append electric-pair-pairs latex-mode-electric-pairs))
-      (setq-local electric-pair-text-pairs electric-pair-pairs)
-      (message "Electric pairs added for LaTeX mode: %s" electric-pair-pairs))
-
-    (defun org-mode-add-electric-pairs ()
-      "Add electric pairs for org mode."
-      (setq-local electric-pair-pairs (append electric-pair-pairs
-                                              org-mode-electric-pairs
-                                              latex-mode-electric-pairs))
-      (setq-local electric-pair-text-pairs electric-pair-pairs)
-      (message "Electric pairs added for org mode: %s" electric-pair-pairs))
-
-    :hook
-    (latex-mode . latex-mode-add-electric-pairs)
-    (org-mode . org-mode-add-electric-pairs))
-
-  (use-package embark
-    :bind
-    ("C-." . embark-act)
-    ("M-." . embark-dwim))
-
-  (use-package em-banner)
-
-  (use-package flycheck
-    :hook
-    (after-init . global-flycheck-mode))
-
-  (use-package flycheck-inline
-    :config
-    (with-eval-after-load 'flycheck
-      (add-hook 'flycheck-mode-hook #'flycheck-inline-mode)))
-
-  (use-package format-all)
-
-  (use-package magit)
-
-  (use-package marginalia
-    :bind (:map minibuffer-local-map
-                ("M-A" . marginalia-cycle))
-    :init
-    (marginalia-mode))
-
-  (use-package move-text
-    :init
-    (move-text-default-bindings))
-
-  (use-package nix-mode
-    :mode "\\.nix\\'")
-
-  (use-package orderless
-    :custom
-    (completion-styles '(orderless flex))
-    (completion-category-defaults nil)
-    (completion-category-overrides '((file (styles basic partial-completion)))))
-
-  (use-package eat
-    :bind
-    (("C-c t e". eat)))
-
-  (use-package vterm
-    :bind
-    (("C-c t v" . vterm)))
-
-  (use-package org
-    :bind
-    (("C-M-<return>" . org-insert-subheading))
-    :init
-    (setq org-attach-id-dir "~/org/.attach"
-          org-log-done 'time
-          org-imenu-depth 7
-          org-complete-tags-always-offer-all-agenda-tags t)
-    (org-babel-do-load-languages 'org-babel-load-languages '((shell . t)
-                                                             (emacs-lisp . t)
-                                                             (python . t)
-                                                             (R . t)
-                                                             (dot . t)
-                                                             (gnuplot . t))))
-
-  (use-package org-roam
-    :bind
-    (("C-c r f" . org-roam-node-find)
-     ("C-c r i" . org-roam-node-insert))
-    :custom
-    (org-roam-directory (concat org-directory "/roam"))
-    (org-roam-dailies-capture-templates
-     '(("d" "default" entry "* %<%H:%M %p>: %?"
-        :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))))
-    :config
-    ;; If you're using a vertical completion framework, you might want a more informative completion interface
-    (setq org-roam-node-display-template (concat "''${title:*} " (propertize "''${tags:10}" 'face 'org-tag)))
-    (org-roam-db-autosync-mode)
-    (setq org-roam-completion-everywhere t)
-    ;; If using org-roam-protocol
-    (require 'org-roam-protocol))
-
-  (use-package org-modern
-    :ensure t
-    :defer t
-    :hook
-    (org-mode . org-modern-mode)
-    (org-agenda-finalize . org-modern-agenda))
-
-  (use-package org-superstar
-    :hook
-    (org-mode . (lambda () (org-superstar-mode 1))))
-
-  (use-package org-present)
-
-  (use-package salt-mode
-    :hook
-    (salt-mode . (lambda () (flyspell-mode 1))))
-
-  (use-package moc)
-
-  (use-package spacious-padding
-    :init
-    (setq spacious-padding-widths
-          '( :internal-border-width 10
-             :header-line-width 5
-             :mode-line-width 5
-             :tab-width 10
-             :right-divider-width 30
-             :scroll-bar-width 8
-             :fringe-width 15))
-
-    ;; Read the doc string of `spacious-padding-subtle-mode-line' as it
-    ;; is very flexible and provides several examples.
-    (setq spacious-padding-subtle-mode-line
-          `( :mode-line-active 'default
-             :mode-line-inactive vertical-border))
-
-    (spacious-padding-mode 1))
-
-  (use-package savehist
-    :init
-    (savehist-mode))
-
-  (use-package org-download
-    :init
-    (setq org-download-method 'attach))
-
-  (use-package go-mode)
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;                        treesit                       ;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   (use-package treesit
     :init
@@ -1462,22 +1856,61 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
             (go-mode . go-ts-mode)
             (rust-mode . rust-ts-mode))))
 
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                         verb                         ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package verb)
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                        vertico                       ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
   (use-package vertico
     :custom
-    (vertico-scroll-margin 0) ;; Different scroll margin
-    (vertico-count 10) ;; Show more candidates
-    ;; (vertico-resize t) ;; Grow and shrink the Vertico minibuffer
-    (vertico-cycle t) ;; Enable cycling for `vertico-next/previous'
+    (vertico-scroll-margin 0)
+    (vertico-count 10)
+    (vertico-cycle t)
     :init
     (vertico-mode))
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                         vterm                        ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package vterm
+    :bind
+    (("C-c t v" . vterm)))
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                         vundo                        ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package vundo)
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                        walkman                       ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package walkman)
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                         wgrep                        ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package wgrep)
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                       yasnippet                      ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   (use-package yasnippet
     :init
     (yas-global-mode 1))
 
-    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    ;;;                               Hydras                                             ;;;
-    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;                                            hydras                                            ;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   (defhydra tuxikus/hydra-org (:color green :hint nil)
     "Org hydra"
@@ -1491,9 +1924,9 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
     ("co" org-clock-out "Clock out" :column "Clock")
     ("q" nil "quit" :column "Options"))
 
-    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    ;;;                               Functions                                          ;;;
-    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;                                           functions                                          ;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   (defun tuxikus/get-jira-ticket-number (branch)
     (when (string-match "[A-Z]\\{8\\}-[0-9]*" branch)
@@ -1632,17 +2065,17 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
       (vterm-send-string (concat "ssh " selected-host))
       (vterm-send-return)))
 
-  (defun tuxikus/generate-config-header (text border-char size)
+  (defun tuxikus/generate-elisp-config-header (text size)
     "Insert a header with width SIZE and the TEXT centered."
-    (let* ((border-char border-char)
+    (let* ((border-char ";")
            (border-length size)
            (border-begin-end-length 3)
            (text-length (length text))
-           (padding (max 0 (/ (- border-length text-length border-begin-end-length) 2)))
+           (padding (max 0 (/ (- border-length text-length) 2)))
            (header (concat (make-string border-begin-end-length ?\;)
-                           (make-string padding ? )
+                           (make-string (- border-length padding text-length border-begin-end-length) ? )
                            text
-                           (make-string (- border-length padding text-length (* border-begin-end-length 2)) ? )
+                           (make-string (- border-length padding text-length border-begin-end-length) ? )
                            (make-string border-begin-end-length ?\;))))
       (concat (make-string border-length ?\;)
               "\n"
@@ -1650,9 +2083,17 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
               "\n"
               (make-string border-length ?\;))))
 
-  (defun tuxikus/insert-config-header-large (text border-char)
-    (interactive "sText: \nsBorder Character: ")
-    (insert (tuxikus/generate-config-header text border-char 100)))
+  (defun tuxikus/insert-elips-config-header-large (text)
+    (interactive "sText: ")
+    (insert (tuxikus/generate-elisp-config-header text 100)))
+
+  (defun tuxikus/insert-elips-config-header-medium (text)
+    (interactive "sText: ")
+    (insert (tuxikus/generate-elisp-config-header text 60)))
+
+  (defun tuxikus/insert-elips-config-header-small (text)
+    (interactive "sText: ")
+    (insert (tuxikus/generate-elisp-config-header text 30)))
 #+end_src
 ***** Configuration dump
 #+name: emacs-configuration-dumper

@@ -132,6 +132,7 @@ in
     hyprsunset
     keepassxc
     ledger
+    poppler_utils
     mpd
     mpv
     pass
