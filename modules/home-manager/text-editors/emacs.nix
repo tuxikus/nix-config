@@ -281,8 +281,8 @@ in
       (use-package direnv
         :bind
         (("C-c f" . dirvish)
-        :map dirvish-mode-map
-        ("o" . dirvish-quick-access))
+         :map dirvish-mode-map
+         ("o" . dirvish-quick-access))
         :custom
         (dirvish-quick-access-entries
          '(("h" "~/"                          "Home")
@@ -995,7 +995,7 @@ in
                (first-part (substring attachment-dir 0 2))
                (second-part (substring attachment-dir 2))
                (final-dir (concat org-attach-id-dir "/" first-part "/" second-part))
-               (files (directory-files final-fir))
+               (files (directory-files final-dir))
                (files (remove "." files))
                (files (remove ".." files))
                (file-path (concat
@@ -1004,12 +1004,13 @@ in
                            first-part
                            "/"
                            second-part
+                           "/"
                            (car files))))
           (if (= (length files) 1)
               (if (called-interactively-p)
-                  (message "%s" files-path)
-                (error "More than one attachment found!")))))
-      
+                  (message "%s" file-path)
+                file-path)
+            (error "More than one attachment found!"))))
       
       (defun tuxikus/parse-ssh-config ()
         "Return a list of hosts form the tuxikus/ssh-config-file"
