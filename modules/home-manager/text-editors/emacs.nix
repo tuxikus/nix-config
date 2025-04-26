@@ -114,6 +114,7 @@ in
       ;;; init.el --- Emacs configuration file
       ;;; Commentary:
       ;;; Code:
+      
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                                            custom                                            ;;;
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -132,13 +133,13 @@ in
       
       (defcustom tuxikus/nix-config-directory "~/projects/personal/nix-config/"
         "Nix config directory."
-          :type '(string)
-          :group 'custom)
+        :type '(string)
+        :group 'custom)
       
       (defcustom tuxikus/nix-flake-host "zeus"
         "Nix flake host."
-          :type '(string)
-          :group 'custom)
+        :type '(string)
+        :group 'custom)
       
         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         ;;;                                          use-package                                         ;;;
@@ -251,15 +252,15 @@ in
         :custom
         (dashboard-projects-backend 'project-el)
         (dashboard-items '((recents   . 10)
-                                (bookmarks . 10)
-                                (projects  . 10)
-                                (agenda    . 10)
-                                (registers . 10)))
+                           (bookmarks . 10)
+                           (projects  . 10)
+                           (agenda    . 10)
+                           (registers . 10)))
         (dashboard-item-shortcuts '((recents   . "r")
-                                         (bookmarks . "m")
-                                         (projects  . "p")
-                                         (agenda    . "a")
-                                         (registers . "e")))
+                                    (bookmarks . "m")
+                                    (projects  . "p")
+                                    (agenda    . "a")
+                                    (registers . "e")))
         (initial-buffer-choice (lambda () (get-buffer-create dashboard-buffer-name)))
         :hook
         (after-init . dashboard-setup-startup))
@@ -268,15 +269,28 @@ in
       ;;;                         dired                        ;;;
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
-      ;; (use-package dired
-      ;;   :config
-      ;;   (put 'dired-find-alternate-file 'disabled nil))
+      (use-package dired
+        :config
+        (setq dired-listing-switches
+              "-l --almost-all --human-readable --group-directories-first --no-group"))
       
         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         ;;;                        direnv                        ;;;
         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
       (use-package direnv
+        :bind
+        (("C-c f" . dirvish)
+        :map dirvish-mode-map
+        ("o" . dirvish-quick-access))
+        :custom
+        (dirvish-quick-access-entries ; It's a custom option, `setq' won't work
+         '(("h" "~/"                          "Home")
+           ("d" "~/Downloads/"                "Downloads")
+           ("m" "/mnt/"                       "Drives")
+           ("s" "/ssh:my-remote-server")      "SSH server"
+           ("e" "/sudo:root@localhost:/etc")  "Modify program settings"
+           ("t" "~/.local/share/Trash/files/" "TrashCan")))
         :hook
         (after-init . direnv-mode))
       
