@@ -111,6 +111,9 @@ in
     };
 
     home.file.".emacs.d/init.el".text = ''
+      ;;; init.el --- Emacs configuration file
+      ;;; Commentary:
+      ;;; Code:
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                                            custom                                            ;;;
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -123,13 +126,19 @@ in
         :group 'custom)
       
       (defcustom tuxikus/ssh-config-file "~/.ssh/config"
-        "SSH config file path.")
+        "SSH config file path."
+        :type '(string)
+        :group 'custom)
       
       (defcustom tuxikus/nix-config-directory "~/projects/personal/nix-config/"
-        "Nix config directory")
+        "Nix config directory."
+          :type '(string)
+          :group 'custom)
       
       (defcustom tuxikus/nix-flake-host "zeus"
-        "Nix flake host")
+        "Nix flake host."
+          :type '(string)
+          :group 'custom)
       
         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         ;;;                                          use-package                                         ;;;
