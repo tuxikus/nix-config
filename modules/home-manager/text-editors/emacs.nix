@@ -374,7 +374,6 @@ in
       ;;;                         emacs                        ;;;
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
-      
       (use-package emacs
         :bind
         (("M-<tab>" . completion-at-point)
@@ -394,6 +393,7 @@ in
          (makefile-mode . indent-tabs-mode)
          (prog-mode . display-line-numbers-mode))
         :init
+        (desktop-save-mode 1)
         (fset 'yes-or-no-p 'y-or-n-p)
         (auto-save-mode -1)
         (tool-bar-mode -1)
