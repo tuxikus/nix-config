@@ -1021,143 +1021,6 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
     };
   }
 #+end_src
-***** Package list :noexport:
-#+begin_src emacs-lisp :results value list
-  (defun sort-packages ()
-    (let ((packages '("aas"
-                     "ace-window"
-                     "avy"
-                     "cape"
-                     "consult"
-                     "consult-yasnippet"
-                     "corfu"
-                     "corfu-terminal"
-                     "direnv"
-                     "dirvish"
-                     "docker"
-                     "dockerfile-mode"
-                     "dslide"
-                     "eat"
-                     "emacs"
-                     "electric"
-                     "em-banner"
-                     "org"
-                     "eglot"
-                     "moc"
-                     "dired"
-                     "savehist"
-                     "embark"
-                     "embark-consult"
-                     "embark-org-roam"
-                     "ess"
-                     "exec-path-from-shell"
-                     "hydra"
-                     "fireplace"
-                     "flycheck"
-                     "flycheck-inline"
-                     "format-all"
-                     "git-link"
-                     "go-mode"
-                     "hide-mode-line"
-                     "htmlize"
-                     "ledger-mode"
-                     "magit"
-                     "marginalia"
-                     "move-text"
-                     "nix-mode"
-                     "orderless"
-                     "org-download"
-                     "org-modern"
-                     "org-roam"
-                     "org-roam-ui"
-                     "org-superstar"
-                     "pass"
-                     "pdf-tools"
-                     "python-mode"
-                     "pyvenv"
-                     "ripgrep"
-                     "rust-mode"
-                     "salt-mode"
-                     "spacious-padding"
-                     "tabspaces"
-                     "verb"
-                     "treesit"
-                     "vertico"
-                     "vterm"
-                     "vundo"
-                     "walkman"
-                     "wgrep"
-                     "yasnippet")))
-      (sort packages)))
-
-  (sort-packages)
-#+end_src
-#+RESULTS:
-- aas
-- ace-window
-- avy
-- cape
-- consult
-- consult-yasnippet
-- corfu
-- corfu-terminal
-- dired
-- direnv
-- dirvish
-- docker
-- dockerfile-mode
-- dslide
-- eat
-- eglot
-- electric
-- em-banner
-- emacs
-- embark
-- embark-consult
-- embark-org-roam
-- ess
-- exec-path-from-shell
-- fireplace
-- flycheck
-- flycheck-inline
-- format-all
-- git-link
-- go-mode
-- hide-mode-line
-- htmlize
-- hydra
-- ledger-mode
-- magit
-- marginalia
-- moc
-- move-text
-- nix-mode
-- orderless
-- org
-- org-download
-- org-modern
-- org-roam
-- org-roam-ui
-- org-superstar
-- pass
-- pdf-tools
-- python-mode
-- pyvenv
-- ripgrep
-- rust-mode
-- salt-mode
-- savehist
-- spacious-padding
-- tabspaces
-- treesit
-- verb
-- vertico
-- vterm
-- vundo
-- walkman
-- wgrep
-- yasnippet
-
 ***** Configuration
 #+name: emacs-configuration
 #+begin_src emacs-lisp
@@ -1685,6 +1548,13 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
     :hook
     (org-mode . org-modern-mode)
     (org-agenda-finalize . org-modern-agenda))
+
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;                       org-noter                      ;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package org-noter)
 
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     ;;;                       org-roam                       ;;;
