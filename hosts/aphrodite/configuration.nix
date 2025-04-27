@@ -101,22 +101,23 @@ in
 
   environment = {
     systemPackages = with pkgs; [
-      raycast
-      aerospace
       _1password-cli
-      sketchybar
-      jankyborders
-      python3
-      fzf
-      go-task
-      openssh
-      jupyter
-      tree-sitter
-      poppler_utils
+      aerospace
       dig
-      ripgrep
       fastfetch
+      fzf
+      gnuplot
+      go-task
+      jankyborders
+      jupyter
+      openssh
       pngpaste
+      poppler_utils
+      python3
+      raycast
+      ripgrep
+      sketchybar
+      tree-sitter
 
       # :o
       gnutls

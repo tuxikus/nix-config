@@ -127,6 +127,7 @@ in
     firefox
     fuzzel
     fzf
+    gnuplot
     ghostty
     grim
     home-manager
