@@ -93,7 +93,8 @@ in
     xserver = {
       enable = true;
       displayManager.gdm.enable = true;
-      windowManager.exwm.enable = true;
+      displayManager.startx.enable = true;
+      #windowManager.exwm.enable = true;
       windowManager.qtile = {
         enable = true;
         extraPackages =
