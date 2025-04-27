@@ -609,6 +609,16 @@ in
          (org-imenu-depth 7)
          (org-complete-tags-always-offer-all-agenda-tags t))
         :init
+        (setq org-todo-keywords
+              '((sequence "TODO(t)" "|" "DONE(D)" "CANCEL(C)")
+                (sequence "MEET(m)" "|" "MET(M)")
+                (sequence "STUDY(s)" "|" "STUDIED(S)")
+                (sequence "WRITE(w)" "|" "WROTE(W)")))
+      
+        (setq org-todo-keyword-faces
+              '(("MEET" . (:inherit (bold org-todo)))
+                ("STUDY" . (:inherit (warning org-todo)))
+                ("WRITE" . (:inherit (shadow org-todo)))))
         (org-babel-do-load-languages
          'org-babel-load-languages '((shell . t)
                                      (emacs-lisp . t)
@@ -634,13 +644,6 @@ in
         :hook
         (org-mode . org-modern-mode)
         (org-agenda-finalize . org-modern-agenda))
-      
-      
-        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-        ;;;                       org-noter                      ;;;
-        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-      
-      (use-package org-noter)
       
         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         ;;;                       org-roam                       ;;;
