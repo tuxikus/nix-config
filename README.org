@@ -1418,6 +1418,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
                             (interactive)
                             (exwm-workspace-switch-create ,i))))
                       (number-sequence 0 9))))
+    (exwm-systemtray-mode 1)
     ;; Enable EXWM
     (exwm-enable))
 

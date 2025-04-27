@@ -502,6 +502,7 @@ in
                                 (interactive)
                                 (exwm-workspace-switch-create ,i))))
                           (number-sequence 0 9))))
+        (exwm-systemtray-mode 1)
         ;; Enable EXWM
         (exwm-enable))
       
