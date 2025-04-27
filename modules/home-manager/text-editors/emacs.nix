@@ -28,6 +28,7 @@ let
       embark-org-roam
       ess
       exec-path-from-shell
+      exwm
       fireplace
       flycheck
       flycheck-inline
