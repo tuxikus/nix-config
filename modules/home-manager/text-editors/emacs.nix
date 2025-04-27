@@ -17,7 +17,6 @@ let
       consult
       consult-yasnippet
       corfu
-      dashboard
       direnv
       dirvish
       docker
@@ -243,27 +242,6 @@ in
         (completion-cycle-threshold nil)
         :hook
         (after-init . global-corfu-mode))
-      
-        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-        ;;;                       dashboard                      ;;;
-        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-      
-      (use-package dashboard
-        :custom
-        (dashboard-projects-backend 'project-el)
-        (dashboard-items '((recents   . 10)
-                           (bookmarks . 10)
-                           (projects  . 10)
-                           (agenda    . 10)
-                           (registers . 10)))
-        (dashboard-item-shortcuts '((recents   . "r")
-                                    (bookmarks . "m")
-                                    (projects  . "p")
-                                    (agenda    . "a")
-                                    (registers . "e")))
-        (initial-buffer-choice (lambda () (get-buffer-create dashboard-buffer-name)))
-        :hook
-        (after-init . dashboard-setup-startup))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                         dired                        ;;;
