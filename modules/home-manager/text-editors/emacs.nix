@@ -488,6 +488,17 @@ in
         ;; Make class name the buffer name.
         (add-hook 'exwm-update-class-hook
                   (lambda () (exwm-workspace-rename-buffer exwm-class-name)))
+        (setq exwm-input-prefix-keys
+              '(?\C-x
+                ?\C-u
+                ?\C-h
+                ?\M-x
+                ?\s-s
+                ?\M-`
+                ?\M-&
+                ?\M-:
+                ?\C-\M-j  ;; Buffer list
+                ?\C-\ ))  ;; Ctrl+Space
         ;; Global keybindings.
         (setq exwm-input-global-keys
               `(([?\s-r] . exwm-reset) ;; s-r: Reset (to line-mode).
@@ -794,7 +805,7 @@ in
       
       (use-package tabspaces
         :bind
-        ("S-s" . tabspaces-switch-or-create-workspace)
+        ("s-s" . tabspaces-switch-or-create-workspace)
         :hook
         (after-init . tabspaces-mode)
         :commands
@@ -804,7 +815,7 @@ in
         (tabspaces-use-filtered-buffers-as-default t)
         (tabspaces-default-tab "Default")
         (tabspaces-remove-to-default t)
-        (tabspaces-include-buffers '("*scratch*"))
+        (tabspaces-include-buffers '("*scratch*" "firefox"))
         (tabspaces-initialize-project-with-todo t)
         (tabspaces-todo-file-name "project-todo.org")
         ;; sessions

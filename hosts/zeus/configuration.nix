@@ -142,7 +142,6 @@ in
     platformio
     python3
     ripgrep
-    ripgrep
     samba
     slurp
     tree
