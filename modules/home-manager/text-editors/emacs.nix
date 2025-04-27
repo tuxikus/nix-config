@@ -793,6 +793,8 @@ in
         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
       (use-package tabspaces
+        :bind
+        ("S-s" . tabspaces-switch-or-create-workspace)
         :hook
         (after-init . tabspaces-mode)
         :commands
