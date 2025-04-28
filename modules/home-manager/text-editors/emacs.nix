@@ -35,6 +35,7 @@ let
       flycheck
       flycheck-inline
       format-all
+      general
       git-link
       go-mode
       hide-mode-line

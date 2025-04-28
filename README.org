@@ -944,6 +944,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
         flycheck
         flycheck-inline
         format-all
+        general
         git-link
         go-mode
         hide-mode-line
