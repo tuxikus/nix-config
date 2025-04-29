@@ -196,9 +196,15 @@ in
          "ff" 'find-file
          "fs" 'save-buffer
          "bq" 'kill-current-buffer
+         "bk" 'kill-buffer
+         "bi" 'ibuffer
          "er" 'eval-region
          "eb" 'eval-buffer
-         "c" 'compile)
+         "c" 'compile
+         "w3" 'split-window-right
+         "w2" 'split-window-below
+         "w1" 'delete-other-windows
+         "w0" 'delete-window)
         :hook
         ((before-save . whitespace-cleanup)
          (makefile-mode . indent-tabs-mode)
@@ -229,13 +235,6 @@ in
         ;; move mode line to top
         (setq-default header-line-format mode-line-format)
         (setq-default mode-line-format nil)
-        ;; tab bar
-        (setq tab-bar-new-button nil
-              tab-bar-close-button nil)
-        ;; Customize the appearance of the tab-bar
-        (set-face-attribute 'tab-bar nil
-                            :height 0.9  ;; Adjust the height of the tab text
-                            :weight 'bold)  ;; Make the tab text bold
         (setq create-lockfiles nil
               make-backup-files nil
               custom-theme-directory "~/.emacs.d/themes"
@@ -475,8 +474,6 @@ in
       
       (use-package ess)
       
-      
-      
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                 exec-path-from-shell                 ;;;
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -682,8 +679,8 @@ in
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
       (use-package org-download
-        :init
-        (setq org-download-method 'attach))
+        :custom
+        (org-download-method 'attach))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                      org-modern                      ;;;
