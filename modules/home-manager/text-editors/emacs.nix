@@ -144,8 +144,122 @@ in
         :type '(string)
         :group 'custom)
       
+      
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-      ;;;                                          use-package                                         ;;;
+      ;;;                                          key config                                          ;;;
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ;;;                         evil                         ;;;
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      
+      (use-package evil
+        :init
+        (setq evil-want-integration)
+        (setq evil-want-keybinding nil)
+        :config
+        (evil-mode 1))
+      
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ;;;                    evil-collection                   ;;;
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      
+      (use-package evil-collection
+        :after evil
+        :ensure t
+        :config
+        (evil-collection-init))
+      
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ;;;                        general                       ;;;
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      
+      (use-package general
+        :after evil
+        :config
+        (general-create-definer tuxikus/leader-keys
+          :keymaps '(normal visual emacs)
+          :prefix "SPC"
+          :global-prefix "C-SPC"))
+      
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ;;;                                       built-in packages                                      ;;;
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ;;;                         emacs                        ;;;
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      
+      (use-package emacs
+        :after general
+        :general
+        (tuxikus/leader-keys
+         "ff" 'find-file
+         "fs" 'save-buffer
+         "bq" 'kill-this-buffer
+         "er" 'eval-region
+         "eb" 'eval-buffer
+         "c" 'compile)
+        :hook
+        ((before-save . whitespace-cleanup)
+         (makefile-mode . indent-tabs-mode)
+         (prog-mode . display-line-numbers-mode)
+         (git-commit-setup . tuxikus/insert-jira-ticket-number))
+        :init
+        (fset 'yes-or-no-p 'y-or-n-p)
+        (auto-save-mode -1)
+        (tool-bar-mode -1)
+        (menu-bar-mode -1)
+        (scroll-bar-mode -1)
+        ;;(save-place-mode 1)
+        (global-auto-revert-mode 1)
+        (setq-default indent-tabs-mode nil)
+        (setq ring-bell-function 'ignore)
+        (setq display-line-numbers-type 'relative)
+        (load-theme 'modus-operandi t)
+        :config
+        ;; mode line
+        (setq-default mode-line-format
+                      (list
+                       '(:eval (propertize (format " %s " (buffer-name))
+                                           'face '(:weight bold)))
+                       '(:eval (propertize (format " %s " "|")
+                                           'face '(:weight bold)))
+                       '(:eval (propertize (format " %s " major-mode)
+                                           'face '(:weight bold)))))
+        ;; move mode line to top
+        (setq-default header-line-format mode-line-format)
+        (setq-default mode-line-format nil)
+        ;; tab bar
+        (setq tab-bar-new-button nil
+              tab-bar-close-button nil)
+        ;; Customize the appearance of the tab-bar
+        (set-face-attribute 'tab-bar nil
+                            :height 0.9  ;; Adjust the height of the tab text
+                            :weight 'bold)  ;; Make the tab text bold
+        (setq create-lockfiles nil
+              make-backup-files nil
+              custom-theme-directory "~/.emacs.d/themes"
+              inhibit-startup-message t
+              inhibit-startup-screen t
+              initial-scratch-message ";;; Emacs is fun"
+              global-auto-revert-non-file-buffers t
+              org-id-uuid-program "~/.local/bin/uuidgenlc")
+        ;; (set-frame-font "Iosevka Nerd Font-15" nil t) ; test fonts
+        (add-to-list 'default-frame-alist
+                     '(font . "Iosevka Nerd Font-${config.fontSize}"))
+        (which-key-mode 1)
+        :custom
+        (enable-recursive-minibuffers t)
+        (read-extended-command-predicate #'command-completion-default-include-p)
+        ;; Emacs 30 and newer: Disable Ispell completion function.
+        ;; Try `cape-dict' as an alternative.
+        (text-mode-ispell-word-completion nil)
+        ;; Hide commands in M-x which do not apply to the current mode.
+        (read-extended-command-predicate #'command-completion-default-include-p))
+      
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ;;;                                       external packages                                      ;;;
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -198,11 +312,13 @@ in
       ;;;                        consult                       ;;;
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
-      (use-package general)
       (use-package consult
         :general
-        ("<leader>g" 'consult-grep)
-        ("M-s g" 'consult-grep))
+        (tuxikus/leader-keys
+         "sg" 'consult-grep
+         "sr" 'consult-ripgrep
+         "bb" 'consult-buffer
+         "im" 'consult-imenu))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                   consult-yasnippet                  ;;;
@@ -344,81 +460,6 @@ in
       (use-package em-banner)
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-      ;;;                         emacs                        ;;;
-      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-      
-      (use-package emacs
-        :bind
-        (("M-<tab>" . completion-at-point)
-         ("C-c d" . duplicate-line)
-         ("C-c e r" . eval-region)
-         ("C-c e b" . eval-buffer)
-         ("C-c w m" . whitespace-mode)
-         ("C-x c" . compile)
-         ("C-S-a" . beginning-of-buffer)
-         ("C-S-e" . end-of-buffer)
-         ("M-z" . zap-up-to-char)
-         ("C-z" . nil))
-        :hook
-        ((before-save . whitespace-cleanup)
-         (makefile-mode . indent-tabs-mode)
-         (prog-mode . display-line-numbers-mode)
-         (git-commit-setup . tuxikus/insert-jira-ticket-number))
-      
-        :init
-        (fset 'yes-or-no-p 'y-or-n-p)
-        (auto-save-mode -1)
-        (tool-bar-mode -1)
-        (menu-bar-mode -1)
-        (scroll-bar-mode -1)
-        ;;(save-place-mode 1)
-        (global-auto-revert-mode 1)
-        (setq-default indent-tabs-mode nil)
-        (setq ring-bell-function 'ignore)
-        (setq display-line-numbers-type 'relative)
-        (load-theme 'modus-operandi t)
-        :config
-        ;; mode line
-        (setq-default mode-line-format
-                      (list
-                       '(:eval (propertize (format " %s " (buffer-name))
-                                           'face '(:weight bold)))
-                       '(:eval (propertize (format " %s " "|")
-                                           'face '(:weight bold)))
-                       '(:eval (propertize (format " %s " major-mode)
-                                           'face '(:weight bold)))))
-        ;; move mode line to top
-        (setq-default header-line-format mode-line-format)
-        (setq-default mode-line-format nil)
-        ;; tab bar
-        (setq tab-bar-new-button nil
-              tab-bar-close-button nil)
-        ;; Customize the appearance of the tab-bar
-        (set-face-attribute 'tab-bar nil
-                            :height 0.9  ;; Adjust the height of the tab text
-                            :weight 'bold)  ;; Make the tab text bold
-        (setq create-lockfiles nil
-              make-backup-files nil
-              custom-theme-directory "~/.emacs.d/themes"
-              inhibit-startup-message t
-              inhibit-startup-screen t
-              initial-scratch-message ";;; Emacs is fun"
-              global-auto-revert-non-file-buffers t
-              org-id-uuid-program "~/.local/bin/uuidgenlc")
-        ;; (set-frame-font "Iosevka Nerd Font-15" nil t) ; test fonts
-        (add-to-list 'default-frame-alist
-                     '(font . "Iosevka Nerd Font-${config.fontSize}"))
-        (which-key-mode 1)
-        :custom
-        (enable-recursive-minibuffers t)
-        (read-extended-command-predicate #'command-completion-default-include-p)
-        ;; Emacs 30 and newer: Disable Ispell completion function.
-        ;; Try `cape-dict' as an alternative.
-        (text-mode-ispell-word-completion nil)
-        ;; Hide commands in M-x which do not apply to the current mode.
-        (read-extended-command-predicate #'command-completion-default-include-p))
-      
-      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                        embark                        ;;;
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
@@ -445,27 +486,7 @@ in
       
       (use-package ess)
       
-      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-      ;;;                         evil                         ;;;
-      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
-      (use-package evil
-        :init
-        (setq evil-want-keybinding nil)
-        :config
-        (evil-set-leader 'normal (kbd "SPC"))
-        :config
-        (evil-mode 1))
-      
-      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-      ;;;                    evil-collection                   ;;;
-      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-      
-      (use-package evil-collection
-        :after evil
-        :ensure t
-        :config
-        (evil-collection-init))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                 exec-path-from-shell                 ;;;
