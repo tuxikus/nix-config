@@ -18,7 +18,6 @@ let
       consult-yasnippet
       corfu
       direnv
-      dirvish
       docker
       dockerfile-mode
       dslide
@@ -258,6 +257,16 @@ in
         ;; Hide commands in M-x which do not apply to the current mode.
         (read-extended-command-predicate #'command-completion-default-include-p))
       
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ;;;                        project                       ;;;
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      
+      (use-package project
+        :general
+        (tuxikus/leader-keys
+          "pp" 'project-switch-project
+          "pf" 'project-find-file))
+      
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                                       external packages                                      ;;;
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -285,8 +294,9 @@ in
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
       (use-package ace-window
-        :bind
-        (("M-o" . ace-window))
+        :general
+        (tuxikus/leader-keys
+          "ws" 'ace-window)
         :custom
         (aw-dispatch-always t)
         (aw-keys '(?a ?o ?e ?u ?h ?t ?n ?s ?f)))
@@ -295,11 +305,7 @@ in
       ;;;                          avy                         ;;;
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
-      (use-package avy
-        :bind
-        (("M-g f" . avy-goto-line)
-         ("M-g w" . avy-goto-word-1)
-         ("C-'" . avy-goto-char-2)))
+      (use-package avy)
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                         cape                         ;;;
@@ -353,25 +359,8 @@ in
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
       (use-package direnv
-        :bind
-        (("C-c f" . dirvish)
-         :map dirvish-mode-map
-         ("o" . dirvish-quick-access))
-        :custom
-        (dirvish-quick-access-entries
-         '(("h" "~/"                          "Home")
-           ("d" "~/Downloads/"                "Downloads")
-           ("m" "/mnt/"                       "Drives")))
-        :hook
-        (after-init . direnv-mode))
-      
-      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-      ;;;                        dirvish                       ;;;
-      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-      
-      (use-package dirvish
-        :hook
-        (after-init . dirvish-override-dired-mode))
+        :config
+        (direnv-mode))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                        docker                        ;;;
@@ -614,16 +603,15 @@ in
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
       (use-package magit
-        :bind
-        ("C-x g" . magit))
+        :general
+        (tuxikus/leader-keys
+          "gg" 'magit))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                      marginalia                      ;;;
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
       (use-package marginalia
-        :bind (:map minibuffer-local-map
-                    ("M-A" . marginalia-cycle))
         :init
         (marginalia-mode))
       
@@ -897,9 +885,7 @@ in
       ;;;                         vterm                        ;;;
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
-      (use-package vterm
-        :bind
-        (("C-c t v" . vterm)))
+      (use-package vterm)
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                         vundo                        ;;;
