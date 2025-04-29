@@ -155,7 +155,7 @@ in
       
       (use-package evil
         :init
-        (setq evil-want-integration)
+        (setq evil-want-integration t)
         (setq evil-want-keybinding nil)
         :config
         (evil-mode 1))
@@ -196,7 +196,7 @@ in
         (tuxikus/leader-keys
          "ff" 'find-file
          "fs" 'save-buffer
-         "bq" 'kill-this-buffer
+         "bq" 'kill-current-buffer
          "er" 'eval-region
          "eb" 'eval-buffer
          "c" 'compile)
