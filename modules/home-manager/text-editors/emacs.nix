@@ -32,7 +32,6 @@ let
       exwm
       fireplace
       flycheck
-      flycheck-inline
       format-all
       general
       git-link
@@ -202,11 +201,11 @@ in
          (prog-mode . display-line-numbers-mode)
          (git-commit-setup . tuxikus/insert-jira-ticket-number))
         :custom
-        (auto-save-mode -1)
-        (tool-bar-mode -1)
-        (menu-bar-mode -1)
-        (scroll-bar-mode -1)
-        (global-auto-revert-mode 1)
+        (auto-save-mode nil)
+        (tool-bar-mode nil)
+        (menu-bar-mode nil)
+        (scroll-bar-mode nil)
+        (global-auto-revert-mode t)
         (indent-tabs-mode nil)
         (ring-bell-function 'ignore)
         (display-line-numbers-type 'relative)
@@ -283,6 +282,29 @@ in
         :general
         (tuxikus/leader-keys
           "bi" 'ibuffer))
+      
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ;;;                       em-banner                      ;;;
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      
+      (use-package em-banner)
+      
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ;;;                         eglot                        ;;;
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      
+      (use-package eglot
+        :custom
+        (eglot-autoshutdown t)
+        (eglot-confirm-server-initiated-edits nil))
+      
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ;;;                       savehist                       ;;;
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      
+      (use-package savehist
+        :hook
+        (after-init . savehist-mode))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                                       external packages                                      ;;;
@@ -376,8 +398,8 @@ in
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
       (use-package direnv
-        :config
-        (direnv-mode))
+        :hook
+        (after-init . direnv-mode))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                        docker                        ;;;
@@ -417,53 +439,6 @@ in
       (use-package eat
         :bind
         (("C-c t e". eat)))
-      
-      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-      ;;;                         eglot                        ;;;
-      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-      
-      (use-package eglot
-        ;; :hook
-        ;; ((python-ts-mode . eglot-ensure)
-        ;;  (python-mode . eglot-ensure))
-        :custom
-        (eglot-autoshutdown t)
-        (eglot-confirm-server-initiated-edits nil))
-      
-      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-      ;;;                       electric                       ;;;
-      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-      
-      (use-package electric
-        :init
-        ;;(setq electric-pair-preserve-balance nil)
-        (electric-pair-mode)
-        :config
-        (defvar latex-mode-electric-pairs '((?$ . ?$))
-          "Electric pairs for LaTeX mode.")
-        (defvar org-mode-electric-pairs '(())
-          "Electric pairs for org mode.")
-        (defun latex-mode-add-electric-pairs ()
-          "Add electric pairs for LaTeX mode."
-          (setq-local electric-pair-pairs (append electric-pair-pairs latex-mode-electric-pairs))
-          (setq-local electric-pair-text-pairs electric-pair-pairs)
-          (message "Electric pairs added for LaTeX mode: %s" electric-pair-pairs))
-        (defun org-mode-add-electric-pairs ()
-          "Add electric pairs for org mode."
-          (setq-local electric-pair-pairs (append electric-pair-pairs
-                                                  org-mode-electric-pairs
-                                                  latex-mode-electric-pairs))
-          (setq-local electric-pair-text-pairs electric-pair-pairs)
-          (message "Electric pairs added for org mode: %s" electric-pair-pairs))
-        :hook
-        (latex-mode . latex-mode-add-electric-pairs)
-        (org-mode . org-mode-add-electric-pairs))
-      
-      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-      ;;;                       em-banner                      ;;;
-      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-      
-      (use-package em-banner)
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                        embark                        ;;;
@@ -525,15 +500,6 @@ in
       (use-package flycheck
         :hook
         (after-init . global-flycheck-mode))
-      
-      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-      ;;;                    flycheck-inline                   ;;;
-      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-      
-      (use-package flycheck-inline
-        :config
-        (with-eval-after-load 'flycheck
-          (add-hook 'flycheck-mode-hook #'flycheck-inline-mode)))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                      format-all                      ;;;
@@ -665,7 +631,6 @@ in
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
       (use-package org-modern
-        :defer t
         :hook
         (org-mode . org-modern-mode)
         (org-agenda-finalize . org-modern-agenda))
@@ -716,15 +681,14 @@ in
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
       (use-package pdf-tools
-        :init
-        (pdf-tools-install))
+        :hook
+        (after-init . pdf-tools-install))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                      python-mode                     ;;;
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
       (use-package python-mode
-        :defer t
         :mode "\\.py\\'")
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -744,7 +708,6 @@ in
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
       (use-package rust-mode
-        :defer t
         :mode "\\.rs\\'")
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -752,16 +715,7 @@ in
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
       (use-package salt-mode
-        :defer t
         :mode "\\.sls\\'")
-      
-      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-      ;;;                       savehist                       ;;;
-      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-      
-      (use-package savehist
-        :init
-        (savehist-mode))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                   spacious-padding                   ;;;
@@ -853,8 +807,8 @@ in
         (vertico-scroll-margin 0)
         (vertico-count 10)
         (vertico-cycle t)
-        :init
-        (vertico-mode))
+        :hook
+        (after-init . vertico-mode))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                         vterm                        ;;;
@@ -885,8 +839,8 @@ in
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
       (use-package yasnippet
-        :init
-        (yas-global-mode 1))
+        :custom
+        (yas-global-mode t))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                                            hydras                                            ;;;
