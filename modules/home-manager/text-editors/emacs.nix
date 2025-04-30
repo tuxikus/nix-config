@@ -231,7 +231,8 @@ in
       
       (use-package compile
         :general
-        ("c" 'compile))
+        (tuxikus/leader-keys
+          "c" 'compile))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                         files                        ;;;

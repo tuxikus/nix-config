@@ -1153,7 +1153,8 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
 
   (use-package compile
     :general
-    ("c" 'compile))
+    (tuxikus/leader-keys
+      "c" 'compile))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;                         files                        ;;;
