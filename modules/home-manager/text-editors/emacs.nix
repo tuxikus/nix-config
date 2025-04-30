@@ -280,6 +280,7 @@ in
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
       (use-package ibuffer
+        :general
         (tuxikus/leader-keys
           "bi" 'ibuffer))
       

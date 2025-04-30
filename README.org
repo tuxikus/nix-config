@@ -1202,6 +1202,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   (use-package ibuffer
+    :general
     (tuxikus/leader-keys
       "bi" 'ibuffer))
 
