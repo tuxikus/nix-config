@@ -906,7 +906,7 @@ Apple MacBook Pro M2
 **** Emacs
 Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rahul's Blog]]
 ***** Nix configuration
-#+begin_src nix :tangle modules/home-manager/text-editors/emacs.nix :noweb tangle :mkdirp yes
+#+begin_src nix :tangle modules/home-manager/text-editors/emacs.nix :noweb yes :mkdirp yes
   {
     config,
     pkgs,
@@ -1024,6 +1024,11 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
       home.file.".emacs.d/init.el".text = ''
         <<emacs-configuration>>
       '';
+
+      home.file.".emacs.d/init-exwm.el".text = ''
+        <<emacs-exwm-configuration>>
+      '';
+
     };
   }
 #+end_src
@@ -1059,7 +1064,6 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
     "Nix flake host."
     :type '(string)
     :group 'custom)
-
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;                                          key config                                          ;;;
@@ -1110,68 +1114,56 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
     :after general
     :general
     (tuxikus/leader-keys
-     "ff" 'find-file
-     "fs" 'save-buffer
      "bq" 'kill-current-buffer
      "bk" 'kill-buffer
-     "bi" 'ibuffer
      "er" 'eval-region
-     "eb" 'eval-buffer
-     "c" 'compile
-     "w3" 'split-window-right
-     "w2" 'split-window-below
-     "w1" 'delete-other-windows
-     "w0" 'delete-window)
+     "eb" 'eval-buffer)
     :hook
     ((before-save . whitespace-cleanup)
      (makefile-mode . indent-tabs-mode)
      (prog-mode . display-line-numbers-mode)
      (git-commit-setup . tuxikus/insert-jira-ticket-number))
-    :init
-    (fset 'yes-or-no-p 'y-or-n-p)
+    :custom
     (auto-save-mode -1)
     (tool-bar-mode -1)
     (menu-bar-mode -1)
     (scroll-bar-mode -1)
-    ;;(save-place-mode 1)
     (global-auto-revert-mode 1)
-    (setq-default indent-tabs-mode nil)
-    (setq ring-bell-function 'ignore)
-    (setq display-line-numbers-type 'relative)
-    (load-theme 'modus-operandi t)
-    :config
-    ;; mode line
-    (setq-default mode-line-format
-                  (list
-                   '(:eval (propertize (format " %s " (buffer-name))
-                                       'face '(:weight bold)))
-                   '(:eval (propertize (format " %s " "|")
-                                       'face '(:weight bold)))
-                   '(:eval (propertize (format " %s " major-mode)
-                                       'face '(:weight bold)))))
-    ;; move mode line to top
-    (setq-default header-line-format mode-line-format)
-    (setq-default mode-line-format nil)
-    (setq create-lockfiles nil
-          make-backup-files nil
-          custom-theme-directory "~/.emacs.d/themes"
-          inhibit-startup-message t
-          inhibit-startup-screen t
-          initial-scratch-message ";;; Emacs is fun"
-          global-auto-revert-non-file-buffers t
-          org-id-uuid-program "~/.local/bin/uuidgenlc")
-    ;; (set-frame-font "Iosevka Nerd Font-15" nil t) ; test fonts
-    (add-to-list 'default-frame-alist
-                 '(font . "Iosevka Nerd Font-${config.fontSize}"))
-    (which-key-mode 1)
-    :custom
+    (indent-tabs-mode nil)
+    (ring-bell-function 'ignore)
+    (display-line-numbers-type 'relative)
+    (inhibit-startup-message t)
+    (inhibit-startup-screen t)
     (enable-recursive-minibuffers t)
     (read-extended-command-predicate #'command-completion-default-include-p)
-    ;; Emacs 30 and newer: Disable Ispell completion function.
-    ;; Try `cape-dict' as an alternative.
-    (text-mode-ispell-word-completion nil)
-    ;; Hide commands in M-x which do not apply to the current mode.
-    (read-extended-command-predicate #'command-completion-default-include-p))
+    (org-id-uuid-program "~/.local/bin/uuidgenlc")
+    (initial-scratch-message ";;; Emacs is fun")
+    (create-lockfiles nil)
+    (make-backup-files nil)
+    (global-auto-revert-non-file-buffers t)
+    :config
+    (setq-default header-line-format mode-line-format)
+    (setq-default mode-line-format nil)
+    (add-to-list 'default-frame-alist
+                 '(font . "Iosevka Nerd Font-${config.fontSize}")))
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;                        compile                       ;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package compile
+    :general
+    ("c" 'compile))
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;                         files                        ;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package files
+    :general
+    (tuxikus/leader-keys
+      "ff" 'find-file
+      "fs" 'save-buffer))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;                        project                       ;;;
@@ -1182,6 +1174,35 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
     (tuxikus/leader-keys
       "pp" 'project-switch-project
       "pf" 'project-find-file))
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;                        window                        ;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package window
+    :general
+    (tuxikus/leader-keys
+     "ww" 'other-window
+     "w3" 'split-window-right
+     "w2" 'split-window-below
+     "w1" 'delete-other-windows
+     "w0" 'delete-window))
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;                       which-key                      ;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package which-key
+    :hook
+    (after-init . which-key-mode))
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;                        ibuffer                       ;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package ibuffer
+    (tuxikus/leader-keys
+      "bi" 'ibuffer))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;                                       external packages                                      ;;;
@@ -1401,46 +1422,6 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
       (exec-path-from-shell-initialize))
     (when (daemonp)
       (exec-path-from-shell-initialize)))
-
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;;;                         exwm                         ;;;
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-  (use-package exwm
-    :if (eq window-system 'x)
-    :init
-    (setq exwm-workspace-number 9)
-    ;; Make class name the buffer name.
-    (add-hook 'exwm-update-class-hook
-              (lambda () (exwm-workspace-rename-buffer exwm-class-name)))
-    (setq exwm-input-prefix-keys
-          '(?\C-x
-            ?\C-u
-            ?\C-h
-            ?\M-x
-            ?\s-s
-            ?\M-`
-            ?\M-&
-            ?\M-:
-            ?\C-\M-j  ;; Buffer list
-            ?\C-\ ))  ;; Ctrl+Space
-    ;; Global keybindings.
-    (setq exwm-input-global-keys
-          `(([?\s-r] . exwm-reset) ;; s-r: Reset (to line-mode).
-            ([?\s-w] . exwm-workspace-switch) ;; s-w: Switch workspace.
-            ([?\s-d] . (lambda (cmd) ;; s-d: Launch application.
-                         (interactive (list (read-shell-command "$ ")))
-                         (start-process-shell-command cmd nil cmd)))
-            ;; s-N: Switch to certain workspace.
-            ,@(mapcar (lambda (i)
-                        `(,(kbd (format "s-%d" i)) .
-                          (lambda ()
-                            (interactive)
-                            (exwm-workspace-switch-create ,i))))
-                      (number-sequence 0 9))))
-    (exwm-systemtray-mode 1)
-    ;; Enable EXWM
-    (exwm-enable))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;                         hydra                        ;;;
@@ -2045,6 +2026,49 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
             (when (re-search-forward "^\\s-+" end t)
               (replace-match ""))))
         (forward-line 1))))
+#+end_src
+
+#+name: emacs-exwm-configuration
+#+begin_src elisp
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;                         exwm                         ;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package exwm
+    :if (eq window-system 'x)
+    :init
+    (setq exwm-workspace-number 9)
+    ;; Make class name the buffer name.
+    (add-hook 'exwm-update-class-hook
+              (lambda () (exwm-workspace-rename-buffer exwm-class-name)))
+    (setq exwm-input-prefix-keys
+          '(?\C-x
+            ?\C-u
+            ?\C-h
+            ?\M-x
+            ?\s-s
+            ?\M-`
+            ?\M-&
+            ?\M-:
+            ?\C-\M-j  ;; Buffer list
+            ?\C-\ ))  ;; Ctrl+Space
+    ;; Global keybindings.
+    (setq exwm-input-global-keys
+          `(([?\s-r] . exwm-reset) ;; s-r: Reset (to line-mode).
+            ([?\s-w] . exwm-workspace-switch) ;; s-w: Switch workspace.
+            ([?\s-d] . (lambda (cmd) ;; s-d: Launch application.
+                         (interactive (list (read-shell-command "$ ")))
+                         (start-process-shell-command cmd nil cmd)))
+            ;; s-N: Switch to certain workspace.
+            ,@(mapcar (lambda (i)
+                        `(,(kbd (format "s-%d" i)) .
+                          (lambda ()
+                            (interactive)
+                            (exwm-workspace-switch-create ,i))))
+                      (number-sequence 0 9))))
+    (exwm-systemtray-mode 1)
+    ;; Enable EXWM
+    (exwm-enable))
 #+end_src
 ***** Configuration dump
 #+name: emacs-configuration-dumper
