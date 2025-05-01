@@ -21,6 +21,7 @@ let
       docker
       dockerfile-mode
       dslide
+      dashboard
       eat
       embark
       embark-consult
@@ -155,7 +156,9 @@ in
         (setq evil-want-integration t)
         (setq evil-want-keybinding nil)
         :config
-        (evil-mode 1))
+        (evil-mode 1)
+        (evil-set-initial-state 'git-commit-mode 'insert)
+        (evil-set-initial-state 'vterm-mode 'emacs))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                    evil-collection                   ;;;
@@ -191,10 +194,10 @@ in
         :after general
         :general
         (tuxikus/leader-keys
-         "bq" 'kill-current-buffer
-         "bk" 'kill-buffer
-         "er" 'eval-region
-         "eb" 'eval-buffer)
+          "bq" 'kill-current-buffer
+          "bk" 'kill-buffer
+          "er" 'eval-region
+          "eb" 'eval-buffer)
         :hook
         ((before-save . whitespace-cleanup)
          (makefile-mode . indent-tabs-mode)
@@ -221,6 +224,23 @@ in
         (global-auto-revert-non-file-buffers t))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ;;;                         dired                        ;;;
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      
+      (use-package dired
+        :config
+        (setq dired-listing-switches
+              "-l --almost-all --human-readable --group-directories-first --no-group"))
+      
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ;;;                      use-package                     ;;;
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      
+      (use-package use-package
+        :custom
+        (use-package-compute-statistics t))
+      
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                        compile                       ;;;
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
@@ -240,6 +260,21 @@ in
           "fs" 'save-buffer))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ;;;                       register                       ;;;
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      
+      (use-package register
+        :general
+        (tuxikus/leader-keys
+          "rs" 'copy-to-register
+          "rb" 'bookmark-jump
+          "rm" 'bookmark-set
+          "ri" 'insert-register
+          "rj" 'jump-to-register
+          "rp" 'point-to-register
+          "rl" 'list-registers))
+      
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                        project                       ;;;
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
@@ -256,11 +291,24 @@ in
       (use-package window
         :general
         (tuxikus/leader-keys
-         "ww" 'other-window
-         "w3" 'split-window-right
-         "w2" 'split-window-below
-         "w1" 'delete-other-windows
-         "w0" 'delete-window))
+          "ww" 'other-window
+          "w3" 'split-window-right
+          "w2" 'split-window-below
+          "w1" 'delete-other-windows
+          "w0" 'delete-window))
+      
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ;;;                       help-fns                       ;;;
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      
+      (use-package help-fns
+        :general
+        (tuxikus/leader-keys
+          "hi" 'info
+          "hf" 'describe-function
+          "hv" 'describe-variable
+          "hm" 'describe-mode
+          "hk" 'describe-key))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                       which-key                      ;;;
@@ -340,7 +388,11 @@ in
       ;;;                          avy                         ;;;
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
-      (use-package avy)
+      (use-package avy
+        :general
+        (tuxikus/leader-keys
+          "al" 'avy-goto-line
+          "as" 'avy-goto-char-timer))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                         cape                         ;;;
@@ -356,10 +408,10 @@ in
       (use-package consult
         :general
         (tuxikus/leader-keys
-         "sg" 'consult-grep
-         "sr" 'consult-ripgrep
-         "bb" 'consult-buffer
-         "im" 'consult-imenu))
+          "sg" 'consult-grep
+          "sr" 'consult-ripgrep
+          "bb" 'consult-buffer
+          "im" 'consult-imenu))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                   consult-yasnippet                  ;;;
@@ -381,13 +433,12 @@ in
         (after-init . global-corfu-mode))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-      ;;;                         dired                        ;;;
+      ;;;                       dashboard                      ;;;
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
-      (use-package dired
+      (use-package dashboard
         :config
-        (setq dired-listing-switches
-              "-l --almost-all --human-readable --group-directories-first --no-group"))
+        (dashboard-setup-startup-hook))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                        direnv                        ;;;
