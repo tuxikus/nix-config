@@ -154,8 +154,8 @@ in
         :init
         (setq evil-want-integration t)
         (setq evil-want-keybinding nil)
-        :hook
-        (after-init . evil-mode))
+        :config
+        (evil-mode 1))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                    evil-collection                   ;;;
