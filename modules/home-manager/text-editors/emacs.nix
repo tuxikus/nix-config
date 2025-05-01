@@ -151,11 +151,10 @@ in
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
       (use-package evil
-        :init
-        (setq evil-want-integration t)
-        (setq evil-want-keybinding nil)
-        :config
-        (evil-mode 1))
+        :custom
+        (evil-want-integration t)
+        :hook
+        (after-init . evil-mode))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                    evil-collection                   ;;;
@@ -199,7 +198,8 @@ in
         ((before-save . whitespace-cleanup)
          (makefile-mode . indent-tabs-mode)
          (prog-mode . display-line-numbers-mode)
-         (git-commit-setup . tuxikus/insert-jira-ticket-number))
+         (git-commit-setup . tuxikus/insert-jira-ticket-number)
+         (after-init . tuxikus/set-font))
         :custom
         (auto-save-mode nil)
         (tool-bar-mode nil)
@@ -217,12 +217,7 @@ in
         (initial-scratch-message ";;; Emacs is fun")
         (create-lockfiles nil)
         (make-backup-files nil)
-        (global-auto-revert-non-file-buffers t)
-        :config
-        (setq-default header-line-format mode-line-format)
-        (setq-default mode-line-format nil)
-        (add-to-list 'default-frame-alist
-                     '(font . "Iosevka Nerd Font-${config.fontSize}")))
+        (global-auto-revert-non-file-buffers t))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                        compile                       ;;;
@@ -722,20 +717,7 @@ in
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
       (use-package spacious-padding
-        :init
-        (setq spacious-padding-widths
-              '( :internal-border-width 10
-                 :header-line-width 5
-                 :mode-line-width 5
-                 :tab-width 10
-                 :right-divider-width 30
-                 :scroll-bar-width 8
-                 :fringe-width 15))
-        ;; Read the doc string of `spacious-padding-subtle-mode-line' as it
-        ;; is very flexible and provides several examples.
-        (setq spacious-padding-subtle-mode-line
-              `( :mode-line-active 'default
-                 :mode-line-inactive vertical-border))
+        :custom
         (spacious-padding-mode 1))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -755,12 +737,7 @@ in
         (tabspaces-default-tab "Default")
         (tabspaces-remove-to-default t)
         (tabspaces-include-buffers '("*scratch*" "firefox"))
-        (tabspaces-initialize-project-with-todo t)
         (tabspaces-todo-file-name "project-todo.org")
-        ;; sessions
-        (tabspaces-session t)
-        (tabspaces-session-auto-restore t)
-        (tab-bar-new-tab-choice "*scratch*")
         :config
         (with-eval-after-load 'consult
           ;; hide full buffer list (still available with "b" prefix)
@@ -867,6 +844,10 @@ in
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                                           functions                                          ;;;
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      
+      (defun tuxikus/set-font ()
+        (add-to-list 'default-frame-alist
+                     '(font . "Iosevka Nerd Font-${config.fontSize}")))
       
       (defun tuxikus/get-jira-ticket-number (branch)
         (when (string-match "[A-Z]\\{8\\}-[0-9]*" branch)
