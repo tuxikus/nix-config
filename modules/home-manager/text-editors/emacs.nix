@@ -257,7 +257,7 @@ in
       (use-package newcomment
         :general
         (tuxikus/leader-keys
-          "cm" comment-dwim'))
+          "cm" 'comment-dwim))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                         files                        ;;;

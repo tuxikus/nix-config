@@ -1179,7 +1179,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
   (use-package newcomment
     :general
     (tuxikus/leader-keys
-      "cm" comment-dwim'))
+      "cm" 'comment-dwim))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;                         files                        ;;;
