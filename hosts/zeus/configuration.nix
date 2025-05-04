@@ -117,6 +117,7 @@ in
   environment.systemPackages = with pkgs; [
     arduino-ide
     bat
+    guile
     calibre
     chromium
     cifs-utils

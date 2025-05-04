@@ -260,6 +260,7 @@ Specs:
     environment.systemPackages = with pkgs; [
       arduino-ide
       bat
+      guile
       calibre
       chromium
       cifs-utils
@@ -939,6 +940,8 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
         evil
         evil-collection
         exec-path-from-shell
+        geiser
+        geiser-guile
         exwm
         fireplace
         flycheck
@@ -1327,6 +1330,18 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
       "as" 'avy-goto-char-timer))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;                        geiser                        ;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package geiser)
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;                     geiser-guile                     ;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package geiser-guile)
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;                         cape                         ;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -1588,6 +1603,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
                                  (emacs-lisp . t)
                                  (python . t)
                                  (R . t)
+                                 (scheme . t)
                                  (dot . t)
                                  (gnuplot . t))))
 
