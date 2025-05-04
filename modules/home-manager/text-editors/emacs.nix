@@ -221,7 +221,8 @@ in
         (initial-scratch-message ";;; Emacs is fun")
         (create-lockfiles nil)
         (make-backup-files nil)
-        (global-auto-revert-non-file-buffers t))
+        (global-auto-revert-non-file-buffers t)
+        (fill-column 100))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                         dired                        ;;;
@@ -247,7 +248,16 @@ in
       (use-package compile
         :general
         (tuxikus/leader-keys
-          "c" 'compile))
+          "cc" 'compile))
+      
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ;;;                      newcomment                      ;;;
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      
+      (use-package newcomment
+        :general
+        (tuxikus/leader-keys
+          "cm" comment-dwim'))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                         files                        ;;;
@@ -633,6 +643,8 @@ in
       (use-package org
         :bind
         (("C-M-<return>" . org-insert-subheading))
+        :hook
+        ((org-mode . auto-fill-mode))
         :custom
         ((org-attach-id-dir "~/org/.attach")
          (org-log-done 'time)
