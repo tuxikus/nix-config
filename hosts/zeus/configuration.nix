@@ -156,6 +156,7 @@ in
     wlr-randr
     yt-dlp
     yubioath-flutter
+    sbcl
   ];
 
   programs = {

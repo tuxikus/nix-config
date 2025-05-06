@@ -27,6 +27,7 @@ let
       embark-consult
       embark-org-roam
       ess
+      slime
       evil
       evil-collection
       exec-path-from-shell
@@ -436,6 +437,14 @@ in
           "sr" 'consult-ripgrep
           "bb" 'consult-buffer
           "im" 'consult-imenu))
+      
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ;;;                         slime                        ;;;
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      
+      (use-package slime
+        :init
+        (setq inferior-lisp-program "sbcl"))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                   consult-yasnippet                  ;;;
