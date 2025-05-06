@@ -1611,6 +1611,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
     (org-babel-do-load-languages
      'org-babel-load-languages '((shell . t)
                                  (emacs-lisp . t)
+                                 (lisp . t)
                                  (python . t)
                                  (R . t)
                                  (scheme . t)

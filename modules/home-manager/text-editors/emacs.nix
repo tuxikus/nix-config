@@ -687,6 +687,7 @@ in
         (org-babel-do-load-languages
          'org-babel-load-languages '((shell . t)
                                      (emacs-lisp . t)
+                                     (lisp . t)
                                      (python . t)
                                      (R . t)
                                      (scheme . t)
