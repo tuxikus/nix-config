@@ -158,14 +158,6 @@ in
     yt-dlp
     yubioath-flutter
     sbcl
-    sbclPackages.qlot
-    sbclPackages.qlot-cli
-    ncurses
-    gnumake
-    gcc
-    SDL2
-    SDL2_image
-    SDL2_ttf
   ];
 
   programs = {
