@@ -157,6 +157,7 @@ in
     yt-dlp
     yubioath-flutter
     sbcl
+    sbclPackages.qlot
   ];
 
   programs = {
