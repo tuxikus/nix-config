@@ -129,6 +129,7 @@ in
     fuzzel
     fzf
     gnuplot
+    fd
     ghostty
     grim
     home-manager
@@ -162,6 +163,9 @@ in
     ncurses
     gnumake
     gcc
+    SDL2
+    SDL2_image
+    SDL2_ttf
   ];
 
   programs = {

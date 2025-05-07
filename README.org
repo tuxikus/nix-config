@@ -272,6 +272,7 @@ Specs:
       fuzzel
       fzf
       gnuplot
+      fd
       ghostty
       grim
       home-manager
@@ -305,6 +306,9 @@ Specs:
       ncurses
       gnumake
       gcc
+      SDL2
+      SDL2_image
+      SDL2_ttf
     ];
 
     programs = {
