@@ -158,6 +158,7 @@ in
     yubioath-flutter
     sbcl
     sbclPackages.qlot
+    sbclPackages.qlot-cli
     ncurses
     gnumake
   ];
