@@ -436,7 +436,8 @@ in
           "sg" 'consult-grep
           "sr" 'consult-ripgrep
           "bb" 'consult-buffer
-          "im" 'consult-imenu))
+          "im" 'consult-imenu
+          "sm" 'consult-mark))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                         slime                        ;;;
@@ -664,8 +665,16 @@ in
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
       (use-package org
-        :bind
-        (("C-M-<return>" . org-insert-subheading))
+        :general
+        (tuxikus/leader-keys
+          "obt" 'org-babel-tangle
+          "ol" 'org-insert-link
+          "oh" 'org-insert-heading
+          "os" 'org-insert-subheading
+          "ot" 'org-todo
+          "orf" 'org-roam-node-find
+          "ori" 'org-roam-node-insert
+          "oe" 'org-edit-special)
         :hook
         ((org-mode . auto-fill-mode))
         :custom
