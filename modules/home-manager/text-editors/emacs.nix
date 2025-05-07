@@ -53,6 +53,7 @@ let
       org-modern
       org-roam
       org-roam-ui
+      org-drill
       org-superstar
       pass
       pdf-tools

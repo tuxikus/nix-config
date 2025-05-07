@@ -965,6 +965,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
         org-modern
         org-roam
         org-roam-ui
+        org-drill
         org-superstar
         pass
         pdf-tools
