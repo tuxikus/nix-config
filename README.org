@@ -302,6 +302,7 @@ Specs:
       sbcl
       sbclPackages.qlot
       ncurses
+      gnumake
     ];
 
     programs = {

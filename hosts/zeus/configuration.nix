@@ -159,6 +159,7 @@ in
     sbcl
     sbclPackages.qlot
     ncurses
+    gnumake
   ];
 
   programs = {
