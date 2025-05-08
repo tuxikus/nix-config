@@ -627,7 +627,12 @@ in
       (use-package magit
         :general
         (tuxikus/leader-keys
-          "gg" 'magit))
+          "gg" 'magit
+          "gs" 'magit-stage
+          "gc" 'magit-commit
+          "gp" 'magit-push)
+        :custom
+        (magit-display-buffer-function 'magit-display-buffer-fullframe-status-v1))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                      marginalia                      ;;;
