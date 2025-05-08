@@ -1614,6 +1614,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
     :custom
     ((org-attach-id-dir "~/org/.attach")
      (org-log-done 'time)
+     (org-confirm-babel-evaluate nil)
      (org-hide-emphasis-markers t)
      (org-imenu-depth 7)
      (org-complete-tags-always-offer-all-agenda-tags t))
@@ -2825,6 +2826,11 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
   }
 #+end_src
 ***** Configuration
+#+name: reload-qtile
+#+begin_src shell
+  qtile cmd-obj -o cmd -f reload_config
+#+end_src
+
 #+name: qtile-configuration
 #+begin_src python
   import os

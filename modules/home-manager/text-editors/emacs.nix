@@ -689,6 +689,7 @@ in
         :custom
         ((org-attach-id-dir "~/org/.attach")
          (org-log-done 'time)
+         (org-confirm-babel-evaluate nil)
          (org-hide-emphasis-markers t)
          (org-imenu-depth 7)
          (org-complete-tags-always-offer-all-agenda-tags t))
