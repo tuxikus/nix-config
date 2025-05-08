@@ -229,13 +229,34 @@ in
         (fill-column 100))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ;;;                      elisp-mode                      ;;;
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      
+      (use-package elisp-mode
+        :hook
+        (elisp-mode . tuxikus/set-lisp-whitespace-line-column))
+      
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ;;;                       lisp-mode                      ;;;
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      
+      (use-package lisp-mode
+        :hook
+        (lisp-mode . tuxikus/set-lisp-whitespace-line-column))
+      
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ;;;                      scheme-mode                     ;;;
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      
+      (use-package scheme-mode
+        :hook
+        (scheme-mode . tuxikus/set-lisp-whitespace-line-column))
+      
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                         dired                        ;;;
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
-      (use-package dired
-        :config
-        (setq dired-listing-switches
-              "-l --almost-all --human-readable --group-directories-first --no-group"))
+      (use-package dired)
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                      use-package                     ;;;
@@ -266,6 +287,17 @@ in
           "M-;" 'comment-dwim)
         (tuxikus/leader-keys
           "cm" 'comment-dwim))
+      
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ;;;                        simple                        ;;;
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      
+      (use-package simple
+        :general
+        (:keymaps 'global
+          "M-x" 'execute-extended-command)
+        (tuxikus/leader-keys
+          "SPC" 'execute-extended-command))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                         files                        ;;;
@@ -1147,6 +1179,12 @@ in
                 (when (re-search-forward "^\\s-+" end t)
                   (replace-match ""))))
             (forward-line 1))))
+      
+      (defun tuxikus/set-default-whitespace-line-colum ()
+        (setq whitespace-line-column 80))
+      
+      (defun tuxikus/set-lisp-whitespace-line-column ()
+        (setq whitespace-line-column 100))
     '';
 
     home.file.".emacs.d/init-exwm.el".text = ''
