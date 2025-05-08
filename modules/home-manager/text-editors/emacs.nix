@@ -251,6 +251,8 @@ in
       
       (use-package compile
         :general
+        (:keymaps 'global
+          "C-x c" 'compile)
         (tuxikus/leader-keys
           "cc" 'compile))
       
@@ -260,6 +262,8 @@ in
       
       (use-package newcomment
         :general
+        (:keymaps 'global
+          "M-;" 'comment-dwim)
         (tuxikus/leader-keys
           "cm" 'comment-dwim))
       
@@ -269,6 +273,9 @@ in
       
       (use-package files
         :general
+        (:keymaps 'global
+          "C-x C-f" 'find-file
+          "C-x C-s" 'save-buffer)
         (tuxikus/leader-keys
           "ff" 'find-file
           "fs" 'save-buffer))
@@ -673,6 +680,7 @@ in
           "oh" 'org-insert-heading
           "os" 'org-insert-subheading
           "ot" 'org-todo
+          "oo" 'org-open-at-point
           "orf" 'org-roam-node-find
           "ori" 'org-roam-node-insert
           "oe" 'org-edit-special)
@@ -681,6 +689,7 @@ in
         :custom
         ((org-attach-id-dir "~/org/.attach")
          (org-log-done 'time)
+         (org-hide-emphasis-markers t)
          (org-imenu-depth 7)
          (org-complete-tags-always-offer-all-agenda-tags t))
         :init
