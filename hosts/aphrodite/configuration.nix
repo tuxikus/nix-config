@@ -109,7 +109,7 @@ in
       gnuplot
       go-task
       jankyborders
-      jupyter
+      #jupyter
       openssh
       pngpaste
       poppler_utils

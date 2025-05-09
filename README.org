@@ -650,7 +650,7 @@ Apple MacBook Pro M2
         gnuplot
         go-task
         jankyborders
-        jupyter
+        #jupyter
         openssh
         pngpaste
         poppler_utils
