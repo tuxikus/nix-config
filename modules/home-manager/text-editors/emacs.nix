@@ -148,6 +148,16 @@ in
         :type '(string)
         :group 'custom)
       
+      (defcustom tuxikus/note-system/fleeting-notes-directory (concat org-roam-directory "/fleeting-notes")
+        "Fleeting notes directory"
+        :type '(string)
+        :group 'custom)
+      
+      (defcustom tuxikus/note-system/literature-notes-directory (concat org-roam-directory "/literature-notes")
+        "Literature notes directory"
+        :type '(string)
+        :group 'custom)
+      
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                                          key config                                          ;;;
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -207,7 +217,7 @@ in
         :hook
         ((before-save . whitespace-cleanup)
          (makefile-mode . indent-tabs-mode)
-         (prog-mode . display-line-numbers-mode)
+         ;;(prog-mode . display-line-numbers-mode)
          (git-commit-setup . tuxikus/insert-jira-ticket-number)
          (after-init . tuxikus/set-font))
         :custom
@@ -295,7 +305,7 @@ in
       (use-package compile
         :general
         (:keymaps 'global
-          "C-x c" 'compile)
+                  "C-x c" 'compile)
         (tuxikus/leader-key
           "cc" 'compile))
       
@@ -306,7 +316,7 @@ in
       (use-package newcomment
         :general
         (:keymaps 'global
-          "M-;" 'comment-dwim)
+                  "M-;" 'comment-dwim)
         (tuxikus/leader-key
           "cm" 'comment-dwim))
       
@@ -317,7 +327,7 @@ in
       (use-package simple
         :general
         (:keymaps 'global
-          "M-x" 'execute-extended-command)
+                  "M-x" 'execute-extended-command)
         (tuxikus/leader-key
           "SPC" 'execute-extended-command)
         (tuxikus/special-leader-key
@@ -331,8 +341,8 @@ in
       (use-package files
         :general
         (:keymaps 'global
-          "C-x C-f" 'find-file
-          "C-x C-s" 'save-buffer)
+                  "C-x C-f" 'find-file
+                  "C-x C-s" 'save-buffer)
         (tuxikus/leader-key
           "ff" 'find-file
           "fs" 'save-buffer))
@@ -764,6 +774,7 @@ in
          (org-confirm-babel-evaluate nil)
          (org-hide-emphasis-markers t)
          (org-imenu-depth 7)
+         (org-latex-image-default-scale 2)
          (org-complete-tags-always-offer-all-agenda-tags t))
         :init
         (setq org-todo-keywords
@@ -817,7 +828,7 @@ in
          '(("d" "default"
             plain "%?"
             :target (file+head "%<%Y-%m-%d>-''${slug}.org"
-                               "#+title: ''${title}\n#+author: tuxikus\n#+date: <%<%Y-%m-%d %a>>\n#+startup: latexpreview\n#+filetags:\n")
+                               "#+title: ''${title}\n#+author: tuxikus\n#+date: <%<%Y-%m-%d %a>>\n#+startup: latexpreview\n#+filetags:\n\n\n* Siehe auch\n* Referenzen\n")
             :unnarrowed t)))
         (org-roam-dailies-capture-templates
          '(("d" "default" entry "* %<%H:%M %p>: %?"
@@ -1081,7 +1092,7 @@ in
           (setq org-directory selection
                 org-attach-id-dir (concat org-directory "/.attach")
                 org-roam-directory (concat org-directory "/roam")
-                org-roam-db-location (concat org-directory "/org-roam.db"))))
+                org-roam-db-location (concat org-roam-directory "/org-roam.db"))))
       
       (defun tuxikus/delete-current-file ()
         (interactive)
@@ -1211,7 +1222,6 @@ in
             (when (looking-at "^\\s-*;;;")
               (let ((start (line-beginning-position))
                     (end (line-end-position)))
-                ;; Remove leading whitespace
                 (goto-char start)
                 (when (re-search-forward "^\\s-+" end t)
                   (replace-match ""))))
@@ -1222,6 +1232,59 @@ in
       
       (defun tuxikus/set-lisp-whitespace-line-column ()
         (setq whitespace-line-column 100))
+      
+      (defun tuxikus/get-org-title (file)
+      (with-temp-buffer
+        (condition-case nil
+            (progn
+              (insert-file-contents file)
+              (goto-char (point-min))
+              (if (re-search-forward "^#\\+[Tt][Ii][Tt][Ll][Ee]:?[ \t]*\\(.*\\)$" nil t)
+                  (match-string 1)
+                ""))
+          (error ""))))
+      
+      (defun tuxikus/note-system/insert-literature-note-link ()
+        (interactive)
+        (let* ((note-path (read-file-name "Select Literature note: "))
+               (note-title (tuxikus/get-org-title note-path)))
+          (org-insert-link nil
+                           (concat "file:" note-path)
+                           (concat "Literature note: " note-title))))
+      
+      (defun tuxikus/slugify (s)
+        (let* ((s (downcase s))
+               (s (ucs-normalize-NFD-string s))
+               (s (replace-regexp-in-string "[\u0300-\u036f]" "" s))
+               (s (replace-regexp-in-string "[^a-z0-9 -]" "" s))
+               (s (replace-regexp-in-string "[ ]+" "-" s))
+               (s (replace-regexp-in-string "-+" "-" s))
+               (s (replace-regexp-in-string "^-\\|-$" "" s)))
+          s))
+      
+      (defun tuxikus/note-system/new-note (type)
+        (unless (memq type '(fleeting literature))
+          (error "Invalid note type: %s" type))
+        (let ((path (if (eq type 'fleeting)
+                        tuxikus/note-system/fleeting-notes-directory
+                      tuxikus/note-system/literature-notes-directory)))
+          (let* ((note-title (read-string "Title: "))
+                 (note-file-path (concat path
+                                         "/"
+                                         (format-time-string "%Y-%m-%d")
+                                         "-"
+                                         (tuxikus/slugify note-title)
+                                         ".org")))
+          (write-region (concat "#+title: " note-title) nil note-file-path nil)
+          (find-file note-file-path))))
+      
+      (defun tuxikus/note-system/new-fleeting-note ()
+        (interactive)
+        (tuxikus/note-system/new-note 'fleeting))
+      
+      (defun tuxikus/note-system/new-literature-note ()
+        (interactive)
+        (tuxikus/note-system/new-note 'literature))
     '';
 
     home.file.".emacs.d/init-exwm.el".text = ''
