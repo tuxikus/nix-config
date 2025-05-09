@@ -1750,8 +1750,8 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
     (("C-c r f" . org-roam-node-find)
      ("C-c r i" . org-roam-node-insert))
     :init
-    (setq tuxikus/note-system/fleeting-note-directory (concat org-roam-directory "/fleeting-notes"))
-    (setq tuxikus/note-system/literature-note-directory (concat org-roam-directory "/literature-notes"))
+    (setq tuxikus/note-system/fleeting-notes-directory (concat org-roam-directory "/fleeting-notes"))
+    (setq tuxikus/note-system/literature-notes-directory (concat org-roam-directory "/literature-notes"))
     :custom
     (org-roam-directory (concat org-directory "/roam"))
     (org-roam-capture-templates
