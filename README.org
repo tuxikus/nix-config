@@ -942,6 +942,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
         slime
         evil
         evil-collection
+        evil-surround
         exec-path-from-shell
         geiser
         geiser-guile
@@ -1095,7 +1096,6 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
 
   (use-package evil-collection
     :after evil
-    :ensure t
     :config
     (evil-collection-init))
 
@@ -1106,10 +1106,12 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
   (use-package general
     :after evil
     :config
-    (general-create-definer tuxikus/leader-keys
+    (general-create-definer tuxikus/leader-key
       :keymaps '(normal visual emacs)
-      :prefix "SPC"
-      :global-prefix "C-SPC"))
+      :prefix "SPC")
+    (general-create-definer tuxikus/special-leader-key
+      :keymaps '(normal visual emacs)
+      :prefix "C-SPC"))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;                                       built-in packages                                      ;;;
@@ -1122,7 +1124,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
   (use-package emacs
     :after general
     :general
-    (tuxikus/leader-keys
+    (tuxikus/leader-key
       "bq" 'kill-current-buffer
       "bk" 'kill-buffer
       "er" 'eval-region
@@ -1152,6 +1154,26 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
     (make-backup-files nil)
     (global-auto-revert-non-file-buffers t)
     (fill-column 100))
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;                        kmacro                        ;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package kmacro
+    :init
+    (global-set-key (kbd "<f1>") 'kmacro-start-macro)
+    (global-set-key (kbd "<f4>") 'kmacro-end-macro)
+    (global-set-key (kbd "<f2>") 'kmacro-call-macro))
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;                        replace                       ;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package replace
+    :general
+    (tuxikus/leader-key
+      "trb" 'query-replace           ;; text replace basic
+      "trr" 'query-replace-regexp))  ;; text replace regex
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;                      elisp-mode                      ;;;
@@ -1199,7 +1221,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
     :general
     (:keymaps 'global
       "C-x c" 'compile)
-    (tuxikus/leader-keys
+    (tuxikus/leader-key
       "cc" 'compile))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1210,7 +1232,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
     :general
     (:keymaps 'global
       "M-;" 'comment-dwim)
-    (tuxikus/leader-keys
+    (tuxikus/leader-key
       "cm" 'comment-dwim))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1221,8 +1243,11 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
     :general
     (:keymaps 'global
       "M-x" 'execute-extended-command)
-    (tuxikus/leader-keys
-      "SPC" 'execute-extended-command))
+    (tuxikus/leader-key
+      "SPC" 'execute-extended-command)
+    (tuxikus/special-leader-key
+      "c" 'shell-command
+      "C" 'async-shell-command))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;                         files                        ;;;
@@ -1233,7 +1258,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
     (:keymaps 'global
       "C-x C-f" 'find-file
       "C-x C-s" 'save-buffer)
-    (tuxikus/leader-keys
+    (tuxikus/leader-key
       "ff" 'find-file
       "fs" 'save-buffer))
 
@@ -1243,7 +1268,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
 
   (use-package register
     :general
-    (tuxikus/leader-keys
+    (tuxikus/leader-key
       "rs" 'copy-to-register
       "rb" 'bookmark-jump
       "rm" 'bookmark-set
@@ -1258,7 +1283,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
 
   (use-package project
     :general
-    (tuxikus/leader-keys
+    (tuxikus/leader-key
       "pp" 'project-switch-project
       "pf" 'project-find-file))
 
@@ -1268,12 +1293,13 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
 
   (use-package window
     :general
-    (tuxikus/leader-keys
+    (tuxikus/leader-key
       "ww" 'other-window
       "w3" 'split-window-right
       "w2" 'split-window-below
       "w1" 'delete-other-windows
-      "w0" 'delete-window))
+      "w0" 'delete-window
+      "wq" 'delete-window))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;                       help-fns                       ;;;
@@ -1281,7 +1307,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
 
   (use-package help-fns
     :general
-    (tuxikus/leader-keys
+    (tuxikus/leader-key
       "hi" 'info
       "hf" 'describe-function
       "hv" 'describe-variable
@@ -1302,7 +1328,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
 
   (use-package ibuffer
     :general
-    (tuxikus/leader-keys
+    (tuxikus/leader-key
       "bi" 'ibuffer))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1356,7 +1382,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
 
   (use-package ace-window
     :general
-    (tuxikus/leader-keys
+    (tuxikus/leader-key
       "ws" 'ace-window)
     :custom
     (aw-dispatch-always t)
@@ -1368,7 +1394,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
 
   (use-package avy
     :general
-    (tuxikus/leader-keys
+    (tuxikus/leader-key
       "al" 'avy-goto-line
       "as" 'avy-goto-char-timer))
 
@@ -1397,12 +1423,13 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
 
   (use-package consult
     :general
-    (tuxikus/leader-keys
+    (tuxikus/leader-key
       "sg" 'consult-grep
       "sr" 'consult-ripgrep
       "bb" 'consult-buffer
-      "im" 'consult-imenu
-      "sm" 'consult-mark))
+      "sim" 'consult-imenu
+      "sm" 'consult-mark
+      "y" 'consult-yank-pop))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;                         slime                        ;;;
@@ -1496,6 +1523,14 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
     ("M-." . embark-dwim))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;                     evil-surround                    ;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package evil-surround
+    :config
+    (global-evil-surround-mode 1))
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;                    embark-consult                    ;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -1583,7 +1618,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
 
   (use-package magit
     :general
-    (tuxikus/leader-keys
+    (tuxikus/leader-key
       "gg" 'magit
       "gs" 'magit-stage
       "gc" 'magit-commit
@@ -1636,7 +1671,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
 
   (use-package org
     :general
-    (tuxikus/leader-keys
+    (tuxikus/leader-key
       "obt" 'org-babel-tangle
       "ol" 'org-insert-link
       "oh" 'org-insert-heading
@@ -1703,16 +1738,18 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
      ("C-c r i" . org-roam-node-insert))
     :custom
     (org-roam-directory (concat org-directory "/roam"))
+    (org-roam-capture-templates
+     '(("d" "default"
+        plain "%?"
+        :target (file+head "%<%Y-%m-%d>-''${slug}.org"
+                           "#+title: ''${title}\n#+author: tuxikus\n#+date: <%<%Y-%m-%d %a>>\n#+startup: latexpreview\n#+filetags:\n")
+        :unnarrowed t)))
     (org-roam-dailies-capture-templates
      '(("d" "default" entry "* %<%H:%M %p>: %?"
         :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))))
-    :config
-    ;; If you're using a vertical completion framework, you might want a more informative completion interface
-    (setq org-roam-node-display-template (concat "''${title:*} " (propertize "''${tags:10}" 'face 'org-tag)))
-    (org-roam-db-autosync-mode)
-    (setq org-roam-completion-everywhere t)
-    ;; If using org-roam-protocol
-    (require 'org-roam-protocol))
+    (org-roam-node-display-template (concat "''${title:*} " (propertize "''${tags:10}" 'face 'org-tag)))
+    (org-roam-db-autosync-mode t)
+    (org-roam-completion-everywhere t))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;                      org-roam-ui                     ;;;
