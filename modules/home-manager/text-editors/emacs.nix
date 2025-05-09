@@ -824,10 +824,11 @@ in
         :bind
         (("C-c r f" . org-roam-node-find)
          ("C-c r i" . org-roam-node-insert))
+        :init
+        (setq tuxikus/note-system/fleeting-note-directory (concat org-roam-directory "/fleeting-notes"))
+        (setq tuxikus/note-system/literature-note-directory (concat org-roam-directory "/literature-notes"))
         :custom
         (org-roam-directory (concat org-directory "/roam"))
-        (tuxikus/note-system/fleeting-note-directory (concat org-roam-directory "/fleeting-notes"))
-        (tuxikus/note-system/literature-note-directory (concat org-roam-directory "/literature-notes"))
         (org-roam-capture-templates
          '(("d" "default"
             plain "%?"
