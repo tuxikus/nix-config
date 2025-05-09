@@ -5,7 +5,7 @@
   ...
 }:
 let
-  my-emacs = config.emacsPkg
+  my-emacs = config.emacsPkg;
   my-emacs-with-packages = (pkgs.emacsPackagesFor my-emacs).emacsWithPackages (
     epkgs: with epkgs; [
       aas
