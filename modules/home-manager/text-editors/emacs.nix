@@ -122,6 +122,8 @@ in
       ;;; Commentary:
       ;;; Code:
       
+      (require 'ucs-normalize)
+      
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                                            custom                                            ;;;
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -824,8 +826,8 @@ in
          ("C-c r i" . org-roam-node-insert))
         :custom
         (org-roam-directory (concat org-directory "/roam"))
-        (tuxikus/note-system/literature-notes-directory (concat org-roam-directory "/literature-notes"))
-        (tuxikus/note-system/fleeting-notes-directory (concat org-roam-directory "/fleeting-notes"))
+        (tuxikus/note-system/fleeting-note-directory (concat org-roam-directory "/fleeting-notes"))
+        (tuxikus/note-system/literature-note-directory (concat org-roam-directory "/literature-notes"))
         (org-roam-capture-templates
          '(("d" "default"
             plain "%?"
