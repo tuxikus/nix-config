@@ -148,12 +148,12 @@ in
         :type '(string)
         :group 'custom)
       
-      (defcustom tuxikus/note-system/fleeting-notes-directory (concat org-roam-directory "/fleeting-notes")
+      (defcustom tuxikus/note-system/fleeting-notes-directory nil
         "Fleeting notes directory"
         :type '(string)
         :group 'custom)
       
-      (defcustom tuxikus/note-system/literature-notes-directory (concat org-roam-directory "/literature-notes")
+      (defcustom tuxikus/note-system/literature-notes-directory nil
         "Literature notes directory"
         :type '(string)
         :group 'custom)
@@ -824,6 +824,8 @@ in
          ("C-c r i" . org-roam-node-insert))
         :custom
         (org-roam-directory (concat org-directory "/roam"))
+        (tuxikus/note-system/literature-notes-directory (concat org-roam-directory "/literature-notes"))
+        (tuxikus/note-system/fleeting-notes-directory (concat org-roam-directory "/fleeting-notes"))
         (org-roam-capture-templates
          '(("d" "default"
             plain "%?"
