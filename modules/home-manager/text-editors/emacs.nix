@@ -5,9 +5,7 @@
   ...
 }:
 let
-  my-emacs = config.emacsPkg.override {
-    withNativeCompilation = true;
-  };
+  my-emacs = config.emacsPkg
   my-emacs-with-packages = (pkgs.emacsPackagesFor my-emacs).emacsWithPackages (
     epkgs: with epkgs; [
       aas

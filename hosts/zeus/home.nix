@@ -66,7 +66,7 @@ in
   terminal = "ghostty";
   appLauncher = "fuzzel";
 
-  emacsPkg = pkgs.emacs;
+  emacsPkg = (pkgs.emacs.override { withNativeCompilation = true; });
   customInit = ''
       (setq container-executable 'podman)
     '';

@@ -397,7 +397,7 @@ Specs:
     terminal = "ghostty";
     appLauncher = "fuzzel";
 
-    emacsPkg = pkgs.emacs;
+    emacsPkg = (pkgs.emacs.override { withNativeCompilation = true; });
     customInit = ''
         (setq container-executable 'podman)
       '';
@@ -744,7 +744,7 @@ Apple MacBook Pro M2
     programs.home-manager.enable = true;
 
     #emacsPkg = pkgs.emacs-macport;
-    emacsPkg = (pkgs.emacs.override { withNativeCompilation = true; });
+    emacsPkg = (pkgs.emacs.override { withNativeCompilation = false; });
     fontSize = "20";
     customInit = ''
       (setq custom-init-loaded t)
@@ -917,9 +917,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
     ...
   }:
   let
-    my-emacs = config.emacsPkg.override {
-      withNativeCompilation = true;
-    };
+    my-emacs = config.emacsPkg
     my-emacs-with-packages = (pkgs.emacsPackagesFor my-emacs).emacsWithPackages (
       epkgs: with epkgs; [
         aas
