@@ -927,6 +927,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
         cape
         consult
         consult-yasnippet
+        company
         corfu
         direnv
         docker
@@ -1794,6 +1795,14 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
   (use-package pdf-tools
     :hook
     (after-init . pdf-tools-install))
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;                        company                       ;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package company
+    :hook
+    (after-init . global-company-mode))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;                       lsp-mode                       ;;;

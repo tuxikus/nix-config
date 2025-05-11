@@ -14,6 +14,7 @@ let
       cape
       consult
       consult-yasnippet
+      company
       corfu
       direnv
       docker
@@ -868,6 +869,14 @@ in
       (use-package pdf-tools
         :hook
         (after-init . pdf-tools-install))
+      
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ;;;                        company                       ;;;
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      
+      (use-package company
+        :hook
+        (after-init . global-company-mode))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                       lsp-mode                       ;;;
