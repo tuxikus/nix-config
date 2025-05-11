@@ -18,6 +18,7 @@ let
       corfu
       direnv
       docker
+      doom-modeline
       dockerfile-mode
       dslide
       dashboard
@@ -27,6 +28,7 @@ let
       embark-org-roam
       ess
       lsp-mode
+      lsp-pyright
       slime
       evil
       evil-collection
@@ -221,6 +223,7 @@ in
          (makefile-mode . indent-tabs-mode)
          ;;(prog-mode . display-line-numbers-mode)
          (git-commit-setup . tuxikus/insert-jira-ticket-number)
+         (after-init . tuxikus/set-theme)
          (after-init . tuxikus/set-font))
         :custom
         (auto-save-mode nil)
@@ -320,7 +323,7 @@ in
         (:keymaps 'global
                   "M-;" 'comment-dwim)
         (tuxikus/leader-key
-          "cm" 'comment-dwim))
+          "tc" 'comment-dwim))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                        simple                        ;;;
@@ -428,10 +431,10 @@ in
       ;;;                         eglot                        ;;;
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
-      (use-package eglot
-        :custom
-        (eglot-autoshutdown t)
-        (eglot-confirm-server-initiated-edits nil))
+      ;; (use-package eglot
+      ;;   :custom
+      ;;   (eglot-autoshutdown t)
+      ;;   (eglot-confirm-server-initiated-edits nil))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                       savehist                       ;;;
@@ -501,8 +504,8 @@ in
       ;;;                         cape                         ;;;
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
-      (use-package cape
-        :bind ("M-p" . cape-prefix-map))
+      ;; (use-package cape
+      ;;   :bind ("M-p" . cape-prefix-map))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                        consult                       ;;;
@@ -536,14 +539,14 @@ in
       ;;;                         corfu                        ;;;
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
-      (use-package corfu
-        :custom
-        (corfu-auto nil)
-        (corfu-echo-documentation nil)
-        (tab-always-indent 'complete)
-        (completion-cycle-threshold nil))
-        ;;:hook
-        ;;(after-init . global-corfu-mode))
+      ;; (use-package corfu
+      ;;   :custom
+      ;;   (corfu-auto nil)
+      ;;   (corfu-echo-documentation nil)
+      ;;   (tab-always-indent 'complete)
+      ;;   (completion-cycle-threshold nil)
+      ;;   :hook
+      ;;   (after-init . global-corfu-mode))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                       dashboard                      ;;;
@@ -654,6 +657,14 @@ in
         :bind
         (("C-c h o" . tuxikus/org-hydra/body)
          ("C-c h n" . tuxikus/nix-hydra/body)))
+      
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ;;;                     doom-modeline                    ;;;
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      
+      (use-package doom-modeline
+        :hook
+        (after-init . doom-modeline-mode))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                       fireplace                      ;;;
@@ -885,6 +896,17 @@ in
       (use-package lsp-mode)
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ;;;                      lsp-pyright                     ;;;
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      
+       (use-package lsp-pyright
+        :ensure t
+        :custom (lsp-pyright-langserver-command "pyright") ;; or basedpyright
+        :hook (python-mode . (lambda ()
+                                (require 'lsp-pyright)
+                                (lsp))))  ; or lsp-deferred
+      
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                      python-mode                     ;;;
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
@@ -1053,6 +1075,9 @@ in
       (defun tuxikus/set-font ()
         (add-to-list 'default-frame-alist
                      '(font . "Iosevka Nerd Font-${config.fontSize}")))
+      
+      (defun tuxikus/set-theme ()
+        (load-theme 'modus-operandi))
       
       (defun tuxikus/get-jira-ticket-number (branch)
         (when (string-match "[A-Z]\\{8\\}-[0-9]*" branch)
