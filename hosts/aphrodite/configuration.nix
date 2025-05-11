@@ -44,15 +44,15 @@ in
           outer.right = 15;
         };
         mode.main.binding = {
-          cmd-left = "focus left";
-          cmd-down = "focus down";
-          cmd-up = "focus up";
-          cmd-right = "focus right";
+          cmd-h = "focus left";
+          cmd-j = "focus down";
+          cmd-k = "focus up";
+          cmd-l = "focus right";
 
-          cmd-shift-left = "move left";
-          cmd-shift-down = "move down";
-          cmd-shift-up = "move up";
-          cmd-shift-right = "move right";
+          cmd-shift-h = "move left";
+          cmd-shift-j = "move down";
+          cmd-shift-k = "move up";
+          cmd-shift-l = "move right";
 
           cmd-m = "fullscreen";
 
@@ -77,16 +77,6 @@ in
           cmd-shift-8 = "move-node-to-workspace 8";
           cmd-shift-9 = "move-node-to-workspace 9";
           cmd-shift-0 = "move-node-to-workspace 10";
-
-          cmd-r = "mode resize";
-        };
-        mode.resize.binding = {
-          h = "resize width -50";
-          j = "resize height +50";
-          k = "resize height -50";
-          l = "resize width +50";
-          enter = "mode main";
-          esc = "mode main";
         };
       };
     };
