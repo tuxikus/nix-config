@@ -157,6 +157,7 @@ in
     wlr-randr
     yt-dlp
     yubioath-flutter
+    ruff
     sbcl
   ];
 
