@@ -937,6 +937,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
         embark-consult
         embark-org-roam
         ess
+        lsp-mode
         slime
         evil
         evil-collection
@@ -1464,9 +1465,9 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
     (corfu-auto nil)
     (corfu-echo-documentation nil)
     (tab-always-indent 'complete)
-    (completion-cycle-threshold nil)
-    :hook
-    (after-init . global-corfu-mode))
+    (completion-cycle-threshold nil))
+    ;;:hook
+    ;;(after-init . global-corfu-mode))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;                       dashboard                      ;;;
@@ -1792,6 +1793,12 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
   (use-package pdf-tools
     :hook
     (after-init . pdf-tools-install))
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;                       lsp-mode                       ;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package lsp-mode)
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;                      python-mode                     ;;;

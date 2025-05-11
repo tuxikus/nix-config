@@ -25,6 +25,7 @@ let
       embark-consult
       embark-org-roam
       ess
+      lsp-mode
       slime
       evil
       evil-collection
@@ -539,9 +540,9 @@ in
         (corfu-auto nil)
         (corfu-echo-documentation nil)
         (tab-always-indent 'complete)
-        (completion-cycle-threshold nil)
-        :hook
-        (after-init . global-corfu-mode))
+        (completion-cycle-threshold nil))
+        ;;:hook
+        ;;(after-init . global-corfu-mode))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                       dashboard                      ;;;
@@ -867,6 +868,12 @@ in
       (use-package pdf-tools
         :hook
         (after-init . pdf-tools-install))
+      
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ;;;                       lsp-mode                       ;;;
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      
+      (use-package lsp-mode)
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                      python-mode                     ;;;
