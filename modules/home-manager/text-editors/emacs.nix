@@ -36,7 +36,6 @@ let
       exec-path-from-shell
       geiser
       geiser-guile
-      exwm
       fireplace
       flycheck
       format-all
@@ -57,6 +56,7 @@ let
       org-roam
       org-roam-ui
       org-drill
+      org-pomodoro
       org-superstar
       pass
       pdf-tools
@@ -868,6 +868,16 @@ in
         (org-mode . org-superstar-mode))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ;;;                     org-pomodoro                     ;;;
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      
+      (use-package org-pomodoro
+        :custom
+        ((org-pomodoro-length 25)
+         (org-pomodoro-short-break-length 5)
+         (org-pomodoro-long-break-length 20)))
+      
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                         pass                         ;;;
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
@@ -1330,48 +1340,5 @@ in
         (interactive)
         (tuxikus/note-system/new-note 'literature))
     '';
-
-    home.file.".emacs.d/init-exwm.el".text = ''
-      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-      ;;;                         exwm                         ;;;
-      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-      
-      (use-package exwm
-        :if (eq window-system 'x)
-        :init
-        (setq exwm-workspace-number 9)
-        ;; Make class name the buffer name.
-        (add-hook 'exwm-update-class-hook
-                  (lambda () (exwm-workspace-rename-buffer exwm-class-name)))
-        (setq exwm-input-prefix-keys
-              '(?\C-x
-                ?\C-u
-                ?\C-h
-                ?\M-x
-                ?\s-s
-                ?\M-`
-                ?\M-&
-                ?\M-:
-                ?\C-\M-j  ;; Buffer list
-                ?\C-\ ))  ;; Ctrl+Space
-        ;; Global keybindings.
-        (setq exwm-input-global-keys
-              `(([?\s-r] . exwm-reset) ;; s-r: Reset (to line-mode).
-                ([?\s-w] . exwm-workspace-switch) ;; s-w: Switch workspace.
-                ([?\s-d] . (lambda (cmd) ;; s-d: Launch application.
-                             (interactive (list (read-shell-command "$ ")))
-                             (start-process-shell-command cmd nil cmd)))
-                ;; s-N: Switch to certain workspace.
-                ,@(mapcar (lambda (i)
-                            `(,(kbd (format "s-%d" i)) .
-                              (lambda ()
-                                (interactive)
-                                (exwm-workspace-switch-create ,i))))
-                          (number-sequence 0 9))))
-        (exwm-systemtray-mode 1)
-        ;; Enable EXWM
-        (exwm-enable))
-    '';
-
   };
 }

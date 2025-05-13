@@ -93,8 +93,6 @@ in
     xserver = {
       enable = true;
       displayManager.gdm.enable = true;
-      displayManager.startx.enable = true;
-      #windowManager.exwm.enable = true;
       windowManager.qtile = {
         enable = true;
         extraPackages =
@@ -117,7 +115,6 @@ in
   environment.systemPackages = with pkgs; [
     arduino-ide
     bat
-    guile
     calibre
     chromium
     cifs-utils
@@ -136,13 +133,11 @@ in
     hyprpaper
     hyprsunset
     keepassxc
-    ledger
     poppler_utils
     mpd
     mpv
     pass
     pavucontrol
-    platformio
     python3
     ripgrep
     samba
