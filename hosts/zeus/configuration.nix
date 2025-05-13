@@ -116,6 +116,7 @@ in
     arduino-ide
     bat
     calibre
+    godot_4
     chromium
     cifs-utils
     dig

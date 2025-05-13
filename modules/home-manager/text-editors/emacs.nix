@@ -18,6 +18,7 @@ let
       corfu
       direnv
       docker
+      gdscript-mode
       doom-modeline
       dockerfile-mode
       dslide
@@ -752,6 +753,12 @@ in
       
       (use-package nix-mode
         :mode "\\.nix\\'")
+      
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ;;;                     gdscript-mode                    ;;;
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      
+      (use-package gdscript-mode)
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                       orderless                      ;;;

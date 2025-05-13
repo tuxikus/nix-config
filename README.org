@@ -259,6 +259,7 @@ Specs:
       arduino-ide
       bat
       calibre
+      godot_4
       chromium
       cifs-utils
       dig
@@ -916,6 +917,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
         corfu
         direnv
         docker
+        gdscript-mode
         doom-modeline
         dockerfile-mode
         dslide
@@ -1658,6 +1660,12 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
 
   (use-package nix-mode
     :mode "\\.nix\\'")
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;                     gdscript-mode                    ;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package gdscript-mode)
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;                       orderless                      ;;;
