@@ -785,6 +785,8 @@ in
           "oo" 'org-open-at-point
           "orf" 'org-roam-node-find
           "ori" 'org-roam-node-insert
+          "oci" 'org-clock-in
+          "oco" 'org-clock-out
           "oe" 'org-edit-special)
         :hook
         ((org-mode . auto-fill-mode))

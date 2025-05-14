@@ -1692,6 +1692,8 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
       "oo" 'org-open-at-point
       "orf" 'org-roam-node-find
       "ori" 'org-roam-node-insert
+      "oci" 'org-clock-in
+      "oco" 'org-clock-out
       "oe" 'org-edit-special)
     :hook
     ((org-mode . auto-fill-mode))
