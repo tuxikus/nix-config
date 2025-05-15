@@ -176,7 +176,6 @@ in
         (setq evil-want-integration t)
         (setq evil-want-keybinding nil)
         :config
-        (evil-mode 1)
         (evil-set-initial-state 'git-commit-mode 'insert)
         (evil-set-initial-state 'vterm-mode 'emacs))
       
@@ -193,13 +192,15 @@ in
       ;;;                        general                       ;;;
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
-      (use-package general
+       (use-package general
         :after evil
         :config
         (general-create-definer tuxikus/leader-key
+          :prefix "C-c")
+        (general-create-definer tuxikus/evil-leader-key
           :keymaps '(normal visual emacs)
           :prefix "SPC")
-        (general-create-definer tuxikus/special-leader-key
+        (general-create-definer tuxikus/evil-special-leader-key
           :keymaps '(normal visual emacs)
           :prefix "C-SPC"))
       
@@ -212,9 +213,11 @@ in
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
       (use-package emacs
-        :after general
         :general
         (tuxikus/leader-key
+          "er" 'eval-region
+          "eb" 'eval-buffer)
+        (tuxikus/evil-leader-key
           "bq" 'kill-current-buffer
           "bk" 'kill-buffer
           "er" 'eval-region
@@ -262,9 +265,9 @@ in
       
       (use-package replace
         :general
-        (tuxikus/leader-key
-          "trb" 'query-replace           ;; text replace basic
-          "trr" 'query-replace-regexp))  ;; text replace regex
+        (tuxikus/evil-leader-key
+          "trb" 'query-replace
+          "trr" 'query-replace-regexp))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                      elisp-mode                      ;;;
@@ -312,7 +315,7 @@ in
         :general
         (:keymaps 'global
                   "C-x c" 'compile)
-        (tuxikus/leader-key
+        (tuxikus/evil-leader-key
           "cc" 'compile))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -321,9 +324,7 @@ in
       
       (use-package newcomment
         :general
-        (:keymaps 'global
-                  "M-;" 'comment-dwim)
-        (tuxikus/leader-key
+        (tuxikus/evil-leader-key
           "tc" 'comment-dwim))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -332,11 +333,9 @@ in
       
       (use-package simple
         :general
-        (:keymaps 'global
-                  "M-x" 'execute-extended-command)
-        (tuxikus/leader-key
+        (tuxikus/evil-leader-key
           "SPC" 'execute-extended-command)
-        (tuxikus/special-leader-key
+        (tuxikus/evil-special-leader-key
           "c" 'shell-command
           "C" 'async-shell-command))
       
@@ -346,10 +345,10 @@ in
       
       (use-package files
         :general
-        (:keymaps 'global
-                  "C-x C-f" 'find-file
-                  "C-x C-s" 'save-buffer)
         (tuxikus/leader-key
+          "ff" 'find-file
+          "fs" 'save-buffer)
+        (tuxikus/evil-leader-key
           "ff" 'find-file
           "fs" 'save-buffer))
       
@@ -359,7 +358,7 @@ in
       
       (use-package register
         :general
-        (tuxikus/leader-key
+        (tuxikus/evil-leader-key
           "rs" 'copy-to-register
           "rb" 'bookmark-jump
           "rm" 'bookmark-set
@@ -374,7 +373,7 @@ in
       
       (use-package project
         :general
-        (tuxikus/leader-key
+        (tuxikus/evil-leader-key
           "pp" 'project-switch-project
           "pf" 'project-find-file))
       
@@ -384,7 +383,7 @@ in
       
       (use-package window
         :general
-        (tuxikus/leader-key
+        (tuxikus/evil-leader-key
           "ww" 'other-window
           "w3" 'split-window-right
           "w2" 'split-window-below
@@ -398,7 +397,7 @@ in
       
       (use-package help-fns
         :general
-        (tuxikus/leader-key
+        (tuxikus/evil-leader-key
           "hi" 'info
           "hf" 'describe-function
           "hv" 'describe-variable
@@ -419,7 +418,7 @@ in
       
       (use-package ibuffer
         :general
-        (tuxikus/leader-key
+        (tuxikus/evil-leader-key
           "bi" 'ibuffer))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -473,7 +472,7 @@ in
       
       (use-package ace-window
         :general
-        (tuxikus/leader-key
+        (tuxikus/evil-leader-key
           "ws" 'ace-window)
         :custom
         (aw-dispatch-always t)
@@ -485,7 +484,7 @@ in
       
       (use-package avy
         :general
-        (tuxikus/leader-key
+        (tuxikus/evil-leader-key
           "al" 'avy-goto-line
           "as" 'avy-goto-char-timer))
       
@@ -514,7 +513,7 @@ in
       
       (use-package consult
         :general
-        (tuxikus/leader-key
+        (tuxikus/evil-leader-key
           "sg" 'consult-grep
           "sr" 'consult-ripgrep
           "bb" 'consult-buffer
@@ -717,7 +716,7 @@ in
       
       (use-package magit
         :general
-        (tuxikus/leader-key
+        (tuxikus/evil-leader-key
           "gg" 'magit
           "gs" 'magit-stage
           "gc" 'magit-commit
@@ -776,7 +775,7 @@ in
       
       (use-package org
         :general
-        (tuxikus/leader-key
+        (tuxikus/evil-leader-key
           "obt" 'org-babel-tangle
           "ol" 'org-insert-link
           "oh" 'org-insert-heading
@@ -1103,7 +1102,7 @@ in
           (message (match-string 0 branch))))
       
       (defun tuxikus/insert-jira-ticket-number ()
-        (insert (concat (tuxikus/get-jira-ticket-number (magit-get-current-branch) ": "))))
+        (insert (concat (tuxikus/get-jira-ticket-number (magit-get-current-branch)) ": ")))
       
       (defun tuxikus/get-bookmarks-from-file ()
         "Get bookmarks from the bookmark file"
