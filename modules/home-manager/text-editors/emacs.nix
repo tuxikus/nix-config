@@ -197,6 +197,8 @@ in
         :config
         (general-create-definer tuxikus/leader-key
           :prefix "C-c")
+       (general-create-definer tuxikus/search-leader-key
+          :prefix "M-s")
         (general-create-definer tuxikus/evil-leader-key
           :keymaps '(normal visual emacs)
           :prefix "SPC")
@@ -313,8 +315,8 @@ in
       
       (use-package compile
         :general
-        (:keymaps 'global
-                  "C-x c" 'compile)
+        (tuxikus/leader-key
+          "c" 'compile)
         (tuxikus/evil-leader-key
           "cc" 'compile))
       
@@ -472,6 +474,8 @@ in
       
       (use-package ace-window
         :general
+        (:keymaps 'global
+                  "M-o" 'ace-window)
         (tuxikus/evil-leader-key
           "ws" 'ace-window)
         :custom
@@ -513,6 +517,17 @@ in
       
       (use-package consult
         :general
+        (:keymaps 'global
+                  "C-x b" 'consult-buffer
+                  "M-y" 'consult-yank-from-kill-ring)
+        (tuxikus/search-leader-key
+          "s" 'consult-grep
+          "r" 'consult-ripgrep
+          "g" 'consult-git-grep
+          "i" 'consult-imenu
+          "l" 'consult-line
+          "c" 'consult-compile-error
+          "m" 'consult-mark)
         (tuxikus/evil-leader-key
           "sg" 'consult-grep
           "sr" 'consult-ripgrep
@@ -599,9 +614,7 @@ in
       ;;;                          eat                         ;;;
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
-      (use-package eat
-        :bind
-        (("C-c t e". eat)))
+      (use-package eat)
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                        embark                        ;;;
@@ -1097,12 +1110,24 @@ in
       (defun tuxikus/set-theme ()
         (load-theme 'modus-operandi))
       
+      (defun tuxikus/get-current-branch ()
+        (interactive)
+        (if (called-interactively-p)
+            (message (magit-get-current-branch)
+        (magit-get-current-branch))))
+      
       (defun tuxikus/get-jira-ticket-number (branch)
-        (when (string-match "[A-Z]\\{8\\}-[0-9]*" branch)
-          (message (match-string 0 branch))))
+        (interactive)
+        (when (string-match "MW[A-Z]+-[0-9]+" branch)
+          (match-string 0 branch)))
       
       (defun tuxikus/insert-jira-ticket-number ()
-        (insert (concat (tuxikus/get-jira-ticket-number (magit-get-current-branch)) ": ")))
+        (interactive)
+        (let* ((branch (magit-get-current-branch))
+              (jira-ticket-number (tuxikus/get-jira-ticket-number branch)))
+          (message jira-ticket-number)
+          (when jira-ticket-number
+            (insert (concat (tuxikus/get-jira-ticket-number (magit-get-current-branch)) ": ")))))
       
       (defun tuxikus/get-bookmarks-from-file ()
         "Get bookmarks from the bookmark file"
@@ -1203,7 +1228,7 @@ in
                            "/"
                            (car files))))
           (if (= (length files) 1)
-              (if (called-interactively-p)
+              (if (called-interactively-p)y
                   (message "%s" file-path)
                 file-path)
             (error "More than one attachment found!"))))
@@ -1347,6 +1372,18 @@ in
       (defun tuxikus/note-system/new-literature-note ()
         (interactive)
         (tuxikus/note-system/new-note 'literature))
+      
+      (defun tuxikus/reset-emacs ()
+        "This function save and kill all open buffers and open the dashboard. A simple reset."
+        (interactive)
+        (save-some-buffers)
+        (tuxikus/kill-all-buffers)
+        (dashboard-open))
+      
+      (defun tuxikus/kill-all-buffers ()
+        ""
+        (interactive)
+        (mapc 'kill-buffer (buffer-list)))
     '';
   };
 }
