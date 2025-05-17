@@ -153,9 +153,6 @@ in
     wlr-randr
     yt-dlp
     yubioath-flutter
-    pyright
-    sbcl
-    ocaml
   ];
 
   programs = {
