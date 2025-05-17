@@ -155,6 +155,7 @@ in
     yubioath-flutter
     pyright
     sbcl
+    ocaml
   ];
 
   programs = {

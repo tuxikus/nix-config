@@ -35,6 +35,7 @@ let
       evil-collection
       evil-surround
       exec-path-from-shell
+      tuareg
       geiser
       geiser-guile
       fireplace
@@ -93,6 +94,7 @@ let
           tree-sitter-go
           tree-sitter-gomod
           tree-sitter-rust
+          tree-sitter-ocaml
         ]
       ))
     ]
@@ -488,6 +490,8 @@ in
       
       (use-package avy
         :general
+        (:keymaps 'global
+                  "M-g f" 'avy-goto-line)
         (tuxikus/evil-leader-key
           "al" 'avy-goto-line
           "as" 'avy-goto-char-timer))
@@ -897,6 +901,13 @@ in
         ((org-pomodoro-length 25)
          (org-pomodoro-short-break-length 5)
          (org-pomodoro-long-break-length 20)))
+      
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ;;;                        tuareg                        ;;;
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      
+      (use-package tuareg
+        :mode (("\\.ocamlinit\\'" . tuareg-mode)))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                         pass                         ;;;
