@@ -229,13 +229,13 @@ config for each host. Be sure to update the disks.nix with your current and/or d
       xserver = {
         enable = true;
         displayManager.gdm.enable = true;
-        windowManager.qtile = {
-          enable = true;
-          extraPackages =
-            python3Packages: with python3Packages; [
-              qtile-extras
-            ];
-        };
+        # windowManager.qtile = {
+        #   enable = true;
+        #   extraPackages =
+        #     python3Packages: with python3Packages; [
+        #       qtile-extras
+        #     ];
+        # };
         xkb = {
           layout = "us";
           variant = "";
@@ -336,7 +336,7 @@ config for each host. Be sure to update the disks.nix with your current and/or d
       (homeManagerModulesDirectory + "/window-manager/hyprland.nix")
       (homeManagerModulesDirectory + "/window-manager/hyprpaper.nix")
       (homeManagerModulesDirectory + "/window-manager/waybar.nix")
-      (homeManagerModulesDirectory + "/window-manager/qtile.nix")
+      #(homeManagerModulesDirectory + "/window-manager/qtile.nix")
       (homeManagerModulesDirectory + "/scripts/home-backup.nix")
       (homeManagerModulesDirectory + "/scripts/uuidgenlc.nix")
       (homeManagerModulesDirectory + "/scripts/music-unzip.nix")
@@ -348,8 +348,8 @@ config for each host. Be sure to update the disks.nix with your current and/or d
       homeDirectory = "/home/tuxikus";
 
       sessionVariables = {
-        EDITOR = "emacsclient -c";
-        VISUAL = "emacsclient -c";
+        EDITOR = "emacsclient";
+        VISUAL = "emacsclient";
       };
 
       # This value determines the Home Manager release that your
@@ -2705,7 +2705,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
   env = XCURSOR_SIZE,24
   env = QT_QPA_PLATFORMTHEME,qt5ct
 
-  monitor = DP-3, 2560x1440@144, 0x0, 1
+  monitor = DP-3, 2560x1440@60, 0x0, 1
 
   input {
       kb_layout = us
@@ -2811,6 +2811,15 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
   # Move/resize windows with mainMod + LMB/RMB and dragging
   bindm = $mainMod, mouse:272, movewindow
   bindm = $mainMod, mouse:273, resizewindow
+
+  workspace = 1,monitor:DP-3
+  workspace = 2,monitor:DP-3
+  workspace = 3,monitor:DP-3
+  workspace = 4,monitor:DP-3
+  workspace = 5,monitor:DP-3
+  workspace = 6,monitor:DP-3
+  workspace = 7,monitor:DP-3
+  workspace = 8,monitor:DP-3
 #+end_src
 ***** Configuration dump
 #+name: hyprland-configuration-dumper

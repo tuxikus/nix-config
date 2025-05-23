@@ -18,7 +18,7 @@ in
     (homeManagerModulesDirectory + "/window-manager/hyprland.nix")
     (homeManagerModulesDirectory + "/window-manager/hyprpaper.nix")
     (homeManagerModulesDirectory + "/window-manager/waybar.nix")
-    (homeManagerModulesDirectory + "/window-manager/qtile.nix")
+    #(homeManagerModulesDirectory + "/window-manager/qtile.nix")
     (homeManagerModulesDirectory + "/scripts/home-backup.nix")
     (homeManagerModulesDirectory + "/scripts/uuidgenlc.nix")
     (homeManagerModulesDirectory + "/scripts/music-unzip.nix")
@@ -30,8 +30,8 @@ in
     homeDirectory = "/home/tuxikus";
 
     sessionVariables = {
-      EDITOR = "emacsclient -c";
-      VISUAL = "emacsclient -c";
+      EDITOR = "emacsclient";
+      VISUAL = "emacsclient";
     };
 
     # This value determines the Home Manager release that your
