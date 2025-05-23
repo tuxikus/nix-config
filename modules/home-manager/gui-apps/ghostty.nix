@@ -19,10 +19,15 @@
       keybind = ctrl+v=scroll_page_down
       keybind = alt+v=scroll_page_up
       
-      keybind = ctrl+q=toggle_tab_overview
+      keybind = ctrl+x>t>2=new_tab
+      keybind = ctrl+x>t>0=close_tab
+      
+      keybind = ctrl+y=paste_from_clipboard
+      keybind = alt+w=copy_to_clipboard
       
       keybind = ctrl+x>3=new_split:right
       keybind = ctrl+x>2=new_split:down
+      keybind = ctrl+x>o=goto_split:next
     '';
   };
 }

@@ -11,17 +11,13 @@
         source "$(fzf-share)/key-bindings.bash"
         source "$(fzf-share)/completion.bash"
       fi
+
+      export FZF_COMPLETION_TRIGGER='*'
+      export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix'
+      export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
     '';
     shellAliases = {
-      ed = "emacs --daemon";
-      #e = "emacsclient -c & disown";
-      e = ''emacsclient -c --eval "(tabspaces-restore-session)" & disown'';
-      night-shift-on = "hyprsunset --temperature 3000 & disown";
-      night-shift-off = "pgrep hyprsunset | xargs kill";
       ll = "ls -lah";
-      ff = "fastfetch";
-      cdp = "cd $(cli-project-switcher | fzf)";
-      vanilla-emacs = "emacs -q --load ~/projects/personal/vanilla-emacs/init.el";
     };
   };
 }

@@ -132,13 +132,6 @@ config for each host. Be sure to update the disks.nix with your current and/or d
 #+end_src
 * Hosts
 ** Zeus
-Main workstation.
-
-Specs:
-| CPU    | AMD Ryzen 5 5600X (12) @ 3.70 GHz |
-| GPU    | AMD Radeon RX 6800 XT             |
-| Memory | 32GB DDR4                         |
-
 *** configuration.nix
 #+begin_src nix :tangle hosts/zeus/configuration.nix :noweb tangle :mkdirp yes
   {
@@ -259,7 +252,6 @@ Specs:
       arduino-ide
       bat
       calibre
-      godot_4
       chromium
       cifs-utils
       dig
@@ -278,7 +270,6 @@ Specs:
       hyprsunset
       keepassxc
       poppler_utils
-      mpd
       mpv
       pass
       pavucontrol
@@ -296,6 +287,7 @@ Specs:
       wlr-randr
       yt-dlp
       yubioath-flutter
+      iotop
     ];
 
     programs = {
@@ -881,10 +873,15 @@ Apple MacBook Pro M2
   keybind = ctrl+v=scroll_page_down
   keybind = alt+v=scroll_page_up
 
-  keybind = ctrl+q=toggle_tab_overview
+  keybind = ctrl+x>t>2=new_tab
+  keybind = ctrl+x>t>0=close_tab
+
+  keybind = ctrl+y=paste_from_clipboard
+  keybind = alt+w=copy_to_clipboard
 
   keybind = ctrl+x>3=new_split:right
   keybind = ctrl+x>2=new_split:down
+  keybind = ctrl+x>o=goto_split:next
 #+end_src
 **** Fuzzel
 ***** Nix configuration
@@ -930,6 +927,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
         docker
         gdscript-mode
         doom-modeline
+        doom-themes
         dockerfile-mode
         dslide
         dashboard
@@ -1600,6 +1598,12 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
   (use-package doom-modeline
     :hook
     (after-init . doom-modeline-mode))
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;                      doom-themes                     ;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package doom-themes)
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;                       fireplace                      ;;;
@@ -2592,17 +2596,13 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
           source "$(fzf-share)/key-bindings.bash"
           source "$(fzf-share)/completion.bash"
         fi
+
+        export FZF_COMPLETION_TRIGGER='*'
+        export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix'
+        export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
       '';
       shellAliases = {
-        ed = "emacs --daemon";
-        #e = "emacsclient -c & disown";
-        e = ''emacsclient -c --eval "(tabspaces-restore-session)" & disown'';
-        night-shift-on = "hyprsunset --temperature 3000 & disown";
-        night-shift-off = "pgrep hyprsunset | xargs kill";
         ll = "ls -lah";
-        ff = "fastfetch";
-        cdp = "cd $(cli-project-switcher | fzf)";
-        vanilla-emacs = "emacs -q --load ~/projects/personal/vanilla-emacs/init.el";
       };
     };
   }
@@ -3053,15 +3053,15 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
   app_launcher = "fuzzel"
 
   keys = [
-      Key([mod], "h", lazy.layout.left(), desc="Move focus to left"),
-      Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),
-      Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
-      Key([mod], "k", lazy.layout.up(), desc="Move focus up"),
+      Key([mod], "left", lazy.layout.left(), desc="Move focus to left"),
+      Key([mod], "right", lazy.layout.right(), desc="Move focus to right"),
+      Key([mod], "down", lazy.layout.down(), desc="Move focus down"),
+      Key([mod], "up", lazy.layout.up(), desc="Move focus up"),
 
-      Key([mod, "shift"], "h", lazy.layout.shuffle_left(), desc="Move window to the left"),
-      Key([mod, "shift"], "l", lazy.layout.shuffle_right(), desc="Move window to the right"),
-      Key([mod, "shift"], "j", lazy.layout.shuffle_down(), desc="Move window down"),
-      Key([mod, "shift"], "k", lazy.layout.shuffle_up(), desc="Move window up"),
+      Key([mod, "shift"], "left", lazy.layout.shuffle_left(), desc="Move window to the left"),
+      Key([mod, "shift"], "right", lazy.layout.shuffle_right(), desc="Move window to the right"),
+      Key([mod, "shift"], "down", lazy.layout.shuffle_down(), desc="Move window down"),
+      Key([mod, "shift"], "up", lazy.layout.shuffle_up(), desc="Move window up"),
 
       # Toggle between split and unsplit sides of stack.
       # Split = all windows displayed

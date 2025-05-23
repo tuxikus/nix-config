@@ -116,7 +116,6 @@ in
     arduino-ide
     bat
     calibre
-    godot_4
     chromium
     cifs-utils
     dig
@@ -135,7 +134,6 @@ in
     hyprsunset
     keepassxc
     poppler_utils
-    mpd
     mpv
     pass
     pavucontrol
@@ -153,6 +151,7 @@ in
     wlr-randr
     yt-dlp
     yubioath-flutter
+    iotop
   ];
 
   programs = {

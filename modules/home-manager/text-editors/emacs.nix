@@ -20,6 +20,7 @@ let
       docker
       gdscript-mode
       doom-modeline
+      doom-themes
       dockerfile-mode
       dslide
       dashboard
@@ -682,6 +683,12 @@ in
       (use-package doom-modeline
         :hook
         (after-init . doom-modeline-mode))
+      
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ;;;                      doom-themes                     ;;;
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      
+      (use-package doom-themes)
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                       fireplace                      ;;;
