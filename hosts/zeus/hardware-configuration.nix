@@ -19,20 +19,17 @@
         "nvme"
         "xhci_pci"
         "ahci"
-        "usbhid"
         "uas"
         "sd_mod"
+        "sr_mod"
+        "sdhci_pci"
       ];
       kernelModules = [ ];
     };
-    kernelModules = [ "kvm-amd" ];
+    kernelModules = [ "kvm-intel" ];
     extraModulePackages = [ ];
   };
 
-  hardware = {
-    pulseaudio.enable = false;
-    cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-  };
-
   networking.useDHCP = lib.mkDefault true;
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
