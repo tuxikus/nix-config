@@ -442,7 +442,7 @@ config for each host. Be sure to update the disks.nix with your current and/or d
   disko.devices = {
     disk = {
       root = {
-        device = "/dev/nvme0n1"
+        device = "/dev/nvme0n1";
         type = "disk";
         content = {
           type = "gpt";
