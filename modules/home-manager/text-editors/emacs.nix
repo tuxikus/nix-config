@@ -36,6 +36,7 @@ let
       evil-collection
       evil-surround
       exec-path-from-shell
+      stimmung-themes
       tuareg
       geiser
       geiser-guile
@@ -747,6 +748,13 @@ in
           "gp" 'magit-push)
         :custom
         (magit-display-buffer-function 'magit-display-buffer-fullframe-status-v1))
+      
+      
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ;;;                    stimmung-themes                   ;;;
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      
+      (use-package stimmung-themes)
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                      marginalia                      ;;;

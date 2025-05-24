@@ -23,7 +23,6 @@ in
     (homeManagerModulesDirectory + "/scripts/borg-home-backup.nix")
     (homeManagerModulesDirectory + "/scripts/uuidgenlc.nix")
     (homeManagerModulesDirectory + "/scripts/music-unzip.nix")
-    (homeManagerModulesDirectory + "/scripts/cli-project-switcher.nix")
   ];
 
   home = {

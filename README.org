@@ -341,7 +341,6 @@ config for each host. Be sure to update the disks.nix with your current and/or d
       (homeManagerModulesDirectory + "/scripts/borg-home-backup.nix")
       (homeManagerModulesDirectory + "/scripts/uuidgenlc.nix")
       (homeManagerModulesDirectory + "/scripts/music-unzip.nix")
-      (homeManagerModulesDirectory + "/scripts/cli-project-switcher.nix")
     ];
 
     home = {
@@ -901,6 +900,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
         evil-collection
         evil-surround
         exec-path-from-shell
+        stimmung-themes
         tuareg
         geiser
         geiser-guile
@@ -1620,6 +1620,13 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
       "gp" 'magit-push)
     :custom
     (magit-display-buffer-function 'magit-display-buffer-fullframe-status-v1))
+
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;                    stimmung-themes                   ;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package stimmung-themes)
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;                      marginalia                      ;;;
@@ -2473,38 +2480,6 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
 #+begin_src emacs-lisp :noweb yes
   (with-temp-buffer
     (insert-file-contents "~/projects/personal/python-music-unzip/main.py")
-    (buffer-string))
-#+end_src
-**** cli-project-switcher
-***** Nix configuration
-#+begin_src nix :tangle modules/home-manager/scripts/cli-project-switcher.nix :mkdirp yes
-  { lib, config, ...}:
-  {
-    options = {
-      projectDirectories = lib.mkOption {
-        type = lib.types.str;
-      };
-    };
-
-    config = {
-      home.file.".local/bin/cli-project-switcher" = {
-        text = ''
-          <<script-cli-project-switcher()>>
-        '';
-        executable = true;
-      };
-
-      home.file.".config/cli-project-switcher/config".text = ''
-        ${config.projectDirectories}
-      '';
-    };
-  }
-#+end_src
-***** Script
-#+name: script-cli-project-switcher
-#+begin_src emacs-lisp :noweb yes
-  (with-temp-buffer
-    (insert-file-contents "~/projects/personal/cli-project-switcher/main.py")
     (buffer-string))
 #+end_src
 **** borg-home-backup
