@@ -389,8 +389,6 @@ config for each host. Be sure to update the disks.nix with your current and/or d
         (setq container-executable 'podman)
       '';
     fontSize = "15";
-
-    qtileWallpaper = ./assets/qtile-wallpaper.png;
   }
 #+end_src
 *** hardware-configuration.nix
