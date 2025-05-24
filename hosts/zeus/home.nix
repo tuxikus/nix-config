@@ -73,9 +73,4 @@ in
   fontSize = "15";
 
   qtileWallpaper = ./assets/qtile-wallpaper.png;
-
-  projectDirectories = ''
-    ~/projects/personal
-    ~/projects/git
-  '';
 }
