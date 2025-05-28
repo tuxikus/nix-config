@@ -18,8 +18,6 @@ in
             exec-once = waybar
             exec-once = hyprpaper
             exec-once = dunst
-            exec-once = emacsclient -c
-            exec-once = firefox
             
             $terminal = ${config.terminal}
             $app_launcher = ${config.appLauncher}
@@ -69,7 +67,7 @@ in
             }
             
             animations {
-                enabled = yes
+                enabled = false
                 bezier = myBezier, 0.05, 0.9, 0.1, 1.05
                 animation = windows, 1, 7, myBezier
                 animation = windowsOut, 1, 7, default, popin 80%
