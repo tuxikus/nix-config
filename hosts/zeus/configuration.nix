@@ -125,6 +125,7 @@ in
     home-manager
     hyprpaper
     hyprsunset
+    hyprlock
     iotop
     keepassxc
     mpv

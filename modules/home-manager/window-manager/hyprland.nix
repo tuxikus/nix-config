@@ -88,8 +88,9 @@ in
             
             $mainMod = SUPER
             
-            bind = $mainMod, q, killactive,
+            bind = $mainMod, q, killactive
             
+            bind = $mainMod CTRL, q, exec, hyprlock
             bind = $mainMod, return, exec, $terminal
             bind = $mainMod SHIFT, e, exit
             bind = $mainMod, m, fullscreen

@@ -18,6 +18,7 @@ in
     (homeManagerModulesDirectory + "/education/latex.nix")
     (homeManagerModulesDirectory + "/window-manager/hyprland.nix")
     (homeManagerModulesDirectory + "/window-manager/hyprpaper.nix")
+    (homeManagerModulesDirectory + "/window-manager/hyprlock.nix")
     (homeManagerModulesDirectory + "/window-manager/waybar.nix")
     (homeManagerModulesDirectory + "/scripts/home-backup.nix")
     (homeManagerModulesDirectory + "/scripts/borg-home-backup.nix")
