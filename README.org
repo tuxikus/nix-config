@@ -147,7 +147,7 @@ Modules:
     imports = [
       ./hardware-configuration.nix
       (nixModulesDirectory + "/udev/zsa-keyboards.nix")
-      #(nixModulesDirectory + "/udev/vial.nix")
+      (nixModulesDirectory + "/udev/vial.nix")
       #(nixModulesDirectory + "/udev/platformio.nix")
       (nixModulesDirectory + "/virtualization.nix")
       (nixModulesDirectory + "/podman.nix")
@@ -273,7 +273,6 @@ Modules:
       tree-sitter
       unzip
       vial
-      qmk-udev-rules
       waybar
       wezterm
       wget
@@ -693,7 +692,7 @@ Apple MacBook Pro M2
       (pkgs.writeTextFile {
         name = "udev-file";
         text = ''
-          KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{serial}=="*vial:f64c2b3c*", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
+          KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{serial}=="*vial:f64c2b3c*", MODE="0660", GROUP="tuxikus", TAG+="uaccess", TAG+="udev-acl"
         '';
         destination = "/etc/udev/rules.d/99-vial.rules";
       })
@@ -860,8 +859,8 @@ Apple MacBook Pro M2
   config.window_padding = {
     left = 10,
     right = 10,
-    top = 0,
-    bottom = 0,
+    top = 10,
+    bottom = 10,
   }
 
   config.use_fancy_tab_bar = false
