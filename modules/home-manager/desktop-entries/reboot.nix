@@ -1,6 +1,6 @@
 {
   xdg.desktopEntries = {
-    shutdown = {
+    reboot = {
       name = "reboot";
       exec = "reboot";
       terminal = false;

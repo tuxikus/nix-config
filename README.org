@@ -3416,7 +3416,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
 #+begin_src nix :tangle modules/home-manager/desktop-entries/reboot.nix
   {
     xdg.desktopEntries = {
-      shutdown = {
+      reboot = {
         name = "reboot";
         exec = "reboot";
         terminal = false;
