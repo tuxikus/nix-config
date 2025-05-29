@@ -860,7 +860,7 @@ Apple MacBook Pro M2
   config.font_size = 15
   config.font = wezterm.font 'Iosevka Nerd Font'
 
-  config.color_scheme = '3024 (light) (terminal.sexy)'
+  config.color_scheme = 'One Light (base16)'
 
   config.window_padding = {
     left = 10,
@@ -1535,6 +1535,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
     :general
     (:keymaps 'global
               "C-x b" 'consult-buffer
+              "M-g i" 'consult-imenu
               "M-y" 'consult-yank-from-kill-ring)
     (tuxikus/search-leader-key
       "s" 'consult-grep
@@ -3081,6 +3082,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
 #+begin_src conf :noweb tangle
   preload = ${config.wallpaper}
   wallpaper = DP-3, ${config.wallpaper}
+  wallpaper = eDP-1, ${config.wallpaper}
 #+end_src
 ***** Configuration dump
 #+name: hyprpaper-configuration-dumper

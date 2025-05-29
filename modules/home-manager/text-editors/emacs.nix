@@ -624,6 +624,7 @@ in
         :general
         (:keymaps 'global
                   "C-x b" 'consult-buffer
+                  "M-g i" 'consult-imenu
                   "M-y" 'consult-yank-from-kill-ring)
         (tuxikus/search-leader-key
           "s" 'consult-grep

@@ -10,7 +10,7 @@
       config.font_size = 15
       config.font = wezterm.font 'Iosevka Nerd Font'
       
-      config.color_scheme = '3024 (light) (terminal.sexy)'
+      config.color_scheme = 'One Light (base16)'
       
       config.window_padding = {
         left = 10,
