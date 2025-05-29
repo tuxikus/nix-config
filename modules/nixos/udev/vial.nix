@@ -3,6 +3,10 @@
   ...
 }:
 {
+  services.udev.extraRules = ''
+    KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="6964", ATTRS{idProduct}=="0075", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
+  '';
+
   services.udev.packages = [
     (pkgs.writeTextFile {
       name = "udev-file";
