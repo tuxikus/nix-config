@@ -1,3 +1,4 @@
+#+tangle: yes
 #+property: header-args :noweb yes :mkdirp yes
 #+startup: overview
 * ❄️ Welcome to my nix-config ❄️
@@ -1824,7 +1825,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
     :hook
     ((org-mode . auto-fill-mode)
      (org-mode . (lambda ()
-                   (add-hook 'after-save-hook 'org-babel-tangle nil t))))
+                   (add-hook 'after-save-hook 'tuxikus/auto-tangle nil t))))
     :custom
     ((org-attach-id-dir "~/org/.attach")
      (org-log-done 'time)
@@ -2415,6 +2416,15 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
     ""
     (interactive)
     (mapc 'kill-buffer (buffer-list)))
+
+  (defun tuxikus/auto-tangle ()
+    "Tangle the Org file if it contains '#+tangle: yes' in the first line."
+    (when (and (eq major-mode 'org-mode)
+               (save-excursion
+                 (goto-char (point-min))
+                 (re-search-forward "^#\\+tangle: yes" nil t)))
+      (org-babel-tangle)
+      (message "File tangled!")))
 #+end_src
 ***** Configuration dump
 #+name: emacs-configuration-dumper

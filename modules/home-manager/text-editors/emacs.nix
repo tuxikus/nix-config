@@ -914,7 +914,7 @@ in
         :hook
         ((org-mode . auto-fill-mode)
          (org-mode . (lambda ()
-                       (add-hook 'after-save-hook 'org-babel-tangle nil t))))
+                       (add-hook 'after-save-hook 'tuxikus/auto-tangle nil t))))
         :custom
         ((org-attach-id-dir "~/org/.attach")
          (org-log-done 'time)
@@ -1505,6 +1505,15 @@ in
         ""
         (interactive)
         (mapc 'kill-buffer (buffer-list)))
+      
+      (defun tuxikus/auto-tangle ()
+        "Tangle the Org file if it contains '#+tangle: yes' in the first line."
+        (when (and (eq major-mode 'org-mode)
+                   (save-excursion
+                     (goto-char (point-min))
+                     (re-search-forward "^#\\+tangle: yes" nil t)))
+          (org-babel-tangle)
+          (message "File tangled!")))
     '';
   };
 }
