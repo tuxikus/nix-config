@@ -139,6 +139,7 @@ in
     tree-sitter
     unzip
     vial
+    usbutils
     waybar
     wezterm
     wget
