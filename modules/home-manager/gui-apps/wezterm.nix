@@ -13,8 +13,8 @@
       config.color_scheme = '3024 (light) (terminal.sexy)'
       
       config.window_padding = {
-        left = 2,
-        right = 2,
+        left = 10,
+        right = 10,
         top = 0,
         bottom = 0,
       }
@@ -26,7 +26,7 @@
       
       config.default_prog = { 'bash' }
       
-      config.leader = { key = 'a', mods = 'CTRL|ALT', timeout_milliseconds = 2000 }
+      config.leader = { key = 'C', mods = 'CTRL', timeout_milliseconds = 2000 }
       
       config.keys = {
         { mods = 'LEADER', key = 'l', action = wezterm.action.ShowLauncher },
