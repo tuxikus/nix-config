@@ -3408,7 +3408,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
         name = "shutdow";
         exec = "shutdown -h now";
         terminal = false;
-      }
+      };
     };
   }
 #+end_src
@@ -3420,7 +3420,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
         name = "reboot";
         exec = "reboot";
         terminal = false;
-      }
+      };
     };
   }
 #+end_src

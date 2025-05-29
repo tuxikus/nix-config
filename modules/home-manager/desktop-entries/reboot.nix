@@ -4,6 +4,6 @@
       name = "reboot";
       exec = "reboot";
       terminal = false;
-    }
+    };
   };
 }
