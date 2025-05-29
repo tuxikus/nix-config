@@ -8,7 +8,7 @@ in
         "position": "top", // Waybar position (top|bottom|left|right)
         "modules-left": ["hyprland/workspaces"],
         "modules-center": ["custom/music"],
-        "modules-right": ["pulseaudio", "clock", "tray"],
+        "modules-right": ["", "clock", "tray"],
         "clock": {
           "timezone": "Europe/Berlin",
           "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",

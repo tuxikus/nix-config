@@ -19,14 +19,19 @@
         bottom = 0,
       }
       
-      config.ui_key_cap_rendering = 'Emacs'
+      config.use_fancy_tab_bar = false
+      config.tab_and_split_indicies_are_zero_based = true
       
       config.quick_select_alphabet = 'dvorak'
       
       config.default_prog = { 'bash' }
       
+      config.leader = { key = 'c' mods = 'CTRL|SHIFT', timeout_milliseconds = 2000 }
+      
       config.keys = {
         { key = 'l', mods = 'CTRL|SHIFT', action = wezterm.action.ShowLauncher },
+        { mods = 'LEADER', key = 'c', action = wezterm.action.SpawnTab 'CurrentPaneDomain',},
+        { mods = 'LEADER', key = 'x', action = wezterm.action.CloseCurrentPane { confirm = true },},
       }
       
       config.launcher_menu = {

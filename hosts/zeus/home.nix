@@ -19,11 +19,12 @@ in
     (homeManagerModulesDirectory + "/window-manager/hyprland.nix")
     (homeManagerModulesDirectory + "/window-manager/hyprpaper.nix")
     (homeManagerModulesDirectory + "/window-manager/waybar.nix")
-    #(homeManagerModulesDirectory + "/window-manager/qtile.nix")
     (homeManagerModulesDirectory + "/scripts/home-backup.nix")
     (homeManagerModulesDirectory + "/scripts/borg-home-backup.nix")
     (homeManagerModulesDirectory + "/scripts/uuidgenlc.nix")
     (homeManagerModulesDirectory + "/scripts/music-unzip.nix")
+    (homeManagerModulesDirectory + "/desktop-entries/shutdown.nix")
+    (homeManagerModulesDirectory + "/desktop-entries/reboot.nix")
   ];
 
   home = {

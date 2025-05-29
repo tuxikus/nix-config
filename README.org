@@ -227,13 +227,6 @@ Modules:
       xserver = {
         enable = true;
         displayManager.gdm.enable = true;
-        # windowManager.qtile = {
-        #   enable = true;
-        #   extraPackages =
-        #     python3Packages: with python3Packages; [
-        #       qtile-extras
-        #     ];
-        # };
         xkb = {
           layout = "us";
           variant = "";
@@ -336,11 +329,12 @@ Modules:
       (homeManagerModulesDirectory + "/window-manager/hyprland.nix")
       (homeManagerModulesDirectory + "/window-manager/hyprpaper.nix")
       (homeManagerModulesDirectory + "/window-manager/waybar.nix")
-      #(homeManagerModulesDirectory + "/window-manager/qtile.nix")
       (homeManagerModulesDirectory + "/scripts/home-backup.nix")
       (homeManagerModulesDirectory + "/scripts/borg-home-backup.nix")
       (homeManagerModulesDirectory + "/scripts/uuidgenlc.nix")
       (homeManagerModulesDirectory + "/scripts/music-unzip.nix")
+      (homeManagerModulesDirectory + "/desktop-entries/shutdown.nix")
+      (homeManagerModulesDirectory + "/desktop-entries/reboot.nix")
     ];
 
     home = {
@@ -869,14 +863,19 @@ Apple MacBook Pro M2
     bottom = 0,
   }
 
-  config.ui_key_cap_rendering = 'Emacs'
+  config.use_fancy_tab_bar = false
+  config.tab_and_split_indicies_are_zero_based = true
 
   config.quick_select_alphabet = 'dvorak'
 
   config.default_prog = { 'bash' }
 
+  config.leader = { key = 'c' mods = 'CTRL|SHIFT', timeout_milliseconds = 2000 }
+
   config.keys = {
     { key = 'l', mods = 'CTRL|SHIFT', action = wezterm.action.ShowLauncher },
+    { mods = 'LEADER', key = 'c', action = wezterm.action.SpawnTab 'CurrentPaneDomain',},
+    { mods = 'LEADER', key = 'x', action = wezterm.action.CloseCurrentPane { confirm = true },},
   }
 
   config.launcher_menu = {
@@ -3101,7 +3100,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
       "position": "top", // Waybar position (top|bottom|left|right)
       "modules-left": ["hyprland/workspaces"],
       "modules-center": ["custom/music"],
-      "modules-right": ["pulseaudio", "clock", "tray"],
+      "modules-right": ["", "clock", "tray"],
       "clock": {
         "timezone": "Europe/Berlin",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
@@ -3399,4 +3398,29 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
   # We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
   # java that happens to be on java's whitelist.
   wmname = "LG3D"
+#+end_src
+*** Desktop entries
+**** Shutdown
+#+begin_src nix :tangle modules/home-manager/desktop-entries/shutdown.nix
+  {
+    xdg.desktopEntries = {
+      shutdown = {
+        name = "shutdow";
+        exec = "shutdown -h now";
+        terminal = false;
+      }
+    };
+  }
+#+end_src
+**** Reboot
+#+begin_src nix :tangle modules/home-manager/desktop-entries/reboot.nix
+  {
+    xdg.desktopEntries = {
+      shutdown = {
+        name = "reboot";
+        exec = "reboot";
+        terminal = false;
+      }
+    };
+  }
 #+end_src
