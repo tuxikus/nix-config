@@ -46,8 +46,6 @@ Modules:
   echo 'mysuperpassword' > /tmp/secret.key
 #+end_src
 ** Optional: Fromat disks with disko
-For partitioning and formatting I'm using [[https://github.com/nix-community/disko][disko]]. I hardcoded the ids of my drives to the disks.nix
-config for each host. Be sure to update the disks.nix with your current and/or desired disk layout and ids.
 #+begin_src shell
   sudo nix \
        --experimental-features "nix-command flakes" \
@@ -257,22 +255,23 @@ config for each host. Be sure to update the disks.nix with your current and/or d
       dig
       dunst
       fastfetch
+      fd
       ffmpeg
       firefox
       fuzzel
       fzf
-      gnuplot
-      fd
       ghostty
+      gnuplot
       grim
       home-manager
       hyprpaper
       hyprsunset
+      iotop
       keepassxc
-      poppler_utils
       mpv
       pass
       pavucontrol
+      poppler_utils
       python3
       ripgrep
       samba
@@ -282,12 +281,12 @@ config for each host. Be sure to update the disks.nix with your current and/or d
       unzip
       vial
       waybar
+      wezterm
       wget
       wl-clipboard
       wlr-randr
       yt-dlp
       yubioath-flutter
-      iotop
     ];
 
     programs = {
@@ -329,6 +328,7 @@ config for each host. Be sure to update the disks.nix with your current and/or d
       (homeManagerModulesDirectory + "/shell/xonsh.nix")
       (homeManagerModulesDirectory + "/text-editors/emacs.nix")
       (homeManagerModulesDirectory + "/gui-apps/ghostty.nix")
+      (homeManagerModulesDirectory + "/gui-apps/wezterm.nix")
       (homeManagerModulesDirectory + "/gui-apps/fuzzel.nix")
       (homeManagerModulesDirectory + "/utility/tmux.nix")
       (homeManagerModulesDirectory + "/utility/zellij.nix")
@@ -648,6 +648,7 @@ Apple MacBook Pro M2
       (homeManagerModulesDirectory + "/utility/tmux.nix")
       (homeManagerModulesDirectory + "/utility/zellij.nix")
       (homeManagerModulesDirectory + "/gui-apps/ghostty.nix")
+      (homeManagerModulesDirectory + "/gui-apps/wezterm.nix")
       (homeManagerModulesDirectory + "/scripts/uuidgenlc.nix")
     ];
 
@@ -818,20 +819,6 @@ Apple MacBook Pro M2
   confirm-close-surface = false
 
   theme = BlulocoLight
-
-  # emacs bindings
-  keybind = ctrl+v=scroll_page_down
-  keybind = alt+v=scroll_page_up
-
-  keybind = ctrl+x>t>2=new_tab
-  keybind = ctrl+x>t>0=close_tab
-
-  keybind = ctrl+y=paste_from_clipboard
-  keybind = alt+w=copy_to_clipboard
-
-  keybind = ctrl+x>3=new_split:right
-  keybind = ctrl+x>2=new_split:down
-  keybind = ctrl+x>o=goto_split:next
 #+end_src
 **** Fuzzel
 ***** Nix configuration
@@ -849,6 +836,57 @@ Apple MacBook Pro M2
 #+begin_src conf :tangle ~/projects/personal/nix-config-dump/fuzzel/.config/fuzzel/fuzzel.ini
   [font]
   Iosevka Nerd Font:weight=light
+#+end_src
+**** Wezterm
+***** Nix configuration
+#+begin_src nix :tangle modules/home-manager/gui-apps/wezterm.nix :mkdirp yes
+  {
+    home.file.".config/wezterm/wezterm.lua" = {
+      text = ''
+        <<wezterm-configuration>>
+      '';
+    };
+  }
+#+end_src
+***** Configuration
+#+name: wezterm-configuration
+#+begin_src lua
+  local wezterm = require 'wezterm'
+  local config = wezterm.config.builder()
+
+  config.initial_cols = 120
+  config.initial_rows = 28
+
+  config.font_size = 12
+  config.font = wezterm.font 'Iosevka Nerd Font'
+
+  config.color_scheme = '3024 (light) (terminal.sexy)'
+
+  config.window_padding = {
+    left = 2,
+    right = 2,
+    top = 0,
+    bottom = 0,
+  }
+
+  config.ui_key_cap_rendering = 'Emacs'
+
+  config.quick_select_alphabet = 'dvorak'
+
+  config.default_prog = { 'bash' }
+
+  config.keys = {
+    { key = 'l', mods = 'CTRL|SHIFT', action = wezterm.action.ShowLauncher },
+  }
+
+  config.launcher_menu = {
+    { args = { 'top' }, },
+    { label = 'Bash',
+      args = { 'bash', '-l' },
+      -- cwd = 'some/path',
+      -- set_environment_variables = { FOO = 'bar' },
+    }'
+  }
 #+end_src
 *** Text editors
 **** Emacs
@@ -873,6 +911,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
         consult-yasnippet
         company
         corfu
+        meow
         direnv
         docker
         gdscript-mode
@@ -906,7 +945,6 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
         hide-mode-line
         htmlize
         hydra
-        ledger-mode
         magit
         marginalia
         move-text
@@ -1058,6 +1096,96 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
     (evil-collection-init))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;                         meow                         ;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package meow
+    :init
+    (defun meow-setup ()
+    (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
+    (meow-motion-define-key
+     '("j" . meow-next)
+     '("k" . meow-prev)
+     '("<escape>" . ignore))
+    (meow-leader-define-key
+     ;; Use SPC (0-9) for digit arguments.
+     '("1" . meow-digit-argument)
+     '("2" . meow-digit-argument)
+     '("3" . meow-digit-argument)
+     '("4" . meow-digit-argument)
+     '("5" . meow-digit-argument)
+     '("6" . meow-digit-argument)
+     '("7" . meow-digit-argument)
+     '("8" . meow-digit-argument)
+     '("9" . meow-digit-argument)
+     '("0" . meow-digit-argument)
+     '("/" . meow-keypad-describe-key)
+     '("?" . meow-cheatsheet))
+    (meow-normal-define-key
+     '("0" . meow-expand-0)
+     '("9" . meow-expand-9)
+     '("8" . meow-expand-8)
+     '("7" . meow-expand-7)
+     '("6" . meow-expand-6)
+     '("5" . meow-expand-5)
+     '("4" . meow-expand-4)
+     '("3" . meow-expand-3)
+     '("2" . meow-expand-2)
+     '("1" . meow-expand-1)
+     '("-" . negative-argument)
+     '(";" . meow-reverse)
+     '("," . meow-inner-of-thing)
+     '("." . meow-bounds-of-thing)
+     '("[" . meow-beginning-of-thing)
+     '("]" . meow-end-of-thing)
+     '("a" . meow-append)
+     '("A" . meow-open-below)
+     '("b" . meow-back-word)
+     '("B" . meow-back-symbol)
+     '("c" . meow-change)
+     '("d" . meow-delete)
+     '("D" . meow-backward-delete)
+     '("e" . meow-next-word)
+     '("E" . meow-next-symbol)
+     '("f" . meow-find)
+     '("g" . meow-cancel-selection)
+     '("G" . meow-grab)
+     '("h" . meow-left)
+     '("H" . meow-left-expand)
+     '("i" . meow-insert)
+     '("I" . meow-open-above)
+     '("j" . meow-next)
+     '("J" . meow-next-expand)
+     '("k" . meow-prev)
+     '("K" . meow-prev-expand)
+     '("l" . meow-right)
+     '("L" . meow-right-expand)
+     '("m" . meow-join)
+     '("n" . meow-search)
+     '("o" . meow-block)
+     '("O" . meow-to-block)
+     '("p" . meow-yank)
+     '("q" . meow-quit)
+     '("Q" . meow-goto-line)
+     '("r" . meow-replace)
+     '("R" . meow-swap-grab)
+     '("s" . meow-kill)
+     '("t" . meow-till)
+     '("u" . meow-undo)
+     '("U" . meow-undo-in-selection)
+     '("v" . meow-visit)
+     '("w" . meow-mark-word)
+     '("W" . meow-mark-symbol)
+     '("x" . meow-line)
+     '("X" . meow-goto-line)
+     '("y" . meow-save)
+     '("Y" . meow-sync-grab)
+     '("z" . meow-pop-selection)
+     '("'" . repeat)
+     '("<escape>" . ignore)))
+    (meow-setup))
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;                        general                       ;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -1119,6 +1247,15 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
     (make-backup-files nil)
     (global-auto-revert-non-file-buffers t)
     (fill-column 100))
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;                         misc                         ;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package misc
+    :general
+    (tuxikus/leader-key
+      "dl" 'duplicate-line))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;                        kmacro                        ;;;
@@ -1594,13 +1731,6 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
   (use-package htmlize)
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;;;                      ledger-mode                     ;;;
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-  (use-package ledger-mode
-    :mode "\\.lgr\\'")
-
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;                         magit                        ;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -1710,6 +1840,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
                                  (emacs-lisp . t)
                                  (lisp . t)
                                  (python . t)
+                                 (lua . t)
                                  (R . t)
                                  (scheme . t)
                                  (dot . t)

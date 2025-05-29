@@ -121,22 +121,23 @@ in
     dig
     dunst
     fastfetch
+    fd
     ffmpeg
     firefox
     fuzzel
     fzf
-    gnuplot
-    fd
     ghostty
+    gnuplot
     grim
     home-manager
     hyprpaper
     hyprsunset
+    iotop
     keepassxc
-    poppler_utils
     mpv
     pass
     pavucontrol
+    poppler_utils
     python3
     ripgrep
     samba
@@ -146,12 +147,12 @@ in
     unzip
     vial
     waybar
+    wezterm
     wget
     wl-clipboard
     wlr-randr
     yt-dlp
     yubioath-flutter
-    iotop
   ];
 
   programs = {

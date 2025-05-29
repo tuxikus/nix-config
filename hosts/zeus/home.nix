@@ -11,6 +11,7 @@ in
     (homeManagerModulesDirectory + "/shell/xonsh.nix")
     (homeManagerModulesDirectory + "/text-editors/emacs.nix")
     (homeManagerModulesDirectory + "/gui-apps/ghostty.nix")
+    (homeManagerModulesDirectory + "/gui-apps/wezterm.nix")
     (homeManagerModulesDirectory + "/gui-apps/fuzzel.nix")
     (homeManagerModulesDirectory + "/utility/tmux.nix")
     (homeManagerModulesDirectory + "/utility/zellij.nix")
