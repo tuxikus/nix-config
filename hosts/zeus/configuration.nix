@@ -13,8 +13,8 @@ in
   imports = [
     ./hardware-configuration.nix
     (nixModulesDirectory + "/udev/zsa-keyboards.nix")
-    (nixModulesDirectory + "/udev/vial.nix")
-    (nixModulesDirectory + "/udev/platformio.nix")
+    #(nixModulesDirectory + "/udev/vial.nix")
+    #(nixModulesDirectory + "/udev/platformio.nix")
     (nixModulesDirectory + "/virtualization.nix")
     (nixModulesDirectory + "/podman.nix")
   ];
@@ -139,6 +139,7 @@ in
     tree-sitter
     unzip
     vial
+    qmk-udev-rules
     waybar
     wezterm
     wget
