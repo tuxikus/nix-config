@@ -852,7 +852,7 @@ Apple MacBook Pro M2
   config.initial_cols = 120
   config.initial_rows = 28
 
-  config.font_size = 12
+  config.font_size = 15
   config.font = wezterm.font 'Iosevka Nerd Font'
 
   config.color_scheme = '3024 (light) (terminal.sexy)'
@@ -871,10 +871,11 @@ Apple MacBook Pro M2
 
   config.default_prog = { 'bash' }
 
-  config.leader = { key = 'c', mods = 'CTRL|SHIFT', timeout_milliseconds = 2000 }
+  config.leader = { key = 'a', mods = 'CTRL|ALT', timeout_milliseconds = 2000 }
 
   config.keys = {
-    { key = 'l', mods = 'CTRL|SHIFT', action = wezterm.action.ShowLauncher },
+    { mods = 'LEADER', key = 'l', action = wezterm.action.ShowLauncher },
+    { mods = 'LEADER', key = 'p', action = wezterm.action.ActivateCommandPalette },
     { mods = 'LEADER', key = 'c', action = wezterm.action.SpawnTab 'CurrentPaneDomain',},
     { mods = 'LEADER', key = 'x', action = wezterm.action.CloseCurrentPane { confirm = true },},
   }
@@ -887,6 +888,8 @@ Apple MacBook Pro M2
       -- set_environment_variables = { FOO = 'bar' },
     }
   }
+
+  return config
 #+end_src
 *** Text editors
 **** Emacs
