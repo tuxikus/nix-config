@@ -846,7 +846,7 @@ Apple MacBook Pro M2
 #+name: wezterm-configuration
 #+begin_src lua
   local wezterm = require 'wezterm'
-  local config = wezterm.config.builder()
+  local config = wezterm.config_builder()
 
   config.initial_cols = 120
   config.initial_rows = 28
@@ -864,13 +864,13 @@ Apple MacBook Pro M2
   }
 
   config.use_fancy_tab_bar = false
-  config.tab_and_split_indicies_are_zero_based = true
+  config.tab_and_split_indices_are_zero_based = true
 
   config.quick_select_alphabet = 'dvorak'
 
   config.default_prog = { 'bash' }
 
-  config.leader = { key = 'c' mods = 'CTRL|SHIFT', timeout_milliseconds = 2000 }
+  config.leader = { key = 'c', mods = 'CTRL|SHIFT', timeout_milliseconds = 2000 }
 
   config.keys = {
     { key = 'l', mods = 'CTRL|SHIFT', action = wezterm.action.ShowLauncher },
@@ -878,13 +878,13 @@ Apple MacBook Pro M2
     { mods = 'LEADER', key = 'x', action = wezterm.action.CloseCurrentPane { confirm = true },},
   }
 
-  config.launcher_menu = {
+  config.launch_menu = {
     { args = { 'top' }, },
     { label = 'Bash',
       args = { 'bash', '-l' },
       -- cwd = 'some/path',
       -- set_environment_variables = { FOO = 'bar' },
-    }'
+    }
   }
 #+end_src
 *** Text editors
