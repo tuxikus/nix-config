@@ -129,8 +129,6 @@ in
     iotop
     keepassxc
     mpv
-    pass
-    passExtensions.pass-otp
     pavucontrol
     poppler_utils
     python3

@@ -264,8 +264,6 @@ Modules:
       iotop
       keepassxc
       mpv
-      pass
-      passExtensions.pass-otp
       pavucontrol
       poppler_utils
       python3
@@ -373,6 +371,13 @@ Modules:
 
     programs = {
       home-manager.enable = true;
+      password-store = {
+        enable = true;
+        package = pkgs.pass-wayland.withExtensions (exts:
+          with exts; [
+            pass-otp
+          ]);
+      };
       git = {
         enable = true;
         userEmail = "contact@tuxikus.de";

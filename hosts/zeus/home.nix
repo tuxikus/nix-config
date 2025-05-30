@@ -58,6 +58,13 @@ in
 
   programs = {
     home-manager.enable = true;
+    password-store = {
+      enable = true;
+      package = pkgs.pass-wayland.withExtensions (exts:
+        with exts; [
+          pass-otp
+        ]);
+    };
     git = {
       enable = true;
       userEmail = "contact@tuxikus.de";
