@@ -117,6 +117,7 @@ in
     ffmpeg
     firefox
     fuzzel
+    zbar
     fzf
     ghostty
     gnuplot

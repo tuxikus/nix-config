@@ -252,6 +252,7 @@ Modules:
       ffmpeg
       firefox
       fuzzel
+      zbar
       fzf
       ghostty
       gnuplot
@@ -1853,7 +1854,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
   ;;;                          moc                         ;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-  (use-package moc)
+  ;; (use-package moc)
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;                       move-text                      ;;;
