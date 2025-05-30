@@ -26,6 +26,7 @@ in
     (homeManagerModulesDirectory + "/scripts/music-unzip.nix")
     (homeManagerModulesDirectory + "/desktop-entries/shutdown.nix")
     (homeManagerModulesDirectory + "/desktop-entries/reboot.nix")
+    (homeManagerModulesDirectory + "/desktop-entries/clear-cliphist.nix")
   ];
 
   home = {

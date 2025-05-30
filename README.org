@@ -339,6 +339,7 @@ Modules:
       (homeManagerModulesDirectory + "/scripts/music-unzip.nix")
       (homeManagerModulesDirectory + "/desktop-entries/shutdown.nix")
       (homeManagerModulesDirectory + "/desktop-entries/reboot.nix")
+      (homeManagerModulesDirectory + "/desktop-entries/clear-cliphist.nix")
     ];
 
     home = {
@@ -3567,6 +3568,18 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
       reboot = {
         name = "reboot";
         exec = "reboot";
+        terminal = false;
+      };
+    };
+  }
+#+end_src
+**** clear cliphist
+#+begin_src nix :tangle modules/home-manager/desktop-entries/clear-cliphist.nix
+  {
+    xdg.desktopEntries = {
+      clear-cliphist = {
+        name = "clear cliphist";
+        exec = "sh -c \"cliphist list | cliphist delete\"";
         terminal = false;
       };
     };
