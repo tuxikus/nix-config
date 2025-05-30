@@ -6,7 +6,6 @@ in
     {
         "layer": "top", // Waybar at top layer
         "position": "top", // Waybar position (top|bottom|left|right)
-        "margin": "15",
         "modules-left": ["hyprland/workspaces"],
         "modules-center": ["custom/music"],
         "modules-right": ["", "clock", "tray"],
@@ -31,42 +30,26 @@ in
     * {
         font-size: 15px;
         font-family: "Iosevka Nerd Font";
-        color: black;
-        border-radius: 25px;
-    }
-    
-    window#waybar {
-        background: white;
-    }
-    
-    #window {
         color: white;
     }
     
+    window#waybar {
+        background: black;
+    }
+    
     #workspaces button {
+        background-color: black;
+        color: white;
+    }
+    
+    #workspaces button:hover {
         background-color: white;
         color: black;
     }
     
-    #workspaces button:hover {
-        background-color: black;
-        color: white;
-    }
-    
     #workspaces button.focused {
         background-color: black;
-        color: blue;
-    }
-    
-    #custom-notification {
-        font-family: "Fira Code";
-    }
-    
-    #clock,
-    #pulseaudio,
-    #workspaces {
-        background: white;
-        color: black;
+        color: white;
     }
   '';
 }
