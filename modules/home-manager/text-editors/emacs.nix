@@ -79,16 +79,16 @@ let
       walkman
       wgrep
       yasnippet
-      (trivialBuild {
-        pname = "moc";
-        version = "v0.6.2";
-        src = pkgs.fetchurl {
-          url = "https://raw.githubusercontent.com/positron-solutions/moc/refs/heads/master/moc.el";
-          sha256 = "sha256-rwsfM+FvWb0sviT2TtCVlWW8rfW6XBHlch4AbvhaL00=";
-        };
+      # (trivialBuild {
+      #   pname = "moc";
+      #   version = "v0.6.2";
+      #   src = pkgs.fetchurl {
+      #     url = "https://raw.githubusercontent.com/positron-solutions/moc/refs/heads/master/moc.el";
+      #     sha256 = "sha256-rwsfM+FvWb0sviT2TtCVlWW8rfW6XBHlch4AbvhaL00=";
+      #   };
 
-        nativeBuildInputs = [ hide-mode-line ];
-      })
+      #   nativeBuildInputs = [ hide-mode-line ];
+      # })
       (treesit-grammars.with-grammars (
         grammars: with grammars; [
           tree-sitter-python

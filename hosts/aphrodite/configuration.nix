@@ -22,8 +22,7 @@ in
   };
 
   fonts.packages = [
-    pkgs.nerdfonts
-    pkgs.profont
+    pkgs.nerd-fonts.iosevka
   ];
 
   services = {

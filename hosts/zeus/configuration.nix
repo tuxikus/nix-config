@@ -83,8 +83,7 @@ in
   };
 
   fonts.packages = with pkgs; [
-    nerdfonts
-    profont
+    nerd-fonts.iosevka
   ];
 
   services = {
