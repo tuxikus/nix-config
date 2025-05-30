@@ -141,6 +141,7 @@ in
     unzip
     vial
     usbutils
+    clipman
     waybar
     wezterm
     wget

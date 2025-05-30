@@ -6,6 +6,7 @@ in
     {
         "layer": "top", // Waybar at top layer
         "position": "top", // Waybar position (top|bottom|left|right)
+        "margin": "15",
         "modules-left": ["hyprland/workspaces"],
         "modules-center": ["custom/music"],
         "modules-right": ["", "clock", "tray"],
@@ -28,31 +29,33 @@ in
 
   home.file."${waybarConfigDirectory}/style.css".text = ''
     * {
-        font-size: 20px;
+        font-size: 15px;
         font-family: "Iosevka Nerd Font";
+        color: black;
+        border-radius: 25px;
     }
     
     window#waybar {
-        background: rgba(0,0,0,1.0);
+        background: white;
     }
     
     #window {
-        color: #c5c8c6;
+        color: white;
     }
     
     #workspaces button {
+        background-color: white;
+        color: black;
+    }
+    
+    #workspaces button:hover {
         background-color: black;
         color: white;
     }
     
-    #workspaces button:hover {
-        background-color: white;
-        color: black;
-    }
-    
     #workspaces button.focused {
-        background-color: white;
-        color: black;
+        background-color: black;
+        color: blue;
     }
     
     #custom-notification {
@@ -62,8 +65,8 @@ in
     #clock,
     #pulseaudio,
     #workspaces {
-        background: black;
-        color: white;
+        background: white;
+        color: black;
     }
   '';
 }

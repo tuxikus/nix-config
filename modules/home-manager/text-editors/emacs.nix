@@ -14,6 +14,7 @@ let
       cape
       consult
       consult-yasnippet
+      lua-mode
       company
       corfu
       meow
@@ -676,6 +677,12 @@ in
       (use-package dashboard
         :config
         (dashboard-setup-startup-hook))
+      
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ;;;                       lua-mode                       ;;;
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      
+      (use-package lua-mode)
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                        direnv                        ;;;

@@ -276,6 +276,7 @@ Modules:
       unzip
       vial
       usbutils
+      clipman
       waybar
       wezterm
       wget
@@ -836,8 +837,15 @@ Apple MacBook Pro M2
 ***** Configuration
 #+name: fuzzel-configuration
 #+begin_src conf :tangle ~/projects/personal/nix-config-dump/fuzzel/.config/fuzzel/fuzzel.ini
-  [font]
-  Iosevka Nerd Font:weight=light
+  width=100
+  font=Iosevka Nerd Font:weight=bold:size=16
+
+  [colors]
+  background=#ffffffff
+  text=#000000ff
+
+  [border]
+  radius=20
 #+end_src
 **** Wezterm
 ***** Nix configuration
@@ -862,7 +870,7 @@ Apple MacBook Pro M2
   config.font_size = 15
   config.font = wezterm.font 'Iosevka Nerd Font'
 
-  config.color_scheme = 'One Light (base16)'
+  config.color_scheme = '3024 (light) (terminal.sexy)'
 
   config.window_padding = {
     left = 10,
@@ -871,6 +879,7 @@ Apple MacBook Pro M2
     bottom = 10,
   }
 
+  config.tab_bar_at_bottom = true
   config.use_fancy_tab_bar = false
   config.tab_and_split_indices_are_zero_based = true
 
@@ -882,9 +891,27 @@ Apple MacBook Pro M2
 
   config.keys = {
     { mods = 'LEADER', key = 'l', action = wezterm.action.ShowLauncher },
+    { mods = 'LEADER', key = '|', action = wezterm.action.SplitHorizontal },
+    { mods = 'LEADER', key = '-', action = wezterm.action.SplitVertical },
+    { mods = 'LEADER', key = 't', action = wezterm.action.ShowTabNavigator },
     { mods = 'LEADER', key = 'p', action = wezterm.action.ActivateCommandPalette },
     { mods = 'LEADER', key = 'c', action = wezterm.action.SpawnTab 'CurrentPaneDomain',},
     { mods = 'LEADER', key = 'x', action = wezterm.action.CloseCurrentPane { confirm = true },},
+    { key = 'r',
+      mods = 'LEADER',
+      action = wezterm.action.PromptInputLine {
+         description = 'Enter new name for tab',
+         initial_value = ' ',
+         action = wezterm.action_callback(function(window, pane, line)
+               -- line will be `nil` if they hit escape without entering anything
+               -- An empty string if they just hit enter
+               -- Or the actual line of text they wrote
+               if line then
+                  window:active_tab():set_title(line)
+               end
+         end),
+      },
+    },
   }
 
   config.launch_menu = {
@@ -895,6 +922,35 @@ Apple MacBook Pro M2
       -- set_environment_variables = { FOO = 'bar' },
     }
   }
+
+  -- tab bar
+  function tab_title(tab_info)
+    local title = tab_info.tab_title
+    if title and #title > 0 then
+      return title
+    end
+    return tab_info.active_pane.title
+  end
+
+  wezterm.on(
+    'format-tab-title',
+    function(tab, tabs, panes, config, hover, max_width)
+      local title = tab_title(tab)
+      if tab.is_active then
+        return {
+          { Background = { Color = 'blue' } },
+          { Text = '[' .. title .. ']' },
+        }
+      end
+      if tab.is_last_active then
+        return {
+          { Background = { Color = 'green' } },
+          { Text = ' ' .. title .. '*' },
+        }
+      end
+      return title
+    end
+  )
 
   return config
 #+end_src
@@ -919,6 +975,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
         cape
         consult
         consult-yasnippet
+        lua-mode
         company
         corfu
         meow
@@ -1589,6 +1646,12 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
   (use-package dashboard
     :config
     (dashboard-setup-startup-hook))
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;                       lua-mode                       ;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package lua-mode)
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;                        direnv                        ;;;
@@ -2915,6 +2978,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
   exec-once = waybar
   exec-once = hyprpaper
   exec-once = dunst
+  exec-once = wl-paste -t text --watch clipman store --no-persist
 
   $terminal = ${config.terminal}
   $app_launcher = ${config.appLauncher}
@@ -2988,11 +3052,13 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
   bind = $mainMod, q, killactive
 
   bind = $mainMod CTRL, q, exec, hyprlock
-  bind = $mainMod, return, exec, $terminal
   bind = $mainMod SHIFT, e, exit
   bind = $mainMod, m, fullscreen
-  bind = $mainMod, e, exec, emacsclient -c
   bind = $mainMod, d, exec, $app_launcher
+  bind = $mainMod, o, movecurrentworkspacetomonitor, +1
+  bind = $mainMod, s, exec, grim -g "$(slurp)"
+  bind = $mainMod SHIFT, s, exec, grim
+  bind = $mainMod, v, exec, clipman pick -t STDOUT | fuzzel --dmenu | wl-copy
 
   bind = $mainMod, left, movefocus, l
   bind = $mainMod, right, movefocus, r
@@ -3234,6 +3300,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
   {
       "layer": "top", // Waybar at top layer
       "position": "top", // Waybar position (top|bottom|left|right)
+      "margin": "15",
       "modules-left": ["hyprland/workspaces"],
       "modules-center": ["custom/music"],
       "modules-right": ["", "clock", "tray"],
@@ -3257,31 +3324,33 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
 #+name: waybar-style
 #+begin_src css
   ,* {
-      font-size: 20px;
+      font-size: 15px;
       font-family: "Iosevka Nerd Font";
+      color: black;
+      border-radius: 25px;
   }
 
   window#waybar {
-      background: rgba(0,0,0,1.0);
+      background: white;
   }
 
   #window {
-      color: #c5c8c6;
+      color: white;
   }
 
   #workspaces button {
+      background-color: white;
+      color: black;
+  }
+
+  #workspaces button:hover {
       background-color: black;
       color: white;
   }
 
-  #workspaces button:hover {
-      background-color: white;
-      color: black;
-  }
-
   #workspaces button.focused {
-      background-color: white;
-      color: black;
+      background-color: black;
+      color: blue;
   }
 
   #custom-notification {
@@ -3291,8 +3360,8 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
   #clock,
   #pulseaudio,
   #workspaces {
-      background: black;
-      color: white;
+      background: white;
+      color: black;
   }
 #+end_src
 **** Qtile

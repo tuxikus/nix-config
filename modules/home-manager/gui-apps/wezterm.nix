@@ -10,7 +10,7 @@
       config.font_size = 15
       config.font = wezterm.font 'Iosevka Nerd Font'
       
-      config.color_scheme = 'One Light (base16)'
+      config.color_scheme = '3024 (light) (terminal.sexy)'
       
       config.window_padding = {
         left = 10,
@@ -19,6 +19,7 @@
         bottom = 10,
       }
       
+      config.tab_bar_at_bottom = true
       config.use_fancy_tab_bar = false
       config.tab_and_split_indices_are_zero_based = true
       
@@ -30,9 +31,27 @@
       
       config.keys = {
         { mods = 'LEADER', key = 'l', action = wezterm.action.ShowLauncher },
+        { mods = 'LEADER', key = '|', action = wezterm.action.SplitHorizontal },
+        { mods = 'LEADER', key = '-', action = wezterm.action.SplitVertical },
+        { mods = 'LEADER', key = 't', action = wezterm.action.ShowTabNavigator },
         { mods = 'LEADER', key = 'p', action = wezterm.action.ActivateCommandPalette },
         { mods = 'LEADER', key = 'c', action = wezterm.action.SpawnTab 'CurrentPaneDomain',},
         { mods = 'LEADER', key = 'x', action = wezterm.action.CloseCurrentPane { confirm = true },},
+        { key = 'r',
+          mods = 'LEADER',
+          action = wezterm.action.PromptInputLine {
+             description = 'Enter new name for tab',
+             initial_value = ' ',
+             action = wezterm.action_callback(function(window, pane, line)
+                   -- line will be `nil` if they hit escape without entering anything
+                   -- An empty string if they just hit enter
+                   -- Or the actual line of text they wrote
+                   if line then
+                      window:active_tab():set_title(line)
+                   end
+             end),
+          },
+        },
       }
       
       config.launch_menu = {
@@ -43,6 +62,35 @@
           -- set_environment_variables = { FOO = 'bar' },
         }
       }
+      
+      -- tab bar
+      function tab_title(tab_info)
+        local title = tab_info.tab_title
+        if title and #title > 0 then
+          return title
+        end
+        return tab_info.active_pane.title
+      end
+      
+      wezterm.on(
+        'format-tab-title',
+        function(tab, tabs, panes, config, hover, max_width)
+          local title = tab_title(tab)
+          if tab.is_active then
+            return {
+              { Background = { Color = 'blue' } },
+              { Text = '[' .. title .. ']' },
+            }
+          end
+          if tab.is_last_active then
+            return {
+              { Background = { Color = 'green' } },
+              { Text = ' ' .. title .. '*' },
+            }
+          end
+          return title
+        end
+      )
       
       return config
     '';

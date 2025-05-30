@@ -1,8 +1,15 @@
 {
   home.file.".config/fuzzel/fuzzel.ini" = {
     text = ''
-      [font]
-      Iosevka Nerd Font:weight=light
+      width=100
+      font=Iosevka Nerd Font:weight=bold:size=16
+      
+      [colors]
+      background=#ffffffff
+      text=#000000ff
+      
+      [border]
+      radius=20
     '';
   };
 }
