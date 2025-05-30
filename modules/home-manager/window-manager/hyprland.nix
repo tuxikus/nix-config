@@ -18,7 +18,8 @@ in
             exec-once = waybar
             exec-once = hyprpaper
             exec-once = dunst
-            exec-once = wl-paste -t text --watch clipman store --no-persist
+            exec-once = wl-paste --type text --watch cliphist store # Stores only text data
+            #exec-once = wl-paste --type image --watch cliphist store # Stores only image data
             
             $terminal = ${config.terminal}
             $app_launcher = ${config.appLauncher}
@@ -98,7 +99,7 @@ in
             bind = $mainMod, o, movecurrentworkspacetomonitor, +1
             bind = $mainMod, s, exec, grim -g "$(slurp)"
             bind = $mainMod SHIFT, s, exec, grim
-            bind = $mainMod, v, exec, clipman pick -t STDOUT | fuzzel --dmenu | wl-copy
+            bind = $mainMod, v, exec, cliphist list | fuzzel --dmenu | cliphist decode | wl-copy
             
             bind = $mainMod, left, movefocus, l
             bind = $mainMod, right, movefocus, r

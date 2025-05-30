@@ -265,6 +265,7 @@ Modules:
       keepassxc
       mpv
       pass
+      passExtensions.pass-otp
       pavucontrol
       poppler_utils
       python3
@@ -276,7 +277,7 @@ Modules:
       unzip
       vial
       usbutils
-      clipman
+      cliphist
       waybar
       wezterm
       wget
@@ -861,95 +862,107 @@ Apple MacBook Pro M2
 ***** Configuration
 #+name: wezterm-configuration
 #+begin_src lua
-  local wezterm = require 'wezterm'
+  local wezterm = require "wezterm"
   local config = wezterm.config_builder()
 
   config.initial_cols = 120
   config.initial_rows = 28
 
   config.font_size = 15
-  config.font = wezterm.font 'Iosevka Nerd Font'
+  config.font = wezterm.font "Iosevka Nerd Font"
 
-  config.color_scheme = '3024 (light) (terminal.sexy)'
+  config.color_scheme = "3024 (light) (terminal.sexy)"
 
   config.window_padding = {
-    left = 10,
-    right = 10,
-    top = 10,
-    bottom = 10,
+     left = 10,
+     right = 10,
+     top = 10,
+     bottom = 10,
   }
 
   config.tab_bar_at_bottom = true
   config.use_fancy_tab_bar = false
   config.tab_and_split_indices_are_zero_based = true
 
-  config.quick_select_alphabet = 'dvorak'
+  config.quick_select_alphabet = "dvorak"
 
-  config.default_prog = { 'bash' }
+  config.default_prog = { "bash" }
 
-  config.leader = { key = 'C', mods = 'CTRL', timeout_milliseconds = 2000 }
+  config.leader = { key = "C", mods = "CTRL", timeout_milliseconds = 2000 }
 
   config.keys = {
-    { mods = 'LEADER', key = 'l', action = wezterm.action.ShowLauncher },
-    { mods = 'LEADER', key = '|', action = wezterm.action.SplitHorizontal },
-    { mods = 'LEADER', key = '-', action = wezterm.action.SplitVertical },
-    { mods = 'LEADER', key = 't', action = wezterm.action.ShowTabNavigator },
-    { mods = 'LEADER', key = 'p', action = wezterm.action.ActivateCommandPalette },
-    { mods = 'LEADER', key = 'c', action = wezterm.action.SpawnTab 'CurrentPaneDomain',},
-    { mods = 'LEADER', key = 'x', action = wezterm.action.CloseCurrentPane { confirm = true },},
-    { key = 'r',
-      mods = 'LEADER',
-      action = wezterm.action.PromptInputLine {
-         description = 'Enter new name for tab',
-         initial_value = ' ',
-         action = wezterm.action_callback(function(window, pane, line)
-               -- line will be `nil` if they hit escape without entering anything
-               -- An empty string if they just hit enter
-               -- Or the actual line of text they wrote
-               if line then
-                  window:active_tab():set_title(line)
-               end
-         end),
-      },
-    },
+     { mods = "LEADER", key = "0", action = wezterm.action.ActivateTab(0) },
+     { mods = "LEADER", key = "1", action = wezterm.action.ActivateTab(1) },
+     { mods = "LEADER", key = "2", action = wezterm.action.ActivateTab(2) },
+     { mods = "LEADER", key = "3", action = wezterm.action.ActivateTab(3) },
+     { mods = "LEADER", key = "4", action = wezterm.action.ActivateTab(4) },
+     { mods = "LEADER", key = "5", action = wezterm.action.ActivateTab(5) },
+     { mods = "LEADER", key = "6", action = wezterm.action.ActivateTab(6) },
+     { mods = "LEADER", key = "7", action = wezterm.action.ActivateTab(7) },
+     { mods = "LEADER", key = "8", action = wezterm.action.ActivateTab(8) },
+     { mods = "LEADER", key = "9", action = wezterm.action.ActivateTab(9) },
+     { mods = "LEADER", key = "s", action = wezterm.action.Search { CaseInSensitiveString = "" } },
+     { mods = "LEADER", key = "l", action = wezterm.action.ShowLauncher },
+     { mods = "LEADER", key = "q", action = wezterm.action.QuickSelect },
+     { mods = "LEADER", key = "|", action = wezterm.action.SplitHorizontal },
+     { mods = "LEADER", key = "-", action = wezterm.action.SplitVertical },
+     { mods = "LEADER", key = "t", action = wezterm.action.ShowTabNavigator },
+     { mods = "LEADER", key = "p", action = wezterm.action.ActivateCommandPalette },
+     { mods = "LEADER", key = "c", action = wezterm.action.SpawnTab "CurrentPaneDomain",},
+     { mods = "LEADER", key = "x", action = wezterm.action.CloseCurrentPane { confirm = true },},
+     { key = "r",
+       mods = "LEADER",
+       action = wezterm.action.PromptInputLine {
+          description = "Enter new name for tab",
+          initial_value = "x",
+          action = wezterm.action_callback(function(window, pane, line)
+                -- line will be `nil` if they hit escape without entering anything
+                -- An empty string if they just hit enter
+                -- Or the actual line of text they wrote
+                if line then
+                   window:active_tab():set_title(line)
+                end
+          end),
+       },
+     },
   }
 
   config.launch_menu = {
-    { args = { 'top' }, },
-    { label = 'Bash',
-      args = { 'bash', '-l' },
-      -- cwd = 'some/path',
-      -- set_environment_variables = { FOO = 'bar' },
-    }
+     { args = { "top" }, },
+     { label = "Bash",
+       args = { "bash", "-l" },
+       -- cwd = "some/path",
+       -- set_environment_variables = { FOO = "bar" },
+     }
   }
 
   -- tab bar
   function tab_title(tab_info)
-    local title = tab_info.tab_title
-    if title and #title > 0 then
-      return title
-    end
-    return tab_info.active_pane.title
+     local title = tab_info.tab_title
+     if title and #title > 0 then
+        return title
+     end
+     return tab_info.active_pane.title
   end
 
   wezterm.on(
-    'format-tab-title',
-    function(tab, tabs, panes, config, hover, max_width)
-      local title = tab_title(tab)
-      if tab.is_active then
-        return {
-          { Background = { Color = 'blue' } },
-          { Text = '[' .. title .. ']' },
-        }
-      end
-      if tab.is_last_active then
-        return {
-          { Background = { Color = 'green' } },
-          { Text = ' ' .. title .. '*' },
-        }
-      end
-      return title
-    end
+     "format-tab-title",
+     function(tab, tabs, panes, config, hover, max_width)
+        local title = tab_title(tab)
+        if tab.is_active then
+           return {
+              { Background = { Color = "blue" } },
+              { Text = "[" .. title .. "]" },
+           }
+        end
+        if tab.is_last_active then
+           return {
+              { Background = { Color = "green" } },
+              { Text = " " .. title .. "*" },
+           }
+        end
+        return title
+     end
   )
 
   return config
@@ -2978,7 +2991,8 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
   exec-once = waybar
   exec-once = hyprpaper
   exec-once = dunst
-  exec-once = wl-paste -t text --watch clipman store --no-persist
+  exec-once = wl-paste --type text --watch cliphist store # Stores only text data
+  #exec-once = wl-paste --type image --watch cliphist store # Stores only image data
 
   $terminal = ${config.terminal}
   $app_launcher = ${config.appLauncher}
@@ -3058,7 +3072,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
   bind = $mainMod, o, movecurrentworkspacetomonitor, +1
   bind = $mainMod, s, exec, grim -g "$(slurp)"
   bind = $mainMod SHIFT, s, exec, grim
-  bind = $mainMod, v, exec, clipman pick -t STDOUT | fuzzel --dmenu | wl-copy
+  bind = $mainMod, v, exec, cliphist list | fuzzel --dmenu | cliphist decode | wl-copy
 
   bind = $mainMod, left, movefocus, l
   bind = $mainMod, right, movefocus, r
@@ -3150,8 +3164,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
 #+name: hyprpaper-configuration
 #+begin_src conf :noweb tangle
   preload = ${config.wallpaper}
-  wallpaper = DP-3, ${config.wallpaper}
-  wallpaper = eDP-1, ${config.wallpaper}
+  wallpaper = ,${config.wallpaper}
 #+end_src
 ***** Configuration dump
 #+name: hyprpaper-configuration-dumper
@@ -3181,98 +3194,40 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
 ***** Configuration
 #+name: hyprlock-configuration
 #+begin_src conf
-  $font = Monospace
-
-  general {
-      hide_cursor = false
-  }
-
-  # uncomment to enable fingerprint authentication
-  # auth {
-  #     fingerprint {
-  #         enabled = true
-  #         ready_message = Scan fingerprint to unlock
-  #         present_message = Scanning...
-  #         retry_delay = 250 # in milliseconds
-  #     }
-  # }
-
-  animations {
-      enabled = true
-      bezier = linear, 1, 1, 0, 0
-      animation = fadeIn, 1, 5, linear
-      animation = fadeOut, 1, 5, linear
-      animation = inputFieldDots, 1, 2, linear
-  }
-
   background {
-      monitor =
-      path = screenshot
+      blur_size = 5
       blur_passes = 3
+      noise = true
+      contrast = 1.0
+      brightness = 0.9
+      vibrancy = 0.3
   }
 
-  input-field {
-      monitor =
-      size = 20%, 5%
-      outline_thickness = 3
-      inner_color = rgba(0, 0, 0, 0.0) # no fill
-
-      outer_color = rgba(33ccffee) rgba(00ff99ee) 45deg
-      check_color = rgba(00ff99ee) rgba(ff6633ee) 120deg
-      fail_color = rgba(ff6633ee) rgba(ff0066ee) 40deg
-
-      font_color = rgb(143, 143, 143)
-      fade_on_empty = false
-      rounding = 15
-
-      font_family = $font
-      placeholder_text = Input password...
-      fail_text = $PAMFAIL
-
-      # uncomment to use a letter instead of a dot to indicate the typed password
-      # dots_text_format = *
-      # dots_size = 0.4
-      dots_spacing = 0.3
-
-      # uncomment to use an input indicator that does not show the password length (similar to swaylock's input indicator)
-      # hide_input = true
-
-      position = 0, -20
+  # Clock (optional)
+  label {
+      text = $TIME
+      font_family = Iosevka Nerd Font
+      font_size = 64
+      color = rgba(255,255,255,0.8)
+      position = 0, 300
       halign = center
       valign = center
   }
 
-  # TIME
-  label {
-      monitor =
-      text = $TIME # ref. https://wiki.hyprland.org/Hypr-Ecosystem/hyprlock/#variable-substitution
-      font_size = 90
-      font_family = $font
-
-      position = -30, 0
-      halign = right
-      valign = top
-  }
-
-  # DATE
-  label {
-      monitor =
-      text = cmd[update:60000] date +"%A, %d %B %Y" # update every 60 seconds
-      font_size = 25
-      font_family = $font
-
-      position = -30, -150
-      halign = right
-      valign = top
-  }
-
-  label {
-      monitor =
-      text = $LAYOUT[en,ru]
-      font_size = 24
-      onclick = hyprctl switchxkblayout all next
-
-      position = 250, -20
+  # Password prompt
+  input-field {
+      size = 200, 40
+      outline_thickness = 2
+      dots_size = 0.2
+      dots_spacing = 0.2
+      dots_center = true
+      outer_color = rgba(255,255,255,0.2)
+      inner_color = rgba(255,255,255,0.05)
+      font_family = Iosevka Nerd Font
+      font_size = 18
+      placeholder_text = Password...
+      hide_input = false
+      position = 0, 100
       halign = center
       valign = center
   }

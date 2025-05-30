@@ -130,6 +130,7 @@ in
     keepassxc
     mpv
     pass
+    passExtensions.pass-otp
     pavucontrol
     poppler_utils
     python3
@@ -141,7 +142,7 @@ in
     unzip
     vial
     usbutils
-    clipman
+    cliphist
     waybar
     wezterm
     wget

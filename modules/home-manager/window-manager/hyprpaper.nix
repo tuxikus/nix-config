@@ -17,8 +17,7 @@ in
   config = {
     home.file."${hyprConfigDirectory}/hyprpaper.conf".text = ''
       preload = ${config.wallpaper}
-      wallpaper = DP-3, ${config.wallpaper}
-      wallpaper = eDP-1, ${config.wallpaper}
+      wallpaper = ,${config.wallpaper}
     '';
   };
 }
