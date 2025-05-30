@@ -100,6 +100,7 @@ in
             bind = $mainMod, s, exec, grim -g "$(slurp)"
             bind = $mainMod SHIFT, s, exec, grim
             bind = $mainMod, v, exec, cliphist list | fuzzel --dmenu | cliphist decode | wl-copy
+            bind = $mainMod SHIFT, v, exec, cliphist list | fuzzel --dmenu | cliphist delete
             
             bind = $mainMod, left, movefocus, l
             bind = $mainMod, right, movefocus, r
