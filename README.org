@@ -891,9 +891,7 @@ Apple MacBook Pro M2
 
   config.quick_select_alphabet = "dvorak"
 
-  config.default_prog = { "bash" }
-
-  config.leader = { key = "C", mods = "CTRL", timeout_milliseconds = 2000 }
+  config.leader = { key = "c", mods = "CTRL|ALT", timeout_milliseconds = 2000 }
 
   config.keys = {
      { mods = "LEADER", key = "0", action = wezterm.action.ActivateTab(0) },
