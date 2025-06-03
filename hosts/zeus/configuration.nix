@@ -60,6 +60,13 @@ in
     };
   };
 
+  hardware = {
+    bluetooth = {
+      enable = true;
+      powerOnBoot = true;
+    };
+  };
+
   security.rtkit.enable = true;
 
   users = {
@@ -87,6 +94,7 @@ in
   ];
 
   services = {
+    blueman.enable = true;
     pcscd.enable = true;
     dbus.enable = true;
     xserver = {

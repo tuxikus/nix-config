@@ -195,6 +195,13 @@ Modules:
       };
     };
 
+    hardware = {
+      bluetooth = {
+        enable = true;
+        powerOnBoot = true;
+      };
+    };
+
     security.rtkit.enable = true;
 
     users = {
@@ -222,6 +229,7 @@ Modules:
     ];
 
     services = {
+      blueman.enable = true;
       pcscd.enable = true;
       dbus.enable = true;
       xserver = {
