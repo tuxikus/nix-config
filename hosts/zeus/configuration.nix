@@ -145,6 +145,7 @@ in
     wezterm
     wget
     wl-clipboard
+    hyprpicker
     wlr-randr
     yt-dlp
     yubioath-flutter
