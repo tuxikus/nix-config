@@ -502,7 +502,7 @@ Apple MacBook Pro M2
 
     nix.settings.experimental-features = "nix-command flakes";
 
-    system.primaryUser = "dominik.potoczki"
+    system.primaryUser = "dominik.potoczki";
 
     nixpkgs = {
       config.allowUnfree = true;
