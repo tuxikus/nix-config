@@ -9,6 +9,8 @@ in
 
   nix.settings.experimental-features = "nix-command flakes";
 
+  system.primaryUser = "dominik.potoczki"
+
   nixpkgs = {
     config.allowUnfree = true;
     hostPlatform = "aarch64-darwin";
@@ -26,8 +28,6 @@ in
   ];
 
   services = {
-    nix-daemon.enable = true;
-
     aerospace = {
       enable = true;
       settings = {
@@ -43,15 +43,15 @@ in
           outer.right = 15;
         };
         mode.main.binding = {
-          cmd-h = "focus left";
-          cmd-j = "focus down";
-          cmd-k = "focus up";
-          cmd-l = "focus right";
+          cmd-left = "focus left";
+          cmd-down = "focus down";
+          cmd-up = "focus up";
+          cmd-right = "focus right";
 
-          cmd-shift-h = "move left";
-          cmd-shift-j = "move down";
-          cmd-shift-k = "move up";
-          cmd-shift-l = "move right";
+          cmd-shift-left = "move left";
+          cmd-shift-down = "move down";
+          cmd-shift-up = "move up";
+          cmd-shift-right = "move right";
 
           cmd-m = "fullscreen";
 
@@ -107,6 +107,7 @@ in
       ripgrep
       sketchybar
       tree-sitter
+      wezterm
 
       # :o
       gnutls
@@ -140,15 +141,16 @@ in
       "tunnelblick"
       "utm"
       "ghostty"
+      "firefox"
     ];
   };
 
   system = {
     # Used for backwards compatibility, please read the changelog before changing
     # $ darwin-rebuild changelog
-    stateVersion = 4;
+    stateVersion = 5;
     defaults.screencapture.target = "clipboard";
   };
 
-  security.pam.enableSudoTouchIdAuth = true;
+  security.pam.services.sudo_local.touchIdAuth = true;
 }

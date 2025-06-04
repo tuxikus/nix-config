@@ -502,6 +502,8 @@ Apple MacBook Pro M2
 
     nix.settings.experimental-features = "nix-command flakes";
 
+    system.primaryUser = "dominik.potoczki"
+
     nixpkgs = {
       config.allowUnfree = true;
       hostPlatform = "aarch64-darwin";
@@ -519,8 +521,6 @@ Apple MacBook Pro M2
     ];
 
     services = {
-      nix-daemon.enable = true;
-
       aerospace = {
         enable = true;
         settings = {
@@ -536,15 +536,15 @@ Apple MacBook Pro M2
             outer.right = 15;
           };
           mode.main.binding = {
-            cmd-h = "focus left";
-            cmd-j = "focus down";
-            cmd-k = "focus up";
-            cmd-l = "focus right";
+            cmd-left = "focus left";
+            cmd-down = "focus down";
+            cmd-up = "focus up";
+            cmd-right = "focus right";
 
-            cmd-shift-h = "move left";
-            cmd-shift-j = "move down";
-            cmd-shift-k = "move up";
-            cmd-shift-l = "move right";
+            cmd-shift-left = "move left";
+            cmd-shift-down = "move down";
+            cmd-shift-up = "move up";
+            cmd-shift-right = "move right";
 
             cmd-m = "fullscreen";
 
@@ -600,6 +600,7 @@ Apple MacBook Pro M2
         ripgrep
         sketchybar
         tree-sitter
+        wezterm
 
         # :o
         gnutls
@@ -633,17 +634,18 @@ Apple MacBook Pro M2
         "tunnelblick"
         "utm"
         "ghostty"
+        "firefox"
       ];
     };
 
     system = {
       # Used for backwards compatibility, please read the changelog before changing
       # $ darwin-rebuild changelog
-      stateVersion = 4;
+      stateVersion = 5;
       defaults.screencapture.target = "clipboard";
     };
 
-    security.pam.enableSudoTouchIdAuth = true;
+    security.pam.services.sudo_local.touchIdAuth = true;
   }
 #+end_src
 *** home.nix
@@ -852,7 +854,7 @@ Apple MacBook Pro M2
 ***** Configuration
 #+name: fuzzel-configuration
 #+begin_src conf :tangle ~/projects/personal/nix-config-dump/fuzzel/.config/fuzzel/fuzzel.ini
-  width=100
+  width=50
   font=Iosevka Nerd Font:weight=bold:size=16
 
   [colors]
@@ -3012,7 +3014,8 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
   env = XCURSOR_SIZE,24
   env = QT_QPA_PLATFORMTHEME,qt5ct
 
-  monitor = DP-3, 2560x1440@60, 0x0, 1
+  monitor = eDP-1, 1920x1080@60, 0x0, 1
+  monitor = DP-3, 2560x1440@60, 1920x0, 1
 
   input {
       kb_layout = us
@@ -3122,15 +3125,6 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
   # Move/resize windows with mainMod + LMB/RMB and dragging
   bindm = $mainMod, mouse:272, movewindow
   bindm = $mainMod, mouse:273, resizewindow
-
-  workspace = 1,monitor:DP-3
-  workspace = 2,monitor:DP-3
-  workspace = 3,monitor:DP-3
-  workspace = 4,monitor:DP-3
-  workspace = 5,monitor:DP-3
-  workspace = 6,monitor:DP-3
-  workspace = 7,monitor:DP-3
-  workspace = 8,monitor:DP-3
 #+end_src
 ***** Configuration dump
 #+name: hyprland-configuration-dumper

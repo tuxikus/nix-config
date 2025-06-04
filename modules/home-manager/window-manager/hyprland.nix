@@ -27,7 +27,8 @@ in
             env = XCURSOR_SIZE,24
             env = QT_QPA_PLATFORMTHEME,qt5ct
             
-            monitor = DP-3, 2560x1440@60, 0x0, 1
+            monitor = eDP-1, 1920x1080@60, 0x0, 1
+            monitor = DP-3, 2560x1440@60, 1920x0, 1
             
             input {
                 kb_layout = us
@@ -137,15 +138,6 @@ in
             # Move/resize windows with mainMod + LMB/RMB and dragging
             bindm = $mainMod, mouse:272, movewindow
             bindm = $mainMod, mouse:273, resizewindow
-            
-            workspace = 1,monitor:DP-3
-            workspace = 2,monitor:DP-3
-            workspace = 3,monitor:DP-3
-            workspace = 4,monitor:DP-3
-            workspace = 5,monitor:DP-3
-            workspace = 6,monitor:DP-3
-            workspace = 7,monitor:DP-3
-            workspace = 8,monitor:DP-3
           '';
     };
   };
