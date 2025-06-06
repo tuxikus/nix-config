@@ -108,7 +108,7 @@ in
   environment = {
     sessionVariables = rec {
       PASSWORD_STORE_DIR = "$HOME/.password-store";
-    }
+    };
     systemPackages = with pkgs; [
       calibre
       chromium
