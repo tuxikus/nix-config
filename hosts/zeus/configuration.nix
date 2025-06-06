@@ -94,7 +94,6 @@ in
   ];
 
   services = {
-    blueman.enable = true;
     pcscd.enable = true;
     dbus.enable = true;
     xserver = {
@@ -105,59 +104,53 @@ in
         variant = "";
       };
     };
-    pipewire = {
-      enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true;
-      pulse.enable = true;
-    };
   };
-  environment.systemPackages = with pkgs; [
-    arduino-ide
-    bat
-    calibre
-    chromium
-    cifs-utils
-    dig
-    dunst
-    fastfetch
-    fd
-    ffmpeg
-    firefox
-    fuzzel
-    zbar
-    fzf
-    ghostty
-    gnuplot
-    grim
-    home-manager
-    hyprpaper
-    hyprsunset
-    hyprlock
-    iotop
-    keepassxc
-    mpv
-    pavucontrol
-    poppler_utils
-    python3
-    ripgrep
-    samba
-    slurp
-    tree
-    tree-sitter
-    unzip
-    vial
-    usbutils
-    cliphist
-    waybar
-    wezterm
-    wget
-    wl-clipboard
-    hyprpicker
-    wlr-randr
-    yt-dlp
-    yubioath-flutter
-  ];
+  environment = {
+    sessionVariables = rec {
+      PASSWORD_STORE_DIR = "$HOME/.password-store";
+    }
+    systemPackages = with pkgs; [
+      calibre
+      chromium
+      cifs-utils
+      cliphist
+      dunst
+      fastfetch
+      fd
+      ffmpeg
+      firefox
+      fuzzel
+      fzf
+      ghostty
+      gnuplot
+      grim
+      home-manager
+      hyprlock
+      hyprpaper
+      hyprpicker
+      hyprsunset
+      keepassxc
+      mpv
+      poppler_utils
+      python3
+      ripgrep
+      samba
+      slurp
+      tree
+      tree-sitter
+      unzip
+      usbutils
+      vial
+      waybar
+      wezterm
+      wget
+      wl-clipboard
+      wlr-randr
+      yt-dlp
+      yubioath-flutter
+      zbar
+    ];
+  };
 
   programs = {
     gnupg.agent = {

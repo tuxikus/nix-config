@@ -12,56 +12,53 @@ let
       ace-window
       avy
       cape
+      company
       consult
       consult-yasnippet
-      lua-mode
-      company
       corfu
-      meow
+      dashboard
       direnv
       docker
-      gdscript-mode
+      dockerfile-mode
       doom-modeline
       doom-themes
-      dockerfile-mode
       dslide
-      dashboard
       eat
       embark
       embark-consult
       embark-org-roam
       ess
-      lsp-mode
-      lsp-pyright
-      slime
       evil
       evil-collection
       evil-surround
       exec-path-from-shell
-      stimmung-themes
-      tuareg
-      geiser
-      geiser-guile
       fireplace
       flycheck
       format-all
+      gdscript-mode
+      geiser
+      geiser-guile
       general
       git-link
       go-mode
       hide-mode-line
       htmlize
       hydra
+      lsp-mode
+      lsp-pyright
+      lua-mode
       magit
       marginalia
+      meow
       move-text
       nix-mode
       orderless
       org-download
+      org-drill
       org-modern
+      org-pomodoro
       org-roam
       org-roam-ui
-      org-drill
-      org-pomodoro
       org-superstar
       pass
       pdf-tools
@@ -70,8 +67,12 @@ let
       ripgrep
       rust-mode
       salt-mode
+      slime
       spacious-padding
+      stimmung-themes
+      surround
       tabspaces
+      tuareg
       verb
       vertico
       vterm
@@ -91,13 +92,13 @@ let
       # })
       (treesit-grammars.with-grammars (
         grammars: with grammars; [
-          tree-sitter-python
           tree-sitter-bash
           tree-sitter-c
           tree-sitter-go
           tree-sitter-gomod
-          tree-sitter-rust
           tree-sitter-ocaml
+          tree-sitter-python
+          tree-sitter-rust
         ]
       ))
     ]
@@ -334,6 +335,7 @@ in
         (global-auto-revert-mode t)
         (indent-tabs-mode nil)
         (ring-bell-function 'ignore)
+        (compilation-ask-about-save nil)
         (display-line-numbers-type 'relative)
         (inhibit-startup-message t)
         (inhibit-startup-screen t)
@@ -685,6 +687,15 @@ in
       (use-package lua-mode)
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ;;;                       surround                       ;;;
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      
+      (use-package surround
+        :general
+        (tuxikus/search-leader-key
+          "s" 'surround-keymap))
+      
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                        direnv                        ;;;
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
@@ -1025,7 +1036,7 @@ in
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
       (use-package tuareg
-        :mode (("\\.ocamlinit\\'" . tuareg-mode)))
+        :mode (("\\.ml\\'" . tuareg-mode)))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                         pass                         ;;;
@@ -1467,6 +1478,14 @@ in
           (org-insert-link nil
                            (concat "file:" note-path)
                            (concat "Literature note: " note-title))))
+      
+      (defun tuxikus/note-system/insert-fleeting-note-link ()
+        (interactive)
+        (let* ((note-path (read-file-name "Select Fleeting note: "))
+               (note-title (tuxikus/get-org-title note-path)))
+          (org-insert-link nil
+                           (concat "file:" note-path)
+                           (concat "Fleeting note: " note-title))))
       
       (defun tuxikus/slugify (s)
         (let* ((s (downcase s))

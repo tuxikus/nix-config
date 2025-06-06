@@ -229,7 +229,6 @@ Modules:
     ];
 
     services = {
-      blueman.enable = true;
       pcscd.enable = true;
       dbus.enable = true;
       xserver = {
@@ -240,59 +239,53 @@ Modules:
           variant = "";
         };
       };
-      pipewire = {
-        enable = true;
-        alsa.enable = true;
-        alsa.support32Bit = true;
-        pulse.enable = true;
-      };
     };
-    environment.systemPackages = with pkgs; [
-      arduino-ide
-      bat
-      calibre
-      chromium
-      cifs-utils
-      dig
-      dunst
-      fastfetch
-      fd
-      ffmpeg
-      firefox
-      fuzzel
-      zbar
-      fzf
-      ghostty
-      gnuplot
-      grim
-      home-manager
-      hyprpaper
-      hyprsunset
-      hyprlock
-      iotop
-      keepassxc
-      mpv
-      pavucontrol
-      poppler_utils
-      python3
-      ripgrep
-      samba
-      slurp
-      tree
-      tree-sitter
-      unzip
-      vial
-      usbutils
-      cliphist
-      waybar
-      wezterm
-      wget
-      wl-clipboard
-      hyprpicker
-      wlr-randr
-      yt-dlp
-      yubioath-flutter
-    ];
+    environment = {
+      sessionVariables = rec {
+        PASSWORD_STORE_DIR = "$HOME/.password-store";
+      }
+      systemPackages = with pkgs; [
+        calibre
+        chromium
+        cifs-utils
+        cliphist
+        dunst
+        fastfetch
+        fd
+        ffmpeg
+        firefox
+        fuzzel
+        fzf
+        ghostty
+        gnuplot
+        grim
+        home-manager
+        hyprlock
+        hyprpaper
+        hyprpicker
+        hyprsunset
+        keepassxc
+        mpv
+        poppler_utils
+        python3
+        ripgrep
+        samba
+        slurp
+        tree
+        tree-sitter
+        unzip
+        usbutils
+        vial
+        waybar
+        wezterm
+        wget
+        wl-clipboard
+        wlr-randr
+        yt-dlp
+        yubioath-flutter
+        zbar
+      ];
+    };
 
     programs = {
       gnupg.agent = {
@@ -1000,56 +993,53 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
         ace-window
         avy
         cape
+        company
         consult
         consult-yasnippet
-        lua-mode
-        company
         corfu
-        meow
+        dashboard
         direnv
         docker
-        gdscript-mode
+        dockerfile-mode
         doom-modeline
         doom-themes
-        dockerfile-mode
         dslide
-        dashboard
         eat
         embark
         embark-consult
         embark-org-roam
         ess
-        lsp-mode
-        lsp-pyright
-        slime
         evil
         evil-collection
         evil-surround
         exec-path-from-shell
-        stimmung-themes
-        tuareg
-        geiser
-        geiser-guile
         fireplace
         flycheck
         format-all
+        gdscript-mode
+        geiser
+        geiser-guile
         general
         git-link
         go-mode
         hide-mode-line
         htmlize
         hydra
+        lsp-mode
+        lsp-pyright
+        lua-mode
         magit
         marginalia
+        meow
         move-text
         nix-mode
         orderless
         org-download
+        org-drill
         org-modern
+        org-pomodoro
         org-roam
         org-roam-ui
-        org-drill
-        org-pomodoro
         org-superstar
         pass
         pdf-tools
@@ -1058,8 +1048,12 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
         ripgrep
         rust-mode
         salt-mode
+        slime
         spacious-padding
+        stimmung-themes
+        surround
         tabspaces
+        tuareg
         verb
         vertico
         vterm
@@ -1079,13 +1073,13 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
         # })
         (treesit-grammars.with-grammars (
           grammars: with grammars; [
-            tree-sitter-python
             tree-sitter-bash
             tree-sitter-c
             tree-sitter-go
             tree-sitter-gomod
-            tree-sitter-rust
             tree-sitter-ocaml
+            tree-sitter-python
+            tree-sitter-rust
           ]
         ))
       ]
@@ -1330,6 +1324,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
     (global-auto-revert-mode t)
     (indent-tabs-mode nil)
     (ring-bell-function 'ignore)
+    (compilation-ask-about-save nil)
     (display-line-numbers-type 'relative)
     (inhibit-startup-message t)
     (inhibit-startup-screen t)
@@ -1681,6 +1676,15 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
   (use-package lua-mode)
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;                       surround                       ;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package surround
+    :general
+    (tuxikus/search-leader-key
+      "s" 'surround-keymap))
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;                        direnv                        ;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -2021,7 +2025,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   (use-package tuareg
-    :mode (("\\.ocamlinit\\'" . tuareg-mode)))
+    :mode (("\\.ml\\'" . tuareg-mode)))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;                         pass                         ;;;
@@ -2463,6 +2467,14 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
       (org-insert-link nil
                        (concat "file:" note-path)
                        (concat "Literature note: " note-title))))
+
+  (defun tuxikus/note-system/insert-fleeting-note-link ()
+    (interactive)
+    (let* ((note-path (read-file-name "Select Fleeting note: "))
+           (note-title (tuxikus/get-org-title note-path)))
+      (org-insert-link nil
+                       (concat "file:" note-path)
+                       (concat "Fleeting note: " note-title))))
 
   (defun tuxikus/slugify (s)
     (let* ((s (downcase s))
