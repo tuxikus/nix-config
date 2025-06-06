@@ -692,7 +692,7 @@ in
       
       (use-package surround
         :general
-        (tuxikus/search-leader-key
+        (tuxikus/leader-key
           "s" 'surround-keymap))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

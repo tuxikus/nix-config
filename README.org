@@ -195,13 +195,6 @@ Modules:
       };
     };
 
-    hardware = {
-      bluetooth = {
-        enable = true;
-        powerOnBoot = true;
-      };
-    };
-
     security.rtkit.enable = true;
 
     users = {
@@ -241,9 +234,6 @@ Modules:
       };
     };
     environment = {
-      sessionVariables = rec {
-        PASSWORD_STORE_DIR = "$HOME/.password-store";
-      };
       systemPackages = with pkgs; [
         calibre
         chromium
@@ -380,6 +370,9 @@ Modules:
           with exts; [
             pass-otp
           ]);
+        settings = {
+          PASSWORD_STORE_DIR = "$HOME/.password-store";
+        };
       };
       git = {
         enable = true;
@@ -1681,7 +1674,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
 
   (use-package surround
     :general
-    (tuxikus/search-leader-key
+    (tuxikus/leader-key
       "s" 'surround-keymap))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

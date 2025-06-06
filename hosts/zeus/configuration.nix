@@ -60,13 +60,6 @@ in
     };
   };
 
-  hardware = {
-    bluetooth = {
-      enable = true;
-      powerOnBoot = true;
-    };
-  };
-
   security.rtkit.enable = true;
 
   users = {
@@ -106,9 +99,6 @@ in
     };
   };
   environment = {
-    sessionVariables = rec {
-      PASSWORD_STORE_DIR = "$HOME/.password-store";
-    };
     systemPackages = with pkgs; [
       calibre
       chromium
