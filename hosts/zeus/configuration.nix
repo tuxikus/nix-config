@@ -114,6 +114,7 @@ in
       ghostty
       gnuplot
       grim
+      gthumb
       home-manager
       hyprlock
       hyprpaper
