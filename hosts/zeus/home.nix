@@ -76,7 +76,7 @@ in
     };
   };
 
-  wallpaper = ./assets/wallpaper.png;
+  wallpaper = ./assets/wallpaper.jpg;
   terminal = "ghostty";
   appLauncher = "fuzzel";
 
