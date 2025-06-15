@@ -315,6 +315,7 @@ Modules:
     imports = [
       (homeManagerModulesDirectory + "/shell/bash.nix")
       (homeManagerModulesDirectory + "/shell/xonsh.nix")
+      (homeManagerModulesDirectory + "/shell/fish.nix")
       (homeManagerModulesDirectory + "/text-editors/emacs.nix")
       (homeManagerModulesDirectory + "/gui-apps/ghostty.nix")
       (homeManagerModulesDirectory + "/gui-apps/wezterm.nix")
@@ -867,6 +868,50 @@ Apple MacBook Pro M2
 #+begin_src lua
   local wezterm = require "wezterm"
   local config = wezterm.config_builder()
+
+  local tabline = wezterm.plugin.require("https://github.com/michaelbrusegard/tabline.wez")
+
+  tabline.setup({
+        options = {
+           icons_enabled = true,
+           theme = '3024 (light) (terminal.sexy)',
+           tabs_enabled = true,
+           theme_overrides = {},
+           section_separators = {
+              left = wezterm.nerdfonts.pl_left_hard_divider,
+              right = wezterm.nerdfonts.pl_right_hard_divider,
+           },
+           component_separators = {
+              left = wezterm.nerdfonts.pl_left_soft_divider,
+              right = wezterm.nerdfonts.pl_right_soft_divider,
+           },
+           tab_separators = {
+              left = wezterm.nerdfonts.pl_left_hard_divider,
+              right = wezterm.nerdfonts.pl_right_hard_divider,
+           },
+        },
+        sections = {
+           tabline_a = { 'mode' },
+           tabline_b = { 'workspace' },
+           tabline_c = { ' ' },
+           tab_active = {
+              'index',
+              { 'parent', padding = 0 },
+              '/',
+              { 'cwd', padding = { left = 0, right = 1 } },
+              { 'zoomed', padding = 0 },
+           },
+           tab_inactive = { 'index', { 'process', padding = { left = 0, right = 1 } } },
+           tabline_x = { 'ram', 'cpu' },
+           tabline_y = { 'datetime', 'battery' },
+           tabline_z = { 'domain' },
+        },
+        extensions = {},
+  })
+
+  tabline.apply_to_config(config)
+
+  config.default_prog = { 'fish' }
 
   config.initial_cols = 120
   config.initial_rows = 28
@@ -2908,7 +2953,15 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
   aliases['pyva'] = 'source-bash venv/bin/activate'
   aliases['pip-freeze'] = 'python3 -m pip freeze > requirements.txt'
 #+end_src
-
+**** Fish
+***** Nix configuration
+#+begin_src nix :tangle modules/home-manager/shell/fish.nix :noweb yes :mkdirp yes
+  {
+    programs.fish = {
+      enable = true;
+    };
+  }
+#+end_src
 *** Utility
 **** tmux
 ***** Nix configuration

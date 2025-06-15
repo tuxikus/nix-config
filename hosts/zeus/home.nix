@@ -9,6 +9,7 @@ in
   imports = [
     (homeManagerModulesDirectory + "/shell/bash.nix")
     (homeManagerModulesDirectory + "/shell/xonsh.nix")
+    (homeManagerModulesDirectory + "/shell/fish.nix")
     (homeManagerModulesDirectory + "/text-editors/emacs.nix")
     (homeManagerModulesDirectory + "/gui-apps/ghostty.nix")
     (homeManagerModulesDirectory + "/gui-apps/wezterm.nix")
