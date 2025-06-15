@@ -649,6 +649,7 @@ Apple MacBook Pro M2
       (homeManagerModulesDirectory + "/education/r.nix")
       (homeManagerModulesDirectory + "/shell/xonsh.nix")
       (homeManagerModulesDirectory + "/shell/bash.nix")
+      (homeManagerModulesDirectory + "/shell/fish.nix")
       (homeManagerModulesDirectory + "/utility/tmux.nix")
       (homeManagerModulesDirectory + "/utility/zellij.nix")
       (homeManagerModulesDirectory + "/gui-apps/ghostty.nix")
@@ -658,8 +659,8 @@ Apple MacBook Pro M2
 
     home = {
       sessionVariables = {
-        EDITOR = "emacsclient -c";
-        VISUAL = "emacsclient -c";
+        EDITOR = "emacsclient";
+        VISUAL = "emacsclient";
       };
       # This value determines the Home Manager release that your
       # configuration is compatible with. This helps avoid breakage
@@ -911,8 +912,6 @@ Apple MacBook Pro M2
 
   tabline.apply_to_config(config)
 
-  config.default_prog = { 'fish' }
-
   config.initial_cols = 120
   config.initial_rows = 28
 
@@ -931,6 +930,9 @@ Apple MacBook Pro M2
   config.tab_bar_at_bottom = true
   config.use_fancy_tab_bar = false
   config.tab_and_split_indices_are_zero_based = true
+  config.window_decorations = "NONE"
+
+  config.default_prog = { 'fish', '-l' }
 
   config.quick_select_alphabet = "dvorak"
 
@@ -2959,6 +2961,9 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
   {
     programs.fish = {
       enable = true;
+      interactiveShellInit = ''
+        set -g fish_greeting ""
+      '';
     };
   }
 #+end_src

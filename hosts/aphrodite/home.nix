@@ -9,6 +9,7 @@ in
     (homeManagerModulesDirectory + "/education/r.nix")
     (homeManagerModulesDirectory + "/shell/xonsh.nix")
     (homeManagerModulesDirectory + "/shell/bash.nix")
+    (homeManagerModulesDirectory + "/shell/fish.nix")
     (homeManagerModulesDirectory + "/utility/tmux.nix")
     (homeManagerModulesDirectory + "/utility/zellij.nix")
     (homeManagerModulesDirectory + "/gui-apps/ghostty.nix")
@@ -18,8 +19,8 @@ in
 
   home = {
     sessionVariables = {
-      EDITOR = "emacsclient -c";
-      VISUAL = "emacsclient -c";
+      EDITOR = "emacsclient";
+      VISUAL = "emacsclient";
     };
     # This value determines the Home Manager release that your
     # configuration is compatible with. This helps avoid breakage

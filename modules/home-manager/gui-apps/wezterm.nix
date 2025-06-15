@@ -46,8 +46,6 @@
       
       tabline.apply_to_config(config)
       
-      config.default_prog = { 'fish' }
-      
       config.initial_cols = 120
       config.initial_rows = 28
       
@@ -66,6 +64,9 @@
       config.tab_bar_at_bottom = true
       config.use_fancy_tab_bar = false
       config.tab_and_split_indices_are_zero_based = true
+      config.window_decorations = "NONE"
+      
+      config.default_prog = { 'fish', '-l' }
       
       config.quick_select_alphabet = "dvorak"
       
