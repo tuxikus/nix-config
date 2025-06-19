@@ -5,7 +5,7 @@
       # Title          : home-backup
       # Date           : 2024-04-11
       # Author         : tuxikus
-      # Version        : 1.1
+      # Version        : 1.2
       # Description    : Create backup of home directory
       # Options        :  -o destination/output path
       #                   -d enable --dry-run
@@ -13,8 +13,8 @@
       #                   --help print help
       #                   --version print version
       
-      version="1.1"
-      excludes="--exclude={'*/lost+found/','lost+found/'}"
+      version="1.2"
+      excludes="--exclude=lost+found/ --exclude=*/lost+found/ --exclude=.Trash-*/ --exclude=*/.Trash-*/"
       log_file_name=".backup-log.txt"
       enable_delete=
       enable_dry_run=
@@ -45,7 +45,7 @@
       
       check_path() {
           if [ ! -d $1 ]; then
-            echo "Wrong usage!"
+            echo "Wrong usage! Not a valid path: $1"
             print_help
             exit 0
           fi
@@ -112,6 +112,7 @@
                          $HOME/.ppw \
                          $HOME/.gnupg \
                          $HOME/.password-store \
+                         $HOME/.ssh \
                          $HOME/org \
                          $HOME/org-edu \
                          $HOME/multimedia \

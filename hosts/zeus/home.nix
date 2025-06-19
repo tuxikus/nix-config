@@ -22,6 +22,7 @@ in
     (homeManagerModulesDirectory + "/window-manager/hyprlock.nix")
     (homeManagerModulesDirectory + "/window-manager/waybar.nix")
     (homeManagerModulesDirectory + "/scripts/home-backup.nix")
+    (homeManagerModulesDirectory + "/scripts/restore-home-backup.nix")
     (homeManagerModulesDirectory + "/scripts/borg-home-backup.nix")
     (homeManagerModulesDirectory + "/scripts/uuidgenlc.nix")
     (homeManagerModulesDirectory + "/scripts/music-unzip.nix")
