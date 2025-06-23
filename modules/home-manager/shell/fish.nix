@@ -6,6 +6,10 @@
       set -g fish_color_quote green
       set -g fish_color_param magenta
     '';
+    shellAliases = {
+      ed = "emacs --daemon";
+      ecn = "emacsclient -c -nw"
+    };
     functions = {
       fish_prompt = {
         body = ''
