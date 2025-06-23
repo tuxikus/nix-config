@@ -3120,7 +3120,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
       '';
       shellAliases = {
         ed = "emacs --daemon";
-        ecn = "emacsclient -c -nw"
+        ecn = "emacsclient -c -nw";
       };
       functions = {
         fish_prompt = {

@@ -8,7 +8,7 @@
     '';
     shellAliases = {
       ed = "emacs --daemon";
-      ecn = "emacsclient -c -nw"
+      ecn = "emacsclient -c -nw";
     };
     functions = {
       fish_prompt = {
