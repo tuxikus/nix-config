@@ -66,7 +66,7 @@
       config.tab_and_split_indices_are_zero_based = true
       config.window_decorations = "NONE"
       
-      config.default_prog = { 'fish', '-l' }
+      config.default_prog = { 'fish' }
       
       config.quick_select_alphabet = "dvorak"
       

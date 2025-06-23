@@ -691,9 +691,7 @@ in
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
       (use-package surround
-        :general
-        (tuxikus/leader-key
-          "s" 'surround-keymap))
+        :bind-keymap ("C-c s" . surround-keymap))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                        direnv                        ;;;

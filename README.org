@@ -934,7 +934,7 @@ Apple MacBook Pro M2
   config.tab_and_split_indices_are_zero_based = true
   config.window_decorations = "NONE"
 
-  config.default_prog = { 'fish', '-l' }
+  config.default_prog = { 'fish' }
 
   config.quick_select_alphabet = "dvorak"
 
@@ -1723,9 +1723,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   (use-package surround
-    :general
-    (tuxikus/leader-key
-      "s" 'surround-keymap))
+    :bind-keymap ("C-c s" . surround-keymap))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;                        direnv                        ;;;
