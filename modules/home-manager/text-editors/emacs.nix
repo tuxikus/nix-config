@@ -831,7 +831,7 @@ in
       
       (use-package go-mode
         :mode "\\.go\\'"
-        :hook (lambda () (setq tab-width 4)))
+        :hook (go-mode . (lambda () (setq tab-width 4))))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                    hide-mode-line                    ;;;
