@@ -100,6 +100,7 @@ in
   };
   environment = {
     systemPackages = with pkgs; [
+      btop
       calibre
       chromium
       cifs-utils
