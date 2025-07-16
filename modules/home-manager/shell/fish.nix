@@ -5,6 +5,8 @@
       set -g fish_greeting ""
       set -g fish_color_quote green
       set -g fish_color_param magenta
+
+      direnv hook fish | source
     '';
     shellAliases = {
       ed = "emacs --daemon";
