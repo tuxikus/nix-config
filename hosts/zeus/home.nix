@@ -26,7 +26,7 @@ in
     (homeManagerModulesDirectory + "/scripts/borg-home-backup.nix")
     (homeManagerModulesDirectory + "/scripts/uuidgenlc.nix")
     (homeManagerModulesDirectory + "/scripts/music-unzip.nix")
-    (homeManagerModulesDirectory + "/scripts/fpass-wl-copy.nix")
+    #(homeManagerModulesDirectory + "/scripts/fpass-wl-copy.nix")
     (homeManagerModulesDirectory + "/desktop-entries/shutdown.nix")
     (homeManagerModulesDirectory + "/desktop-entries/reboot.nix")
     (homeManagerModulesDirectory + "/desktop-entries/clear-cliphist.nix")
@@ -62,16 +62,16 @@ in
 
   programs = {
     home-manager.enable = true;
-    password-store = {
-      enable = true;
-      package = pkgs.pass-wayland.withExtensions (exts:
-        with exts; [
-          pass-otp
-        ]);
-      settings = {
-        PASSWORD_STORE_DIR = "$HOME/.password-store";
-      };
-    };
+    # password-store = {
+    #   enable = true;
+    #   package = pkgs.pass-wayland.withExtensions (exts:
+    #     with exts; [
+    #       pass-otp
+    #     ]);
+    #   settings = {
+    #     PASSWORD_STORE_DIR = "$HOME/.password-store";
+    #   };
+    # };
     git = {
       enable = true;
       userEmail = "contact@tuxikus.de";

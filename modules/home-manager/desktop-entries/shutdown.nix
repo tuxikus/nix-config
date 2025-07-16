@@ -1,7 +1,7 @@
 {
   xdg.desktopEntries = {
     shutdown = {
-      name = "shutdow";
+      name = "shutdown";
       exec = "shutdown -h now";
       terminal = false;
     };

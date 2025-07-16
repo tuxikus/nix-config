@@ -279,9 +279,9 @@ Modules:
     };
 
     programs = {
-      gnupg.agent = {
-        enable = true;
-      };
+      # gnupg.agent = {
+      #   enable = true;
+      # };
       direnv = {
         enable = true;
         nix-direnv.enable = true;
@@ -332,7 +332,7 @@ Modules:
       (homeManagerModulesDirectory + "/scripts/borg-home-backup.nix")
       (homeManagerModulesDirectory + "/scripts/uuidgenlc.nix")
       (homeManagerModulesDirectory + "/scripts/music-unzip.nix")
-      (homeManagerModulesDirectory + "/scripts/fpass-wl-copy.nix")
+      #(homeManagerModulesDirectory + "/scripts/fpass-wl-copy.nix")
       (homeManagerModulesDirectory + "/desktop-entries/shutdown.nix")
       (homeManagerModulesDirectory + "/desktop-entries/reboot.nix")
       (homeManagerModulesDirectory + "/desktop-entries/clear-cliphist.nix")
@@ -368,16 +368,16 @@ Modules:
 
     programs = {
       home-manager.enable = true;
-      password-store = {
-        enable = true;
-        package = pkgs.pass-wayland.withExtensions (exts:
-          with exts; [
-            pass-otp
-          ]);
-        settings = {
-          PASSWORD_STORE_DIR = "$HOME/.password-store";
-        };
-      };
+      # password-store = {
+      #   enable = true;
+      #   package = pkgs.pass-wayland.withExtensions (exts:
+      #     with exts; [
+      #       pass-otp
+      #     ]);
+      #   settings = {
+      #     PASSWORD_STORE_DIR = "$HOME/.password-store";
+      #   };
+      # };
       git = {
         enable = true;
         userEmail = "contact@tuxikus.de";
@@ -1084,7 +1084,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
         org-roam
         org-roam-ui
         org-superstar
-        pass
+        #pass
         pdf-tools
         python-mode
         pyvenv
@@ -1863,7 +1863,11 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
 
   (use-package go-mode
     :mode "\\.go\\'"
-    :hook (go-mode . (lambda () (setq tab-width 4))))
+    :hook
+    (go-ts-mode . (lambda ()
+                 (setq tab-width 4)
+                 (setq indent-tabs-mode t)
+                 (message "go-mode init done"))))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;                    hide-mode-line                    ;;;
@@ -2073,7 +2077,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
   ;;;                         pass                         ;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-  (use-package pass)
+  ;;(use-package pass)
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;                       pdf-tools                      ;;;
@@ -2734,9 +2738,6 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
                      $HOME/.bash_history \
                      $HOME/.backup-log.txt \
                      $HOME/.ppw \
-                     $HOME/.gnupg \
-                     $HOME/.password-store \
-                     $HOME/.ssh \
                      $HOME/org \
                      $HOME/org-edu \
                      $HOME/multimedia \
@@ -3792,7 +3793,7 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
   {
     xdg.desktopEntries = {
       shutdown = {
-        name = "shutdow";
+        name = "shutdown";
         exec = "shutdown -h now";
         terminal = false;
       };

@@ -144,9 +144,9 @@ in
   };
 
   programs = {
-    gnupg.agent = {
-      enable = true;
-    };
+    # gnupg.agent = {
+    #   enable = true;
+    # };
     direnv = {
       enable = true;
       nix-direnv.enable = true;

@@ -60,7 +60,7 @@ let
       org-roam
       org-roam-ui
       org-superstar
-      pass
+      #pass
       pdf-tools
       python-mode
       pyvenv
@@ -831,7 +831,11 @@ in
       
       (use-package go-mode
         :mode "\\.go\\'"
-        :hook (go-mode . (lambda () (setq tab-width 4))))
+        :hook
+        (go-ts-mode . (lambda ()
+                     (setq tab-width 4)
+                     (setq indent-tabs-mode t)
+                     (message "go-mode init done"))))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                    hide-mode-line                    ;;;
@@ -1041,7 +1045,7 @@ in
       ;;;                         pass                         ;;;
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
-      (use-package pass)
+      ;;(use-package pass)
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                       pdf-tools                      ;;;
