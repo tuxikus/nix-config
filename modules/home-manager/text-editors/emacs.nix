@@ -26,7 +26,7 @@ let
       eat
       embark
       embark-consult
-      embark-org-roam
+      #embark-org-roam
       ess
       evil
       evil-collection
@@ -35,7 +35,7 @@ let
       fireplace
       flycheck
       format-all
-      gdscript-mode
+      # gdscript-mode
       geiser
       geiser-guile
       general
@@ -53,14 +53,14 @@ let
       move-text
       nix-mode
       orderless
-      org-download
+      # org-download
       org-drill
       org-modern
       org-pomodoro
-      org-roam
-      org-roam-ui
+      # org-roam
+      # org-roam-ui
       org-superstar
-      #pass
+      # pass
       pdf-tools
       python-mode
       pyvenv
@@ -765,7 +765,7 @@ in
       ;;;                    embark-org-roam                   ;;;
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
-      (use-package embark-org-roam)
+      ;; (use-package embark-org-roam)
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                          ess                         ;;;
@@ -903,7 +903,7 @@ in
       ;;;                     gdscript-mode                    ;;;
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
-      (use-package gdscript-mode)
+      ;; (use-package gdscript-mode)
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                       orderless                      ;;;
@@ -928,8 +928,8 @@ in
           "os" 'org-insert-subheading
           "ot" 'org-todo
           "oo" 'org-open-at-point
-          "orf" 'org-roam-node-find
-          "ori" 'org-roam-node-insert
+          ;; "orf" 'org-roam-node-find
+          ;; "ori" 'org-roam-node-insert
           "oci" 'org-clock-in
           "oco" 'org-clock-out
           "oe" 'org-edit-special)
@@ -971,9 +971,9 @@ in
       ;;;                     org-download                     ;;;
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
-      (use-package org-download
-        :custom
-        (org-download-method 'attach))
+      ;; (use-package org-download
+      ;;   :custom
+      ;;   (org-download-method 'attach))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                      org-modern                      ;;;
@@ -988,33 +988,33 @@ in
       ;;;                       org-roam                       ;;;
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
-      (use-package org-roam
-        :bind
-        (("C-c r f" . org-roam-node-find)
-         ("C-c r i" . org-roam-node-insert))
-        :init
-        (setq tuxikus/note-system/fleeting-notes-directory (concat org-roam-directory "/fleeting-notes"))
-        (setq tuxikus/note-system/literature-notes-directory (concat org-roam-directory "/literature-notes"))
-        :custom
-        (org-roam-directory (concat org-directory "/roam"))
-        (org-roam-capture-templates
-         '(("d" "default"
-            plain "%?"
-            :target (file+head "%<%Y-%m-%d>-''${slug}.org"
-                               "#+title: ''${title}\n#+author: tuxikus\n#+date: <%<%Y-%m-%d %a>>\n#+startup: latexpreview\n#+filetags:\n\n\n* Siehe auch\n* Referenzen\n")
-            :unnarrowed t)))
-        (org-roam-dailies-capture-templates
-         '(("d" "default" entry "* %<%H:%M %p>: %?"
-            :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))))
-        (org-roam-node-display-template (concat "''${title:*} " (propertize "''${tags:10}" 'face 'org-tag)))
-        (org-roam-db-autosync-mode t)
-        (org-roam-completion-everywhere t))
+      ;; (use-package org-roam
+      ;;   :bind
+      ;;   (("C-c r f" . org-roam-node-find)
+      ;;    ("C-c r i" . org-roam-node-insert))
+      ;;   :init
+      ;;   (setq tuxikus/note-system/fleeting-notes-directory (concat org-roam-directory "/fleeting-notes"))
+      ;;   (setq tuxikus/note-system/literature-notes-directory (concat org-roam-directory "/literature-notes"))
+      ;;   :custom
+      ;;   (org-roam-directory (concat org-directory "/roam"))
+      ;;   (org-roam-capture-templates
+      ;;    '(("d" "default"
+      ;;       plain "%?"
+      ;;       :target (file+head "%<%Y-%m-%d>-''${slug}.org"
+      ;;                          "#+title: ''${title}\n#+author: tuxikus\n#+date: <%<%Y-%m-%d %a>>\n#+startup: latexpreview\n#+filetags:\n\n\n* Siehe auch\n* Referenzen\n")
+      ;;       :unnarrowed t)))
+      ;;   (org-roam-dailies-capture-templates
+      ;;    '(("d" "default" entry "* %<%H:%M %p>: %?"
+      ;;       :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))))
+      ;;   (org-roam-node-display-template (concat "''${title:*} " (propertize "''${tags:10}" 'face 'org-tag)))
+      ;;   (org-roam-db-autosync-mode t)
+      ;;   (org-roam-completion-everywhere t))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                      org-roam-ui                     ;;;
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
-      (use-package org-roam-ui)
+      ;; (use-package org-roam-ui)
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                     org-superstar                    ;;;
