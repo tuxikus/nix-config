@@ -14,7 +14,7 @@
       #                   --version print version
       
       version="1.2"
-      excludes="--exclude=lost+found/ --exclude=*/lost+found/ --exclude=.Trash-*/ --exclude=*/.Trash-*/"
+      excludes="--exclude=lost+found/ --exclude=*/lost+found/ --exclude=.Trash-*/ --exclude=*/.Trash-*/ --exclude=*/.direnv"
       log_file_name=".backup-log.txt"
       enable_delete=
       enable_dry_run=
@@ -107,9 +107,8 @@
       
       rsync_command="rsync -av $options $excludes \
                          $HOME/.bookmarks.org \
-                         $HOME/.bash_history \
                          $HOME/.backup-log.txt \
-                         $HOME/.ppw \
+                         $HOME/.pw \
                          $HOME/org \
                          $HOME/org-edu \
                          $HOME/multimedia \
