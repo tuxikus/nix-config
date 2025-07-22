@@ -829,13 +829,18 @@ in
       ;;;                        go-mode                       ;;;
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
-      (use-package go-mode
+      ;; (use-package go-mode
+      ;;   :mode "\\.go\\'")
+      
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ;;;                      go-ts-mode                      ;;;
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      
+      (use-package go-ts-mode
         :mode "\\.go\\'"
         :hook
         (go-ts-mode . (lambda ()
-                     (setq tab-width 4)
-                     (setq indent-tabs-mode t)
-                     (message "go-mode init done"))))
+                        (add-hook 'before-save-hook #'gofmt nil t))))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                    hide-mode-line                    ;;;
@@ -1068,7 +1073,10 @@ in
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
       (use-package lsp-mode
-        :hook ((python-mode go-mode) . lsp-deffered))
+        :hook ((python-mode
+                python-ts-mode
+                go-mode
+                go-ts-mode) . lsp-deferred))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                      lsp-pyright                     ;;;
