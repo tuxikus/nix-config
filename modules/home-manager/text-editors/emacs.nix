@@ -1067,7 +1067,8 @@ in
       ;;;                       lsp-mode                       ;;;
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
-      (use-package lsp-mode)
+      (use-package lsp-mode
+        :hook ((python-mode go-mode) . lsp-deffered))
       
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;;;                      lsp-pyright                     ;;;

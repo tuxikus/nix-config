@@ -2059,7 +2059,8 @@ Docker config from [[https://www.rahuljuliato.com/posts/emacs-docker-podman][Rah
   ;;;                       lsp-mode                       ;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-  (use-package lsp-mode)
+  (use-package lsp-mode
+    :hook ((python-mode go-mode) . lsp-deffered))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;                      lsp-pyright                     ;;;
