@@ -80,6 +80,7 @@ let
       walkman
       wgrep
       yasnippet
+      yasnippet-snippets
       # (trivialBuild {
       #   pname = "moc";
       #   version = "v0.6.2";
@@ -985,6 +986,7 @@ in
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
       (use-package org-modern
+        :if (display-graphic-p)
         :hook
         (org-mode . org-modern-mode)
         (org-agenda-finalize . org-modern-agenda))
