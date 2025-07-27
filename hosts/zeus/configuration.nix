@@ -89,6 +89,7 @@ in
   services = {
     pcscd.enable = true;
     dbus.enable = true;
+    pipewire.enable = false;
     xserver = {
       enable = true;
       displayManager.gdm.enable = true;
