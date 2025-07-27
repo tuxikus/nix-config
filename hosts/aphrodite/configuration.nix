@@ -108,8 +108,11 @@ in
       sketchybar
       tree-sitter
       wezterm
+      gdb
+      go
+      gopls
+      delve
 
-      # :o
       gnutls
       coreutils
       findutils
