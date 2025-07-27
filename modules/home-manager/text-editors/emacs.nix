@@ -1075,6 +1075,12 @@ in
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       
       (use-package lsp-mode
+        :general
+        (tuxikus/leader-key
+          "lr" 'lsp-rename
+          "ld" 'lsp-find-definition
+          "lr" 'lsp-find-references
+          "la" 'lsp-execute-code-action)
         :hook ((python-mode
                 python-ts-mode
                 go-mode
