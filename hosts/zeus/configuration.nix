@@ -136,6 +136,7 @@ in
       vial
       waybar
       wezterm
+      wf-recorder
       wget
       wl-clipboard
       wlr-randr
